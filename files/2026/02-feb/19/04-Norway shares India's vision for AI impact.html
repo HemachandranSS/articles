@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Norway–India AI Impact — Glossary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&family=Catamaran:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #030c18;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.09);
+            --a1: #00C6FF;
+            --a2: #00E5A0;
+            --text: #E2EAF4;
+            --muted: #6E7F96;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse 75% 55% at 10% 5%, rgba(0, 198, 255, 0.13) 0%, transparent 60%), radial-gradient(ellipse 55% 45% at 88% 88%, rgba(123, 94, 167, 0.12) 0%, transparent 55%), #030c18;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.15;
+            animation: drift 22s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 550px;
+            height: 550px;
+            background: var(--a1);
+            top: -200px;
+            left: -130px;
+        }
+
+        .orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #7B5EA7;
+            bottom: -130px;
+            right: -100px;
+            animation-delay: -8s;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(50px, 38px) scale(1.1);
+            }
+        }
+
+        .grid-lines {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(0, 198, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 198, 255, 0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(0, 198, 255, 0.55);
+            animation: fu linear infinite;
+        }
+
+        @keyframes fu {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        #sp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--a1), var(--a2));
+            z-index: 1000;
+            width: 0;
+            box-shadow: 0 0 14px var(--a1);
+            transition: width .1s linear;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 24px 44px;
+        }
+
+        .flags {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            letter-spacing: 6px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 198, 255, 0.12);
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            color: #60d6f8;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 6px 20px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .badge::before {
+            content: '◉';
+            color: var(--a2);
+            animation: bk 2s ease-in-out infinite;
+        }
+
+        @keyframes bk {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.18;
+            background: linear-gradient(135deg, #fff 20%, var(--a1) 55%, var(--a2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        .banner {
+            position: relative;
+            z-index: 10;
+            max-width: 880px;
+            margin: 0 auto 52px;
+            background: rgba(0, 198, 255, 0.06);
+            border: 1px solid rgba(0, 198, 255, 0.2);
+            border-radius: 14px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: .88rem;
+            color: #4ab8d4;
+        }
+
+        .sw {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            margin: 0 auto 44px;
+            padding: 0 24px;
+        }
+
+        .sw input {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 18px 14px 48px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: .95rem;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .sw input::placeholder {
+            color: var(--muted);
+        }
+
+        .sw input:focus {
+            border-color: var(--a1);
+            box-shadow: 0 0 0 4px rgba(0, 198, 255, .15);
+        }
+
+        .si {
+            position: absolute;
+            left: 38px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .stats {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-bottom: 56px;
+            padding: 0 24px;
+        }
+
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 24px;
+            text-align: center;
+        }
+
+        .chip .n {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--a1);
+        }
+
+        .chip .l {
+            font-size: .75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .tabs {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 46px;
+            padding: 0 24px;
+        }
+
+        .tb {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .tb:hover,
+        .tb.active {
+            background: linear-gradient(135deg, var(--a1), var(--a2));
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 4px 22px rgba(0, 198, 255, .35);
+        }
+
+        .grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: transform .35s cubic-bezier(.23, 1, .32, 1), border-color .35s, box-shadow .35s;
+            overflow: hidden;
+            animation: ci .6s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.012);
+            border-color: rgba(255, 255, 255, .16);
+            box-shadow: 0 26px 64px rgba(0, 0, 0, .55);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--ca, linear-gradient(90deg, var(--a1), var(--a2)));
+            opacity: 0;
+            transition: opacity .35s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0, 198, 255, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes ci {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ch {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cn {
+            min-width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            font-weight: 800;
+            background: var(--nb, rgba(0, 198, 255, .18));
+            color: var(--nc, var(--a1));
+        }
+
+        .ct {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--tb2, rgba(0, 198, 255, .1));
+            color: var(--tc, var(--a1));
+        }
+
+        .term {
+            font-size: 1.22rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .pron {
+            font-size: .78rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+
+        .div {
+            height: 1px;
+            background: linear-gradient(90deg, var(--ac2, var(--a1)), transparent);
+            opacity: .22;
+            margin-bottom: 14px;
+        }
+
+        .sl {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .meaning {
+            font-size: .915rem;
+            line-height: 1.78;
+            color: #CBD5E1;
+            margin-bottom: 16px;
+        }
+
+        .ex {
+            background: rgba(0, 0, 0, .28);
+            border-left: 3px solid var(--ac2, var(--a1));
+            border-radius: 0 10px 10px 0;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+        }
+
+        .ex p {
+            font-size: .875rem;
+            line-height: 1.72;
+            color: #94A3B8;
+            font-style: italic;
+        }
+
+        .ex .hl {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--ac2, var(--a1));
+        }
+
+        .tm-label {
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        .tm {
+            font-family: 'Catamaran', sans-serif;
+            font-size: .92rem;
+            line-height: 1.6;
+            color: #7dd3fc;
+            font-weight: 500;
+            background: rgba(0, 0, 0, .22);
+            border-radius: 8px;
+            padding: 9px 12px;
+        }
+
+        .t-cyan {
+            --ca: linear-gradient(90deg, #00C6FF, #38bdf8);
+            --nb: rgba(0, 198, 255, .2);
+            --nc: #00C6FF;
+            --tb2: rgba(0, 198, 255, .12);
+            --tc: #00C6FF;
+            --ac2: #00C6FF;
+        }
+
+        .t-emerald {
+            --ca: linear-gradient(90deg, #00E5A0, #34d399);
+            --nb: rgba(0, 229, 160, .18);
+            --nc: #00E5A0;
+            --tb2: rgba(0, 229, 160, .12);
+            --tc: #00E5A0;
+            --ac2: #00E5A0;
+        }
+
+        .t-violet {
+            --ca: linear-gradient(90deg, #A78BFA, #c4b5fd);
+            --nb: rgba(167, 139, 250, .18);
+            --nc: #A78BFA;
+            --tb2: rgba(167, 139, 250, .12);
+            --tc: #A78BFA;
+            --ac2: #A78BFA;
+        }
+
+        .t-amber {
+            --ca: linear-gradient(90deg, #FF9F43, #fbbf24);
+            --nb: rgba(255, 159, 67, .18);
+            --nc: #FF9F43;
+            --tb2: rgba(255, 159, 67, .12);
+            --tc: #FF9F43;
+            --ac2: #FF9F43;
+        }
+
+        .t-rose {
+            --ca: linear-gradient(90deg, #FF6B9D, #fb7185);
+            --nb: rgba(255, 107, 157, .18);
+            --nc: #FF6B9D;
+            --tb2: rgba(255, 107, 157, .12);
+            --tc: #FF6B9D;
+            --ac2: #FF6B9D;
+        }
+
+        .t-sky {
+            --ca: linear-gradient(90deg, #60A5FA, #93c5fd);
+            --nb: rgba(96, 165, 250, .18);
+            --nc: #60A5FA;
+            --tb2: rgba(96, 165, 250, .12);
+            --tc: #60A5FA;
+            --ac2: #60A5FA;
+        }
+
+        .t-purple {
+            --ca: linear-gradient(90deg, #7B5EA7, #a78bfa);
+            --nb: rgba(123, 94, 167, .2);
+            --nc: #a78bfa;
+            --tb2: rgba(123, 94, 167, .12);
+            --tc: #a78bfa;
+            --ac2: #a78bfa;
+        }
+
+        .t-teal {
+            --ca: linear-gradient(90deg, #4ECDC4, #2dd4bf);
+            --nb: rgba(78, 205, 196, .18);
+            --nc: #4ECDC4;
+            --tb2: rgba(78, 205, 196, .12);
+            --tc: #4ECDC4;
+            --ac2: #4ECDC4;
+        }
+
+        .nr {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px;
+            color: var(--muted);
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 28px 24px 48px;
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        footer a {
+            color: var(--a1);
+            text-decoration: none;
+        }
+
+        @media(max-width:640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sp"></div>
+    <div class="bg-canvas"></div>
+    <div class="grid-lines"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="particles" id="particles"></div>
+    <header>
+        <div class="flags">🇳🇴 🤝 🇮🇳</div>
+        <div class="badge">🤖 Article Glossary</div>
+        <h1>Norway &amp; India's Shared<br>Vision for AI — Key Terms</h1>
+        <p class="subtitle">AI, policy &amp; diplomacy vocabulary with English and Tamil meanings from the AI Impact
+            Summit article.</p>
+    </header>
+    <div class="banner"><span>📰</span>
+        <div><strong>Source:</strong> "Norway shares India's vision for AI impact" · AI Impact Summit, Delhi · Feb 2026
+            · Karianne Oldernes Tung</div>
+    </div>
+    <div class="sw"><span class="si">🔍</span><input type="text" id="si" placeholder="Search a term…" oninput="fc()" />
+    </div>
+    <div class="stats">
+        <div class="chip">
+            <div class="n">22</div>
+            <div class="l">Terms</div>
+        </div>
+        <div class="chip">
+            <div class="n">7</div>
+            <div class="l">Categories</div>
+        </div>
+        <div class="chip">
+            <div class="n">தமிழ்</div>
+            <div class="l">Meanings</div>
+        </div>
+    </div>
+    <div class="tabs">
+        <button class="tb active" onclick="ft('all',this)">All</button>
+        <button class="tb" onclick="ft('ai',this)">AI &amp; Tech</button>
+        <button class="tb" onclick="ft('policy',this)">Policy</button>
+        <button class="tb" onclick="ft('diplomacy',this)">Diplomacy</button>
+        <button class="tb" onclick="ft('digital',this)">Digital Infra</button>
+        <button class="tb" onclick="ft('governance',this)">Governance</button>
+        <button class="tb" onclick="ft('economics',this)">Economics</button>
+    </div>
+    <div class="grid" id="cg"></div>
+    <footer>
+        <p>📚 Glossary for the Norway–India AI article · <a href="https://aiimpactsummit.in">AI Impact Summit 2026</a>
+        </p>
+    </footer>
+    <script>
+        const terms = [
+            { term: "AI Impact Summit", pron: "/ˌeɪˈaɪ ˈɪm.pækt ˈsʌm.ɪt/", cat: "ai", meaning: "A high-level international conference focused on discussing the real-world impact of Artificial Intelligence on society, economies, and governance. The 2026 edition was held in Delhi.", example: "World leaders gathered at the <span class='hl'>AI Impact Summit</span> in Delhi to debate how AI should be regulated for public benefit.", tamil: "செயற்கை நுண்ணறிவு தாக்க உச்சி மாநாடு — AI-இன் சமூக, பொருளாதாரத் தாக்கங்களை விவாதிக்க உலகளவிலான நிபுணர்கள் கூடும் உயர் மட்ட மாநாடு.", theme: "t-cyan" },
+            { term: "Sutras", pron: "/ˈsuː.trəz/", cat: "policy", meaning: "Sanskrit word literally meaning 'thread' or 'rule.' In Indian philosophy, sutras are concise guiding principles. The Summit's three guiding themes — People, Planet, Progress — are called 'sutras'.", example: "The chair introduced the three <span class='hl'>sutras</span> — People, Planet, Progress — as the philosophical threads of the Summit.", tamil: "சூத்திரங்கள் — சமஸ்கிருத வார்த்தை; 'நூல்' அல்லது 'விதி' என்று பொருள். இங்கே மூன்று வழிகாட்டும் கோட்பாடுகளை குறிக்கிறது: மக்கள், கிரகம், முன்னேற்றம்.", theme: "t-emerald" },
+            { term: "Equitable", pron: "/ˈek.wɪ.tə.bəl/", cat: "governance", meaning: "Fair and just — ensuring benefits and opportunities are distributed fairly across all groups without discrimination based on income, geography, or gender.", example: "Policymakers stressed that AI must create an <span class='hl'>equitable</span> society where farmers benefit as much as engineers.", tamil: "சமத்துவமான / நியாயமான — சமூகத்தின் அனைத்து தரப்பினரும் வருமானம், பாலினம், இடம் ஆகியவற்றை பொருட்படுத்தாமல் சமன்பான நலன்களை பெற உரியவர்கள் என்ற கொள்கை.", theme: "t-violet" },
+            { term: "Digitalisation Strategy", pron: "/ˌdɪdʒ.ɪ.tl.aɪˈzeɪ.ʃən ˈstræt.ɪ.dʒi/", cat: "policy", meaning: "A government's comprehensive plan to leverage digital technologies to transform public services, the economy, and society. Norway's 2024–2030 strategy aims to make it the world's most digitally advanced country.", example: "The PM unveiled a <span class='hl'>digitalisation strategy</span> requiring all government services to go fully online.", tamil: "டிஜிட்டல் மயமாக்கல் திட்டம் — AI, கிளவுட், அரசு சேவை டிஜிட்டல்மயம் உள்ளடக்கிய ஒரு நாட்டின் அரசு கணினி வழி மாற்றத்திற்கான விரிவான திட்டம்.", theme: "t-amber" },
+            { term: "AI Hub", pron: "/ˌeɪˈaɪ hʌb/", cat: "ai", meaning: "A centralised national or regional centre that brings together researchers, startups, and government bodies to develop and promote AI technologies. Norway launched 'AI Norway' as such a hub.", example: "The government designated Hyderabad as India's first national <span class='hl'>AI hub</span> with subsidised compute access.", tamil: "செயற்கை நுண்ணறிவு மையம் — ஆராய்ச்சியாளர்கள், நிறுவனங்கள், அரசு ஆகியவற்றை ஒன்றிணைத்து AI வளர்ச்சியை ஊக்குவிக்கும் தேசிய அல்லது பிராந்திய மையம்.", theme: "t-rose" },
+            { term: "Supercomputer", pron: "/ˈsuː.pə.kəm.pjuː.tər/", cat: "ai", meaning: "A computing machine with processing power far beyond standard computers — used for training large AI models, climate modelling, and data-intensive research. Norway's 'Olivia' is their most powerful supercomputer.", example: "India's Param Siddhi <span class='hl'>supercomputer</span> can train AI models in dozens of Indic languages simultaneously.", tamil: "மாபெரும் கணினி / சூப்பர் கம்ப்யூட்டர் — சாதாரண கணினியை விட பல மடங்கு வேக கணக்கீட்டு திறன் கொண்ட, AI மாதிரிகள் பயிற்சி மற்றும் விஞ்ஞான ஆராய்ச்சிக்குப் பயன்படும் கணினி.", theme: "t-sky" },
+            { term: "Language Models", pron: "/ˈlæŋ.ɡwɪdʒ ˈmɒd.əlz/", cat: "ai", meaning: "AI systems trained on vast text data to understand, generate, and translate language. Norway references developing 'Norwegian language models' — AI trained specifically on the Norwegian language.", example: "A team built a Tamil <span class='hl'>language model</span> trained on 10 billion words of Tamil literature and news.", tamil: "மொழி மாதிரிகள் — மொழியை புரிந்துகொள்ள, உருவாக்க மற்றும் மொழிமாற்றம் செய்ய பயிற்சி பெற்ற செயற்கை நுண்ணறிவு அமைப்புகள். எ.கா: ChatGPT, Claude.", theme: "t-purple" },
+            { term: "Digital Public Goods Alliance (DPGA)", pron: "/ˌdɪdʒ.ɪ.tl ˈpʌb.lɪk ɡʊdz əˈlaɪ.əns/", cat: "digital", meaning: "An international initiative that promotes open-source digital solutions freely available for sustainable development globally. Norway is a co-founder.", example: "The <span class='hl'>Digital Public Goods Alliance</span> certified India's CoWIN platform as a digital public good.", tamil: "டிஜிட்டல் பொது நன்மைகள் கூட்டணி — திறந்த மூல மென்பொருள் மற்றும் தரவுகளை உலகளவில் இலவசமாக பகிர்வதை ஊக்குவிக்கும் சர்வதேச கூட்டணி.", theme: "t-teal" },
+            { term: "EU AI Act", pron: "/ˌiːˈjuː eɪˈaɪ ækt/", cat: "policy", meaning: "The world's first comprehensive legal framework regulating AI, enacted by the European Union. It categorises AI by risk level and mandates transparency, human oversight, and restrictions on high-risk applications.", example: "The startup redesigned its loan AI to comply with the <span class='hl'>EU AI Act</span>, which classifies credit scoring as high-risk.", tamil: "ஐரோப்பிய ஒன்றியம் AI சட்டம் — உலகின் முதல் விரிவான AI ஒழுங்குமுறை சட்டம்; AI அமைப்புகளை அபாய அளவின் படி வகைப்படுத்தி கட்டுப்படுத்துகிறது.", theme: "t-cyan" },
+            { term: "Complementarity", pron: "/ˌkɒm.plɪ.menˈtær.ɪ.ti/", cat: "diplomacy", meaning: "A relationship where two parties have distinct but mutually reinforcing strengths. Norway (governance, sustainability) and India (scale, tech talent) are 'complementary.'", example: "Analysts highlighted the <span class='hl'>complementarity</span> between Japan's robotics and India's software skills.", tamil: "நிரப்பு தன்மை — இரண்டு தரப்பினர் வேறுபட்ட ஆனால் ஒன்றையொன்று வலுப்படுத்தும் திறன்களை கொண்டிருக்கும் உறவு; ஒன்று இல்லாதவை மற்றொன்று நிரப்பும்.", theme: "t-violet" },
+            { term: "Digital Public Infrastructure (DPI)", pron: "/ˈdɪdʒ.ɪ.tl ˈpʌb.lɪk ˈɪn.frə.strʌk.tʃər/", cat: "digital", meaning: "Government-built digital systems providing universal access to essential services — identity, payments, health records. India's DPI stack (Aadhaar, UPI, DigiLocker) is globally admired.", example: "India's <span class='hl'>Digital Public Infrastructure</span> has enabled 500 million citizens to access services from their phones.", tamil: "டிஜிட்டல் பொது உள்கட்டமைப்பு — அரசால் நிர்மாணிக்கப்பட்ட அடிப்படை டிஜிட்டல் கட்டமைப்புகள். இந்தியாவில் ஆதார், UPI, DigiLocker இதற்கு சிறந்த எடுத்துக்காட்டுகள்.", theme: "t-emerald" },
+            { term: "MOSIP", pron: "/ˈmoʊ.sɪp/", cat: "digital", meaning: "Modular Open-Source Identity Platform — a globally deployable, open-source digital identity platform developed by IIIT Bangalore, India. Over 100 million people across several countries use MOSIP-based systems.", example: "Ethiopia built its national digital ID using <span class='hl'>MOSIP</span>, enabling 80 million citizens to get verifiable identities.", tamil: "திறந்த மூல அடையாள தளம் — IIIT பெங்களூரு வடிவமைத்த, எந்த நாடும் தன் தேசிய அடையாள அமைப்பை குறைந்த செலவில் உருவாக்க பயன்படும் திறந்த மூல மென்பொருள் தளம்.", theme: "t-amber" },
+            { term: "Democratisation of AI", pron: "/dɪˌmɒk.rə.taɪˈzeɪ.ʃən əv ˌeɪˈaɪ/", cat: "governance", meaning: "Making AI tools accessible to everyone — not just large corporations or elite researchers. Involves open-source models, affordable computing, and policies that spread AI benefits widely.", example: "The NGO advanced <span class='hl'>democratisation of AI</span> by distributing crop disease detection apps to smallholder farmers.", tamil: "செயற்கை நுண்ணறிவு ஜனநாயகமயமாக்கல் — AI கருவிகள் மற்றும் திறன்களை பணக்காரர்கள் மட்டுமின்றி சமூகத்தின் அனைத்து தரப்பினருக்கும் கிடைக்கச் செய்வது.", theme: "t-rose" },
+            { term: "Guardrails", pron: "/ˈɡɑːd.reɪlz/", cat: "policy", meaning: "Safety mechanisms built into AI systems or governance frameworks to prevent harmful outputs or misuse — like spreading misinformation, generating biased content, or violating privacy.", example: "The chatbot developer implemented strict <span class='hl'>guardrails</span> preventing the AI from generating medical diagnoses.", tamil: "பாதுகாப்பு வழிகாட்டல்கள் — AI அமைப்புகளில் தீங்கான வெளியீடுகளை அல்லது தவறான பயன்பாட்டை தடுக்க வடிவமைக்கப்பட்ட கட்டுப்பாடுகள்.", theme: "t-sky" },
+            { term: "Misinformation", pron: "/ˌmɪs.ɪn.fəˈmeɪ.ʃən/", cat: "governance", meaning: "False or inaccurate information — whether spread intentionally or unintentionally. AI can amplify misinformation through deepfakes and AI-generated fake news.", example: "AI-generated <span class='hl'>misinformation</span> spread six times faster than fact-checked news during the 2024 elections.", tamil: "தவறான தகவல் — தெரிந்தோ தெரியாமலோ பரவும் தவறான அல்லது திரிபுபடுத்தப்பட்ட தகவல்கள்; AI இதை மேலும் வேகமாக பரப்பக்கூடும்.", theme: "t-purple" },
+            { term: "G20 Presidency", pron: "/ˌdʒiːˈtwenti ˈprez.ɪ.dən.si/", cat: "diplomacy", meaning: "The annual rotating chairmanship of the G20 group of the world's 20 largest economies. India held the G20 Presidency in 2023, making digital public infrastructure a key agenda item.", example: "During India's <span class='hl'>G20 Presidency</span>, nations adopted a common framework for Digital Public Infrastructure.", tamil: "ஜி20 தலைமை — உலகின் 20 பெரிய பொருளாதாரங்களின் குழுவான G20-இன் ஆண்டுவாரி சுழல் தலைமை பதவி; 2023-இல் இந்தியா இதை வகித்தது.", theme: "t-teal" },
+            { term: "TEPA", pron: "/ˈtiː.pə/", cat: "economics", meaning: "Trade and Economic Partnership Agreement — a comprehensive trade deal between India and EFTA nations (Switzerland, Norway, Iceland, Liechtenstein), effective October 2025.", example: "Under <span class='hl'>TEPA</span>, Norwegian energy firms can invest in India's offshore wind sector with reduced tariffs.", tamil: "வர்த்தக மற்றும் பொருளாதார கூட்டாண்மை ஒப்பந்தம் — இந்தியாவும் நான்கு ஐரோப்பிய EFTA நாடுகளும் 2025 அக்டோபரில் கையொப்பமிட்ட வர்த்தக ஒப்பந்தம்.", theme: "t-cyan" },
+            { term: "EFTA", pron: "/ˈef.tə/", cat: "diplomacy", meaning: "European Free Trade Association — an intergovernmental organisation of Switzerland, Norway, Iceland, and Liechtenstein that promotes free trade and economic integration outside the EU.", example: "India's trade deal with <span class='hl'>EFTA</span> nations opened markets in four wealthy European nations.", tamil: "ஐரோப்பிய சுதந்திர வர்த்தக சங்கம் — ஐரோப்பிய ஒன்றியத்திற்கு வெளியே இயங்கும் சுவிட்சர்லாந்து, நோர்வே, ஐஸ்லாந்து, லிக்டன்ஸ்டைன் ஆகிய நாடுகளின் வர்த்தக கூட்டமைப்பு.", theme: "t-violet" },
+            { term: "Data Governance", pron: "/ˈdeɪ.tə ˈɡʌv.ən.əns/", cat: "policy", meaning: "The framework of policies and processes determining how data is collected, stored, used, shared, and protected — especially regarding privacy, commercial rights, and national security.", example: "New <span class='hl'>data governance</span> guidelines require AI models processing Indian citizens' health data to use India-based servers.", tamil: "தரவு நிர்வாகம் — தரவு எவ்வாறு சேகரிக்கப்படுகிறது, சேமிக்கப்படுகிறது, பகிரப்படுகிறது மற்றும் பாதுகாக்கப்படுகிறது என்பதை நிர்ணயிக்கும் கொள்கை கட்டமைப்பு.", theme: "t-amber" },
+            { term: "Synergies", pron: "/ˈsɪn.ə.dʒiz/", cat: "diplomacy", meaning: "The combined effect of two or more parties working together that is greater than the sum of their individual efforts. India's talent + Norway's governance expertise creates positive synergies.", example: "The joint research centre leveraged <span class='hl'>synergies</span> between India's data science talent and Norway's maritime sensors tech.", tamil: "ஒருங்கிணைந்த வலிமை — இரண்டு அல்லது மேற்பட்ட தரப்பினர் இணைந்து செயல்படும்போது, தனியாக செயல்படுவதை விட அதிக வலிமையான விளைவு கிடைக்கும் தன்மை.", theme: "t-teal" },
+            { term: "Startup Ecosystem", pron: "/ˈstɑːt.ʌp ˈiː.kəʊˌsɪs.təm/", cat: "economics", meaning: "The interconnected community of entrepreneurs, investors, accelerators, universities, and regulators enabling the creation of new businesses. India's startup ecosystem is the world's third-largest.", example: "The government launched a ₹1,000 crore fund to seed AI innovations within India's thriving <span class='hl'>startup ecosystem</span>.", tamil: "தொடக்க நிறுவன சூழலமைப்பு — தொழில் முனைவோர், முதலீட்டாளர்கள், பல்கலைக்கழகங்கள் மற்றும் ஒழுங்காளர்கள் ஒன்றிணைந்து புதிய நிறுவனங்கள் வளர உதவும் சூழல்.", theme: "t-rose" },
+            { term: "Rule of Law", pron: "/ruːl əv lɔː/", cat: "governance", meaning: "A foundational principle that everyone — including governments and corporations — is equally subject to and accountable under the law. AI systems must operate within legal frameworks.", example: "The minister emphasised that even the most advanced AI must operate within the <span class='hl'>rule of law</span>.", tamil: "சட்டத்தின் ஆட்சி — அனைவரும் — தனிநபர், நிறுவனங்கள், அரசு — சட்டத்திற்கு சமன்பான முறையில் கட்டுப்பட்டவர்கள் என்ற அடிப்படை ஜனநாயக கோட்பாடு.", theme: "t-sky" }
+        ];
+        let tag = 'all';
+        function render(list) { const g = document.getElementById('cg'); g.innerHTML = ''; if (!list.length) { g.innerHTML = '<div class="nr"><p>No terms match.</p></div>'; return; } list.forEach((t, i) => { const d = document.createElement('div'); d.className = `card ${t.theme}`; d.style.animationDelay = (i % 12 * 60) + 'ms'; d.innerHTML = `<div class="ch"><span class="cn">${String(i + 1).padStart(2, '0')}</span><span class="ct">${t.cat}</span></div><div class="term">${t.term}</div><div class="pron">${t.pron}</div><div class="div"></div><div class="sl">📖 Definition</div><div class="meaning">${t.meaning}</div><div class="sl">✍️ Example</div><div class="ex"><p>${t.example}</p></div><div class="tm-label">🔤 தமிழ் பொருள்</div><div class="tm">${t.tamil}</div>`; d.addEventListener('mousemove', e => { const r = d.getBoundingClientRect(); d.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%'); d.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%'); }); g.appendChild(d); }); }
+        function fc() { const q = document.getElementById('si').value.toLowerCase(); let d = terms.filter(t => tag === 'all' || t.cat === tag); if (q) d = d.filter(t => t.term.toLowerCase().includes(q) || t.meaning.toLowerCase().includes(q) || t.tamil.includes(q)); render(d); }
+        function ft(t2, btn) { tag = t2; document.querySelectorAll('.tb').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('si').value = ''; fc(); }
+        render(terms);
+        window.addEventListener('scroll', () => { document.getElementById('sp').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%'; });
+        (function () { const c = document.getElementById('particles'); for (let i = 0; i < 32; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random() * 100 + 'vw'; p.style.animationDuration = (10 + Math.random() * 22) + 's'; p.style.animationDelay = (Math.random() * 24) + 's'; c.appendChild(p); } })();
+    </script>
+</body>
+
+</html>

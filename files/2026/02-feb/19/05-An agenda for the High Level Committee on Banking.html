@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>High Level Committee on Banking — Glossary &amp; Key Terminologies</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #040a0f;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.09);
+            --a1: #22C55E;
+            /* money green */
+            --a2: #3B82F6;
+            /* bank blue */
+            --a3: #F59E0B;
+            /* gold */
+            --a4: #EC4899;
+            /* pink */
+            --a5: #8B5CF6;
+            /* purple */
+            --a6: #06B6D4;
+            /* cyan */
+            --text: #E2EAF4;
+            --muted: #6E7F96;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 72% 52% at 12% 6%, rgba(34, 197, 94, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 58% 48% at 86% 86%, rgba(59, 130, 246, 0.11) 0%, transparent 55%),
+                radial-gradient(ellipse 42% 38% at 58% 48%, rgba(245, 158, 11, 0.07) 0%, transparent 50%),
+                #040a0f;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.15;
+            animation: drift 22s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 540px;
+            height: 540px;
+            background: var(--a1);
+            top: -190px;
+            left: -130px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 440px;
+            height: 440px;
+            background: var(--a2);
+            bottom: -120px;
+            right: -100px;
+            animation-delay: -8s;
+        }
+
+        .orb-3 {
+            width: 340px;
+            height: 340px;
+            background: var(--a3);
+            top: 42%;
+            left: 60%;
+            animation-delay: -15s;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(48px, 36px) scale(1.09);
+            }
+        }
+
+        /* subtle dot grid */
+        .dot-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: radial-gradient(rgba(34, 197, 94, 0.12) 1px, transparent 1px);
+            background-size: 36px 36px;
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.5);
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        #sp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--a1), var(--a2));
+            z-index: 1000;
+            width: 0;
+            box-shadow: 0 0 14px var(--a1);
+            transition: width .1s linear;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 24px 44px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #4ade80;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 6px 20px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .badge::before {
+            content: '◈';
+            color: var(--a3);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.18;
+            background: linear-gradient(135deg, #fff 20%, var(--a1) 55%, var(--a3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        .banner {
+            position: relative;
+            z-index: 10;
+            max-width: 880px;
+            margin: 0 auto 52px;
+            background: rgba(34, 197, 94, 0.06);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 14px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: .88rem;
+            color: #4ade80;
+        }
+
+        .banner span {
+            font-size: 1.3rem;
+        }
+
+        .sw {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            margin: 0 auto 44px;
+            padding: 0 24px;
+        }
+
+        .sw input {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 18px 14px 48px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: .95rem;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .sw input::placeholder {
+            color: var(--muted);
+        }
+
+        .sw input:focus {
+            border-color: var(--a1);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, .15);
+        }
+
+        .si {
+            position: absolute;
+            left: 38px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .stats {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-bottom: 56px;
+            padding: 0 24px;
+        }
+
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 24px;
+            text-align: center;
+        }
+
+        .chip .n {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--a1);
+        }
+
+        .chip .l {
+            font-size: .75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .tabs {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 46px;
+            padding: 0 24px;
+        }
+
+        .tb {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .tb:hover,
+        .tb.active {
+            background: linear-gradient(135deg, var(--a1), var(--a2));
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 22px rgba(34, 197, 94, .32);
+        }
+
+        .grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: transform .35s cubic-bezier(.23, 1, .32, 1), border-color .35s, box-shadow .35s;
+            overflow: hidden;
+            animation: ci .6s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.012);
+            border-color: rgba(255, 255, 255, .16);
+            box-shadow: 0 26px 64px rgba(0, 0, 0, .55);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--ca, linear-gradient(90deg, var(--a1), var(--a2)));
+            opacity: 0;
+            transition: opacity .35s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(34, 197, 94, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes ci {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ch {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cn {
+            min-width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            font-weight: 800;
+            background: var(--nb, rgba(34, 197, 94, .18));
+            color: var(--nc, var(--a1));
+        }
+
+        .ct {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--tb2, rgba(34, 197, 94, .1));
+            color: var(--tc, var(--a1));
+        }
+
+        .term {
+            font-size: 1.22rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .pron {
+            font-size: .78rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+
+        .div {
+            height: 1px;
+            background: linear-gradient(90deg, var(--ac2, var(--a1)), transparent);
+            opacity: .22;
+            margin-bottom: 14px;
+        }
+
+        .sl {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .meaning {
+            font-size: .915rem;
+            line-height: 1.78;
+            color: #CBD5E1;
+            margin-bottom: 16px;
+        }
+
+        .ex {
+            background: rgba(0, 0, 0, .28);
+            border-left: 3px solid var(--ac2, var(--a1));
+            border-radius: 0 10px 10px 0;
+            padding: 12px 16px;
+        }
+
+        .ex p {
+            font-size: .875rem;
+            line-height: 1.72;
+            color: #94A3B8;
+            font-style: italic;
+        }
+
+        .ex .hl {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--ac2, var(--a1));
+        }
+
+        /* Themes */
+        .t-green {
+            --ca: linear-gradient(90deg, #22C55E, #4ade80);
+            --nb: rgba(34, 197, 94, .2);
+            --nc: #4ade80;
+            --tb2: rgba(34, 197, 94, .12);
+            --tc: #4ade80;
+            --ac2: #4ade80;
+        }
+
+        .t-blue {
+            --ca: linear-gradient(90deg, #3B82F6, #60a5fa);
+            --nb: rgba(59, 130, 246, .2);
+            --nc: #60a5fa;
+            --tb2: rgba(59, 130, 246, .12);
+            --tc: #60a5fa;
+            --ac2: #60a5fa;
+        }
+
+        .t-gold {
+            --ca: linear-gradient(90deg, #F59E0B, #fbbf24);
+            --nb: rgba(245, 158, 11, .2);
+            --nc: #fbbf24;
+            --tb2: rgba(245, 158, 11, .12);
+            --tc: #fbbf24;
+            --ac2: #fbbf24;
+        }
+
+        .t-pink {
+            --ca: linear-gradient(90deg, #EC4899, #f472b6);
+            --nb: rgba(236, 72, 153, .2);
+            --nc: #f472b6;
+            --tb2: rgba(236, 72, 153, .12);
+            --tc: #f472b6;
+            --ac2: #f472b6;
+        }
+
+        .t-purple {
+            --ca: linear-gradient(90deg, #8B5CF6, #a78bfa);
+            --nb: rgba(139, 92, 246, .2);
+            --nc: #a78bfa;
+            --tb2: rgba(139, 92, 246, .12);
+            --tc: #a78bfa;
+            --ac2: #a78bfa;
+        }
+
+        .t-cyan {
+            --ca: linear-gradient(90deg, #06B6D4, #22d3ee);
+            --nb: rgba(6, 182, 212, .2);
+            --nc: #22d3ee;
+            --tb2: rgba(6, 182, 212, .12);
+            --tc: #22d3ee;
+            --ac2: #22d3ee;
+        }
+
+        .t-orange {
+            --ca: linear-gradient(90deg, #F97316, #fb923c);
+            --nb: rgba(249, 115, 22, .2);
+            --nc: #fb923c;
+            --tb2: rgba(249, 115, 22, .12);
+            --tc: #fb923c;
+            --ac2: #fb923c;
+        }
+
+        .t-rose {
+            --ca: linear-gradient(90deg, #F43F5E, #fb7185);
+            --nb: rgba(244, 63, 94, .2);
+            --nc: #fb7185;
+            --tb2: rgba(244, 63, 94, .12);
+            --tc: #fb7185;
+            --ac2: #fb7185;
+        }
+
+        .nr {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px;
+            color: var(--muted);
+        }
+
+        .nr .ic {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 28px 24px 48px;
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        footer a {
+            color: var(--a1);
+            text-decoration: none;
+        }
+
+        @media(max-width:640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sp"></div>
+    <div class="bg-canvas"></div>
+    <div class="dot-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <div class="badge">🏦 Article Glossary</div>
+        <h1>High Level Committee<br>on Banking — Key Terms</h1>
+        <p class="subtitle">Decode the banking, finance &amp; regulatory vocabulary from Manas R. Das's expert agenda
+            for India's upcoming High Level Committee on Banking reform.</p>
+    </header>
+
+    <div class="banner">
+        <span>📰</span>
+        <div>
+            <strong>Source Article:</strong> "An agenda for the High Level Committee on Banking — Banks: Charting a new
+            course"
+            <br><span>Feb 2026 · By Manas R. Das, Former AGM (Economist), SBI</span>
+        </div>
+    </div>
+
+    <div class="sw">
+        <span class="si">🔍</span>
+        <input type="text" id="si" placeholder="Search a term or keyword…" oninput="fc()" />
+    </div>
+
+    <div class="stats">
+        <div class="chip">
+            <div class="n">24</div>
+            <div class="l">Terms Explained</div>
+        </div>
+        <div class="chip">
+            <div class="n">7</div>
+            <div class="l">Categories</div>
+        </div>
+        <div class="chip">
+            <div class="n">24</div>
+            <div class="l">Example Sentences</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tb active" onclick="ft('all',this)">All Terms</button>
+        <button class="tb" onclick="ft('banking',this)">Banking</button>
+        <button class="tb" onclick="ft('finance',this)">Finance</button>
+        <button class="tb" onclick="ft('regulatory',this)">Regulatory</button>
+        <button class="tb" onclick="ft('corporate',this)">Corporate</button>
+        <button class="tb" onclick="ft('policy',this)">Policy</button>
+        <button class="tb" onclick="ft('idiom',this)">Idiom/Phrase</button>
+    </div>
+
+    <div class="grid" id="cg"></div>
+
+    <footer>
+        <p>📚 Glossary for the Banking Reform article · <a href="https://rbi.org.in" target="_blank">Reserve Bank of
+                India</a> · For educational purposes only</p>
+    </footer>
+
+    <script>
+        const terms = [
+            {
+                term: "High Level Committee (HLC)",
+                pron: "/haɪ ˈlev.əl kəˈmɪt.i/",
+                cat: "regulatory",
+                meaning: "A specially constituted expert panel formed by the government to study a complex sector, identify systemic issues, and recommend policy changes. HLCs typically comprise retired bureaucrats, senior bankers, economists, and domain experts. Their reports often shape landmark reforms. The article refers to the committee announced in the Union Budget 2026.",
+                example: "The Finance Ministry formed a <span class='hl'>High Level Committee</span> on banking to review outdated regulations that were limiting India's ability to compete with global financial hubs like Singapore.",
+                theme: "t-green"
+            },
+            {
+                term: "Narasimham Committee",
+                pron: "/nɑː.rəˈsɪm.əm kəˈmɪt.i/",
+                cat: "banking",
+                meaning: "Two landmark committees headed by M. Narasimham, former RBI Governor — Committee-I (1991) which triggered India's banking liberalisation, and Committee-II (1998) which recommended further reforms including capital adequacy, NPAs, and banking consolidation. These are benchmarks in India's banking reform history.",
+                example: "Banking analysts noted that the proposed <span class='hl'>Narasimham Committee-II</span>-style reforms hadn't been revisited in nearly three decades, making the new HLC announcement overdue.",
+                theme: "t-blue"
+            },
+            {
+                term: "Metamorphic Changes",
+                pron: "/ˌmet.əˈmɔː.fɪk ˈtʃeɪn.dʒɪz/",
+                cat: "idiom",
+                meaning: "Profound, transformative changes — comparable to metamorphosis (caterpillar turning into a butterfly). Used in the article to describe how drastically the banking landscape has changed since 1998 — through technology, globalisation, digital payments, regulatory shifts, and new risk types.",
+                example: "From paper-based branch banking to real-time UPI transactions, India's financial system has undergone <span class='hl'>metamorphic changes</span> that demand a complete overhaul of 1990s-era banking regulations.",
+                theme: "t-gold"
+            },
+            {
+                term: "PSBs (Public Sector Banks)",
+                pron: "/ˌpʌb.lɪk ˈsek.tər bæŋks/",
+                cat: "banking",
+                meaning: "Banks in which the government holds a majority stake (more than 50%). Examples include State Bank of India (SBI), Punjab National Bank, Bank of Baroda, etc. PSBs dominate India's banking sector but are often criticized for inefficiency, NPA burden, and slower technology adoption than private banks.",
+                example: "The merger of several smaller <span class='hl'>PSBs</span> into larger anchor banks in 2019-20 reduced the number of government-owned banks from 27 to 12, improving capital efficiency.",
+                theme: "t-cyan"
+            },
+            {
+                term: "Inter Se M&A / Cross M&A",
+                pron: "/ˌɪn.tər seɪ ˌem ən ˈeɪ/",
+                cat: "corporate",
+                meaning: "'Inter se' means 'among themselves' in Latin. Inter se M&A refers to mergers among PSBs (PSB with another PSB). Cross-M&A refers to mergers between PSBs and private sector banks. Both are tools for banking consolidation — creating fewer, larger, stronger banks.",
+                example: "Policy experts debated whether <span class='hl'>cross-M&A</span> between a mid-sized PSB and a well-run old private sector bank could combine public reach with private sector efficiency.",
+                theme: "t-purple"
+            },
+            {
+                term: "Rural Regional Banks (RRBs)",
+                pron: "/ˌrʊər.əl rɪˈdʒɒn.əl bæŋks/",
+                cat: "banking",
+                meaning: "Government-sponsored banks established under the Regional Rural Banks Act (1976) to provide banking services in rural areas, especially for agricultural credit, small farmers, artisans and rural entrepreneurs. They are co-sponsored by central government, state government, and a sponsor commercial bank.",
+                example: "The farmer in Vidarbha got a kisan credit card from the local <span class='hl'>RRB</span>, which was the only bank branch accessible within 20 kilometres of her village.",
+                theme: "t-green"
+            },
+            {
+                term: "Rural Banking Corporation",
+                pron: "/ˈrʊər.əl ˈbæŋ.kɪŋ ˌkɔː.pəˈreɪ.ʃən/",
+                cat: "banking",
+                meaning: "A proposed consolidated entity that would unify all rural bank branches of commercial banks and all Regional Rural Banks (RRBs) into a single, dedicated institution. The idea is to eliminate fragmentation, reduce costs, and better serve rural and agricultural credit needs.",
+                example: "If a <span class='hl'>Rural Banking Corporation</span> were established, India's rural credit delivery system could be made more efficient by eliminating duplication across 43 RRBs operating in overlapping geographies.",
+                theme: "t-blue"
+            },
+            {
+                term: "Development Financial Institutions (DFIs)",
+                pron: "/dɪˈvel.əp.mənt faɪˈnæn.ʃəl ɪnˈstɪ.tjuː.ʃənz/",
+                cat: "finance",
+                meaning: "Specialised financial institutions established to provide long-term, patient capital for infrastructure, industrial, and social development projects that commercial banks typically avoid due to long payback periods and higher risk. Examples: NaBFID (National Bank for Financing Infrastructure and Development), IIFCL.",
+                example: "The highway project received ₹8,000 crore in funding from a <span class='hl'>Development Financial Institution</span>, since commercial banks were unwilling to lend over a 25-year horizon for such capital-intensive infrastructure.",
+                theme: "t-gold"
+            },
+            {
+                term: "Financial Disintermediation",
+                pron: "/faɪˈnæn.ʃəl ˌdɪs.ɪnˌtɜː.miːdɪˈeɪ.ʃən/",
+                cat: "finance",
+                meaning: "When savers or borrowers bypass traditional banks and go directly to capital markets — investing in mutual funds, bonds, or stocks rather than keeping money in bank deposits. This reduces banks' role as intermediaries. The article recommends policies to reverse this trend and bring depositors back to term deposits.",
+                example: "The rise of mutual funds offering 12% returns triggered <span class='hl'>financial disintermediation</span>, as middle-class families moved money out of bank fixed deposits earning only 7%.",
+                theme: "t-pink"
+            },
+            {
+                term: "Term Deposits (TDs)",
+                pron: "/tɜːm dɪˈpɒz.ɪts/",
+                cat: "banking",
+                meaning: "Fixed-tenure bank deposits (also called Fixed Deposits or FDs) where a depositor locks in a sum for a specific period (e.g., 1 year, 5 years) at a pre-agreed interest rate. They are stable, predictable funding for banks. The article advocates policies to make TDs more attractive vs. mutual funds.",
+                example: "Despite the stock market rally, risk-averse retirees continued to park their savings in 5-year <span class='hl'>Term Deposits</span>, valuing the capital guarantee and assured quarterly interest payout.",
+                theme: "t-cyan"
+            },
+            {
+                term: "Bulk Deposits",
+                pron: "/bʌlk dɪˈpɒz.ɪts/",
+                cat: "banking",
+                meaning: "Large deposits (typically above ₹2 crore) placed by corporations, institutions, or wealthy individuals, usually for a short tenure at negotiated (higher) interest rates. They are costly for banks (high interest outgo) and volatile — can be withdrawn quickly, creating liquidity risks.",
+                example: "The bank's treasury scrambled to replace ₹3,000 crore of maturing <span class='hl'>bulk deposits</span> from a corporate client that had chosen to invest the funds in commercial paper instead of renewing with the bank.",
+                theme: "t-purple"
+            },
+            {
+                term: "CASA (Current and Savings Account) Deposits",
+                pron: "/ˈkɑː.sə dɪˈpɒz.ɪts/",
+                cat: "banking",
+                meaning: "Low-cost deposits in current accounts (zero or minimal interest) and savings accounts (typically 2-4% interest). A high CASA ratio means cheaper funds for banks and stronger margins. Banks aggressively target CASA as it reduces their cost of funds compared to term deposits or bulk borrowings.",
+                example: "After launching a salary account programme with 200 corporates, the bank's <span class='hl'>CASA</span> ratio jumped from 38% to 46%, significantly reducing its average cost of funds.",
+                theme: "t-orange"
+            },
+            {
+                term: "Cross-selling",
+                pron: "/ˈkrɒs ˌsel.ɪŋ/",
+                cat: "banking",
+                meaning: "Selling additional, often unrelated financial products to existing customers through an existing relationship channel. Banks cross-sell mutual funds, insurance, and loans to deposit account holders. The article recommends restricting mutual fund cross-selling to banks that own MF subsidiaries, to avoid conflicts of interest.",
+                example: "The bank teller used the customer's loan application visit as an opportunity for <span class='hl'>cross-selling</span>, offering a health insurance policy and a credit card along with the home loan documentation.",
+                theme: "t-rose"
+            },
+            {
+                term: "Priority Sector Loans (PSL)",
+                pron: "/praɪˈɒr.ɪ.ti ˈsek.tər loʊnz/",
+                cat: "regulatory",
+                meaning: "Mandated lending targets set by the RBI requiring banks to direct a specified percentage of their loans to priority sectors: agriculture, micro/small enterprises, education, housing, and weaker sections. Domestic banks must achieve 40% of Adjusted Net Bank Credit (ANBC) as PSL.",
+                example: "The rural co-operative bank exceeded its <span class='hl'>Priority Sector Loan</span> targets by dedicating 52% of its credit to small farmers and self-help group members in tribal districts.",
+                theme: "t-green"
+            },
+            {
+                term: "PSL Certificates (PSLCs)",
+                pron: "/ˌpiː.es.el ˈsɜː.tɪf.ɪ.kɪts/",
+                cat: "regulatory",
+                meaning: "Tradeable certificates that allow banks falling short of their PSL targets to buy 'priority sector credit' from banks that have exceeded their targets. They are traded on the RBI's e-Kuber platform. They help redistribute PSL obligations efficiently across the banking system.",
+                example: "After falling short of its agricultural lending target, the large private bank bought ₹500 crore worth of <span class='hl'>PSL Certificates</span> from a regional rural bank that had overachieved its quota.",
+                theme: "t-blue"
+            },
+            {
+                term: "IBA (Indian Banks' Association)",
+                pron: "/ˌaɪ.biːˈeɪ/",
+                cat: "banking",
+                meaning: "The apex body representing all Indian banks — public, private, foreign, and cooperative. IBA negotiates bi-partite wage settlements for PSB employees, sets industry standards, and represents banking interests before the government and RBI. The article questions whether individual banks should set their own pay scales instead.",
+                example: "After months of negotiations, the <span class='hl'>IBA</span> reached a wage settlement with bank unions, granting a 17% salary hike to all public sector bank employees starting November 2025.",
+                theme: "t-gold"
+            },
+            {
+                term: "Deposit Insurance",
+                pron: "/dɪˈpɒz.ɪt ɪnˈʃʊər.əns/",
+                cat: "finance",
+                meaning: "A guarantee scheme that protects depositors if a bank fails. In India, the Deposit Insurance and Credit Guarantee Corporation (DICGC) insures deposits up to ₹5 lakh per depositor per bank. The article advocates limiting this cover only to household (retail) deposits, not corporate or institutional deposits.",
+                example: "When the small cooperative bank in Pune was liquidated, depositors were relieved to learn their savings of up to ₹5 lakh were fully protected under <span class='hl'>deposit insurance</span> provided by DICGC.",
+                theme: "t-pink"
+            },
+            {
+                term: "Risk-Based Premium System",
+                pron: "/rɪsk beɪst ˈpriː.mi.əm ˈsɪs.təm/",
+                cat: "regulatory",
+                meaning: "A deposit insurance pricing model where banks with higher risk profiles (weaker capital, more NPAs, poor governance) pay higher insurance premiums, while safer banks pay lower premiums. India plans to implement this from April 2026, replacing the current flat-rate system where all banks pay the same premium.",
+                example: "Under the new <span class='hl'>risk-based premium system</span>, a bank with a high NPA ratio and poor capital adequacy would pay three times more in deposit insurance premiums than a well-capitalised, conservatively managed bank.",
+                theme: "t-cyan"
+            },
+            {
+                term: "D-SIBs (Domestic Systemically Important Banks)",
+                pron: "/diː ˈsɪbz/",
+                cat: "banking",
+                meaning: "Banks designated by the RBI as 'too big to fail' — their failure would have cascading effects on the entire financial system. Currently SBI, HDFC Bank, and ICICI Bank are classified as D-SIBs. They face stricter capital and regulatory requirements as a trade-off for their implicit government backing.",
+                example: "Regulators imposed additional capital surcharges on <span class='hl'>D-SIBs</span>, arguing that banks that benefit from an implicit government backstop must hold extra buffers to protect taxpayers.",
+                theme: "t-purple"
+            },
+            {
+                term: "Too-Big-To-Fail",
+                pron: "/tuː bɪɡ tə feɪl/",
+                cat: "finance",
+                meaning: "A concept describing financial institutions so large and interconnected that their failure would cause widespread economic damage — forcing governments to bail them out with public money. This creates 'moral hazard' as such banks may take excessive risks knowing they'll be rescued.",
+                example: "Critics argued that repeatedly bailing out a <span class='hl'>too-big-to-fail</span> bank sends the wrong message, encouraging reckless risk-taking and socialising private losses onto taxpayers.",
+                theme: "t-orange"
+            },
+            {
+                term: "Resolution Framework",
+                pron: "/ˌrez.əˈluː.ʃən ˈfreɪm.wɜːk/",
+                cat: "regulatory",
+                meaning: "A legal and procedural mechanism for handling the failure of a bank or financial institution in an orderly manner — without triggering a panic, protecting depositors to the extent possible, and minimising costs to the public exchequer. Countries like the US and EU have established frameworks like FDIC resolution and the EU's BRRD.",
+                example: "The government introduced a bank <span class='hl'>resolution framework</span> that allowed a failing private bank to be rapidly transferred to a bridge entity, protecting depositors' funds while restructuring took place over 90 days.",
+                theme: "t-rose"
+            },
+            {
+                term: "Unclaimed Deposits",
+                pron: "/ʌnˈkleɪmd dɪˈpɒz.ɪts/",
+                cat: "banking",
+                meaning: "Bank deposits that have had no transactions for 10 years and whose owners have not come forward to claim them. These funds are transferred to the RBI's Depositor Education and Awareness (DEA) Fund. As of 2024, India's unclaimed deposits reached ₹78,000+ crore — a major governance and consumer protection concern.",
+                example: "The government launched a digital portal to help citizens identify and reclaim <span class='hl'>unclaimed deposits</span> — funds forgotten in old accounts, often by deceased account holders whose heirs were unaware.",
+                theme: "t-green"
+            },
+            {
+                term: "Gordian Knot",
+                pron: "/ˌɡɔː.di.ən nɒt/",
+                cat: "idiom",
+                meaning: "An idiom meaning an extremely complex or intractable problem that seems impossible to solve through conventional means. Refers to the ancient legend of a knot in Gordium that could only be cut, not untied — Alexander the Great solved it by cutting through it with a sword. The article uses it to describe the legal and procedural complexity surrounding unclaimed deposits.",
+                example: "The committee chair acknowledged that recovering billions in <span class='hl'>unclaimed deposits</span> was a <span class='hl'>Gordian Knot</span> — tied up in succession laws, KYC failures, and nominee registration gaps that no single regulation had yet resolved.",
+                theme: "t-gold"
+            },
+            {
+                term: "Geopolitical Tumult",
+                pron: "/ˌdʒiː.oʊˌpɒl.ɪ.tɪ.kəl ˈtjuː.mʌlt/",
+                cat: "policy",
+                meaning: "Widespread disruption and uncertainty in global affairs caused by wars, sanctions, trade disputes, or shifting political alliances between nations. The article references this as a reason to reassess Indian banks' overseas operations — since geopolitical risks affect cross-border banking viability.",
+                example: "Indian banks with branches in Russia faced significant <span class='hl'>geopolitical tumult</span> after Western sanctions complicated international wire transfers and correspondent banking relationships.",
+                theme: "t-pink"
+            }
+        ];
+
+        let tag = 'all';
+
+        function render(list) {
+            const g = document.getElementById('cg');
+            g.innerHTML = '';
+            if (!list.length) {
+                g.innerHTML = `<div class="nr"><div class="ic">🔎</div><p>No terms match your search. Try a different keyword.</p></div>`;
+                return;
+            }
+            list.forEach((t, i) => {
+                const d = document.createElement('div');
+                d.className = `card ${t.theme}`;
+                d.dataset.cat = t.cat;
+                d.style.animationDelay = (i % 12 * 60) + 'ms';
+                d.innerHTML = `
+      <div class="ch">
+        <span class="cn">${String(i + 1).padStart(2, '0')}</span>
+        <span class="ct">${t.cat}</span>
+      </div>
+      <div class="term">${t.term}</div>
+      <div class="pron">${t.pron}</div>
+      <div class="div"></div>
+      <div class="sl">📖 Definition</div>
+      <div class="meaning">${t.meaning}</div>
+      <div class="sl">✍️ Example Sentence</div>
+      <div class="ex"><p>${t.example}</p></div>`;
+                d.addEventListener('mousemove', e => {
+                    const r = d.getBoundingClientRect();
+                    d.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+                    d.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+                });
+                g.appendChild(d);
+            });
+        }
+
+        function fc() {
+            const q = document.getElementById('si').value.toLowerCase();
+            let d = terms.filter(t => tag === 'all' || t.cat === tag);
+            if (q) d = d.filter(t => t.term.toLowerCase().includes(q) || t.meaning.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q));
+            render(d);
+        }
+        function ft(t2, btn) {
+            tag = t2;
+            document.querySelectorAll('.tb').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('si').value = '';
+            fc();
+        }
+
+        render(terms);
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('sp').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+        });
+
+        (function () {
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 32; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (10 + Math.random() * 22) + 's';
+                p.style.animationDelay = (Math.random() * 24) + 's';
+                const s = (Math.random() * 3 + 1) + 'px';
+                p.style.width = p.style.height = s;
+                p.style.opacity = (Math.random() * 0.5 + 0.15);
+                c.appendChild(p);
+            }
+        })();
+    </script>
+</body>
+
+</html>

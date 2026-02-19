@@ -4,25 +4,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RBI Bank Lending — Glossary & Terminologies</title>
+    <title>RBI Bank Lending to Brokers — Glossary</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&family=Catamaran:wght@400;600;700&display=swap"
         rel="stylesheet" />
     <style>
         :root {
             --bg: #050914;
             --surface: rgba(255, 255, 255, 0.04);
-            --surface-hover: rgba(255, 255, 255, 0.08);
             --border: rgba(255, 255, 255, 0.09);
-            --accent1: #6C63FF;
-            --accent2: #00D9B1;
-            --accent3: #FF6B6B;
-            --accent4: #FFD93D;
-            --accent5: #4ECDC4;
+            --a1: #6C63FF;
+            --a2: #00D9B1;
+            --a3: #FF6B6B;
+            --a4: #FFD93D;
+            --a5: #4ECDC4;
             --text: #E8EAF6;
             --muted: #8892A4;
-            --glow1: rgba(108, 99, 255, 0.35);
-            --glow2: rgba(0, 217, 177, 0.25);
         }
 
         *,
@@ -45,15 +42,11 @@
             overflow-x: hidden;
         }
 
-        /* ── Animated background ── */
         .bg-canvas {
             position: fixed;
             inset: 0;
             z-index: 0;
-            background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(108, 99, 255, 0.12) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0, 217, 177, 0.10) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 40% at 60% 30%, rgba(255, 107, 107, 0.07) 0%, transparent 50%),
-                #050914;
+            background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(108, 99, 255, 0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0, 217, 177, 0.10) 0%, transparent 55%), radial-gradient(ellipse 50% 40% at 60% 30%, rgba(255, 107, 107, 0.07) 0%, transparent 50%), #050914;
         }
 
         .orb {
@@ -69,7 +62,7 @@
         .orb-1 {
             width: 500px;
             height: 500px;
-            background: var(--accent1);
+            background: var(--a1);
             top: -150px;
             left: -100px;
             animation-delay: 0s;
@@ -78,7 +71,7 @@
         .orb-2 {
             width: 400px;
             height: 400px;
-            background: var(--accent2);
+            background: var(--a2);
             bottom: -100px;
             right: -80px;
             animation-delay: -6s;
@@ -87,7 +80,7 @@
         .orb-3 {
             width: 300px;
             height: 300px;
-            background: var(--accent3);
+            background: var(--a3);
             top: 50%;
             left: 65%;
             animation-delay: -12s;
@@ -103,7 +96,6 @@
             }
         }
 
-        /* ── Floating particles ── */
         .particles {
             position: fixed;
             inset: 0;
@@ -140,7 +132,18 @@
             }
         }
 
-        /* ── Header ── */
+        #sp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--a1), var(--a2));
+            z-index: 1000;
+            width: 0;
+            box-shadow: 0 0 12px var(--a2);
+            transition: width .1s linear;
+        }
+
         header {
             position: relative;
             z-index: 10;
@@ -166,11 +169,11 @@
 
         .badge::before {
             content: '●';
-            color: var(--accent2);
-            animation: pulse-dot 2s ease-in-out infinite;
+            color: var(--a2);
+            animation: pd 2s ease-in-out infinite;
         }
 
-        @keyframes pulse-dot {
+        @keyframes pd {
 
             0%,
             100% {
@@ -187,7 +190,7 @@
             font-size: clamp(2rem, 5vw, 3.6rem);
             font-weight: 700;
             line-height: 1.15;
-            background: linear-gradient(135deg, #fff 30%, var(--accent1) 65%, var(--accent2) 100%);
+            background: linear-gradient(135deg, #fff 30%, var(--a1) 65%, var(--a2) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -202,8 +205,7 @@
             line-height: 1.7;
         }
 
-        /* ── Source banner ── */
-        .source-banner {
+        .banner {
             position: relative;
             z-index: 10;
             max-width: 860px;
@@ -215,16 +217,11 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            font-size: 0.88rem;
+            font-size: .88rem;
             color: #c5b44a;
         }
 
-        .source-banner span {
-            font-size: 1.2rem;
-        }
-
-        /* ── Search ── */
-        .search-wrap {
+        .sw {
             position: relative;
             z-index: 10;
             max-width: 500px;
@@ -232,7 +229,7 @@
             padding: 0 24px;
         }
 
-        .search-wrap input {
+        .sw input {
             width: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
@@ -240,31 +237,29 @@
             padding: 14px 18px 14px 48px;
             color: var(--text);
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: .95rem;
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color .3s, box-shadow .3s;
         }
 
-        .search-wrap input::placeholder {
+        .sw input::placeholder {
             color: var(--muted);
         }
 
-        .search-wrap input:focus {
-            border-color: var(--accent1);
+        .sw input:focus {
+            border-color: var(--a1);
             box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
         }
 
-        .search-icon {
+        .si {
             position: absolute;
             left: 38px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--muted);
-            font-size: 1rem;
             pointer-events: none;
         }
 
-        /* ── Stats row ── */
         .stats {
             position: relative;
             z-index: 10;
@@ -276,7 +271,7 @@
             padding: 0 24px;
         }
 
-        .stat-chip {
+        .chip {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -284,21 +279,20 @@
             text-align: center;
         }
 
-        .stat-chip .num {
+        .chip .n {
             font-size: 1.8rem;
             font-weight: 800;
-            color: var(--accent2);
+            color: var(--a2);
         }
 
-        .stat-chip .lbl {
-            font-size: 0.78rem;
+        .chip .l {
+            font-size: .78rem;
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* ── Category filter tabs ── */
-        .filter-tabs {
+        .tabs {
             position: relative;
             z-index: 10;
             display: flex;
@@ -309,27 +303,26 @@
             padding: 0 24px;
         }
 
-        .tab-btn {
+        .tb {
             background: var(--surface);
             border: 1px solid var(--border);
             color: var(--muted);
             padding: 8px 20px;
             border-radius: 100px;
-            font-size: 0.82rem;
+            font-size: .82rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all .25s;
         }
 
-        .tab-btn:hover,
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        .tb:hover,
+        .tb.active {
+            background: linear-gradient(135deg, var(--a1), var(--a2));
             border-color: transparent;
             color: #fff;
-            box-shadow: 0 4px 18px rgba(108, 99, 255, 0.4);
+            box-shadow: 0 4px 18px rgba(108, 99, 255, .4);
         }
 
-        /* ── Grid ── */
         .grid {
             position: relative;
             z-index: 10;
@@ -341,25 +334,21 @@
             padding: 0 24px 100px;
         }
 
-        /* ── Card ── */
         .card {
             position: relative;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 28px;
-            transition: transform 0.35s cubic-bezier(.23, 1, .32, 1),
-                border-color 0.35s,
-                box-shadow 0.35s;
+            transition: transform .35s cubic-bezier(.23, 1, .32, 1), border-color .35s, box-shadow .35s;
             overflow: hidden;
-            cursor: default;
-            animation: card-in 0.6s ease both;
+            animation: ci .6s ease both;
         }
 
         .card:hover {
             transform: translateY(-6px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, .18);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
         }
 
         .card::before {
@@ -369,9 +358,9 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: var(--card-accent, linear-gradient(90deg, var(--accent1), var(--accent2)));
+            background: var(--ca, linear-gradient(90deg, var(--a1), var(--a2)));
             opacity: 0;
-            transition: opacity 0.35s;
+            transition: opacity .35s;
         }
 
         .card:hover::before {
@@ -384,7 +373,7 @@
             inset: 0;
             background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.04) 0%, transparent 60%);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity .3s;
             pointer-events: none;
         }
 
@@ -392,7 +381,7 @@
             opacity: 1;
         }
 
-        @keyframes card-in {
+        @keyframes ci {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -404,7 +393,7 @@
             }
         }
 
-        .card-header {
+        .ch {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
@@ -412,28 +401,28 @@
             margin-bottom: 12px;
         }
 
-        .card-num {
+        .cn {
             min-width: 36px;
             height: 36px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            font-size: .75rem;
             font-weight: 800;
-            background: var(--card-num-bg, rgba(108, 99, 255, 0.2));
-            color: var(--card-num-color, var(--accent1));
+            background: var(--nb, rgba(108, 99, 255, .2));
+            color: var(--nc, var(--a1));
         }
 
-        .cat-tag {
-            font-size: 0.68rem;
+        .ct {
+            font-size: .68rem;
             font-weight: 700;
             letter-spacing: 1.2px;
             text-transform: uppercase;
             padding: 4px 10px;
             border-radius: 100px;
-            background: var(--tag-bg, rgba(108, 99, 255, 0.12));
-            color: var(--tag-color, var(--accent1));
+            background: var(--tb2, rgba(108, 99, 255, .12));
+            color: var(--tc, var(--a1));
         }
 
         .term {
@@ -444,22 +433,22 @@
             line-height: 1.3;
         }
 
-        .pronunciation {
-            font-size: 0.78rem;
+        .pron {
+            font-size: .78rem;
             color: var(--muted);
             font-style: italic;
             margin-bottom: 14px;
         }
 
-        .divider {
+        .div {
             height: 1px;
-            background: linear-gradient(90deg, var(--accent1), transparent);
-            opacity: 0.2;
+            background: linear-gradient(90deg, var(--ac2, var(--a1)), transparent);
+            opacity: .2;
             margin-bottom: 14px;
         }
 
-        .section-label {
-            font-size: 0.68rem;
+        .sl {
+            font-size: .68rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -468,179 +457,152 @@
         }
 
         .meaning {
-            font-size: 0.915rem;
+            font-size: .915rem;
             line-height: 1.75;
             color: #CBD5E1;
             margin-bottom: 16px;
         }
 
-        .example-box {
-            background: rgba(0, 0, 0, 0.25);
-            border-left: 3px solid var(--card-accent-color, var(--accent2));
+        .ex {
+            background: rgba(0, 0, 0, .25);
+            border-left: 3px solid var(--ac2, var(--a2));
             border-radius: 0 10px 10px 0;
             padding: 12px 16px;
+            margin-bottom: 14px;
         }
 
-        .example-box p {
-            font-size: 0.875rem;
+        .ex p {
+            font-size: .875rem;
             line-height: 1.7;
             color: #94A3B8;
             font-style: italic;
         }
 
-        .example-box .highlight {
+        .ex .hl {
             font-style: normal;
             font-weight: 600;
-            color: var(--card-accent-color, var(--accent2));
+            color: var(--ac2, var(--a2));
         }
 
-        /* ── Color themes per card ── */
-        .theme-purple {
-            --card-accent: linear-gradient(90deg, #6C63FF, #a78bfa);
-            --card-num-bg: rgba(108, 99, 255, 0.2);
-            --card-num-color: #a78bfa;
-            --tag-bg: rgba(108, 99, 255, 0.12);
-            --tag-color: #a78bfa;
-            --card-accent-color: #a78bfa;
+        .tm-label {
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 5px;
         }
 
-        .theme-teal {
-            --card-accent: linear-gradient(90deg, #00D9B1, #4ECDC4);
-            --card-num-bg: rgba(0, 217, 177, 0.15);
-            --card-num-color: #00D9B1;
-            --tag-bg: rgba(0, 217, 177, 0.1);
-            --tag-color: #00D9B1;
-            --card-accent-color: #00D9B1;
+        .tm {
+            font-family: 'Catamaran', sans-serif;
+            font-size: .92rem;
+            line-height: 1.6;
+            color: #7dd3fc;
+            font-weight: 500;
+            background: rgba(0, 0, 0, .22);
+            border-radius: 8px;
+            padding: 9px 12px;
         }
 
-        .theme-red {
-            --card-accent: linear-gradient(90deg, #FF6B6B, #ff9a9a);
-            --card-num-bg: rgba(255, 107, 107, 0.15);
-            --card-num-color: #FF6B6B;
-            --tag-bg: rgba(255, 107, 107, 0.1);
-            --tag-color: #FF6B6B;
-            --card-accent-color: #FF6B6B;
-        }
-
-        .theme-yellow {
-            --card-accent: linear-gradient(90deg, #FFD93D, #fbbf24);
-            --card-num-bg: rgba(255, 217, 61, 0.15);
-            --card-num-color: #FFD93D;
-            --tag-bg: rgba(255, 217, 61, 0.1);
-            --tag-color: #FFD93D;
-            --card-accent-color: #FFD93D;
-        }
-
-        .theme-blue {
-            --card-accent: linear-gradient(90deg, #60a5fa, #93c5fd);
-            --card-num-bg: rgba(96, 165, 250, 0.15);
-            --card-num-color: #60a5fa;
-            --tag-bg: rgba(96, 165, 250, 0.1);
-            --tag-color: #60a5fa;
-            --card-accent-color: #60a5fa;
-        }
-
-        .theme-orange {
-            --card-accent: linear-gradient(90deg, #fb923c, #fdba74);
-            --card-num-bg: rgba(251, 146, 60, 0.15);
-            --card-num-color: #fb923c;
-            --tag-bg: rgba(251, 146, 60, 0.1);
-            --tag-color: #fb923c;
-            --card-accent-color: #fb923c;
-        }
-
-        .theme-pink {
-            --card-accent: linear-gradient(90deg, #f472b6, #fbcfe8);
-            --card-num-bg: rgba(244, 114, 182, 0.15);
-            --card-num-color: #f472b6;
-            --tag-bg: rgba(244, 114, 182, 0.1);
-            --tag-color: #f472b6;
-            --card-accent-color: #f472b6;
-        }
-
-        .theme-green {
-            --card-accent: linear-gradient(90deg, #4ade80, #86efac);
-            --card-num-bg: rgba(74, 222, 128, 0.15);
-            --card-num-color: #4ade80;
-            --tag-bg: rgba(74, 222, 128, 0.1);
-            --tag-color: #4ade80;
-            --card-accent-color: #4ade80;
-        }
-
-        /* ── No results ── */
-        .no-results {
-            position: relative;
-            z-index: 10;
+        .nr {
             grid-column: 1/-1;
             text-align: center;
             padding: 60px;
             color: var(--muted);
         }
 
-        .no-results .icon {
+        .nr .ic {
             font-size: 3rem;
             margin-bottom: 12px;
         }
 
-        /* ── Footer ── */
+        .t-purple {
+            --ca: linear-gradient(90deg, #6C63FF, #a78bfa);
+            --nb: rgba(108, 99, 255, .2);
+            --nc: #a78bfa;
+            --tb2: rgba(108, 99, 255, .12);
+            --tc: #a78bfa;
+            --ac2: #a78bfa;
+        }
+
+        .t-teal {
+            --ca: linear-gradient(90deg, #00D9B1, #4ECDC4);
+            --nb: rgba(0, 217, 177, .15);
+            --nc: #00D9B1;
+            --tb2: rgba(0, 217, 177, .1);
+            --tc: #00D9B1;
+            --ac2: #00D9B1;
+        }
+
+        .t-red {
+            --ca: linear-gradient(90deg, #FF6B6B, #ff9a9a);
+            --nb: rgba(255, 107, 107, .15);
+            --nc: #FF6B6B;
+            --tb2: rgba(255, 107, 107, .1);
+            --tc: #FF6B6B;
+            --ac2: #FF6B6B;
+        }
+
+        .t-yellow {
+            --ca: linear-gradient(90deg, #FFD93D, #fbbf24);
+            --nb: rgba(255, 217, 61, .15);
+            --nc: #FFD93D;
+            --tb2: rgba(255, 217, 61, .1);
+            --tc: #FFD93D;
+            --ac2: #FFD93D;
+        }
+
+        .t-blue {
+            --ca: linear-gradient(90deg, #60a5fa, #93c5fd);
+            --nb: rgba(96, 165, 250, .15);
+            --nc: #60a5fa;
+            --tb2: rgba(96, 165, 250, .1);
+            --tc: #60a5fa;
+            --ac2: #60a5fa;
+        }
+
+        .t-orange {
+            --ca: linear-gradient(90deg, #fb923c, #fdba74);
+            --nb: rgba(251, 146, 60, .15);
+            --nc: #fb923c;
+            --tb2: rgba(251, 146, 60, .1);
+            --tc: #fb923c;
+            --ac2: #fb923c;
+        }
+
+        .t-pink {
+            --ca: linear-gradient(90deg, #f472b6, #fbcfe8);
+            --nb: rgba(244, 114, 182, .15);
+            --nc: #f472b6;
+            --tb2: rgba(244, 114, 182, .1);
+            --tc: #f472b6;
+            --ac2: #f472b6;
+        }
+
+        .t-green {
+            --ca: linear-gradient(90deg, #4ade80, #86efac);
+            --nb: rgba(74, 222, 128, .15);
+            --nc: #4ade80;
+            --tb2: rgba(74, 222, 128, .1);
+            --tc: #4ade80;
+            --ac2: #4ade80;
+        }
+
         footer {
             position: relative;
             z-index: 10;
             text-align: center;
             padding: 32px 24px 48px;
             color: var(--muted);
-            font-size: 0.8rem;
+            font-size: .8rem;
         }
 
         footer a {
-            color: var(--accent2);
+            color: var(--a2);
             text-decoration: none;
         }
 
-        /* ── Progress bar on scroll ── */
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent1), var(--accent2));
-            z-index: 1000;
-            width: 0%;
-            transition: width 0.1s linear;
-            box-shadow: 0 0 12px var(--accent2);
-        }
-
-        /* ── Tooltip ── */
-        .tooltip-wrap {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip-wrap .tip {
-            position: absolute;
-            bottom: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%) scale(0.9);
-            background: rgba(20, 20, 40, 0.95);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 0.78rem;
-            color: var(--text);
-            white-space: nowrap;
-            pointer-events: none;
-            opacity: 0;
-            transition: all 0.2s;
-            z-index: 100;
-        }
-
-        .tooltip-wrap:hover .tip {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
-
-        /* ── Responsive ── */
-        @media (max-width: 640px) {
+        @media(max-width:640px) {
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -653,320 +615,95 @@
 </head>
 
 <body>
-
-    <div id="scroll-progress"></div>
-
-    <!-- Background -->
+    <div id="sp"></div>
     <div class="bg-canvas"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
     <div class="particles" id="particles"></div>
-
-    <!-- Header -->
     <header>
         <div class="badge">📰 Article Glossary</div>
-        <h1>RBI Bank Lending<br>to Brokers — Key Terms</h1>
-        <p class="subtitle">Master the financial & regulatory vocabulary from the article on RBI's new rules on bank
-            lending to capital market intermediaries.</p>
+        <h1>RBI Bank Lending to Brokers<br>— Key Terms Explained</h1>
+        <p class="subtitle">Master the financial &amp; regulatory vocabulary from the article on RBI's new rules on bank
+            lending to capital market intermediaries — with English and Tamil meanings.</p>
     </header>
-
-    <!-- Source Banner -->
-    <div class="source-banner" style="padding:16px 32px; margin-left:auto; margin-right:auto;">
-        <span>📄</span>
-        <div>
-            <strong>Source Article:</strong> "Effect of the new rules on bank lending to brokers" — <em>RBI bans bank
-                funding for proprietary trades from April 2026</em>
-            <br><span style="color:#a08020;">Business Standard · Feb 2026 · By Akshata Gorde</span>
-        </div>
+    <div class="banner"><span>📄</span>
+        <div><strong>Source:</strong> "Effect of the new rules on bank lending to brokers" — RBI bans bank funding for
+            proprietary trades from April 2026 · Business Standard · Feb 2026 · Akshata Gorde</div>
     </div>
-
-    <!-- Search -->
-    <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Search a term or keyword…" oninput="filterCards()" />
+    <div class="sw"><span class="si">🔍</span><input type="text" id="si" placeholder="Search a term…" oninput="fc()" />
     </div>
-
-    <!-- Stats -->
     <div class="stats">
-        <div class="stat-chip">
-            <div class="num">20</div>
-            <div class="lbl">Terms Explained</div>
+        <div class="chip">
+            <div class="n">20</div>
+            <div class="l">Terms</div>
         </div>
-        <div class="stat-chip">
-            <div class="num">8</div>
-            <div class="lbl">Categories</div>
+        <div class="chip">
+            <div class="n">8</div>
+            <div class="l">Categories</div>
         </div>
-        <div class="stat-chip">
-            <div class="num">20</div>
-            <div class="lbl">Example Sentences</div>
+        <div class="chip">
+            <div class="n">தமிழ்</div>
+            <div class="l">Meanings</div>
         </div>
     </div>
-
-    <!-- Filter Tabs -->
-    <div class="filter-tabs">
-        <button class="tab-btn active" onclick="filterByTag('all', this)">All Terms</button>
-        <button class="tab-btn" onclick="filterByTag('regulatory', this)">Regulatory</button>
-        <button class="tab-btn" onclick="filterByTag('banking', this)">Banking</button>
-        <button class="tab-btn" onclick="filterByTag('trading', this)">Trading</button>
-        <button class="tab-btn" onclick="filterByTag('collateral', this)">Collateral</button>
-        <button class="tab-btn" onclick="filterByTag('market', this)">Market</button>
-        <button class="tab-btn" onclick="filterByTag('finance', this)">Finance</button>
+    <div class="tabs">
+        <button class="tb active" onclick="ft('all',this)">All</button>
+        <button class="tb" onclick="ft('regulatory',this)">Regulatory</button>
+        <button class="tb" onclick="ft('banking',this)">Banking</button>
+        <button class="tb" onclick="ft('trading',this)">Trading</button>
+        <button class="tb" onclick="ft('collateral',this)">Collateral</button>
+        <button class="tb" onclick="ft('market',this)">Market</button>
+        <button class="tb" onclick="ft('finance',this)">Finance</button>
     </div>
-
-    <!-- Cards Grid -->
-    <div class="grid" id="cardGrid"></div>
-
+    <div class="grid" id="cg"></div>
     <footer>
-        <p>📚 Glossary generated from the article · <a href="#">RBI Circular · April 2026</a> · For educational purposes
-        </p>
+        <p>📚 Glossary · RBI Circular April 2026 · For educational purposes</p>
     </footer>
-
     <script>
         const terms = [
-            {
-                term: "Capital Market Intermediaries",
-                pron: "/ˈkæp.ɪ.tl̩ ˈmɑː.kɪt ɪnˌtɜː.mɪ.dɪ.ər.iz/",
-                cat: "market",
-                meaning: "Entities that act as middlemen between buyers and sellers in capital markets. This includes stockbrokers, brokerage firms, mutual fund distributors, and investment banks. They facilitate transactions and provide liquidity to financial markets.",
-                example: "The SEBI mandated that all <span class='highlight'>capital market intermediaries</span> must maintain adequate net worth to protect investor interests.",
-                theme: "theme-purple"
-            },
-            {
-                term: "Proprietary Trading",
-                pron: "/prəˈpraɪ.ɪ.tər.i ˈtreɪ.dɪŋ/",
-                cat: "trading",
-                meaning: "When a financial firm — such as a brokerage or bank — trades stocks, bonds, derivatives, or other instruments using its own money (not clients' money) to make a profit for itself. Also called 'prop trading'.",
-                example: "The investment bank's <span class='highlight'>proprietary trading</span> desk generated ₹200 crore in profits last quarter by taking short-term equity positions.",
-                theme: "theme-teal"
-            },
-            {
-                term: "Deleveraging",
-                pron: "/diːˈlev.ər.ɪdʒ.ɪŋ/",
-                cat: "finance",
-                meaning: "The process of reducing the total amount of debt or borrowed money that a company or individual is using to finance their assets or investments. It often happens when credit tightens or regulations restrict borrowing.",
-                example: "After the new RBI norms, several brokerage firms began <span class='highlight'>deleveraging</span> their proprietary portfolios by selling off positions funded by bank credit.",
-                theme: "theme-red"
-            },
-            {
-                term: "Leverage",
-                pron: "/ˈliː.vər.ɪdʒ/",
-                cat: "finance",
-                meaning: "Using borrowed capital (debt) to increase the potential return of an investment. High leverage means a large portion of investments is funded by debt. It amplifies both gains and losses.",
-                example: "The broker used 5x <span class='highlight'>leverage</span> to buy ₹50 lakh worth of shares with only ₹10 lakh of its own capital.",
-                theme: "theme-yellow"
-            },
-            {
-                term: "Eligible Collateral",
-                pron: "/ɪˈlɪdʒ.ɪ.bəl kəˈlæt.ər.əl/",
-                cat: "collateral",
-                meaning: "Assets that a borrower pledges to a lender as security for a loan that are formally accepted under regulatory guidelines. Only certain approved assets qualify. If the borrower defaults, the lender may seize the collateral.",
-                example: "Under the new RBI guidelines, only government bonds and certain rated debt instruments qualify as <span class='highlight'>eligible collateral</span> for bank loans to brokers.",
-                theme: "theme-blue"
-            },
-            {
-                term: "Collateral Haircut",
-                pron: "/kəˈlæt.ər.əl ˈheər.kʌt/",
-                cat: "collateral",
-                meaning: "A percentage reduction applied to the market value of an asset used as collateral, to account for potential price fluctuations and credit risk. A 40% haircut on shares worth ₹100 means only ₹60 is accepted as loan security.",
-                example: "The bank applied a 40% <span class='highlight'>collateral haircut</span> on the listed shares pledged by the broker, reducing the usable loan value from ₹1 crore to ₹60 lakh.",
-                theme: "theme-orange"
-            },
-            {
-                term: "Systematic Risk / Systemic Risk",
-                pron: "/ˌsɪs.tɪˈmæt.ɪk rɪsk/",
-                cat: "regulatory",
-                meaning: "The risk of collapse of an entire financial system or market, as opposed to the risk of a single entity. It is caused by excessive interconnection between financial institutions — if one fails, others may too (domino effect).",
-                example: "The RBI's restrictions on prop trading funding were introduced to reduce <span class='highlight'>systemic risk</span> in case a large brokerage firm collapsed.",
-                theme: "theme-pink"
-            },
-            {
-                term: "Working Capital",
-                pron: "/ˈwɜː.kɪŋ ˈkæp.ɪ.tl̩/",
-                cat: "finance",
-                meaning: "Short-term funds a business uses for its day-to-day operations — like paying salaries, rent, office costs, and meeting short-term obligations. It equals current assets minus current liabilities.",
-                example: "The bank continued to provide <span class='highlight'>working capital</span> loans to brokers for operational expenses such as rent, payroll, and IT infrastructure.",
-                theme: "theme-green"
-            },
-            {
-                term: "Settlement Mismatch",
-                pron: "/ˈset.əl.mənt ˈmɪs.mætʃ/",
-                cat: "trading",
-                meaning: "A timing gap between when a trade is executed and when the actual payment or securities transfer is completed. This creates temporary funding needs for brokers who need short-term credit to bridge those gaps.",
-                example: "Banks are permitted to lend to brokers to cover <span class='highlight'>settlement mismatches</span> that arise between trade execution and the T+1 settlement cycle.",
-                theme: "theme-purple"
-            },
-            {
-                term: "Market-Making",
-                pron: "/ˈmɑː.kɪt ˈmeɪ.kɪŋ/",
-                cat: "market",
-                meaning: "A practice where a broker or financial firm continuously quotes both buy and sell prices for a financial instrument, ensuring there is always liquidity in the market. Market makers profit from the bid-ask spread.",
-                example: "A broker engaged in <span class='highlight'>market-making</span> for an illiquid small-cap stock quoted a buy price of ₹100 and a sell price of ₹101 throughout the trading day.",
-                theme: "theme-teal"
-            },
-            {
-                term: "Margin Trading",
-                pron: "/ˈmɑː.dʒɪn ˈtreɪ.dɪŋ/",
-                cat: "trading",
-                meaning: "When an investor borrows money from a broker to buy more securities than they could with their own funds alone. The securities purchased serve as collateral. It magnifies both returns and risks for the investor.",
-                example: "Ravi used <span class='highlight'>margin trading</span> to purchase ₹5 lakh worth of shares by paying only ₹2.5 lakh from his savings and borrowing the rest from his broker.",
-                theme: "theme-red"
-            },
-            {
-                term: "Standardised Haircuts",
-                pron: "/ˈstæn.dər.daɪzd ˈheər.kʌts/",
-                cat: "collateral",
-                meaning: "Uniform, pre-defined percentage reductions applied to specific categories of assets used as collateral, established by the regulator to bring consistency across banks rather than each bank applying different discount rates.",
-                example: "The RBI introduced <span class='highlight'>standardised haircuts</span> — 40% on listed equities and 25% on mutual funds — to ensure all banks use the same valuation basis for broker loans.",
-                theme: "theme-yellow"
-            },
-            {
-                term: "Sovereign Gold Bonds (SGBs)",
-                pron: "/ˈsɒv.rɪn ɡoʊld bɒndz/",
-                cat: "collateral",
-                meaning: "Government-issued bonds denominated in grams of gold, used as an alternative to holding physical gold. They earn annual interest and have capital gains tied to gold prices. The RBI now accepts them as collateral at a 25% haircut.",
-                example: "The broker pledged its <span class='highlight'>Sovereign Gold Bonds</span> worth ₹40 lakh as collateral for a bank loan, but received only ₹30 lakh in funding due to the 25% haircut.",
-                theme: "theme-blue"
-            },
-            {
-                term: "REITs / ETF Units",
-                pron: "/riːts / ˌiː.tiːˈef ˈjuː.nɪts/",
-                cat: "market",
-                meaning: "REITs (Real Estate Investment Trusts) pool money to invest in real estate assets; ETFs (Exchange-Traded Funds) are funds that track an index and trade on stock exchanges. Under new RBI norms, both carry a 25% collateral haircut.",
-                example: "The fund manager allocated 15% of the broker's asset pool into <span class='highlight'>REIT and ETF units</span>, which can now be pledged to banks with a 25% haircut under new RBI guidelines.",
-                theme: "theme-orange"
-            },
-            {
-                term: "Deleveraging / Unwinding of Positions",
-                pron: "/ʌnˈwaɪnd.ɪŋ əv pəˈzɪʃ.ənz/",
-                cat: "trading",
-                meaning: "Closing or selling down existing traded positions — typically to reduce exposure, meet margin calls, or comply with regulatory limits. 'Selective unwinding' means strategically selling only certain positions first.",
-                example: "Brokers warned of selective <span class='highlight'>unwinding of proprietary positions</span> in mid-cap stocks as they scrambled to reduce leverage ahead of RBI's April 2026 deadline.",
-                theme: "theme-pink"
-            },
-            {
-                term: "Market Liquidity",
-                pron: "/ˈmɑː.kɪt lɪˈkwɪd.ɪ.ti/",
-                cat: "market",
-                meaning: "The ease with which an asset can be bought or sold in the market without significantly affecting its price. High liquidity means trades can happen quickly; low liquidity means prices can swing widely on small trades.",
-                example: "The exit of several large prop traders from the market led to reduced <span class='highlight'>market liquidity</span>, causing wider bid-ask spreads in mid-cap stocks.",
-                theme: "theme-green"
-            },
-            {
-                term: "Industry Representation",
-                pron: "/ˈɪn.dəs.tri ˌrep.rɪ.zenˈteɪ.ʃən/",
-                cat: "regulatory",
-                meaning: "When an industry body or association formally communicates its concerns, suggestions, or objections to a regulator or government — typically through written letters, meetings, or lobbying — to influence policy decisions.",
-                example: "Leading broker associations planned to submit formal <span class='highlight'>industry representations</span> to the RBI requesting a phased timeline and transitional relaxations.",
-                theme: "theme-purple"
-            },
-            {
-                term: "RBI (Reserve Bank of India)",
-                pron: "/ˌɑːr.biːˈaɪ/",
-                cat: "regulatory",
-                meaning: "India's central bank and top financial regulator. It controls monetary policy, regulates banks and NBFCs, manages foreign exchange, and issues banking regulations. Its directives are binding on all scheduled commercial banks.",
-                example: "The <span class='highlight'>RBI</span> issued a circular barring banks from extending credit to brokers specifically for proprietary trading purposes, effective April 2026.",
-                theme: "theme-teal"
-            },
-            {
-                term: "Short-term Profitability",
-                pron: "/ʃɔːt tɜːm ˌprɒf.ɪ.təˈbɪl.ɪ.ti/",
-                cat: "finance",
-                meaning: "A company's ability to generate profit over a near-term time horizon (months to a year or two), as opposed to long-term sustainable earnings. It can be impacted by sudden changes in cost structures or revenue streams.",
-                example: "Analysts cautioned that the new RBI rules had the potential to dent <span class='highlight'>short-term profitability</span> of brokerages with large prop books by 15-20%.",
-                theme: "theme-red"
-            },
-            {
-                term: "Balance Sheet Strength",
-                pron: "/ˈbæl.əns ʃiːt streŋθ/",
-                cat: "banking",
-                meaning: "A measure of a company's financial solidity — how much equity (own capital) it has versus debt, the quality of its assets, and its ability to absorb losses. A strong balance sheet implies lower leverage and less financial risk.",
-                example: "Brokers with strong <span class='highlight'>balance sheet strength</span> and ample own capital were less impacted by the RBI restrictions, as they relied less on bank borrowings for prop trades.",
-                theme: "theme-yellow"
-            }
+            { term: "Capital Market Intermediaries", pron: "/ˈkæp.ɪ.tl̩ ˈmɑː.kɪt ɪnˌtɜː.mɪ.dɪ.ər.iz/", cat: "market", meaning: "Entities that act as middlemen between buyers and sellers in capital markets — including stockbrokers, brokerage firms, mutual fund distributors, and investment banks. They facilitate transactions and provide liquidity to financial markets.", example: "The SEBI mandated that all <span class='hl'>capital market intermediaries</span> must maintain adequate net worth to protect investor interests.", tamil: "மூலதன சந்தை இடைத்தரகர்கள் — பங்கு வெளியீட்டாளர்களுக்கும் முதலீட்டாளர்களுக்கும் இடையே இணைப்பாக செயல்படும் நிறுவனங்கள். எ.கா: தரகு நிறுவனங்கள், பரஸ்பர நிதி விநியோகஸ்தர்கள்.", theme: "t-purple" },
+            { term: "Proprietary Trading", pron: "/prəˈpraɪ.ɪ.tər.i ˈtreɪ.dɪŋ/", cat: "trading", meaning: "When a financial firm trades stocks, bonds, or derivatives using its own money — not clients' money — to generate profit for itself. Also called 'prop trading'.", example: "The investment bank's <span class='hl'>proprietary trading</span> desk generated ₹200 crore in profits last quarter.", tamil: "சொந்த வர்த்தகம் — ஒரு நிதி நிறுவனம் வாடிக்கையாளர் நிதியை அல்லாமல் தன் சொந்த பணத்தை பயன்படுத்தி பங்குகள் மற்றும் பத்திரங்களில் வர்த்தகம் செய்வது.", theme: "t-teal" },
+            { term: "Deleveraging", pron: "/diːˈlev.ər.ɪdʒ.ɪŋ/", cat: "finance", meaning: "The process of reducing the total amount of debt or borrowed money that a company is using to finance its assets. Often happens when credit tightens or regulations restrict borrowing.", example: "After the new RBI norms, several brokerage firms began <span class='hl'>deleveraging</span> their proprietary portfolios.", tamil: "கடன் குறைப்பு — ஒரு நிறுவனம் தன் முதலீடு அல்லது சொத்துகளுக்காக பயன்படுத்திய கடனை படிப்படியாக குறைத்துக்கொள்ளும் செயல்முறை.", theme: "t-red" },
+            { term: "Leverage", pron: "/ˈliː.vər.ɪdʒ/", cat: "finance", meaning: "Using borrowed capital to increase the potential return of an investment. High leverage means a large portion is funded by debt. It amplifies both gains and losses.", example: "The broker used 5x <span class='hl'>leverage</span> to buy ₹50 lakh worth of shares with only ₹10 lakh of its own capital.", tamil: "நிதி அதிகரிப்பு — குறைந்த சொந்த மூலதனத்தில் கடன் பெற்று அதிக அளவு முதலீடு செய்வது. இது லாபத்தையும் நட்டத்தையும் இரண்டையும் பெருக்கும்.", theme: "t-yellow" },
+            { term: "Eligible Collateral", pron: "/ɪˈlɪdʒ.ɪ.bəl kəˈlæt.ər.əl/", cat: "collateral", meaning: "Assets formally accepted under regulatory guidelines that a borrower pledges to a lender as security for a loan. If the borrower defaults, the lender may seize the collateral.", example: "Under the new RBI guidelines, only government bonds qualify as <span class='hl'>eligible collateral</span> for bank loans to brokers.", tamil: "தகுதியான உறுதிப்பொருள் — கடன் பெறுவதற்காக வங்கியிடம் அடமானமாக வைக்கக்கூடிய, ஒழுங்குமுறை அனுமதி பெற்ற சொத்துக்கள். எ.கா: அரசு பத்திரங்கள், பட்டியலிடப்பட்ட பங்குகள்.", theme: "t-blue" },
+            { term: "Collateral Haircut", pron: "/kəˈlæt.ər.əl ˈheər.kʌt/", cat: "collateral", meaning: "A percentage reduction applied to the market value of an asset used as collateral, to account for price fluctuations. A 40% haircut on ₹100 shares means only ₹60 is accepted as loan security.", example: "The bank applied a 40% <span class='hl'>collateral haircut</span> on the pledged shares.", tamil: "உறுதிப்பொருள் கழிவு — அடமான சொத்தின் சந்தை மதிப்பிலிருந்து கழிக்கப்படும் சதவீத தள்ளுபடி. எ.கா: ₹100 மதிப்புள்ள பங்கு 40% கழிவுடன் ₹60 மதிப்பாக கணக்கிடப்படும்.", theme: "t-orange" },
+            { term: "Systemic Risk", pron: "/sɪsˈtem.ɪk rɪsk/", cat: "regulatory", meaning: "The risk of collapse of an entire financial system caused by excessive interconnection between institutions — if one fails, others may too (domino effect).", example: "The RBI's restrictions were introduced to reduce <span class='hl'>systemic risk</span> in case a large brokerage collapsed.", tamil: "முறையியல் ஆபத்து — ஒரு நிதி நிறுவனம் தோல்வியடைந்தால் மொத்த நிதி அமைப்பும் சரிந்துவிடும் அபாயம். ஒரு டொமினோ விளைவை ஏற்படுத்தும்.", theme: "t-pink" },
+            { term: "Working Capital", pron: "/ˈwɜː.kɪŋ ˈkæp.ɪ.tl̩/", cat: "finance", meaning: "Short-term funds used for day-to-day operations — paying salaries, rent, and meeting short-term obligations. Equals current assets minus current liabilities.", example: "The bank continued to provide <span class='hl'>working capital</span> loans to brokers for operational expenses.", tamil: "செயல்பாட்டு மூலதனம் — ஒரு நிறுவனத்தின் அன்றாட செயல்பாடுகளான ஊதியம், வாடகை, உபகரண பராமரிப்பு ஆகியவற்றுக்குப் பயன்படும் குறுகிய கால நிதி.", theme: "t-green" },
+            { term: "Settlement Mismatch", pron: "/ˈset.əl.mənt ˈmɪs.mætʃ/", cat: "trading", meaning: "A timing gap between when a trade is executed and when actual payment or securities transfer is completed, creating temporary funding needs for brokers.", example: "Banks are permitted to lend to brokers to cover <span class='hl'>settlement mismatches</span> in the T+1 cycle.", tamil: "தீர்வு பொருத்தமின்மை — வர்த்தகம் நடைபெற்ற நேரத்திற்கும் பணம் / பத்திரங்கள் பரிமாறப்படும் நேரத்திற்கும் இடையே உள்ள நேர இடைவெளி; குறுகிய கால நிதி தேவையை ஏற்படுத்தும்.", theme: "t-purple" },
+            { term: "Market-Making", pron: "/ˈmɑː.kɪt ˈmeɪ.kɪŋ/", cat: "market", meaning: "A practice where a broker continuously quotes both buy and sell prices for a financial instrument, ensuring liquidity. Market makers profit from the bid-ask spread.", example: "A broker engaged in <span class='hl'>market-making</span> quoted a buy price of ₹100 and sell price of ₹101 throughout the trading day.", tamil: "சந்தை உருவாக்கம் — ஒரு தரகர் எப்போதும் வாங்கும் மற்றும் விற்கும் விலையை அறிவிப்பதன் மூலம் சந்தையில் தொடர்ந்து வர்த்தக வாய்ப்பை உறுதி செய்வது.", theme: "t-teal" },
+            { term: "Margin Trading", pron: "/ˈmɑː.dʒɪn ˈtreɪ.dɪŋ/", cat: "trading", meaning: "When an investor borrows money from a broker to buy more securities than they could afford alone. The purchased securities serve as collateral.", example: "Ravi used <span class='hl'>margin trading</span> to buy ₹5 lakh shares with only ₹2.5 lakh of his own money.", tamil: "வரம்பு வர்த்தகம் / அந்நிய வர்த்தகம் — முதலீட்டாளர் தரகரிடம் கடன் பெற்று தன் சொந்த பணத்தைவிட அதிக மதிப்பில் பங்குகளை வாங்குவது; அது இலாபம் மற்றும் நட்டம் இரண்டையும் பெருக்கும்.", theme: "t-red" },
+            { term: "Standardised Haircuts", pron: "/ˈstæn.dər.daɪzd ˈheər.kʌts/", cat: "collateral", meaning: "Uniform, pre-defined percentage reductions applied to specific asset categories used as collateral, established by the regulator for consistency across all banks.", example: "The RBI introduced <span class='hl'>standardised haircuts</span> — 40% on listed equities and 25% on mutual funds.", tamil: "தரப்படுத்தப்பட்ட கழிவுகள் — ஒழுங்காளர் நிர்ணயிக்கும் ஒரே மாதிரியான உறுதிப்பொருள் மதிப்பு கழிவு விகிதங்கள்; அனைத்து வங்கிகளும் ஒரே அளவீட்டை பயன்படுத்த வேண்டும்.", theme: "t-yellow" },
+            { term: "Sovereign Gold Bonds (SGBs)", pron: "/ˈsɒv.rɪn ɡoʊld bɒndz/", cat: "collateral", meaning: "Government-issued bonds denominated in grams of gold. They earn annual interest and have capital gains tied to gold prices. Accepted as collateral at 25% haircut.", example: "The broker pledged <span class='hl'>Sovereign Gold Bonds</span> worth ₹40 lakh and received ₹30 lakh in funding.", tamil: "இறையாண்மை தங்கப் பத்திரங்கள் — மத்திய அரசு வெளியிடும் தங்க அடிப்படையிலான பத்திரங்கள். இவை ஆண்டு வட்டி வழங்கி தங்கத்தின் விலை உயர்வை பிரதிபலிக்கும் நிதிக் கருவி.", theme: "t-blue" },
+            { term: "REITs / ETF Units", pron: "/riːts / ˌiː.tiːˈef/", cat: "market", meaning: "REITs invest pooled money in real estate; ETFs track an index and trade on exchanges. Both carry a 25% collateral haircut under new RBI norms.", example: "The fund manager placed 15% in <span class='hl'>REIT and ETF units</span> which can be pledged with a 25% haircut.", tamil: "ரியல் எஸ்டேட் முதலீட்டு நம்பிக்கை / பரிமாற்று வர்த்தக நிதி — ரியல் எஸ்டேட்டில் முதலீடு செய்யும் REIT, ஒரு குறியீட்டை பின்பற்றும் ETF; இரண்டும் அடமான கருவியாக பயன்படுகின்றன.", theme: "t-orange" },
+            { term: "Unwinding of Positions", pron: "/ʌnˈwaɪnd.ɪŋ əv pəˈzɪʃ.ənz/", cat: "trading", meaning: "Closing or selling down existing trading positions to reduce exposure, meet margin calls, or comply with regulatory limits.", example: "Brokers warned of selective <span class='hl'>unwinding of positions</span> in mid-cap stocks before the April deadline.", tamil: "நிலை கலைத்தல் — தற்போது வைத்திருக்கும் முதலீட்டு நிலைகளை விற்று கடனை குறைக்கும் அல்லது விதிமுறைகளை பின்பற்றும் செயல்முறை.", theme: "t-pink" },
+            { term: "Market Liquidity", pron: "/ˈmɑː.kɪt lɪˈkwɪd.ɪ.ti/", cat: "market", meaning: "The ease with which an asset can be bought or sold without significantly affecting its price. High liquidity means trades happen quickly; low liquidity causes price swings.", example: "Reduced <span class='hl'>market liquidity</span> caused wider bid-ask spreads in mid-cap stocks.", tamil: "சந்தை பணப்புழக்கம் — விலையை பெரிதாக பாதிக்காமல் ஒரு சொத்தை எளிதாக வாங்கவோ விற்கவோ முடியும் தன்மை; அதிக பணப்புழக்கம் = விரைவான, நிலையான வர்த்தகம்.", theme: "t-green" },
+            { term: "Industry Representation", pron: "/ˈɪn.dəs.tri ˌrep.rɪ.zenˈteɪ.ʃən/", cat: "regulatory", meaning: "When an industry body formally communicates concerns or objections to a regulator through letters, meetings, or lobbying to influence policy.", example: "Broker associations planned formal <span class='hl'>industry representations</span> to the RBI requesting a phased timeline.", tamil: "தொழில் சங்க கோரிக்கை — ஒரு தொழில் சங்கம் ஒழுங்காளரிடம் தங்கள் கவலைகளை கடிதம், கூட்டம் அல்லது பேச்சுவார்த்தை மூலம் முன்வைப்பது.", theme: "t-purple" },
+            { term: "RBI (Reserve Bank of India)", pron: "/ˌɑːr.biːˈaɪ/", cat: "regulatory", meaning: "India's central bank and top financial regulator. Controls monetary policy, regulates banks and NBFCs, manages foreign exchange, and issues binding banking regulations.", example: "The <span class='hl'>RBI</span> issued a circular barring banks from lending to brokers for proprietary trading.", tamil: "இந்திய ரிசர்வ் வங்கி — இந்தியாவின் மத்திய வங்கி மற்றும் உச்சகட்ட நிதி ஒழுங்காளர். பணவியல் கொள்கை, வங்கி ஒழுங்குமுறை மற்றும் அந்நிய செலாவணி நிர்வாகம் இதன் முக்கிய பணிகள்.", theme: "t-teal" },
+            { term: "Short-term Profitability", pron: "/ʃɔːt tɜːm ˌprɒf.ɪ.təˈbɪl.ɪ.ti/", cat: "finance", meaning: "A company's ability to generate profit over a near-term horizon (months to one or two years). Can be impacted by sudden changes in cost structures or revenue streams.", example: "The new RBI rules could dent <span class='hl'>short-term profitability</span> of brokerages by 15–20%.", tamil: "குறுகிய கால லாப திறன் — ஒரு நிறுவனம் குறுகிய காலத்தில் (சில மாதங்கள் முதல் இரண்டு ஆண்டுகள் வரை) ஈட்டும் லாப ஆற்றல்.", theme: "t-red" },
+            { term: "Balance Sheet Strength", pron: "/ˈbæl.əns ʃiːt streŋθ/", cat: "banking", meaning: "A measure of a company's financial solidity — equity vs. debt ratio, asset quality, and ability to absorb losses. A strong balance sheet implies lower leverage and lower risk.", example: "Brokers with strong <span class='hl'>balance sheet strength</span> were less impacted by the RBI restrictions.", tamil: "இருப்புநிலை வலிமை — நிறுவனத்தின் சொந்த மூலதனம், கடன் விகிதம், சொத்து தரம் ஆகியவற்றை அடிப்படையாக கொண்ட நிதி உறுதிப்பாட்டின் அளவீடு.", theme: "t-yellow" }
         ];
-
-        let activeTag = 'all';
-
-        function renderCards(filtered) {
-            const grid = document.getElementById('cardGrid');
-            grid.innerHTML = '';
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="no-results"><div class="icon">🔎</div><p>No terms match your search. Try a different keyword.</p></div>`;
-                return;
-            }
-            filtered.forEach((t, i) => {
-                const delay = (i % 12) * 60;
-                const card = document.createElement('div');
-                card.className = `card ${t.theme}`;
-                card.dataset.cat = t.cat;
-                card.style.animationDelay = delay + 'ms';
-                card.innerHTML = `
-      <div class="card-header">
-        <span class="card-num">${String(i + 1).padStart(2, '0')}</span>
-        <span class="cat-tag">${t.cat}</span>
-      </div>
-      <div class="term">${t.term}</div>
-      <div class="pronunciation">${t.pron}</div>
-      <div class="divider"></div>
-      <div class="section-label">📖 Definition</div>
-      <div class="meaning">${t.meaning}</div>
-      <div class="section-label">✍️ Example Sentence</div>
-      <div class="example-box"><p>${t.example}</p></div>
-    `;
-                // Mouse glow
-                card.addEventListener('mousemove', e => {
-                    const r = card.getBoundingClientRect();
-                    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-                    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-                });
-                grid.appendChild(card);
+        let tag = 'all';
+        function render(list) {
+            const g = document.getElementById('cg'); g.innerHTML = '';
+            if (!list.length) { g.innerHTML = `<div class="nr"><div class="ic">🔎</div><p>No terms match.</p></div>`; return; }
+            list.forEach((t, i) => {
+                const d = document.createElement('div');
+                d.className = `card ${t.theme}`; d.style.animationDelay = (i % 12 * 60) + 'ms';
+                d.innerHTML = `<div class="ch"><span class="cn">${String(i + 1).padStart(2, '0')}</span><span class="ct">${t.cat}</span></div>
+    <div class="term">${t.term}</div><div class="pron">${t.pron}</div><div class="div"></div>
+    <div class="sl">📖 Definition</div><div class="meaning">${t.meaning}</div>
+    <div class="sl">✍️ Example</div><div class="ex"><p>${t.example}</p></div>
+    <div class="tm-label">🔤 தமிழ் பொருள்</div><div class="tm">${t.tamil}</div>`;
+                d.addEventListener('mousemove', e => { const r = d.getBoundingClientRect(); d.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%'); d.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%'); });
+                g.appendChild(d);
             });
         }
-
-        function filterCards() {
-            const q = document.getElementById('searchInput').value.toLowerCase();
-            let data = terms.filter(t => activeTag === 'all' || t.cat === activeTag);
-            if (q) data = data.filter(t =>
-                t.term.toLowerCase().includes(q) ||
-                t.meaning.toLowerCase().includes(q) ||
-                t.cat.toLowerCase().includes(q)
-            );
-            renderCards(data);
-        }
-
-        function filterByTag(tag, btn) {
-            activeTag = tag;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('searchInput').value = '';
-            filterCards();
-        }
-
-        // Init
-        renderCards(terms);
-
-        // Scroll progress bar
-        window.addEventListener('scroll', () => {
-            const el = document.getElementById('scroll-progress');
-            const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-            el.style.width = pct + '%';
-        });
-
-        // Generate particles
-        (function () {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 28; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.animationDuration = (10 + Math.random() * 20) + 's';
-                p.style.animationDelay = (Math.random() * 20) + 's';
-                p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
-                p.style.opacity = (Math.random() * 0.5 + 0.2);
-                container.appendChild(p);
-            }
-        })();
+        function fc() { const q = document.getElementById('si').value.toLowerCase(); let d = terms.filter(t => tag === 'all' || t.cat === tag); if (q) d = d.filter(t => t.term.toLowerCase().includes(q) || t.meaning.toLowerCase().includes(q) || t.tamil.includes(q)); render(d); }
+        function ft(t2, btn) { tag = t2; document.querySelectorAll('.tb').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('si').value = ''; fc(); }
+        render(terms);
+        window.addEventListener('scroll', () => { document.getElementById('sp').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%'; });
+        (function () { const c = document.getElementById('particles'); for (let i = 0; i < 28; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random() * 100 + 'vw'; p.style.animationDuration = (10 + Math.random() * 20) + 's'; p.style.animationDelay = (Math.random() * 20) + 's'; const s = (Math.random() * 3 + 1) + 'px'; p.style.width = p.style.height = s; c.appendChild(p); } })();
     </script>
 </body>
 

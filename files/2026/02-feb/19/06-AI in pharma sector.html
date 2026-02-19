@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI in Pharma Quality Control — Glossary &amp; Key Terminologies</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #030f14;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.09);
+            --a1: #00B4D8;
+            /* pharma cyan-blue */
+            --a2: #7FD8BE;
+            /* mint green */
+            --a3: #A78BFA;
+            /* violet */
+            --a4: #F472B6;
+            /* pink */
+            --a5: #FBBF24;
+            /* amber */
+            --a6: #34D399;
+            /* emerald */
+            --text: #E2EAF4;
+            --muted: #6B7E92;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 10% 8%, rgba(0, 180, 216, 0.14) 0%, transparent 60%),
+                radial-gradient(ellipse 55% 45% at 88% 85%, rgba(127, 216, 190, 0.11) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 35% at 55% 50%, rgba(167, 139, 250, 0.07) 0%, transparent 50%),
+                #030f14;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.14;
+            animation: drift 20s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 540px;
+            height: 540px;
+            background: var(--a1);
+            top: -190px;
+            left: -130px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 440px;
+            height: 440px;
+            background: var(--a2);
+            bottom: -120px;
+            right: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 340px;
+            height: 340px;
+            background: var(--a3);
+            top: 44%;
+            left: 60%;
+            animation-delay: -14s;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(46px, 34px) scale(1.09);
+            }
+        }
+
+        /* DNA helix-like decorative lines */
+        .deco-lines {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .deco-lines svg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 320px;
+            opacity: 0.04;
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 180, 216, 0.5);
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        #sp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--a1), var(--a2));
+            z-index: 1000;
+            width: 0;
+            box-shadow: 0 0 14px var(--a1);
+            transition: width .1s linear;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 24px 44px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 180, 216, 0.12);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            color: #38bdf8;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 6px 20px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .badge::before {
+            content: '⬡';
+            color: var(--a2);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.18;
+            background: linear-gradient(135deg, #fff 20%, var(--a1) 55%, var(--a2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        .banner {
+            position: relative;
+            z-index: 10;
+            max-width: 880px;
+            margin: 0 auto 52px;
+            background: rgba(0, 180, 216, 0.06);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            border-radius: 14px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: .88rem;
+            color: #38bdf8;
+        }
+
+        .banner span {
+            font-size: 1.3rem;
+        }
+
+        .sw {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            margin: 0 auto 44px;
+            padding: 0 24px;
+        }
+
+        .sw input {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 18px 14px 48px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: .95rem;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .sw input::placeholder {
+            color: var(--muted);
+        }
+
+        .sw input:focus {
+            border-color: var(--a1);
+            box-shadow: 0 0 0 4px rgba(0, 180, 216, .15);
+        }
+
+        .si {
+            position: absolute;
+            left: 38px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .stats {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-bottom: 56px;
+            padding: 0 24px;
+        }
+
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 24px;
+            text-align: center;
+        }
+
+        .chip .n {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--a1);
+        }
+
+        .chip .l {
+            font-size: .75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .tabs {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 46px;
+            padding: 0 24px;
+        }
+
+        .tb {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .tb:hover,
+        .tb.active {
+            background: linear-gradient(135deg, var(--a1), var(--a2));
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 4px 22px rgba(0, 180, 216, .3);
+        }
+
+        .grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: transform .35s cubic-bezier(.23, 1, .32, 1), border-color .35s, box-shadow .35s;
+            overflow: hidden;
+            animation: ci .6s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.012);
+            border-color: rgba(255, 255, 255, .16);
+            box-shadow: 0 26px 64px rgba(0, 0, 0, .55);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--ca, linear-gradient(90deg, var(--a1), var(--a2)));
+            opacity: 0;
+            transition: opacity .35s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0, 180, 216, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes ci {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ch {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cn {
+            min-width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            font-weight: 800;
+            background: var(--nb, rgba(0, 180, 216, .18));
+            color: var(--nc, var(--a1));
+        }
+
+        .ct {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--tb2, rgba(0, 180, 216, .1));
+            color: var(--tc, var(--a1));
+        }
+
+        .term {
+            font-size: 1.22rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .pron {
+            font-size: .78rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+
+        .div {
+            height: 1px;
+            background: linear-gradient(90deg, var(--ac2, var(--a1)), transparent);
+            opacity: .22;
+            margin-bottom: 14px;
+        }
+
+        .sl {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .meaning {
+            font-size: .915rem;
+            line-height: 1.78;
+            color: #CBD5E1;
+            margin-bottom: 16px;
+        }
+
+        .ex {
+            background: rgba(0, 0, 0, .28);
+            border-left: 3px solid var(--ac2, var(--a1));
+            border-radius: 0 10px 10px 0;
+            padding: 12px 16px;
+        }
+
+        .ex p {
+            font-size: .875rem;
+            line-height: 1.72;
+            color: #94A3B8;
+            font-style: italic;
+        }
+
+        .ex .hl {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--ac2, var(--a1));
+        }
+
+        /* Themes */
+        .t-cyan {
+            --ca: linear-gradient(90deg, #00B4D8, #38bdf8);
+            --nb: rgba(0, 180, 216, .2);
+            --nc: #38bdf8;
+            --tb2: rgba(0, 180, 216, .12);
+            --tc: #38bdf8;
+            --ac2: #38bdf8;
+        }
+
+        .t-mint {
+            --ca: linear-gradient(90deg, #7FD8BE, #34d399);
+            --nb: rgba(127, 216, 190, .18);
+            --nc: #7FD8BE;
+            --tb2: rgba(127, 216, 190, .12);
+            --tc: #7FD8BE;
+            --ac2: #7FD8BE;
+        }
+
+        .t-violet {
+            --ca: linear-gradient(90deg, #A78BFA, #c4b5fd);
+            --nb: rgba(167, 139, 250, .2);
+            --nc: #A78BFA;
+            --tb2: rgba(167, 139, 250, .12);
+            --tc: #A78BFA;
+            --ac2: #A78BFA;
+        }
+
+        .t-pink {
+            --ca: linear-gradient(90deg, #F472B6, #fbcfe8);
+            --nb: rgba(244, 114, 182, .18);
+            --nc: #F472B6;
+            --tb2: rgba(244, 114, 182, .12);
+            --tc: #F472B6;
+            --ac2: #F472B6;
+        }
+
+        .t-amber {
+            --ca: linear-gradient(90deg, #FBBF24, #fde68a);
+            --nb: rgba(251, 191, 36, .18);
+            --nc: #FBBF24;
+            --tb2: rgba(251, 191, 36, .12);
+            --tc: #FBBF24;
+            --ac2: #FBBF24;
+        }
+
+        .t-emerald {
+            --ca: linear-gradient(90deg, #34D399, #6ee7b7);
+            --nb: rgba(52, 211, 153, .18);
+            --nc: #34D399;
+            --tb2: rgba(52, 211, 153, .12);
+            --tc: #34D399;
+            --ac2: #34D399;
+        }
+
+        .t-blue {
+            --ca: linear-gradient(90deg, #60A5FA, #93c5fd);
+            --nb: rgba(96, 165, 250, .18);
+            --nc: #60A5FA;
+            --tb2: rgba(96, 165, 250, .12);
+            --tc: #60A5FA;
+            --ac2: #60A5FA;
+        }
+
+        .t-orange {
+            --ca: linear-gradient(90deg, #FB923C, #fdba74);
+            --nb: rgba(251, 146, 60, .18);
+            --nc: #FB923C;
+            --tb2: rgba(251, 146, 60, .12);
+            --tc: #FB923C;
+            --ac2: #FB923C;
+        }
+
+        .nr {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px;
+            color: var(--muted);
+        }
+
+        .nr .ic {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 28px 24px 48px;
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        footer a {
+            color: var(--a1);
+            text-decoration: none;
+        }
+
+        @media(max-width:640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sp"></div>
+    <div class="bg-canvas"></div>
+    <div class="deco-lines">
+        <svg viewBox="0 0 200 800" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#00B4D8" stroke-width="1.5">
+            <path
+                d="M 100 0 C 60 50, 140 100, 100 150 S 60 250, 100 300 S 140 400, 100 450 S 60 550, 100 600 S 140 700, 100 750" />
+            <path
+                d="M 100 0 C 140 50, 60 100, 100 150 S 140 250, 100 300 S 60 400, 100 450 S 140 550, 100 600 S 60 700, 100 750" />
+            <circle cx="100" cy="150" r="4" fill="#00B4D8" stroke="none" />
+            <circle cx="100" cy="300" r="4" fill="#7FD8BE" stroke="none" />
+            <circle cx="100" cy="450" r="4" fill="#00B4D8" stroke="none" />
+            <circle cx="100" cy="600" r="4" fill="#7FD8BE" stroke="none" />
+        </svg>
+    </div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <div class="badge">💊 Article Glossary</div>
+        <h1>AI in Pharma Quality<br>Control — Key Terms</h1>
+        <p class="subtitle">Master the pharmaceutical, AI &amp; quality management vocabulary from Rajiv Desai's article
+            on how Artificial Intelligence is transforming drug quality systems.</p>
+    </header>
+
+    <div class="banner">
+        <span>📰</span>
+        <div>
+            <strong>Source Article:</strong> "AI in pharma sector — AI can play a vital role in drug quality control"
+            <br><span>Feb 2026 · By Rajiv Desai, Senior Technical Advisor, Quality &amp; Regulatory, Indian
+                Pharmaceutical Alliance</span>
+        </div>
+    </div>
+
+    <div class="sw">
+        <span class="si">🔍</span>
+        <input type="text" id="si" placeholder="Search a term or keyword…" oninput="fc()" />
+    </div>
+
+    <div class="stats">
+        <div class="chip">
+            <div class="n">22</div>
+            <div class="l">Terms Explained</div>
+        </div>
+        <div class="chip">
+            <div class="n">7</div>
+            <div class="l">Categories</div>
+        </div>
+        <div class="chip">
+            <div class="n">22</div>
+            <div class="l">Example Sentences</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tb active" onclick="ft('all',this)">All Terms</button>
+        <button class="tb" onclick="ft('pharma',this)">Pharma</button>
+        <button class="tb" onclick="ft('quality',this)">Quality</button>
+        <button class="tb" onclick="ft('ai',this)">AI &amp; Tech</button>
+        <button class="tb" onclick="ft('regulatory',this)">Regulatory</button>
+        <button class="tb" onclick="ft('manufacturing',this)">Manufacturing</button>
+        <button class="tb" onclick="ft('management',this)">Management</button>
+    </div>
+
+    <div class="grid" id="cg"></div>
+
+    <footer>
+        <p>📚 Glossary for the AI in Pharma Quality article · <a href="https://www.ipa-india.org" target="_blank">Indian
+                Pharmaceutical Alliance</a> · For educational purposes only</p>
+    </footer>
+
+    <script>
+        const terms = [
+            {
+                term: "Quality Management System (QMS)",
+                pron: "/ˈkwɒl.ɪ.ti ˈmæn.ɪdʒ.mənt ˈsɪs.təm/",
+                cat: "quality",
+                meaning: "A formalised system that documents processes, procedures and responsibilities for achieving quality policies and objectives within a pharmaceutical company. It encompasses everything from batch manufacturing records and SOPs to deviation management, CAPAs, audits and change control — ensuring consistent, compliant drug production.",
+                example: "After three consecutive FDA observations, the plant overhauled its <span class='hl'>Quality Management System</span> — digitalising paper-based SOPs, automating batch record reviews, and introducing AI-assisted anomaly detection.",
+                theme: "t-cyan"
+            },
+            {
+                term: "Process Validation",
+                pron: "/ˈprəʊ.ses ˌvæl.ɪˈdeɪ.ʃən/",
+                cat: "pharma",
+                meaning: "The documented evidence that a manufacturing process consistently produces a product meeting its predetermined specifications and quality attributes. Regulators like the FDA require validation before commercial manufacturing begins. It typically involves three consecutive process validation batches.",
+                example: "Before the blockbuster antibiotic could be sold commercially, the plant ran three consecutive <span class='hl'>process validation</span> batches at scale — all meeting purity, potency, and yield specifications — to satisfy CDSCO requirements.",
+                theme: "t-mint"
+            },
+            {
+                term: "Analytical Validation",
+                pron: "/ˌæn.əˈlɪt.ɪ.kl̩ ˌvæl.ɪˈdeɪ.ʃən/",
+                cat: "pharma",
+                meaning: "The process of demonstrating that a testing method — such as HPLC, UV spectroscopy, or microbial assay — reliably and reproducibly measures what it is supposed to measure. Parameters evaluated include accuracy, precision, specificity, linearity, LOD (limit of detection) and LOQ (limit of quantification).",
+                example: "The QC laboratory spent six months on <span class='hl'>analytical validation</span> of the new HPLC method, confirming it could detect impurities as low as 0.05% with consistent accuracy across three analysts.",
+                theme: "t-violet"
+            },
+            {
+                term: "Batch Records",
+                pron: "/bætʃ ˈrek.ədz/",
+                cat: "manufacturing",
+                meaning: "Detailed, chronological documents that capture every step of a drug manufacturing batch — ingredients used, weights, equipment IDs, in-process parameters, test results, operator sign-offs, and deviations. They are the primary traceability documents proving a batch was made correctly. Also called Batch Manufacturing Records (BMRs).",
+                example: "The FDA inspector reviewed 18 months of <span class='hl'>batch records</span> and found that a specific granulator had consistently been operated 5°C above the validated temperature — a systematic issue that had been repeatedly overlooked.",
+                theme: "t-pink"
+            },
+            {
+                term: "Deviation Report",
+                pron: "/ˌdiː.viˈeɪ.ʃən rɪˈpɔːt/",
+                cat: "quality",
+                meaning: "A formal document raised when any step in a manufacturing or testing process departs from approved procedures or specifications. It triggers an investigation to determine if the product is affected and what corrective action is needed. Deviations are classified as minor, major, or critical.",
+                example: "A <span class='hl'>deviation report</span> was raised after the filling line operator noticed the fill volume was 3% below specification — the investigation traced it to a worn pump diaphragm that had not been flagged during routine maintenance checks.",
+                theme: "t-amber"
+            },
+            {
+                term: "CAPA (Corrective and Preventive Action)",
+                pron: "/ˈkæ.pə/",
+                cat: "quality",
+                meaning: "A two-part quality process: Corrective Actions fix the immediate problem (e.g., replacing a faulty sensor), while Preventive Actions eliminate the root cause to prevent recurrence (e.g., revising the maintenance schedule so sensors are checked more frequently). CAPA is central to pharmaceutical quality systems and is scrutinised during regulatory audits.",
+                example: "After three batches failed dissolution testing, the QA team initiated a <span class='hl'>CAPA</span> — the corrective action was to rework the batches with adjusted granulation; the preventive action was to install real-time moisture sensors on the granulator.",
+                theme: "t-emerald"
+            },
+            {
+                term: "Traceability",
+                pron: "/ˌtreɪ.sə.ˈbɪl.ɪ.ti/",
+                cat: "quality",
+                meaning: "The ability to track every material, process, equipment, and person involved in producing a pharmaceutical batch — from raw material origin through manufacturing steps to final distribution. Strong traceability is essential for recalling products if safety issues arise and for regulatory inspections.",
+                example: "Thanks to full <span class='hl'>traceability</span>, when a contamination alert was raised, the company identified within 48 hours that only four batches from one API lot were affected, enabling a targeted recall rather than a market-wide withdrawal.",
+                theme: "t-blue"
+            },
+            {
+                term: "Intelligent Surveillance",
+                pron: "/ɪnˈtel.ɪ.dʒənt səˈveɪ.ləns/",
+                cat: "ai",
+                meaning: "AI-driven continuous monitoring of manufacturing and testing data to automatically detect anomalies, trends, or deviations in real time — without waiting for a human to review data manually. Unlike traditional periodic reviews, intelligent surveillance operates 24/7 and can identify subtle patterns invisible to human observers.",
+                example: "The AI-powered <span class='hl'>intelligent surveillance</span> system detected a slow upward drift in tablet hardness values three days before the batch would have failed the compliance specification — allowing operators to adjust compression force before any rejection occurred.",
+                theme: "t-cyan"
+            },
+            {
+                term: "Anomaly Detection",
+                pron: "/əˈnɒm.ə.li dɪˈtek.ʃən/",
+                cat: "ai",
+                meaning: "An AI/machine learning technique that identifies data points, patterns, or behaviours that deviate significantly from the norm — flagging them for investigation. In pharma QC, anomaly detection scans thousands of data points in batch records and sensor readings to catch hidden quality risks automatically.",
+                example: "The AI's <span class='hl'>anomaly detection</span> module raised an alert when a single reactor's pH fluctuated outside its normal variability band — a subtle clue that the pH probe's calibration was drifting, before it could affect batch quality.",
+                theme: "t-mint"
+            },
+            {
+                term: "Right First Time (RFT) Manufacturing",
+                pron: "/raɪt fɜːst taɪm ˌmæn.jʊˈfæk.tʃər.ɪŋ/",
+                cat: "manufacturing",
+                meaning: "A quality philosophy and metric measuring the percentage of batches that meet all specifications on the first attempt — without any rework, reprocessing, rejection, or deviation. High RFT rates indicate a robust, well-controlled manufacturing process. AI can predict and prevent the failures that reduce RFT rates.",
+                example: "After AI-assisted process monitoring was implemented, the formulation plant's <span class='hl'>Right First Time</span> rate improved from 72% to 94% in 18 months, saving ₹12 crore in reduced batch rejections and rework costs.",
+                theme: "t-violet"
+            },
+            {
+                term: "Regulatory Compliance",
+                pron: "/ˌreɡ.jʊˈleɪ.tər.i kəmˈplaɪ.əns/",
+                cat: "regulatory",
+                meaning: "Adherence to laws, guidelines, and standards set by pharmaceutical regulatory bodies such as the US FDA, EMA, CDSCO (India), WHO, and ICH. Non-compliance can lead to warning letters, import alerts, product recalls, plant shutdowns, and reputational damage. AI improves compliance by ensuring consistent documentation and audit readiness.",
+                example: "The company invested heavily in AI-based documentation tools to strengthen <span class='hl'>regulatory compliance</span>, knowing that a single Form 483 observation from USFDA could jeopardise its $200 million US market business.",
+                theme: "t-pink"
+            },
+            {
+                term: "Root Cause Analysis (RCA)",
+                pron: "/ruːt kɔːz əˈnæl.ɪ.sɪs/",
+                cat: "quality",
+                meaning: "A structured investigation technique used to identify the fundamental underlying reason — the 'root cause' — behind a quality failure or deviation, rather than just addressing the visible symptom. Common RCA tools include the '5 Whys', Fishbone (Ishikawa) diagram, and Fault Tree Analysis.",
+                example: "The <span class='hl'>root cause analysis</span> of repeated sterility failures traced the problem not to contaminated materials but to a micro-crack in the cleanroom ceiling panel that allowed unfiltered air to enter — something a surface swab test would never have revealed.",
+                theme: "t-amber"
+            },
+            {
+                term: "Audit Trail",
+                pron: "/ˈɔː.dɪt treɪl/",
+                cat: "regulatory",
+                meaning: "A chronological, tamper-evident electronic record of all actions taken on a system, document, or piece of equipment — who did what, when, and what was changed. Pharmaceutical regulations (e.g., FDA 21 CFR Part 11) require complete audit trails for all electronic records to ensure data integrity.",
+                example: "When the FDA auditor requested the <span class='hl'>audit trail</span> for the rejected batch, the system instantly produced a timestamped log showing every data entry, change, and approval — proving the investigation had been thorough and unaltered.",
+                theme: "t-emerald"
+            },
+            {
+                term: "Predictive Maintenance",
+                pron: "/prɪˈdɪk.tɪv ˈmeɪn.tɪ.nəns/",
+                cat: "ai",
+                meaning: "Using AI, IoT sensors, and machine learning to analyse real-time equipment performance data and predict when a machine is likely to fail — before it actually does. This allows maintenance to be scheduled proactively, avoiding unexpected breakdowns, production downtime, and quality failures caused by faulty equipment.",
+                example: "The tablet press's AI-powered <span class='hl'>predictive maintenance</span> system detected rising vibration levels in the main drive motor and flagged it for inspection; replacing the bearing before it failed saved an estimated 36 hours of unplanned downtime.",
+                theme: "t-blue"
+            },
+            {
+                term: "Data Governance",
+                pron: "/ˈdeɪ.tə ˈɡʌv.ən.əns/",
+                cat: "management",
+                meaning: "A framework of policies, standards, roles, and processes that define how pharmaceutical data is collected, stored, accessed, verified, and protected. Strong data governance ensures data integrity — that records are attributable, legible, contemporaneous, original, and accurate (ALCOA principles) — a key FDA and WHO requirement.",
+                example: "After a data integrity warning letter from FDA, the company overhauled its <span class='hl'>data governance</span> framework — restricting shared login credentials, implementing audit trails on all lab instruments, and conducting quarterly data integrity training for all QC staff.",
+                theme: "t-orange"
+            },
+            {
+                term: "Legacy Systems",
+                pron: "/ˈleɡ.ə.si ˈsɪs.təmz/",
+                cat: "ai",
+                meaning: "Older, often outdated software or technology infrastructure that organisations continue to use because replacing them is expensive or disruptive. In pharma, legacy systems (e.g., old LIMS, paper-based batch records, standalone instruments) are a major barrier to AI adoption as they cannot easily interface with modern AI platforms.",
+                example: "The plant's AI rollout stalled for eight months because its 15-year-old <span class='hl'>legacy system</span> for batch data collection could not export data in a format compatible with the new machine learning platform.",
+                theme: "t-cyan"
+            },
+            {
+                term: "Data Standardisation",
+                pron: "/ˈdeɪ.tə ˌstæn.dər.daɪˈzeɪ.ʃən/",
+                cat: "ai",
+                meaning: "The process of converting data from multiple sources, formats, and systems into a common, consistent format so it can be meaningfully analysed together. In pharma AI implementations, data from different instruments, labs, and facilities must be standardised before AI models can learn from them accurately.",
+                example: "Merging QC data from three manufacturing sites for AI analysis required months of <span class='hl'>data standardisation</span> — unifying unit definitions, renaming fields, and resolving conflicting coding conventions across all three facilities.",
+                theme: "t-mint"
+            },
+            {
+                term: "Change Management",
+                pron: "/tʃeɪndʒ ˈmæn.ɪdʒ.mənt/",
+                cat: "management",
+                meaning: "A structured approach to transitioning individuals, teams, and organisations from a current state to a desired future state — managing the human, cultural, and process dimensions of change. In pharma AI adoption, change management is critical because quality teams trained in manual processes often resist or struggle with automation.",
+                example: "The AI project's biggest risk wasn't technology — it was <span class='hl'>change management</span>. Senior QC analysts with 20+ years of experience resisted the new deviation management tool, fearing it would question their expert judgement.",
+                theme: "t-violet"
+            },
+            {
+                term: "Data Literacy",
+                pron: "/ˈdeɪ.tə ˈlɪt.ər.ə.si/",
+                cat: "management",
+                meaning: "The ability to read, interpret, question, and communicate with data — understanding charts, statistics, and AI-generated insights enough to make informed decisions. The article highlights upskilling quality teams in data literacy as essential for successful AI adoption in pharma.",
+                example: "The pharmaceutical company sent all 300 QA and QC staff through a six-month <span class='hl'>data literacy</span> programme, ensuring they could interpret AI-generated trend reports and challenge the system's recommendations with scientific reasoning.",
+                theme: "t-pink"
+            },
+            {
+                term: "Decision-Support Tool",
+                pron: "/dɪˈsɪʒ.ən səˈpɔːt tuːl/",
+                cat: "ai",
+                meaning: "A technology that provides analysis, recommendations, and insights to assist human experts in making better decisions — but does not replace human judgement or accountability. The article positions AI in pharma quality as a decision-support tool, not an autonomous decision-maker — final authority rests with qualified professionals.",
+                example: "The AI served purely as a <span class='hl'>decision-support tool</span> — it flagged 14 batches with statistically elevated impurity trends and suggested probable causes, but a qualified person reviewed and signed off each investigation before any action was taken.",
+                theme: "t-amber"
+            },
+            {
+                term: "Phased Implementation",
+                pron: "/feɪzd ɪmˌplɪ.menˈteɪ.ʃən/",
+                cat: "management",
+                meaning: "A risk-managed approach to rolling out a new system or technology in stages — starting with small pilot areas before scaling across the organisation. This allows teams to learn, identify problems, and build confidence before full deployment. The article recommends phased implementation to manage AI adoption challenges in pharma.",
+                example: "Rather than deploying AI across all 12 production lines simultaneously, the company chose a <span class='hl'>phased implementation</span> — starting with just the packaging line, refining the model over six months, then expanding to API manufacturing.",
+                theme: "t-emerald"
+            },
+            {
+                term: "Reactive vs. Predictive Compliance",
+                pron: "/riˈæk.tɪv vs. prɪˈdɪk.tɪv kəmˈplaɪ.əns/",
+                cat: "regulatory",
+                meaning: "Reactive compliance means responding to problems after they occur — investigating failures, filing deviations, and implementing CAPAs after the damage is done. Predictive compliance, enabled by AI, means identifying and mitigating risks before failures happen — moving from a firefighting culture to a proactive quality culture.",
+                example: "Traditional pharma quality was entirely <span class='hl'>reactive</span> — the team only knew a batch had a problem when it failed final testing. AI-enabled <span class='hl'>predictive compliance</span> flipped this, catching emerging trends in-process so deviations never reached the final stage.",
+                theme: "t-blue"
+            }
+        ];
+
+        let tag = 'all';
+
+        function render(list) {
+            const g = document.getElementById('cg');
+            g.innerHTML = '';
+            if (!list.length) {
+                g.innerHTML = `<div class="nr"><div class="ic">🔎</div><p>No terms match your search. Try a different keyword.</p></div>`;
+                return;
+            }
+            list.forEach((t, i) => {
+                const d = document.createElement('div');
+                d.className = `card ${t.theme}`;
+                d.dataset.cat = t.cat;
+                d.style.animationDelay = (i % 12 * 60) + 'ms';
+                d.innerHTML = `
+      <div class="ch">
+        <span class="cn">${String(i + 1).padStart(2, '0')}</span>
+        <span class="ct">${t.cat}</span>
+      </div>
+      <div class="term">${t.term}</div>
+      <div class="pron">${t.pron}</div>
+      <div class="div"></div>
+      <div class="sl">📖 Definition</div>
+      <div class="meaning">${t.meaning}</div>
+      <div class="sl">✍️ Example Sentence</div>
+      <div class="ex"><p>${t.example}</p></div>`;
+                d.addEventListener('mousemove', e => {
+                    const r = d.getBoundingClientRect();
+                    d.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+                    d.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+                });
+                g.appendChild(d);
+            });
+        }
+
+        function fc() {
+            const q = document.getElementById('si').value.toLowerCase();
+            let d = terms.filter(t => tag === 'all' || t.cat === tag);
+            if (q) d = d.filter(t => t.term.toLowerCase().includes(q) || t.meaning.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q));
+            render(d);
+        }
+        function ft(t2, btn) {
+            tag = t2;
+            document.querySelectorAll('.tb').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('si').value = '';
+            fc();
+        }
+
+        render(terms);
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('sp').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+        });
+
+        (function () {
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 32; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (10 + Math.random() * 22) + 's';
+                p.style.animationDelay = (Math.random() * 24) + 's';
+                const s = (Math.random() * 3 + 1) + 'px';
+                p.style.width = p.style.height = s;
+                p.style.opacity = (Math.random() * 0.5 + 0.15);
+                c.appendChild(p);
+            }
+        })();
+    </script>
+</body>
+
+</html>
