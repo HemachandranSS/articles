@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trade Terms Decoded</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0e0c0a;
+    --paper: #f5f0e8;
+    --paper2: #ede8dc;
+    --neon: #e8ff47;
+    --rust: #c94a1a;
+    --slate: #2a3545;
+    --gold: #b8960a;
+    --mist: #8a9aaa;
+    --card: #ffffff;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--rust);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--rust);
+    border-radius: 50%;
+    position: fixed;
+    top: -12px; left: -12px;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    opacity: 0.5;
+  }
+
+  /* ── TICKER ── */
+  .ticker-outer {
+    background: var(--ink);
+    overflow: hidden;
+    padding: 10px 0;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tickerScroll 35s linear infinite;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .tick {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--neon);
+    padding: 0 2.5rem;
+    white-space: nowrap;
+  }
+  .tick-sep { color: var(--rust); }
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 5rem 3rem 3rem;
+    border-bottom: 3px solid var(--ink);
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: -1rem; left: -0.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(8rem, 20vw, 18rem);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(14,12,10,0.07);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 2px;
+    background: var(--rust);
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  .hero h1 em {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    color: var(--rust);
+    display: block;
+  }
+  .hero-meta {
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s ease forwards;
+  }
+  .hero-meta-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--neon);
+    -webkit-text-stroke: 2px var(--ink);
+  }
+  .hero-meta-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .hero-desc {
+    max-width: 480px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    margin-top: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s ease forwards;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-section {
+    background: var(--paper2);
+    border-bottom: 2px solid var(--ink);
+    padding: 0.8rem 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 41px;
+    z-index: 100;
+  }
+  .filter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-right: 0.5rem;
+  }
+  .ftag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: none;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .ftag:hover, .ftag.on {
+    background: var(--ink);
+    color: var(--neon);
+  }
+  .count-badge {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--mist);
+  }
+
+  /* ── GRID ── */
+  .grid-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 3rem 6rem;
+    columns: 3;
+    column-gap: 1.5rem;
+  }
+  @media (max-width: 1100px) { .grid-wrap { columns: 2; } }
+  @media (max-width: 640px)  { .grid-wrap { columns: 1; padding: 2rem 1.5rem; } }
+
+  /* ── CARD ── */
+  .card {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--ink);
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+    animation: cardReveal 0.5s ease both;
+  }
+  .card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .card:hover .card-accent { width: 100%; }
+  .card:hover .word-text { color: var(--rust); }
+
+  /* accent bar */
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0;
+    height: 3px;
+    width: 30%;
+    transition: width 0.4s ease;
+  }
+
+  /* category color coding */
+  .card[data-cat="trade"]     .card-accent { background: #c94a1a; }
+  .card[data-cat="economics"] .card-accent { background: #2563eb; }
+  .card[data-cat="policy"]    .card-accent { background: #059669; }
+  .card[data-cat="finance"]   .card-accent { background: #7c3aed; }
+  .card[data-cat="diplomacy"] .card-accent { background: #b8960a; }
+  .card[data-cat="language"]  .card-accent { background: #db2777; }
+
+  .card[data-cat="trade"]:hover     { box-shadow: 6px 6px 0 #c94a1a; border-color: #c94a1a; }
+  .card[data-cat="economics"]:hover { box-shadow: 6px 6px 0 #2563eb; border-color: #2563eb; }
+  .card[data-cat="policy"]:hover    { box-shadow: 6px 6px 0 #059669; border-color: #059669; }
+  .card[data-cat="finance"]:hover   { box-shadow: 6px 6px 0 #7c3aed; border-color: #7c3aed; }
+  .card[data-cat="diplomacy"]:hover { box-shadow: 6px 6px 0 #b8960a; border-color: #b8960a; }
+  .card[data-cat="language"]:hover  { box-shadow: 6px 6px 0 #db2777; border-color: #db2777; }
+
+  .card-header {
+    padding: 1.2rem 1.2rem 0.6rem;
+    border-bottom: 1px solid #e8e3d8;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .word-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    line-height: 1.15;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+  .cat-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .card[data-cat="trade"]     .cat-chip { color: #c94a1a; }
+  .card[data-cat="economics"] .cat-chip { color: #2563eb; }
+  .card[data-cat="policy"]    .cat-chip { color: #059669; }
+  .card[data-cat="finance"]   .cat-chip { color: #7c3aed; }
+  .card[data-cat="diplomacy"] .cat-chip { color: #b8960a; }
+  .card[data-cat="language"]  .cat-chip { color: #db2777; }
+
+  .card-body { padding: 0.9rem 1.2rem; }
+
+  .pronun {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--mist);
+    margin-bottom: 0.6rem;
+    font-style: italic;
+  }
+
+  .defn {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: #3a3530;
+    margin-bottom: 0.9rem;
+  }
+
+  /* Example toggle */
+  .ex-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mist);
+    cursor: none;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color 0.2s;
+    width: 100%;
+    border-top: 1px dashed #ddd;
+    padding-top: 0.75rem;
+  }
+  .ex-btn:hover { color: var(--rust); }
+  .ex-btn .arrow {
+    display: inline-block;
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+  }
+  .ex-btn.open .arrow { transform: rotate(90deg); }
+
+  .ex-box {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
+  }
+  .ex-box.open {
+    max-height: 160px;
+    opacity: 1;
+  }
+  .ex-inner {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: var(--paper2);
+    border-left: 3px solid;
+    font-style: italic;
+    font-size: 0.83rem;
+    line-height: 1.7;
+    color: #555;
+  }
+  .card[data-cat="trade"]     .ex-inner { border-color: #c94a1a; }
+  .card[data-cat="economics"] .ex-inner { border-color: #2563eb; }
+  .card[data-cat="policy"]    .ex-inner { border-color: #059669; }
+  .card[data-cat="finance"]   .ex-inner { border-color: #7c3aed; }
+  .card[data-cat="diplomacy"] .ex-inner { border-color: #b8960a; }
+  .card[data-cat="language"]  .ex-inner { border-color: #db2777; }
+
+  /* ── LARGE FEATURE CARD (every 7th) ── */
+  .card.feature {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .card.feature .word-text { color: var(--neon); }
+  .card.feature .defn { color: #b0a898; }
+  .card.feature .pronun { color: #6a7a8a; }
+  .card.feature .card-header { border-color: #2a2520; }
+  .card.feature .ex-btn { border-color: #2a2520; color: #6a7a8a; }
+  .card.feature .ex-btn:hover { color: var(--neon); }
+  .card.feature .ex-inner { background: #1a1710; color: #b0a898; }
+  .card.feature:hover { transform: translate(-4px,-4px); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes cardReveal {
+    from { opacity:0; transform:translateY(24px) scale(0.97); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  /* stagger */
+  .card:nth-child(1)  { animation-delay:0.04s }
+  .card:nth-child(2)  { animation-delay:0.08s }
+  .card:nth-child(3)  { animation-delay:0.12s }
+  .card:nth-child(4)  { animation-delay:0.16s }
+  .card:nth-child(5)  { animation-delay:0.20s }
+  .card:nth-child(6)  { animation-delay:0.24s }
+  .card:nth-child(7)  { animation-delay:0.28s }
+  .card:nth-child(8)  { animation-delay:0.32s }
+  .card:nth-child(9)  { animation-delay:0.36s }
+  .card:nth-child(10) { animation-delay:0.40s }
+  .card:nth-child(11) { animation-delay:0.44s }
+  .card:nth-child(12) { animation-delay:0.48s }
+  .card:nth-child(13) { animation-delay:0.52s }
+  .card:nth-child(14) { animation-delay:0.56s }
+  .card:nth-child(15) { animation-delay:0.60s }
+  .card:nth-child(16) { animation-delay:0.64s }
+  .card:nth-child(17) { animation-delay:0.68s }
+  .card:nth-child(18) { animation-delay:0.72s }
+  .card:nth-child(19) { animation-delay:0.76s }
+  .card:nth-child(20) { animation-delay:0.80s }
+  .card:nth-child(21) { animation-delay:0.84s }
+  .card:nth-child(22) { animation-delay:0.88s }
+  .card:nth-child(23) { animation-delay:0.92s }
+  .card:nth-child(24) { animation-delay:0.96s }
+  .card:nth-child(25) { animation-delay:1.00s }
+  .card:nth-child(26) { animation-delay:1.04s }
+  .card:nth-child(27) { animation-delay:1.08s }
+  .card:nth-child(28) { animation-delay:1.12s }
+  .card:nth-child(29) { animation-delay:1.16s }
+  .card:nth-child(30) { animation-delay:1.20s }
+
+  /* hidden during filter */
+  .card.hidden {
+    display: none;
+  }
+
+  /* ── FOOTER ── */
+  .foot {
+    background: var(--ink);
+    color: var(--paper2);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .foot-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: var(--neon);
+  }
+  .foot-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: #6a7a8a;
+  }
+
+  /* progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--rust);
+    z-index: 9997;
+    transition: width 0.1s linear;
+    width: 0%;
+  }
+
+  /* search box */
+  .search-wrap {
+    margin-left: auto;
+    position: relative;
+  }
+  .search-input {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    padding: 5px 12px 5px 30px;
+    outline: none;
+    color: var(--ink);
+    cursor: none;
+    width: 180px;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--rust); }
+  .search-icon {
+    position: absolute;
+    left: 8px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--mist);
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- Reading progress -->
+<div class="progress-bar" id="prog"></div>
+
+<!-- Ticker -->
+<div class="ticker-outer">
+  <div class="ticker-track">
+    <span class="tick">📉 DEFICIT: $34.68B <span class="tick-sep">◆</span></span>
+    <span class="tick">📦 IMPORTS +12% MoM <span class="tick-sep">◆</span></span>
+    <span class="tick">📤 EXPORTS −5% <span class="tick-sep">◆</span></span>
+    <span class="tick">🇺🇸 TARIFF: 50% → 18% <span class="tick-sep">◆</span></span>
+    <span class="tick">🥇 GOLD & SILVER SURGE <span class="tick-sep">◆</span></span>
+    <span class="tick">🤝 DELEGATION → WASHINGTON <span class="tick-sep">◆</span></span>
+    <span class="tick">📰 INDIA–US TRADE REPORT · JAN 2025 <span class="tick-sep">◆</span></span>
+    <span class="tick">📉 DEFICIT: $34.68B <span class="tick-sep">◆</span></span>
+    <span class="tick">📦 IMPORTS +12% MoM <span class="tick-sep">◆</span></span>
+    <span class="tick">📤 EXPORTS −5% <span class="tick-sep">◆</span></span>
+    <span class="tick">🇺🇸 TARIFF: 50% → 18% <span class="tick-sep">◆</span></span>
+    <span class="tick">🥇 GOLD & SILVER SURGE <span class="tick-sep">◆</span></span>
+    <span class="tick">🤝 DELEGATION → WASHINGTON <span class="tick-sep">◆</span></span>
+    <span class="tick">📰 INDIA–US TRADE REPORT · JAN 2025 <span class="tick-sep">◆</span></span>
+  </div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-bg-text">TRADE</div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label">Article Vocabulary · The Hindu / Reuters</div>
+      <h1>Hard Words<br/><em>Decoded.</em></h1>
+      <p class="hero-desc">Every challenging term from the India–US trade deficit article, broken down with plain-English definitions and real-world example sentences.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-num">30</div>
+      <div class="hero-meta-label">Key Terms</div>
+    </div>
+  </div>
+</header>
+
+<!-- Filter bar -->
+<div class="filter-section">
+  <span class="filter-label">Filter ↗</span>
+  <button class="ftag on" onclick="filter('all',this)">All</button>
+  <button class="ftag" onclick="filter('trade',this)">🔄 Trade</button>
+  <button class="ftag" onclick="filter('economics',this)">📊 Economics</button>
+  <button class="ftag" onclick="filter('policy',this)">🏛 Policy</button>
+  <button class="ftag" onclick="filter('finance',this)">💰 Finance</button>
+  <button class="ftag" onclick="filter('diplomacy',this)">🤝 Diplomacy</button>
+  <button class="ftag" onclick="filter('language',this)">✍️ Language</button>
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" type="text" placeholder="SEARCH TERMS..." oninput="searchTerms(this.value)"/>
+  </div>
+  <div class="count-badge" id="countBadge">30 / 30</div>
+</div>
+
+<!-- Cards -->
+<div class="grid-wrap" id="grid">
+
+  <!-- 1 -->
+  <div class="card" data-cat="trade">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Trade Deficit</div>
+      <span class="cat-chip">Trade</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ treɪd ˈdefɪsɪt /</div>
+      <div class="defn">When a country buys more from the world than it sells — the shortfall between imports and exports. Think of it as spending more than you earn, on a national scale.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India's trade deficit widened to $34.68 billion, meaning it spent nearly double on imports compared to what it earned through exports."</div></div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card" data-cat="economics">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Merchandise</div>
+      <span class="cat-chip">Economics</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈmɜːtʃəndaɪz /</div>
+      <div class="defn">Physical, tangible goods that are bought and sold — such as gold, electronics, textiles, or machinery. Distinguished from "services" which are intangible.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India's merchandise trade deficit was driven by physical goods like gold — not digital or service exports."</div></div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card feature" data-cat="policy">
+    <div class="card-accent" style="background:var(--neon);"></div>
+    <div class="card-header">
+      <div class="word-text">Tariff</div>
+      <span class="cat-chip" style="color:var(--neon);border-color:var(--neon)">Policy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈtærɪf /</div>
+      <div class="defn">A government-imposed tax on imports or exports. It acts like a toll gate on foreign goods — raising their price to protect local industries or raise government revenue.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"A 50% US tariff on Indian goods effectively doubled the price for American buyers, making Indian products far less competitive."</div></div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card" data-cat="trade">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Imports</div>
+      <span class="cat-chip">Trade</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈɪmpɔːts /</div>
+      <div class="defn">Goods or services purchased from abroad and brought into a country for use or resale. High imports can signal strong domestic demand or dependence on foreign supply.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India's imports surged 12% to $71.24 billion in January, largely because of a sharp rise in gold and silver purchases from overseas."</div></div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card" data-cat="trade">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Exports</div>
+      <span class="cat-chip">Trade</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈekspɔːts /</div>
+      <div class="defn">Goods or services produced domestically and sold to foreign buyers. Exports bring foreign currency into the country and are a key driver of economic growth.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Exports fell 5% to $36.56 billion, reflecting how US tariff pressure was discouraging American buyers from purchasing Indian products."</div></div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card" data-cat="policy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Tariff Relief</div>
+      <span class="cat-chip">Policy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈtærɪf rɪˈliːf /</div>
+      <div class="defn">A reduction or removal of tariffs by a government, easing the cost burden on exporters and making goods cheaper for trading partners — a diplomatic and economic tool.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Trump's tariff relief — cutting duties from 50% to 18% — immediately sparked optimism among Indian exporters who had suffered under the higher rate."</div></div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card" data-cat="diplomacy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Trade Pact</div>
+      <span class="cat-chip">Diplomacy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ treɪd pækt /</div>
+      <div class="defn">A formal, legally binding agreement between countries setting rules for trade — including tariff rates, quotas, and market access. Also called a Free Trade Agreement (FTA).</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The trade delegation flew to Washington to finalise a trade pact that would govern the terms of India–US commerce for years to come."</div></div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="card" data-cat="diplomacy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Interim Framework</div>
+      <span class="cat-chip">Diplomacy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈɪntərɪm ˈfreɪmwɜːk /</div>
+      <div class="defn">A temporary, provisional arrangement providing basic ground rules while a full agreement is being negotiated. It acts as a "bridge deal" between parties.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India and the US are working on a full trade pact based on the interim framework — a set of provisional rules — concluded earlier this month."</div></div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="card" data-cat="economics">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Month-on-Month</div>
+      <span class="cat-chip">Economics</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ mʌnθ ɒn mʌnθ / · MoM</div>
+      <div class="defn">A statistical comparison between a value in a given month and the value in the immediately previous month. Used to track short-term momentum and directional changes.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Imports rose 12% month-on-month — meaning January's import bill was 12% higher than December's, revealing a sudden surge."</div></div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card feature" data-cat="finance">
+    <div class="card-accent" style="background:#7c3aed;"></div>
+    <div class="card-header">
+      <div class="word-text">Fiscal Year</div>
+      <span class="cat-chip" style="color:#a78bfa;border-color:#a78bfa">Finance</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈfɪskəl jɪər /</div>
+      <div class="defn">A 12-month accounting period used by governments and companies for financial reporting. India's fiscal year runs April 1 – March 31, so January is month 10.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Exports to the US totalled $72.46 billion in the first ten months of the fiscal year — April through January in India's financial calendar."</div></div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="card" data-cat="diplomacy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Trade Delegation</div>
+      <span class="cat-chip">Diplomacy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ treɪd ˌdelɪˈɡeɪʃən /</div>
+      <div class="defn">An official group of government representatives or business leaders sent to another country to negotiate trade agreements or strengthen economic relationships.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India's trade delegation, led by Trade Secretary Rajesh Agrawal, is scheduled to travel to Washington next week for formal negotiations."</div></div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="card" data-cat="economics">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Bilateral Trade</div>
+      <span class="cat-chip">Economics</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ baɪˈlætərəl treɪd /</div>
+      <div class="defn">Trade conducted between exactly two countries, involving the mutual exchange of goods and services. "Bilateral" simply means "involving two sides."</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Trump said India would more than double its annual US goods imports, significantly boosting bilateral trade between the two nations."</div></div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Pared</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ pɛəd /</div>
+      <div class="defn">To reduce or trim something gradually and carefully. Like peeling away layers — in financial writing, it means cutting down a number (e.g., a rate or cost).</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The US tariff on Indian exports will be pared to 18% from 50% — a significant trimming that gives Indian exporters much-needed breathing room."</div></div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Widened</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈwaɪdənd /</div>
+      <div class="defn">Became larger or broader. In trade, when a deficit "widens," the gap between imports and exports has grown bigger — it's getting worse, not better.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India's trade deficit widened to a three-month high, meaning the gap between what it spent on imports and earned from exports grew larger than recent months."</div></div>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Sparking</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈspɑːkɪŋ /</div>
+      <div class="defn">Triggering or causing something to start, especially a reaction or emotion. Like a spark that ignites a flame — an event that sets off a chain of responses.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Trump's tariff reduction announcement sparked relief among exporters who had been struggling under the heavy duty burden for months."</div></div>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="card" data-cat="economics">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Policymakers</div>
+      <span class="cat-chip">Economics</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈpɒlɪsi ˌmeɪkəz /</div>
+      <div class="defn">Government officials, ministers, or regulators who create, decide, and implement public policy — including trade rules, tax laws, and economic strategies.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The tariff cut sparked relief among exporters and policymakers, who had been lobbying Washington for months to ease the trade burden."</div></div>
+    </div>
+  </div>
+
+  <!-- 17 -->
+  <div class="card feature" data-cat="trade">
+    <div class="card-accent" style="background:#c94a1a;"></div>
+    <div class="card-header">
+      <div class="word-text">Shipments</div>
+      <span class="cat-chip" style="color:#fb923c;border-color:#fb923c">Trade</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈʃɪpmənts /</div>
+      <div class="defn">Quantities of goods transported from one place to another — by ship, air, or road. In trade reports, "shipments" and "exports" are often used interchangeably.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Shipments to the US rose to $72.46 billion in ten months — meaning Indian goods worth that amount were physically transported to American shores."</div></div>
+    </div>
+  </div>
+
+  <!-- 18 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Finalise</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈfaɪnəlaɪz /</div>
+      <div class="defn">To complete the last details of something and make it official. In negotiations, it means reaching a definitive, binding agreement after all discussions are concluded.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The trade delegation will travel to Washington to finalise the agreement — settling the last remaining details before it becomes official."</div></div>
+    </div>
+  </div>
+
+  <!-- 19 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Concluded</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ kənˈkluːdɪd /</div>
+      <div class="defn">Successfully completed or reached (an agreement, deal, or arrangement). In diplomatic language, a "concluded" agreement means it has been formally agreed upon.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The interim framework was concluded earlier this month — meaning both sides formally agreed to its terms before further negotiations."</div></div>
+    </div>
+  </div>
+
+  <!-- 20 -->
+  <div class="card" data-cat="policy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Slash</div>
+      <span class="cat-chip">Policy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ slæʃ /</div>
+      <div class="defn">To cut drastically and sharply — a strong, decisive reduction. Journalists use "slash" to convey a dramatic, significant decrease (much stronger than "reduce").</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Trump said he would slash tariffs on Indian goods from 50% to 18% — a dramatic 32 percentage-point cut, not a modest trim."</div></div>
+    </div>
+  </div>
+
+  <!-- 21 -->
+  <div class="card" data-cat="diplomacy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Trade Secretary</div>
+      <span class="cat-chip">Diplomacy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ treɪd ˈsekrɪtri /</div>
+      <div class="defn">A senior government official responsible for overseeing a country's trade policy, negotiations, and international commerce relationships. India's equivalent of a Trade Minister.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Trade Secretary Rajesh Agrawal confirmed to reporters that India's delegation would travel to Washington to negotiate a final agreement."</div></div>
+    </div>
+  </div>
+
+  <!-- 22 -->
+  <div class="card" data-cat="finance">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Commerce Ministry</div>
+      <span class="cat-chip">Finance</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈkɒmɜːs ˈmɪnɪstri /</div>
+      <div class="defn">The government department responsible for promoting trade, industry, and commerce. In India, it collects and publishes official trade data including import/export figures.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"Data published by the Commerce Ministry showed imports surged to $71.24 billion — the official government source for India's trade statistics."</div></div>
+    </div>
+  </div>
+
+  <!-- 23 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Driven</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈdrɪvən /</div>
+      <div class="defn">Caused or propelled by a specific force or factor. In financial reporting, "driven by" identifies the main reason behind a change in numbers.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The wider deficit was driven by a sharp rise in gold and silver imports — meaning those commodity purchases were the primary cause of the increased gap."</div></div>
+    </div>
+  </div>
+
+  <!-- 24 -->
+  <div class="card feature" data-cat="economics">
+    <div class="card-accent" style="background:#2563eb;"></div>
+    <div class="card-header">
+      <div class="word-text">Three-Month High</div>
+      <span class="cat-chip" style="color:#60a5fa;border-color:#60a5fa">Economics</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ θriː mʌnθ haɪ /</div>
+      <div class="defn">The highest level recorded in the past three months. It's a benchmark phrase used in financial reporting to contextualise whether a figure is historically notable.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The trade deficit hit a three-month high of $34.68 billion — the worst it had been since October, signalling a worsening trend."</div></div>
+    </div>
+  </div>
+
+  <!-- 25 -->
+  <div class="card" data-cat="trade">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Export Market</div>
+      <span class="cat-chip">Trade</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈekspɔːt ˈmɑːkɪt /</div>
+      <div class="defn">A foreign country or region that buys a significant portion of another country's exported goods. The "largest export market" is the single biggest buyer of a nation's products.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The US is India's largest export market — meaning more Indian goods are sold to America than to any other single country."</div></div>
+    </div>
+  </div>
+
+  <!-- 26 -->
+  <div class="card" data-cat="policy">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Wider-than-Expected</div>
+      <span class="cat-chip">Policy</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈwaɪdər ðæn ɪkˈspektɪd /</div>
+      <div class="defn">Larger than analysts or economists had forecast. When data comes in "wider than expected," it means the real figure surprised markets in a negative direction.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"The wider-than-expected deficit shocked analysts — economists had predicted a smaller gap, so the $34.68 billion figure caught markets off guard."</div></div>
+    </div>
+  </div>
+
+  <!-- 27 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Marking</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈmɑːkɪŋ /</div>
+      <div class="defn">Signifying or representing a notable moment or milestone. In journalism, "marking" highlights that an event is significant enough to be noted and remembered.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"January's deficit widened to $34.68 billion, marking the final month impacted by the 50% US tariff — a significant milestone in the trade relationship."</div></div>
+    </div>
+  </div>
+
+  <!-- 28 -->
+  <div class="card" data-cat="economics">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Annual</div>
+      <span class="cat-chip">Economics</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ˈænjuəl /</div>
+      <div class="defn">Occurring or calculated once per year, or relating to a full 12-month period. "Annual imports" means the total amount imported over an entire year.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"India agreed to more than double its annual imports of US goods — meaning the total purchased per year, not just in one month, would exceed current levels."</div></div>
+    </div>
+  </div>
+
+  <!-- 29 -->
+  <div class="card" data-cat="language">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="word-text">Impacted</div>
+      <span class="cat-chip">Language</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ ɪmˈpæktɪd /</div>
+      <div class="defn">Affected or influenced by something, typically negatively. When a policy or event "impacts" trade, it means it has changed or disrupted normal patterns.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"January was the final month impacted by the 50% tariff — after which the reduced 18% rate took effect and altered trade dynamics."</div></div>
+    </div>
+  </div>
+
+  <!-- 30 -->
+  <div class="card feature" data-cat="trade">
+    <div class="card-accent" style="background:var(--neon);"></div>
+    <div class="card-header">
+      <div class="word-text">Surge</div>
+      <span class="cat-chip" style="color:var(--neon);border-color:var(--neon)">Trade</span>
+    </div>
+    <div class="card-body">
+      <div class="pronun">/ sɜːdʒ /</div>
+      <div class="defn">A sudden, sharp, and powerful increase — stronger than a "rise" or "increase." In trade, a surge typically means an unexpected and dramatic jump in volume or value.</div>
+      <button class="ex-btn" onclick="toggleEx(this)"><span class="arrow">▶</span> Example</button>
+      <div class="ex-box"><div class="ex-inner">"A surge in gold and silver imports pushed India's total import bill 12% higher — an abrupt, powerful spike, not a gradual climb."</div></div>
+    </div>
+  </div>
+
+</div><!-- end grid -->
+
+<footer class="foot">
+  <div class="foot-brand">Trade Decoded</div>
+  <div class="foot-note">The Hindu / Reuters · India–US Trade Deficit · January 2025 · 30 Key Terms</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cur  = document.getElementById('cur');
+  const ring = document.getElementById('ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) *.12;
+    cur.style.transform  = `translate(${mx - 6}px, ${my - 6}px)`;
+    ring.style.transform = `translate(${rx - 6}px, ${ry - 6}px)`;
+    requestAnimationFrame(animCursor);
+  })();
+  document.querySelectorAll('.card,.ftag,.ex-btn,.search-input').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.style.transform += ' scale(2)'; cur.style.background = '#2563eb'; });
+    el.addEventListener('mouseleave', () => { cur.style.background = '#c94a1a'; });
+  });
+
+  // Reading progress
+  const prog = document.getElementById('prog');
+  window.addEventListener('scroll', () => {
+    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    prog.style.width = pct + '%';
+  });
+
+  // Toggle examples
+  function toggleEx(btn) {
+    const box = btn.nextElementSibling;
+    const isOpen = box.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+  }
+
+  // Filter
+  function filter(cat, el) {
+    document.querySelectorAll('.ftag').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+    document.getElementById('grid').querySelectorAll('.card').forEach(c => {
+      c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+    });
+    updateCount();
+  }
+
+  // Search
+  function searchTerms(val) {
+    const q = val.toLowerCase().trim();
+    document.getElementById('grid').querySelectorAll('.card').forEach(c => {
+      const text = c.querySelector('.word-text').textContent.toLowerCase();
+      c.classList.toggle('hidden', q && !text.includes(q));
+    });
+    updateCount();
+  }
+
+  function updateCount() {
+    const all = document.querySelectorAll('.card').length;
+    const vis = document.querySelectorAll('.card:not(.hidden)').length;
+    document.getElementById('countBadge').textContent = `${vis} / ${all}`;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexicon — Trans-Pacific Alliance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0c0a;
+    --paper: #f5f0e8;
+    --accent: #c2440e;
+    --accent2: #2a5c8a;
+    --gold: #c8973a;
+    --muted: #7a7060;
+    --card-bg: #fff8ee;
+    --border: #d4c9b2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  header {
+    padding: 72px 48px 48px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    animation: headerIn 1s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  @keyframes headerIn {
+    from { opacity:0; transform: translateY(-30px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .header-sub {
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .header-deco {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 180px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--border);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    user-select: none;
+    animation: decoFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes decoFloat {
+    0%,100% { transform: translateY(-50%) rotate(-2deg); }
+    50% { transform: translateY(-53%) rotate(2deg); }
+  }
+
+  .count-bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    animation: fadeUp 0.8s 0.3s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .count-pill {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+  }
+
+  .card {
+    background: var(--card-bg);
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.3s ease;
+    animation: cardIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .card:hover {
+    background: #fff;
+    z-index: 2;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .card:hover::after { height: 100%; }
+
+  /* staggered animations */
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.15s; }
+  .card:nth-child(3) { animation-delay: 0.2s; }
+  .card:nth-child(4) { animation-delay: 0.25s; }
+  .card:nth-child(5) { animation-delay: 0.3s; }
+  .card:nth-child(6) { animation-delay: 0.35s; }
+  .card:nth-child(7) { animation-delay: 0.4s; }
+  .card:nth-child(8) { animation-delay: 0.45s; }
+  .card:nth-child(9) { animation-delay: 0.5s; }
+  .card:nth-child(10) { animation-delay: 0.55s; }
+  .card:nth-child(11) { animation-delay: 0.6s; }
+  .card:nth-child(12) { animation-delay: 0.65s; }
+  .card:nth-child(13) { animation-delay: 0.7s; }
+  .card:nth-child(14) { animation-delay: 0.75s; }
+  .card:nth-child(15) { animation-delay: 0.8s; }
+  .card:nth-child(16) { animation-delay: 0.85s; }
+  .card:nth-child(17) { animation-delay: 0.9s; }
+  .card:nth-child(18) { animation-delay: 0.95s; }
+  .card:nth-child(19) { animation-delay: 1.0s; }
+  .card:nth-child(20) { animation-delay: 1.05s; }
+
+  @keyframes cardIn {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .card-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    letter-spacing: 0.15em;
+  }
+
+  .term {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.2;
+    transition: color 0.3s;
+  }
+
+  .card:hover .term { color: var(--accent); }
+
+  .pos {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+
+  .definition {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #3a3530;
+    margin-bottom: 18px;
+  }
+
+  .divider {
+    width: 32px;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 16px;
+    transition: width 0.4s ease, background 0.4s ease;
+  }
+
+  .card:hover .divider {
+    width: 60px;
+    background: var(--accent);
+  }
+
+  .example-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .example {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-style: italic;
+    border-left: 2px solid var(--border);
+    padding-left: 14px;
+    transition: border-color 0.3s;
+  }
+
+  .card:hover .example { border-color: var(--gold); }
+
+  .highlight {
+    color: var(--accent2);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    animation: fadeUp 0.8s 1.2s both;
+  }
+
+  .footer-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform: scale(1); }
+    50% { opacity:0.4; transform: scale(0.7); }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 48px 24px 36px; }
+    .header-deco { display: none; }
+    .count-bar { padding: 16px 24px; }
+    .grid { grid-template-columns: 1fr; }
+    .card { padding: 28px 24px; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Article Glossary</div>
+  <h1>Key <em>Terms</em> &<br>Terminologies</h1>
+  <p class="header-sub">Hard words, jargon, and geopolitical concepts from the article on an expanded Trans-Pacific Alliance — decoded and illustrated.</p>
+  <div class="header-deco">词</div>
+</header>
+
+<div class="count-bar">
+  <span class="count-pill">20 terms</span>
+  <span>Geopolitics · Economics · Trade · Diplomacy</span>
+</div>
+
+<div class="grid">
+
+  <!-- 1 -->
+  <div class="card">
+    <div class="card-num">01</div>
+    <div class="term">Rules-based trading system</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">An international framework where trade between nations is governed by agreed-upon laws and norms (like WTO rules), rather than by the raw power or whims of dominant countries.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"The <span class="highlight">rules-based trading system</span> allowed small nations to challenge unfair tariffs imposed by larger powers through the WTO dispute mechanism."</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <div class="card-num">02</div>
+    <div class="term">Geopolitical rivalries</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">Intense competition between nations for power, influence, and strategic advantages — often playing out through trade, military posturing, and diplomatic pressure rather than open war.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Escalating <span class="highlight">geopolitical rivalries</span> between the US and China led both countries to restrict technology exports to each other."</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <div class="card-num">03</div>
+    <div class="term">Middle powers</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">Nations that are influential enough to shape international affairs but not dominant enough to set the global agenda alone — such as Canada, Australia, India, Brazil, and South Korea.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"<span class="highlight">Middle powers</span> like Australia and Canada often punch above their weight by forming coalitions on climate and trade issues."</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <div class="card-num">04</div>
+    <div class="term">CPTPP</div>
+    <span class="pos">Acronym</span>
+    <p class="definition">The Comprehensive and Progressive Agreement for Trans-Pacific Partnership — a major free trade agreement among 12 countries spanning Asia, Oceania, and the Americas, promoting reduced tariffs and open markets.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"When the UK joined the <span class="highlight">CPTPP</span> in 2023, it gained preferential access to fast-growing Asian markets for British goods."</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+    <div class="card-num">05</div>
+    <div class="term">Weaponisation of interdependence</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">The deliberate use of economic ties — trade, finance, technology — as weapons against rival nations. A powerful country exploits another nation's dependence on it to coerce political compliance.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Cutting off rare-earth mineral exports was a textbook example of the <span class="highlight">weaponisation of interdependence</span>, pressuring trading partners to change their policies."</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <div class="card-num">06</div>
+    <div class="term">Supply-chain blackmail</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">When a dominant economy threatens to cut off critical goods or inputs (like semiconductors or medicines) from another country's supply chain to force political concessions.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Nations scrambled to diversify chip production to protect themselves from <span class="highlight">supply-chain blackmail</span> by major semiconductor exporters."</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <div class="card-num">07</div>
+    <div class="term">Demographic dividend</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">The economic growth potential that arises when a country has a large, young working-age population relative to dependents — more workers producing output, consuming, and paying taxes.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"India is expected to reap a significant <span class="highlight">demographic dividend</span> over the next two decades as hundreds of millions enter the workforce."</p>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+    <div class="card-num">08</div>
+    <div class="term">Global value chains</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">The international network of production stages where different countries contribute different parts of making a product — design in one country, components in another, assembly in a third.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"A modern smartphone passes through over a dozen countries across <span class="highlight">global value chains</span> before reaching the consumer."</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+    <div class="card-num">09</div>
+    <div class="term">Economic coercion</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">The use of economic tools — sanctions, tariffs, trade bans, investment restrictions — by one nation to compel another to change its behaviour or policies.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"The sweeping tariffs imposed on agricultural imports were widely condemned as <span class="highlight">economic coercion</span> designed to bully a smaller trading partner."</p>
+  </div>
+
+  <!-- 10 -->
+  <div class="card">
+    <div class="card-num">10</div>
+    <div class="term">Digital sovereignty</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">A country's or bloc's ability to control its own digital infrastructure, data flows, and technology ecosystem — rather than being dependent on foreign tech giants for critical digital services.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"The EU's push for <span class="highlight">digital sovereignty</span> includes developing homegrown cloud platforms so European data does not flow through American servers."</p>
+  </div>
+
+  <!-- 11 -->
+  <div class="card">
+    <div class="card-num">11</div>
+    <div class="term">Grand Bargain</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">A major, often difficult political compromise between parties with different interests — each side gives up something significant in exchange for a larger shared benefit.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"The trade deal required a <span class="highlight">grand bargain</span>: rich nations agreed to lower agricultural subsidies while developing nations accepted stricter IP protections."</p>
+  </div>
+
+  <!-- 12 -->
+  <div class="card">
+    <div class="card-num">12</div>
+    <div class="term">Carve-outs and exemptions</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">Specific exceptions written into trade agreements that allow certain countries to bypass particular rules for defined reasons — often given to developing nations that need policy flexibility to grow.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"India negotiated <span class="highlight">carve-outs</span> on pharmaceutical patents so it could continue producing affordable generic medicines for its population."</p>
+  </div>
+
+  <!-- 13 -->
+  <div class="card">
+    <div class="card-num">13</div>
+    <div class="term">Non-Aligned Movement (NAM)</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">A Cold War-era grouping of countries — led by India, Egypt, and Yugoslavia — that refused to formally align with either the US-led Western bloc or the Soviet bloc, charting an independent foreign policy.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"India's founding role in the <span class="highlight">Non-Aligned Movement</span> gave it moral authority as a voice for post-colonial nations seeking independence from superpower domination."</p>
+  </div>
+
+  <!-- 14 -->
+  <div class="card">
+    <div class="card-num">14</div>
+    <div class="term">Force multiplier</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">Originally a military term, it refers to any factor that dramatically increases the effectiveness or impact of a group or strategy — something that makes the whole far greater than the sum of its parts.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"India's massive consumer market acts as a <span class="highlight">force multiplier</span> for the trade bloc, making membership far more attractive for technology exporters."</p>
+  </div>
+
+  <!-- 15 -->
+  <div class="card">
+    <div class="card-num">15</div>
+    <div class="term">Bretton Woods organisations</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">International financial institutions created at the 1944 Bretton Woods Conference, primarily the International Monetary Fund (IMF) and the World Bank, designed to manage the global financial system and fund development.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Developing nations have long argued that the <span class="highlight">Bretton Woods organisations</span> were designed to serve Western interests and need fundamental reform."</p>
+  </div>
+
+  <!-- 16 -->
+  <div class="card">
+    <div class="card-num">16</div>
+    <div class="term">Intellectual property (IP)</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">Legal rights — patents, copyrights, trademarks — that protect creations of the mind (inventions, software, brands, designs). A frequent flashpoint in trade negotiations, as strict IP rules can restrict access for developing countries.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Negotiations stalled over <span class="highlight">intellectual property</span> protections, as wealthy nations demanded stricter enforcement while developing countries feared it would block tech transfer."</p>
+  </div>
+
+  <!-- 17 -->
+  <div class="card">
+    <div class="card-num">17</div>
+    <div class="term">Counterweight</div>
+    <span class="pos">Noun</span>
+    <p class="definition">A force, power, or alliance that offsets or balances the dominance of another — preventing any single entity from becoming overwhelmingly powerful in a system.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"A unified ASEAN was seen as a critical <span class="highlight">counterweight</span> to China's growing economic and military influence in Southeast Asia."</p>
+  </div>
+
+  <!-- 18 -->
+  <div class="card">
+    <div class="card-num">18</div>
+    <div class="term">Developmental imperatives</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">The unique, pressing economic and social needs of developing countries — like building infrastructure, reducing poverty, and nurturing infant industries — that may require different policies than those suitable for advanced economies.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Trade deals must respect the <span class="highlight">developmental imperatives</span> of poorer nations, allowing them to subsidise key sectors until they are globally competitive."</p>
+  </div>
+
+  <!-- 19 -->
+  <div class="card">
+    <div class="card-num">19</div>
+    <div class="term">Trans-regional alliance</div>
+    <span class="pos">Noun phrase</span>
+    <p class="definition">A partnership or coalition that spans multiple geographic regions of the world — going beyond a single continent or neighbourhood to connect countries across vast distances through shared interests.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"The proposed <span class="highlight">trans-regional alliance</span> linking Asia, Europe, and Latin America would be unprecedented in both its geographic scope and economic weight."</p>
+  </div>
+
+  <!-- 20 -->
+  <div class="card">
+    <div class="card-num">20</div>
+    <div class="term">WTO (World Trade Organization)</div>
+    <span class="pos">Noun / Acronym</span>
+    <p class="definition">The international body that regulates trade between nations, provides a forum for negotiating trade agreements, and settles trade disputes according to agreed rules. Seen as increasingly paralysed by great-power conflicts.</p>
+    <div class="divider"></div>
+    <div class="example-label">Example</div>
+    <p class="example">"Several countries filed a case at the <span class="highlight">WTO</span>, arguing that the new tariffs violated the most-favoured-nation principle enshrined in global trade rules."</p>
+  </div>
+
+</div>
+
+<footer>
+  <span><span class="footer-dot"></span>Trans-Pacific Alliance · Article Lexicon</span>
+  <span>20 terms · Geopolitics & Trade</span>
+</footer>
+
+</body>
+</html>

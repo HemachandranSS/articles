@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genome Editing — Scientific Glossary</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060a0f;
+    --surface: #0d1520;
+    --surface2: #121d2e;
+    --accent: #00e5c3;
+    --accent2: #4f7cff;
+    --accent3: #ff6b6b;
+    --gold: #c9a84c;
+    --text: #d8e8f5;
+    --text-dim: #6b8aaa;
+    --border: rgba(0,229,195,0.12);
+    --glow: rgba(0,229,195,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* --- BACKGROUND GRID --- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,195,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,195,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* --- AMBIENT ORBS --- */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: orbFloat 12s ease-in-out infinite, orbReveal 2s ease forwards;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(0,229,195,0.07); top: -100px; left: -100px; animation-delay: 0s, 0.3s; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(79,124,255,0.07); bottom: -80px; right: -80px; animation-delay: 4s, 0.6s; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(201,168,76,0.05); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 8s, 0.9s; }
+
+  @keyframes orbReveal { to { opacity: 1; } }
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  /* --- HEADER --- */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 80px 40px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .header-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: slideDown 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: slideDown 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: slideDown 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- SEARCH BAR --- */
+  .search-wrap {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    padding: 36px 40px;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 560px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 14px 20px 14px 48px;
+    outline: none;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    animation: slideDown 0.8s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
+  }
+  .search-input::placeholder { color: var(--text-dim); }
+  .search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--glow);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: calc(50% - 260px);
+    top: 50%; transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 15px;
+    pointer-events: none;
+  }
+
+  /* --- CATEGORY FILTERS --- */
+  .filters {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 40px 40px;
+    opacity: 0;
+    animation: slideDown 0.8s cubic-bezier(0.16,1,0.3,1) 1s forwards;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,195,0.06);
+  }
+
+  /* --- STATS BAR --- */
+  .stats-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 40px 48px;
+    opacity: 0;
+    animation: slideDown 0.8s cubic-bezier(0.16,1,0.3,1) 1.1s forwards;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; display: block; }
+
+  /* --- GRID --- */
+  .grid {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+    padding: 0 40px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* --- CARD --- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px 28px 24px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.3s, box-shadow 0.35s;
+    opacity: 0;
+    animation: cardReveal 0.7s cubic-bezier(0.16,1,0.3,1) var(--delay, 0s) forwards;
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: var(--accent);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--accent), 0 0 30px var(--glow);
+  }
+
+  /* Shimmer effect */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+    transition: left 0.6s;
+  }
+  .card:hover::before { left: 140%; }
+
+  /* Accent line top */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--card-color, var(--accent)), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover::after { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+
+  .card-term {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    flex: 1;
+  }
+
+  .card-tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tag-biology { color: var(--accent); border-color: rgba(0,229,195,0.3); background: rgba(0,229,195,0.05); }
+  .tag-genetics { color: var(--accent2); border-color: rgba(79,124,255,0.3); background: rgba(79,124,255,0.05); }
+  .tag-disease { color: var(--accent3); border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.05); }
+  .tag-technique { color: var(--gold); border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.05); }
+  .tag-molecule { color: #c678dd; border-color: rgba(198,120,221,0.3); background: rgba(198,120,221,0.05); }
+
+  .card-pronunciation {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 14px;
+  }
+
+  .card-meaning {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 18px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+  }
+
+  .card-example {
+    background: var(--surface2);
+    border-left: 2px solid var(--card-color, var(--accent));
+    padding: 12px 16px;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+  }
+
+  .example-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .example-text {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  .example-text em {
+    font-style: normal;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* --- EXPAND INDICATOR --- */
+  .expand-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--card-color, var(--accent));
+    margin-top: 14px;
+    transition: transform 0.3s;
+    opacity: 0.5;
+  }
+  .card:hover .expand-dot { transform: scale(1.5); opacity: 1; }
+
+  /* --- EMPTY STATE --- */
+  .empty-state {
+    display: none;
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 80px;
+    color: var(--text-dim);
+  }
+  .empty-state .big { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 12px; }
+  .empty-state p { font-size: 12px; letter-spacing: 1px; }
+
+  /* --- FOOTER --- */
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 32px 40px 60px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* --- SCROLL PROGRESS --- */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 999;
+    width: 0%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* --- TOOLTIP CURSOR --- */
+  .cursor-glow {
+    position: fixed;
+    width: 300px; height: 300px;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,195,0.04) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    header { padding: 50px 20px 40px; }
+    .grid { grid-template-columns: 1fr; padding: 0 20px 60px; gap: 14px; }
+    .search-icon { left: 28px; }
+    .search-input { max-width: 100%; padding-left: 44px; }
+    .stats-bar { gap: 24px; }
+  }
+
+  /* Number badge */
+  .term-number {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 10px;
+    color: var(--text-dim);
+    opacity: 0.4;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Header -->
+<header>
+  <div class="header-tag">Scientific Lexicon</div>
+  <h1>Genome Editing<br>Glossary</h1>
+  <p class="subtitle">25 key terms decoded · Nature Study on PERT therapy</p>
+</header>
+
+<!-- Search -->
+<div class="search-wrap">
+  <span class="search-icon">⌕</span>
+  <input class="search-input" id="searchInput" type="text" placeholder="Search terms, definitions, examples...">
+</div>
+
+<!-- Filters -->
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-filter="all">All Terms</button>
+  <button class="filter-btn" data-filter="genetics">Genetics</button>
+  <button class="filter-btn" data-filter="biology">Biology</button>
+  <button class="filter-btn" data-filter="molecule">Molecules</button>
+  <button class="filter-btn" data-filter="technique">Techniques</button>
+  <button class="filter-btn" data-filter="disease">Diseases</button>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num" id="visibleCount">25</span><span class="stat-label">Terms</span></div>
+  <div class="stat"><span class="stat-num">5</span><span class="stat-label">Categories</span></div>
+  <div class="stat"><span class="stat-num">2024</span><span class="stat-label">Nature Study</span></div>
+</div>
+
+<!-- Cards Grid -->
+<div class="grid" id="grid">
+
+  <!-- GENETICS -->
+  <div class="card" data-category="genetics" style="--delay:1.2s; --card-color:#4f7cff;">
+    <span class="term-number">01</span>
+    <div class="card-header">
+      <div class="card-term">Nonsense Mutation</div>
+      <span class="card-tag tag-genetics">Genetics</span>
+    </div>
+    <div class="card-pronunciation">/ ˈnɒn.sens mjuːˈteɪ.ʃən /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A type of point mutation in DNA where a single nucleotide change creates a premature "stop" signal in the genetic code, causing the cell to stop building a protein too early. The resulting incomplete protein is usually non-functional.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The patient's cystic fibrosis was caused by a <em>nonsense mutation</em> that halted the CFTR protein mid-construction, leaving cells unable to regulate salt and water balance.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="genetics" style="--delay:1.3s; --card-color:#4f7cff;">
+    <span class="term-number">02</span>
+    <div class="card-header">
+      <div class="card-term">DNA (Deoxyribonucleic Acid)</div>
+      <span class="card-tag tag-genetics">Genetics</span>
+    </div>
+    <div class="card-pronunciation">/ diː.en.ˈeɪ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">The hereditary molecule found in all living cells, structured as a double helix. It encodes the instructions for building and operating an organism. The sequence of four chemical "letters" (A, T, G, C) spells out the genetic blueprint.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">A single altered letter in a person's <em>DNA</em> sequence can disrupt the production of a vital enzyme, triggering a cascade of health problems throughout the body.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="genetics" style="--delay:1.4s; --card-color:#4f7cff;">
+    <span class="term-number">03</span>
+    <div class="card-header">
+      <div class="card-term">Premature Stop Codon</div>
+      <span class="card-tag tag-genetics">Genetics</span>
+    </div>
+    <div class="card-pronunciation">/ ˈpriːmətʃə stɒp ˈkəʊdɒn /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A three-nucleotide sequence (codon) that signals "end of protein" but appears too early in the gene due to a mutation. The most common disease-causing premature stop codons are TAG, TAA, and TGA. They're like a period inserted mid-sentence.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The newly developed therapy targeted the <em>premature stop codon</em> TAG that was interrupting production of the enzyme needed to prevent lysosomal storage disease.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="genetics" style="--delay:1.45s; --card-color:#4f7cff;">
+    <span class="term-number">04</span>
+    <div class="card-header">
+      <div class="card-term">Genome</div>
+      <span class="card-tag tag-genetics">Genetics</span>
+    </div>
+    <div class="card-pronunciation">/ ˈdʒiː.nəʊm /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">The complete set of genetic material in an organism — all its DNA, including every gene and non-coding sequence. The human genome contains roughly 3 billion base pairs and about 20,000 protein-coding genes, packed into 23 pairs of chromosomes.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">Scientists sequenced the patient's entire <em>genome</em> to identify the exact mutation responsible for her rare metabolic disorder.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <!-- MOLECULES -->
+  <div class="card" data-category="molecule" style="--delay:1.5s; --card-color:#c678dd;">
+    <span class="term-number">05</span>
+    <div class="card-header">
+      <div class="card-term">mRNA (Messenger RNA)</div>
+      <span class="card-tag tag-molecule">Molecule</span>
+    </div>
+    <div class="card-pronunciation">/ ˈmesɪndʒə ɑː.en.ˈeɪ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A single-stranded molecule that carries the genetic instructions copied from DNA out of the nucleus to the ribosome. It acts as the working copy of a gene — a temporary blueprint that the cell reads to assemble proteins.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">COVID-19 vaccines delivered <em>mRNA</em> instructions into cells, prompting them to manufacture a harmless spike protein and trigger an immune response.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="molecule" style="--delay:1.55s; --card-color:#c678dd;">
+    <span class="term-number">06</span>
+    <div class="card-header">
+      <div class="card-term">tRNA (Transfer RNA)</div>
+      <span class="card-tag tag-molecule">Molecule</span>
+    </div>
+    <div class="card-pronunciation">/ trænsˈfɜː ɑː.en.ˈeɪ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A small RNA molecule that acts as a physical translator in protein synthesis. Each tRNA recognises a specific codon on the mRNA and carries the corresponding amino acid to the ribosome — like a delivery vehicle matching addresses to packages.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The researchers engineered a <em>tRNA</em> to read through the premature stop codon and slot in the correct amino acid, allowing the protein to be completed normally.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="molecule" style="--delay:1.6s; --card-color:#c678dd;">
+    <span class="term-number">07</span>
+    <div class="card-header">
+      <div class="card-term">Suppressor tRNA</div>
+      <span class="card-tag tag-molecule">Molecule</span>
+    </div>
+    <div class="card-pronunciation">/ səˈpresər tiː.ɑː.en.ˈeɪ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A specially engineered or naturally occurring tRNA that "suppresses" a stop codon by reading it as an amino acid instruction instead of a stop signal. It allows ribosomes to continue building a protein past what would normally be a termination point.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">By installing a <em>suppressor tRNA</em> into the patient's cells, researchers caused the ribosome to skip over the faulty stop signal and produce a full-length, functional protein.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="molecule" style="--delay:1.65s; --card-color:#c678dd;">
+    <span class="term-number">08</span>
+    <div class="card-header">
+      <div class="card-term">Codon</div>
+      <span class="card-tag tag-molecule">Molecule</span>
+    </div>
+    <div class="card-pronunciation">/ ˈkəʊdɒn /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A sequence of three nucleotides in mRNA (or DNA) that specifies a particular amino acid or a stop/start signal. There are 64 possible codons encoding 20 amino acids plus three stop signals. Each codon is the fundamental "word" of the genetic language.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The <em>codon</em> UAG — known as "amber" — is one of three stop signals that normally marks the end of a protein, but when it appears too early, it causes disease.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="molecule" style="--delay:1.7s; --card-color:#c678dd;">
+    <span class="term-number">09</span>
+    <div class="card-header">
+      <div class="card-term">Amino Acid</div>
+      <span class="card-tag tag-molecule">Molecule</span>
+    </div>
+    <div class="card-pronunciation">/ əˈmiːnəʊ ˈæsɪd /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">The molecular building blocks of proteins. There are 20 standard amino acids, each with a distinct chemical structure. When strung together in specific sequences, they fold into the complex three-dimensional shapes that give proteins their unique functions.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">A single substituted <em>amino acid</em> in haemoglobin — glutamic acid swapped for valine — is enough to cause sickle cell disease by altering the protein's shape.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="molecule" style="--delay:1.72s; --card-color:#c678dd;">
+    <span class="term-number">10</span>
+    <div class="card-header">
+      <div class="card-term">pegRNA</div>
+      <span class="card-tag tag-molecule">Molecule</span>
+    </div>
+    <div class="card-pronunciation">/ peg ɑː.en.ˈeɪ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">Prime-Editing Guide RNA — a specialised RNA molecule engineered for prime editing. It performs two jobs: first, it guides the editing machinery to the precise location in the genome; second, it carries the corrected DNA template that will be used to rewrite the target sequence.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The team designed a library of 17,000 different <em>pegRNAs</em> to find the best candidate for accessing the tightly packed tRNA gene and installing the suppressor sequence.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <!-- BIOLOGY -->
+  <div class="card" data-category="biology" style="--delay:1.75s; --card-color:#00e5c3;">
+    <span class="term-number">11</span>
+    <div class="card-header">
+      <div class="card-term">Ribosome</div>
+      <span class="card-tag tag-biology">Biology</span>
+    </div>
+    <div class="card-pronunciation">/ ˈraɪbəˌsəʊm /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A complex molecular machine found in all cells that reads mRNA instructions and assembles amino acids into proteins in the correct order. Made of RNA and protein, ribosomes are the cell's protein factories — every protein in the body is built by one.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The <em>ribosome</em> stalled when it encountered the premature stop codon, prematurely releasing an incomplete protein that quickly degraded inside the cell.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="biology" style="--delay:1.8s; --card-color:#00e5c3;">
+    <span class="term-number">12</span>
+    <div class="card-header">
+      <div class="card-term">Nucleotide</div>
+      <span class="card-tag tag-biology">Biology</span>
+    </div>
+    <div class="card-pronunciation">/ ˈnjuːklɪətaɪd /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">The individual chemical unit (monomer) that makes up DNA and RNA. Each nucleotide consists of a sugar, a phosphate group, and one of four nitrogenous bases. In DNA: adenine (A), thymine (T), guanine (G), cytosine (C). These "letters" are the alphabet of the genetic code.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">Changing just one <em>nucleotide</em> — a single letter in three billion — was enough to introduce a stop codon and disrupt the entire gene's function.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="biology" style="--delay:1.85s; --card-color:#00e5c3;">
+    <span class="term-number">13</span>
+    <div class="card-header">
+      <div class="card-term">Transcription</div>
+      <span class="card-tag tag-biology">Biology</span>
+    </div>
+    <div class="card-pronunciation">/ trænsˈkrɪpʃ.ən /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">The first step of gene expression — the process by which an enzyme called RNA polymerase copies the DNA sequence of a gene into a complementary mRNA strand. It's analogous to photocopying a master document to send to workers on the factory floor.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">During <em>transcription</em>, the cell's machinery reads the mutant gene and faithfully copies the premature stop codon into the mRNA, perpetuating the error.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="biology" style="--delay:1.9s; --card-color:#00e5c3;">
+    <span class="term-number">14</span>
+    <div class="card-header">
+      <div class="card-term">Enzyme</div>
+      <span class="card-tag tag-biology">Biology</span>
+    </div>
+    <div class="card-pronunciation">/ ˈen.zaɪm /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A biological catalyst — a protein that speeds up specific chemical reactions in the body without itself being consumed. Enzymes are essential for virtually every cellular process, from digesting food to copying DNA. A missing or malformed enzyme typically causes serious disease.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">After PERT therapy, <em>enzyme</em> activity in Batten disease cell models recovered to 17–70% of normal levels — enough to meaningfully reduce the toxic buildup inside neurons.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="biology" style="--delay:1.93s; --card-color:#00e5c3;">
+    <span class="term-number">15</span>
+    <div class="card-header">
+      <div class="card-term">Homology-Directed Repair (HDR)</div>
+      <span class="card-tag tag-biology">Biology</span>
+    </div>
+    <div class="card-pronunciation">/ həˈmɒlədʒi daɪˈrektɪd rɪˈpeə /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A natural DNA repair mechanism that cells use to fix breaks in DNA using a template — usually the undamaged sister chromosome. In gene therapy, researchers can provide their own template. HDR is highly precise but inefficient, typically achieving only 10–20% success rates in most cell types.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text"><em>Homology-directed repair</em> was the gold standard for precise gene correction, but PERT's 60–80% efficiency far surpassed it in the same cell models.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <!-- TECHNIQUES -->
+  <div class="card" data-category="technique" style="--delay:1.95s; --card-color:#c9a84c;">
+    <span class="term-number">16</span>
+    <div class="card-header">
+      <div class="card-term">Prime Editing</div>
+      <span class="card-tag tag-technique">Technique</span>
+    </div>
+    <div class="card-pronunciation">/ praɪm ˈedɪtɪŋ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">An advanced genome-editing technology developed in 2019 that can rewrite specific DNA sequences without making double-strand cuts, reducing errors. It uses a modified CRISPR-Cas9 fused with a reverse transcriptase enzyme guided by a pegRNA. Often described as a "search and replace" for DNA.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">Using <em>prime editing</em>, the team permanently rewrote a tRNA gene in human cells with remarkable precision, transforming it into a therapeutic suppressor without off-target effects.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="technique" style="--delay:2.0s; --card-color:#c9a84c;">
+    <span class="term-number">17</span>
+    <div class="card-header">
+      <div class="card-term">PERT</div>
+      <span class="card-tag tag-technique">Technique</span>
+    </div>
+    <div class="card-pronunciation">/ pɜːt /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">Prime-Editing-mediated Readthrough of premature Termination codons. The new gene-agnostic therapeutic strategy developed in this study. It permanently edits a redundant tRNA gene in a patient's own genome, turning it into a suppressor tRNA that can read through premature stop signals across many different diseases.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text"><em>PERT</em> represents a major conceptual shift — rather than correcting each disease gene individually, it reprograms a cell's own machinery to ignore premature stop signals across many genetic disorders.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="technique" style="--delay:2.05s; --card-color:#c9a84c;">
+    <span class="term-number">18</span>
+    <div class="card-header">
+      <div class="card-term">Genome Editing</div>
+      <span class="card-tag tag-technique">Technique</span>
+    </div>
+    <div class="card-pronunciation">/ ˈdʒiːnəʊm ˈedɪtɪŋ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A group of technologies that allow scientists to add, remove, or alter DNA within a living organism's genome. Methods include CRISPR-Cas9, base editing, and prime editing. It holds the promise of directly curing genetic diseases at their root cause rather than just managing symptoms.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text"><em>Genome editing</em> tools have progressed so rapidly that what once took years to achieve in research mice can now be performed in human cell cultures within months.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="technique" style="--delay:2.1s; --card-color:#c9a84c;">
+    <span class="term-number">19</span>
+    <div class="card-header">
+      <div class="card-term">AAV9 (Adeno-Associated Virus 9)</div>
+      <span class="card-tag tag-technique">Technique</span>
+    </div>
+    <div class="card-pronunciation">/ eɪ.eɪ.viː naɪn /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A harmless, non-replicating virus used as a gene therapy delivery vehicle (vector). AAV9 is particularly efficient at crossing the blood-brain barrier and reaching the central nervous system, making it favoured for neurological genetic diseases. It can ferry genetic cargo into cells without integrating into the host genome.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The scientists packaged the prime-editing components inside <em>AAV9</em> and injected it into newborn mice, where it successfully reached the brain, heart, and liver.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="technique" style="--delay:2.12s; --card-color:#c9a84c;">
+    <span class="term-number">20</span>
+    <div class="card-header">
+      <div class="card-term">Base Editing</div>
+      <span class="card-tag tag-technique">Technique</span>
+    </div>
+    <div class="card-pronunciation">/ beɪs ˈedɪtɪŋ /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A genome-editing technique that chemically converts one DNA base letter into another (e.g., C→T or A→G) at a precise location without making double-strand cuts. It is more targeted than traditional CRISPR and is already entering clinical trials for various genetic diseases.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">The first clinical use of <em>base editing</em> was reported in an individual with a TAG stop codon mutation, proving that such tools can safely reach and modify disease-causing sites in humans.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <!-- DISEASES -->
+  <div class="card" data-category="disease" style="--delay:2.15s; --card-color:#ff6b6b;">
+    <span class="term-number">21</span>
+    <div class="card-header">
+      <div class="card-term">Batten Disease</div>
+      <span class="card-tag tag-disease">Disease</span>
+    </div>
+    <div class="card-pronunciation">/ ˈbæt.ən dɪˈziːz /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A fatal inherited neurological disorder (also called neuronal ceroid lipofuscinosis) caused by mutations in genes involved in cellular waste disposal. Toxic lipid material accumulates in brain cells, leading to seizures, blindness, progressive cognitive decline, and early death. No cure currently exists.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">In <em>Batten disease</em> cell models, installing the engineered suppressor tRNA restored enzyme activity to up to 70% of normal levels — a potentially meaningful threshold for reducing neurodegeneration.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="disease" style="--delay:2.2s; --card-color:#ff6b6b;">
+    <span class="term-number">22</span>
+    <div class="card-header">
+      <div class="card-term">Tay-Sachs Disease</div>
+      <span class="card-tag tag-disease">Disease</span>
+    </div>
+    <div class="card-pronunciation">/ ˈteɪ sæks dɪˈziːz /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A rare, inherited lysosomal storage disorder caused by the absence of an enzyme (Hex-A) that breaks down a fatty substance (GM2 ganglioside) in nerve cells. As the substance accumulates, it destroys neurons. The infantile form is invariably fatal, usually before age 5.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">Children with <em>Tay-Sachs disease</em> lack functional Hex-A enzyme; PERT therapy demonstrated that restoring even partial enzyme activity might slow the toxic buildup destroying their motor neurons.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="disease" style="--delay:2.25s; --card-color:#ff6b6b;">
+    <span class="term-number">23</span>
+    <div class="card-header">
+      <div class="card-term">Niemann-Pick C1 Disease</div>
+      <span class="card-tag tag-disease">Disease</span>
+    </div>
+    <div class="card-pronunciation">/ ˈniːmən pɪk siː wʌn /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A progressive and fatal lysosomal storage disease caused by mutations in the NPC1 gene, disrupting cholesterol and lipid trafficking within cells. Untrafficked cholesterol accumulates in lysosomes, damaging the liver, lungs, and nervous system. Sometimes called "childhood Alzheimer's."</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">In <em>Niemann-Pick C1</em> disease cell models treated with PERT, detectable amounts of the normally absent full-length NPC1 protein were produced for the first time.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="disease" style="--delay:2.3s; --card-color:#ff6b6b;">
+    <span class="term-number">24</span>
+    <div class="card-header">
+      <div class="card-term">Hurler Syndrome</div>
+      <span class="card-tag tag-disease">Disease</span>
+    </div>
+    <div class="card-pronunciation">/ ˈhɜːlər ˈsɪndrəʊm /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">The most severe form of Mucopolysaccharidosis type I (MPS I), a lysosomal storage disorder caused by deficiency of the enzyme alpha-L-iduronidase. Without this enzyme, glycosaminoglycans build up in cells, causing organ damage, skeletal abnormalities, intellectual disability, and shortened lifespan.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">In a mouse model of <em>Hurler syndrome</em>, PERT restored 1.7–7% of normal enzyme activity in the brain, heart, and liver — sufficient to improve tissue pathology without triggering toxicity.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <div class="card" data-category="disease" style="--delay:2.35s; --card-color:#ff6b6b;">
+    <span class="term-number">25</span>
+    <div class="card-header">
+      <div class="card-term">Cystic Fibrosis</div>
+      <span class="card-tag tag-disease">Disease</span>
+    </div>
+    <div class="card-pronunciation">/ ˈsɪstɪk faɪˈbrəʊsɪs /</div>
+    <div class="card-divider"></div>
+    <div class="card-meaning">A common inherited disease caused by mutations in the CFTR gene, disrupting a chloride channel protein. This causes thick, sticky mucus to build up in the lungs, digestive system, and other organs. It is one of the most prevalent life-limiting genetic disorders, affecting ~100,000 people worldwide.</div>
+    <div class="card-example">
+      <div class="example-label">Example sentence</div>
+      <div class="example-text">Some forms of <em>cystic fibrosis</em> stem from nonsense mutations that could, in principle, be targeted by PERT — a single gene-agnostic therapy rather than a mutation-specific one.</div>
+    </div>
+    <div class="expand-dot"></div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" id="emptyState">
+    <div class="big">∅</div>
+    <p>No terms match your search</p>
+  </div>
+</div>
+
+<footer>
+  Based on Nature Study · Broad Institute, Harvard & University of Minnesota · PERT Therapy Research
+</footer>
+
+<script>
+  // Cursor glow
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // Scroll progress
+  const bar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = pct + '%';
+  });
+
+  // Search + Filter
+  const searchInput = document.getElementById('searchInput');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card[data-category]');
+  const emptyState = document.getElementById('emptyState');
+  const visibleCount = document.getElementById('visibleCount');
+
+  let activeFilter = 'all';
+  let searchTerm = '';
+
+  function updateCards() {
+    let visible = 0;
+    cards.forEach(card => {
+      const category = card.dataset.category;
+      const text = card.innerText.toLowerCase();
+      const matchFilter = activeFilter === 'all' || category === activeFilter;
+      const matchSearch = searchTerm === '' || text.includes(searchTerm);
+      const show = matchFilter && matchSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    visibleCount.textContent = visible;
+    emptyState.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', e => {
+    searchTerm = e.target.value.toLowerCase();
+    updateCards();
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      updateCards();
+    });
+  });
+
+  // Card hover tilt
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `translateY(-4px) scale(1.01) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // Intersection Observer for staggered scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'none';
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(c => io.observe(c));
+</script>
+</body>
+</html>

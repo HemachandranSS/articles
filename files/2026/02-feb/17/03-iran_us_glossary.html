@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iran–US Crisis — Geopolitical Lexicon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0805;
+    --surface: #12100d;
+    --surface2: #1a1710;
+    --red: #c0392b;
+    --amber: #d4840a;
+    --sand: #c9b07a;
+    --steel: #7fa3b8;
+    --gold: #e8c96a;
+    --text: #e8ddc8;
+    --text-dim: #7a6f5a;
+    --border: rgba(201,176,122,0.12);
+    --glow-red: rgba(192,57,43,0.18);
+    --glow-gold: rgba(232,201,106,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* TOPOGRAPHIC BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(192,57,43,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(201,176,122,0.05) 0%, transparent 50%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 60px,
+        rgba(201,176,122,0.018) 60px,
+        rgba(201,176,122,0.018) 61px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* AMBIENT ORBS */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(130px);
+    pointer-events: none;
+    z-index: 0;
+    animation: pulse 10s ease-in-out infinite;
+  }
+  .orb-1 { width: 600px; height: 400px; background: rgba(192,57,43,0.07); top: -120px; right: -100px; animation-delay: 0s; }
+  .orb-2 { width: 450px; height: 450px; background: rgba(201,176,122,0.05); bottom: -80px; left: -60px; animation-delay: 5s; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(127,163,184,0.05); top: 45%; left: 40%; animation-delay: 2.5s; }
+  @keyframes pulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+
+  /* SCROLL PROGRESS */
+  .progress {
+    position: fixed; top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--amber), var(--gold));
+    z-index: 999;
+    width: 0%;
+    box-shadow: 0 0 12px rgba(192,57,43,0.6);
+    transition: width .1s linear;
+  }
+
+  /* CURSOR */
+  .cursor-glow {
+    position: fixed; width: 340px; height: 340px;
+    pointer-events: none; z-index: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,176,122,0.04) 0%, transparent 70%);
+    transform: translate(-50%,-50%);
+  }
+
+  /* HEADER */
+  header {
+    position: relative; z-index: 10;
+    padding: 80px 48px 56px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .header-eyebrow {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 30px;
+    opacity: 0; animation: rise 1s cubic-bezier(.16,1,.3,1) .2s forwards;
+  }
+
+  .alert-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 12px var(--red);
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  .eyebrow-text {
+    font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--red);
+  }
+
+  .eyebrow-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    letter-spacing: 4px;
+    line-height: .95;
+    background: linear-gradient(160deg, #ffffff 0%, var(--sand) 40%, var(--red) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 18px;
+    opacity: 0; animation: rise 1s cubic-bezier(.16,1,.3,1) .4s forwards;
+  }
+
+  .subtitle {
+    font-size: 11px; color: var(--text-dim);
+    letter-spacing: 3px; text-transform: uppercase;
+    opacity: 0; animation: rise 1s cubic-bezier(.16,1,.3,1) .6s forwards;
+  }
+
+  /* DATELINE TICKER */
+  .ticker-wrap {
+    position: relative; z-index: 10;
+    background: var(--red);
+    padding: 10px 0;
+    overflow: hidden;
+    opacity: 0; animation: rise .8s ease .8s forwards;
+  }
+  .ticker {
+    display: flex; gap: 80px;
+    white-space: nowrap;
+    animation: scroll-left 28s linear infinite;
+  }
+  @keyframes scroll-left { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .tick-item {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.85); flex-shrink: 0;
+  }
+  .tick-sep { color: rgba(255,255,255,0.4); }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CONTROLS */
+  .controls {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 18px; padding: 36px 48px;
+  }
+
+  .search-wrap { position: relative; width: 100%; max-width: 600px; }
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 1px solid rgba(201,176,122,0.25);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 0.5px;
+    padding: 14px 20px 14px 50px;
+    outline: none; border-radius: 2px;
+    transition: border-color .3s, box-shadow .3s;
+    opacity: 0; animation: rise .8s ease 1s forwards;
+  }
+  .search-input::placeholder { color: var(--text-dim); }
+  .search-input:focus {
+    border-color: var(--sand);
+    box-shadow: 0 0 0 3px rgba(201,176,122,0.1), 0 0 20px rgba(201,176,122,0.06);
+  }
+  .search-icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: var(--text-dim); font-size: 16px; pointer-events: none;
+  }
+
+  .filters {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; animation: rise .8s ease 1.1s forwards;
+  }
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 1px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--text-dim);
+    cursor: pointer; transition: all .25s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--sand); color: var(--sand);
+    background: rgba(201,176,122,0.07);
+  }
+
+  /* STATS */
+  .stats-row {
+    position: relative; z-index: 10;
+    display: flex; justify-content: center; gap: 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin: 0 0 48px;
+    opacity: 0; animation: rise .8s ease 1.2s forwards;
+  }
+  .stat {
+    flex: 1; max-width: 180px; text-align: center;
+    padding: 22px 16px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    display: block; font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem; letter-spacing: 2px;
+    color: var(--gold); line-height: 1;
+  }
+  .stat-label {
+    display: block; font-size: 8px; color: var(--text-dim);
+    letter-spacing: 3px; text-transform: uppercase; margin-top: 5px;
+  }
+
+  /* GRID */
+  .grid {
+    position: relative; z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1px;
+    padding: 0 0 80px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    max-width: 100%;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    padding: 28px 28px 24px;
+    position: relative; overflow: hidden;
+    cursor: default;
+    transition: background .3s, transform .4s cubic-bezier(.16,1,.3,1);
+    opacity: 0;
+    animation: cardIn .7s cubic-bezier(.16,1,.3,1) var(--d,0s) forwards;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card:hover {
+    background: var(--surface2);
+    z-index: 2;
+  }
+
+  /* Accent corner */
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--card-color, var(--sand));
+    opacity: 0; transition: opacity .3s;
+  }
+  .card:hover::before { opacity: 1; }
+
+  /* Top line */
+  .card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--card-color, var(--sand)), transparent 60%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .card:hover::after { opacity: 1; }
+
+  .card-num {
+    position: absolute; top: 16px; right: 18px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; color: var(--text-dim); opacity: 0.25;
+    letter-spacing: 2px;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 1px; border: 1px solid;
+    margin-bottom: 14px;
+  }
+  .tag-diplomacy  { color: var(--steel); border-color: rgba(127,163,184,0.35); background: rgba(127,163,184,0.06); }
+  .tag-military   { color: var(--red);   border-color: rgba(192,57,43,0.35);   background: rgba(192,57,43,0.06); }
+  .tag-geography  { color: var(--sand);  border-color: rgba(201,176,122,0.35); background: rgba(201,176,122,0.06); }
+  .tag-nuclear    { color: var(--gold);  border-color: rgba(232,201,106,0.35); background: rgba(232,201,106,0.06); }
+  .tag-org        { color: #98c379;      border-color: rgba(152,195,121,0.35); background: rgba(152,195,121,0.06); }
+  .tag-person     { color: #e5c07b;      border-color: rgba(229,192,123,0.35); background: rgba(229,192,123,0.06); }
+
+  .card-term {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem; font-weight: 700;
+    color: #fff; line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .card-pron {
+    font-size: 10px; color: var(--text-dim);
+    font-style: italic; margin-bottom: 14px;
+  }
+
+  .card-rule {
+    height: 1px; background: var(--border);
+    margin-bottom: 14px;
+  }
+
+  .card-def {
+    font-size: 12px; line-height: 1.85;
+    color: var(--text); margin-bottom: 18px;
+    font-weight: 400;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .card-example {
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--card-color, var(--sand));
+    background: rgba(0,0,0,0.2);
+    padding: 12px 16px; border-radius: 0 2px 2px 0;
+  }
+  .ex-label {
+    font-size: 8px; color: var(--text-dim);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+  .ex-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic;
+    color: rgba(232,221,200,0.75); line-height: 1.65;
+  }
+  .ex-text em {
+    font-style: normal; color: var(--text);
+    font-weight: 600;
+  }
+
+  /* EMPTY */
+  .empty {
+    display: none; grid-column: 1/-1;
+    text-align: center; padding: 100px 40px;
+    color: var(--text-dim);
+  }
+  .empty-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem; letter-spacing: 4px;
+    color: var(--red); margin-bottom: 12px;
+  }
+  .empty p { font-size: 11px; letter-spacing: 2px; }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 10;
+    text-align: center; padding: 30px 40px 60px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  }
+
+  @media(max-width:680px){
+    h1{font-size:3.5rem}
+    header{padding:50px 24px 40px}
+    .controls{padding:28px 24px}
+    .grid{grid-template-columns:1fr}
+    .stats-row{flex-wrap:wrap}
+    .stat{min-width:120px}
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="cursor-glow" id="cg"></div>
+<div class="progress" id="pb"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-eyebrow">
+    <span class="alert-dot"></span>
+    <span class="eyebrow-text">Geopolitical Lexicon · Breaking Dispatch</span>
+    <span class="eyebrow-line"></span>
+  </div>
+  <h1>Iran–US<br>Crisis Decoded</h1>
+  <p class="subtitle">30 terms · Diplomacy · Military · Nuclear · Geneva Talks 2025</p>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="tick-item">ARAGHCHI IN GENEVA <span class="tick-sep">·</span></span>
+    <span class="tick-item">IRGC DRILLS NEAR STRAIT OF HORMUZ <span class="tick-sep">·</span></span>
+    <span class="tick-item">SECOND US AIRCRAFT CARRIER DEPLOYED <span class="tick-sep">·</span></span>
+    <span class="tick-item">IAEA TECHNICAL TALKS UNDERWAY <span class="tick-sep">·</span></span>
+    <span class="tick-item">OMAN-MEDIATED NUCLEAR NEGOTIATIONS <span class="tick-sep">·</span></span>
+    <span class="tick-item">ARAGHCHI IN GENEVA <span class="tick-sep">·</span></span>
+    <span class="tick-item">IRGC DRILLS NEAR STRAIT OF HORMUZ <span class="tick-sep">·</span></span>
+    <span class="tick-item">SECOND US AIRCRAFT CARRIER DEPLOYED <span class="tick-sep">·</span></span>
+    <span class="tick-item">IAEA TECHNICAL TALKS UNDERWAY <span class="tick-sep">·</span></span>
+    <span class="tick-item">OMAN-MEDIATED NUCLEAR NEGOTIATIONS <span class="tick-sep">·</span></span>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" id="si" type="text" placeholder="Search terms, definitions, examples...">
+  </div>
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-f="all">All Terms</button>
+    <button class="filter-btn" data-f="diplomacy">Diplomacy</button>
+    <button class="filter-btn" data-f="military">Military</button>
+    <button class="filter-btn" data-f="nuclear">Nuclear</button>
+    <button class="filter-btn" data-f="geography">Geography</button>
+    <button class="filter-btn" data-f="org">Organisations</button>
+    <button class="filter-btn" data-f="person">Key People</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat"><span class="stat-num" id="vc">30</span><span class="stat-label">Terms</span></div>
+  <div class="stat"><span class="stat-num">6</span><span class="stat-label">Categories</span></div>
+  <div class="stat"><span class="stat-num">2025</span><span class="stat-label">Crisis Year</span></div>
+  <div class="stat"><span class="stat-num">Ω</span><span class="stat-label">Hormuz Watch</span></div>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid">
+
+  <!-- DIPLOMACY -->
+  <div class="card" data-cat="diplomacy" style="--d:1.2s;--card-color:#7fa3b8">
+    <span class="card-num">01</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Nuclear Talks</div>
+    <div class="card-pron">/ ˈnjuːklɪə tɔːks /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Formal negotiations between states focused on limiting, verifying, or eliminating a country's nuclear weapons or enrichment capabilities. They typically involve multiple rounds over months or years, often mediated by a neutral third party, and cover inspections, sanctions relief, and enrichment caps.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The second round of <em>nuclear talks</em> in Geneva brought both sides back to the table, though Iran insisted it would not sign any deal under the threat of military force.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="diplomacy" style="--d:1.28s;--card-color:#7fa3b8">
+    <span class="card-num">02</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Mediation</div>
+    <div class="card-pron">/ ˌmiːdiˈeɪʃən /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A conflict-resolution process in which a neutral third party (the mediator) facilitates negotiations between two or more parties who cannot, or will not, negotiate directly. The mediator has no power to impose a settlement — their role is to build trust, carry messages, and bridge gaps.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Oman's quiet <em>mediation</em> proved essential: without a trusted intermediary, Washington and Tehran would have had no back-channel through which to arrange the Geneva meeting.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="diplomacy" style="--d:1.36s;--card-color:#7fa3b8">
+    <span class="card-num">03</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Envoy</div>
+    <div class="card-pron">/ ˈenvɔɪ /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A diplomat or special representative sent by a government to conduct negotiations or represent its interests on a specific issue. Unlike an ambassador (a permanent presence), an envoy is often dispatched for a defined mission and reports directly to the head of state or a senior minister.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Steve Witkoff, Trump's special <em>envoy</em> for West Asia, met Araghchi in Muscat and laid the groundwork that brought both parties to the negotiating table in Geneva.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="diplomacy" style="--d:1.44s;--card-color:#7fa3b8">
+    <span class="card-num">04</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Submission</div>
+    <div class="card-pron">/ səbˈmɪʃən /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">In diplomatic language, capitulating to a stronger party's demands under coercion or threat rather than through genuine negotiation. When Araghchi said "submission before threats" is "not on the table," he was signalling that Iran will not make concessions driven by fear of military action — only by genuine mutual agreement.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Tehran drew a sharp distinction between compromise and <em>submission</em>, warning that any deal signed under duress would lack legitimacy and domestic support.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="diplomacy" style="--d:1.52s;--card-color:#7fa3b8">
+    <span class="card-num">05</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Sanctions</div>
+    <div class="card-pron">/ ˈsæŋkʃənz /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Economic or political penalties imposed by one country (or group of countries) on another to pressure a change in behaviour. They can target banking, oil exports, arms trade, or specific officials. In the Iran context, US sanctions have crippled the Iranian economy and are typically the central bargaining chip in nuclear negotiations.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Iran's chief demand in any nuclear deal has consistently been the lifting of US <em>sanctions</em> that have blocked its access to global financial markets and oil revenues.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="diplomacy" style="--d:1.6s;--card-color:#7fa3b8">
+    <span class="card-num">06</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Back-channel</div>
+    <div class="card-pron">/ bæk ˈtʃænəl /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Secret or informal lines of communication between rival governments, operating outside official diplomatic channels. Back-channels allow adversaries to explore possibilities, test positions, and lay groundwork for agreements without public commitment or loss of face. Oman has historically hosted US–Iran back-channel communications.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Months of quiet <em>back-channel</em> exchanges in Muscat preceded the formal announcement of Geneva talks, giving both sides confidence that a second meeting was worthwhile.</div>
+    </div>
+  </div>
+
+  <!-- MILITARY -->
+  <div class="card" data-cat="military" style="--d:1.68s;--card-color:#c0392b">
+    <span class="card-num">07</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Aircraft Carrier</div>
+    <div class="card-pron">/ ˈeəkrɑːft ˈkærɪə /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A massive warship that serves as a floating airbase, carrying dozens of combat aircraft and acting as the centrepiece of a naval strike group. Deploying an aircraft carrier to a region is a powerful signal of military intent. The US deploying a second carrier to the Persian Gulf area was a deliberate show of force aimed at Iran.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The arrival of a second US <em>aircraft carrier</em> in the region sent an unmistakable message: Washington was prepared to back its diplomatic ultimatum with overwhelming naval firepower.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="military" style="--d:1.74s;--card-color:#c0392b">
+    <span class="card-num">08</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Live-fire Drill</div>
+    <div class="card-pron">/ laɪv faɪər drɪl /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A military exercise in which actual weapons — ammunition, missiles, or torpedoes — are used rather than simulated ones. Live-fire drills demonstrate real combat readiness and are often timed to send a political signal to adversaries. The name "Smart Control of Hormuz Strait" made Iran's intended audience clear.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The IRGC's <em>live-fire drills</em> near the Strait of Hormuz were a calculated reminder that Iran retains the ability to disrupt one of the world's most critical shipping lanes.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="military" style="--d:1.8s;--card-color:#c0392b">
+    <span class="card-num">09</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Naval Forces</div>
+    <div class="card-pron">/ ˈneɪvəl fɔːsɪz /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The maritime branch of a country's armed forces, responsible for warfare at sea and the projection of power along coastlines and through key waterways. The IRGC Navy (separate from Iran's conventional navy) operates fast-attack boats, submarines, and anti-ship missiles in the Gulf.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The IRGC's <em>naval forces</em> have a long record of harassing commercial tankers in the Persian Gulf, using swarms of speedboats to intimidate far larger vessels.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="military" style="--d:1.86s;--card-color:#c0392b">
+    <span class="card-num">10</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Operational Readiness</div>
+    <div class="card-pron">/ ɒpəˈreɪʃənəl ˈredɪnəs /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The degree to which a military unit is prepared to perform its assigned missions at any given time. Factors include personnel training, equipment maintenance, fuel and ammunition supply, and intelligence. Drills are the primary method for testing and demonstrating operational readiness to both allies and adversaries.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The IRGC Navy used the Hormuz drills to evaluate the <em>operational readiness</em> of its fast-boat squadrons, mine-laying units, and shore-based anti-ship missile batteries.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="military" style="--d:1.92s;--card-color:#c0392b">
+    <span class="card-num">11</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Mockup</div>
+    <div class="card-pron">/ ˈmɒkʌp /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A full-scale physical replica of a military target — typically an enemy vessel or installation — used in training and propaganda. Iran has famously constructed mockup US aircraft carriers that its forces "attack" during exercises, both to practise tactics and to create dramatic footage for domestic and international audiences.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Images of IRGC speedboats encircling an Iranian <em>mockup</em> of a US aircraft carrier drew immediate mockery in Washington but served a powerful psychological purpose at home.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="military" style="--d:1.96s;--card-color:#c0392b">
+    <span class="card-num">12</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Chokepoint</div>
+    <div class="card-pron">/ ˈtʃəʊkpɔɪnt /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A narrow strategic waterway through which a large proportion of global trade or military traffic must pass, making it extremely vulnerable to blockade or attack. Control — or the credible threat of blocking — a chokepoint gives a nation disproportionate leverage in geopolitical crises.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">As the sole maritime <em>chokepoint</em> between the Gulf and the open ocean, the Strait of Hormuz is Iran's most potent geographical trump card in any confrontation with the West.</div>
+    </div>
+  </div>
+
+  <!-- GEOGRAPHY -->
+  <div class="card" data-cat="geography" style="--d:2.02s;--card-color:#c9b07a">
+    <span class="card-num">13</span>
+    <span class="card-tag tag-geography">Geography</span>
+    <div class="card-term">Strait of Hormuz</div>
+    <div class="card-pron">/ streɪt əv hɔːˈmuːz /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A narrow waterway between Iran and Oman connecting the Persian Gulf to the Gulf of Oman and the Arabian Sea. At its narrowest it is just 33km wide. Roughly 20% of global oil trade passes through it daily — making it the world's most strategically vital maritime chokepoint. Iran has repeatedly threatened to close it during crises.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">A blockade of the <em>Strait of Hormuz</em> would trigger an immediate global oil price shock, cutting off supplies to Japan, South Korea, India, and much of Europe within days.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="geography" style="--d:2.08s;--card-color:#c9b07a">
+    <span class="card-num">14</span>
+    <span class="card-tag tag-geography">Geography</span>
+    <div class="card-term">Persian Gulf</div>
+    <div class="card-pron">/ ˈpɜːʒən ɡʌlf /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A semi-enclosed sea bordered by Iran, Iraq, Kuwait, Saudi Arabia, Bahrain, Qatar, the UAE, and Oman. It is the world's most oil-rich body of water, with the surrounding nations holding the majority of global proven oil reserves. Its geopolitical importance makes it one of the most militarised maritime regions on earth.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The US Fifth Fleet, permanently based in Bahrain, patrols the <em>Persian Gulf</em> to protect freedom of navigation for the oil tankers that are the lifeblood of the global economy.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="geography" style="--d:2.12s;--card-color:#c9b07a">
+    <span class="card-num">15</span>
+    <span class="card-tag tag-geography">Geography</span>
+    <div class="card-term">Arabian Sea</div>
+    <div class="card-pron">/ əˈreɪbɪən siː /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The northwestern part of the Indian Ocean, bounded by the Arabian Peninsula, the Indian subcontinent, and the Horn of Africa. It is the open ocean that vessels reach after exiting the Strait of Hormuz and the Gulf of Oman. Major shipping lanes to Europe, Asia, and Africa pass through it.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">US naval assets positioned in the <em>Arabian Sea</em> can surge into the Gulf of Oman within hours if the Strait of Hormuz is threatened, maintaining a forward deterrent posture.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="geography" style="--d:2.16s;--card-color:#c9b07a">
+    <span class="card-num">16</span>
+    <span class="card-tag tag-geography">Geography</span>
+    <div class="card-term">Geneva</div>
+    <div class="card-pron">/ dʒɪˈniːvə /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Switzerland's second-largest city and the world's foremost centre of international diplomacy. Home to the UN's European headquarters, the ICRC, the WTO, and countless multilateral treaty negotiations. Its neutral status under Swiss law makes it the preferred venue for sensitive talks between adversarial states, including past Iran nuclear negotiations.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Choosing <em>Geneva</em> as the venue was itself a signal: Switzerland's strict neutrality guaranteed both sides a setting where neither could claim home-team advantage.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="geography" style="--d:2.2s;--card-color:#c9b07a">
+    <span class="card-num">17</span>
+    <span class="card-tag tag-geography">Geography</span>
+    <div class="card-term">Muscat</div>
+    <div class="card-pron">/ ˈmʌskæt /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The capital city of Oman, strategically located on the Gulf of Oman. Muscat has carved out a unique role as a neutral diplomatic hub — Oman maintains friendly relations with both the United States and Iran, making it the preferred venue for sensitive US–Iran back-channel communications since at least the 1980s.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The February meeting in <em>Muscat</em> was the first direct US–Iran engagement of the Trump second term, and its positive conclusion paved the way for the higher-profile Geneva summit.</div>
+    </div>
+  </div>
+
+  <!-- NUCLEAR -->
+  <div class="card" data-cat="nuclear" style="--d:2.26s;--card-color:#e8c96a">
+    <span class="card-num">18</span>
+    <span class="card-tag tag-nuclear">Nuclear</span>
+    <div class="card-term">Nuclear Enrichment</div>
+    <div class="card-pron">/ ˈnjuːklɪər ɪnˈrɪtʃmənt /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The process of increasing the concentration of the fissile isotope uranium-235 in uranium ore. Low enrichment (3–5%) produces fuel for civilian nuclear power plants. Higher enrichment (90%+) produces weapons-grade material. Iran's advancing enrichment levels — crossing 60% and approaching 90% — are the core concern driving international pressure.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The central sticking point in negotiations is how far Iran will roll back its <em>nuclear enrichment</em> programme — and what economic incentives the West will offer in return.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="nuclear" style="--d:2.32s;--card-color:#e8c96a">
+    <span class="card-num">19</span>
+    <span class="card-tag tag-nuclear">Nuclear</span>
+    <div class="card-term">Nuclear Facility</div>
+    <div class="card-pron">/ ˈnjuːklɪər fəˈsɪlɪti /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A site involved in nuclear research, uranium enrichment, fuel fabrication, or weapons development. Key Iranian facilities include Natanz (main enrichment site), Fordow (buried underground), and Arak (heavy-water reactor). These sites were targeted in the June 2025 Israeli-US strikes, prompting Iran to expel IAEA inspectors.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Iran suspended IAEA access to its key <em>nuclear facilities</em> after the June 2025 strikes, leaving the international community blind to the true state of its atomic programme.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="nuclear" style="--d:2.38s;--card-color:#e8c96a">
+    <span class="card-num">20</span>
+    <span class="card-tag tag-nuclear">Nuclear</span>
+    <div class="card-term">Inspections / Access</div>
+    <div class="card-pron">/ ɪnˈspekʃənz /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Formal visits by IAEA inspectors to a country's nuclear sites to verify that declared activities match actual activities, and to detect any covert weapons development. Inspections are the backbone of the global nuclear non-proliferation regime. Iran's suspension of access after the strikes was a major escalatory step.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Restoring IAEA <em>inspections</em> access to Iranian enrichment sites is likely a prerequisite for any US sanctions relief — but Tehran insists security guarantees must come first.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="nuclear" style="--d:2.44s;--card-color:#e8c96a">
+    <span class="card-num">21</span>
+    <span class="card-tag tag-nuclear">Nuclear</span>
+    <div class="card-term">Proliferation</div>
+    <div class="card-pron">/ prəˌlɪfəˈreɪʃən /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The spread of nuclear weapons, materials, or technology to states or non-state actors that do not currently possess them. Nuclear non-proliferation is a cornerstone of global security policy, enshrined in the Nuclear Non-Proliferation Treaty (NPT). Iran's programme is widely viewed as the most serious near-term proliferation risk.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">US officials warned that without a new deal, Iran's breakout timeline — the time needed to build a bomb — could shorten to weeks, triggering a regional <em>proliferation</em> cascade as Saudi Arabia and others sought their own deterrents.</div>
+    </div>
+  </div>
+
+  <!-- ORGANISATIONS -->
+  <div class="card" data-cat="org" style="--d:2.5s;--card-color:#98c379">
+    <span class="card-num">22</span>
+    <span class="card-tag tag-org">Organisation</span>
+    <div class="card-term">IRGC (Islamic Revolutionary Guard Corps)</div>
+    <div class="card-pron">/ aɪ.ɑː.dʒiː.siː /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Iran's elite parallel military force, founded in 1979 to protect the Islamic Revolution. Separate from the conventional army, the IRGC has its own ground, naval, and air forces, plus the Quds Force for extraterritorial operations. It controls large segments of Iran's economy and is designated a terrorist organisation by the United States.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">The <em>IRGC</em>'s decision to launch naval drills while its foreign minister negotiated in Geneva was a deliberate dual-track strategy — diplomacy and military posturing conducted simultaneously.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="org" style="--d:2.56s;--card-color:#98c379">
+    <span class="card-num">23</span>
+    <span class="card-tag tag-org">Organisation</span>
+    <div class="card-term">IAEA (International Atomic Energy Agency)</div>
+    <div class="card-pron">/ aɪ.eɪ.iː.ˈeɪ /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">A UN-affiliated intergovernmental organisation headquartered in Vienna that promotes the peaceful use of nuclear energy while working to prevent nuclear weapons proliferation. Its inspectors monitor nuclear sites worldwide and report violations to the UN Security Council. It is the world's nuclear watchdog.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text"><em>IAEA</em> chief Rafael Grossi's "in-depth technical discussions" with Araghchi were seen as a potential first step toward restoring inspector access to Iranian nuclear sites shuttered since June 2025.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="org" style="--d:2.62s;--card-color:#98c379">
+    <span class="card-num">24</span>
+    <span class="card-tag tag-org">Organisation</span>
+    <div class="card-term">Press TV</div>
+    <div class="card-pron">/ pres tiː viː /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Iran's English-language state-run international news network, launched in 2007. Funded and operated by the Islamic Republic of Iran Broadcasting (IRIB), it broadcasts Iran's official government narrative globally. Its reporting reflects Iranian government positions and is considered a state propaganda outlet by Western governments, which have banned it from several satellite platforms.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text"><em>Press TV</em> framed the Hormuz drills as defensive preparations against foreign aggression, presenting the same exercises that Western media described as provocative saber-rattling.</div>
+    </div>
+  </div>
+
+  <!-- KEY PEOPLE -->
+  <div class="card" data-cat="person" style="--d:2.68s;--card-color:#e5c07b">
+    <span class="card-num">25</span>
+    <span class="card-tag tag-person">Key Person</span>
+    <div class="card-term">Abbas Araghchi</div>
+    <div class="card-pron">/ ˈæbəs ˌærəɡˈtʃiː /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Iran's Foreign Minister, appointed in 2024. A veteran diplomat with deep experience in nuclear negotiations — he was a key figure in the 2015 JCPOA talks. Known for combining firm adherence to Iran's red lines with a pragmatic willingness to engage. His Geneva appearance signals Tehran's genuine, if conditional, interest in a deal.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text"><em>Araghchi</em>'s social media post from Geneva — "real ideas, but not submission before threats" — was carefully worded to reassure Iran's hardliners while signalling flexibility to his Western interlocutors.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="person" style="--d:2.72s;--card-color:#e5c07b">
+    <span class="card-num">26</span>
+    <span class="card-tag tag-person">Key Person</span>
+    <div class="card-term">Steve Witkoff</div>
+    <div class="card-pron">/ stiːv ˈwɪtkɒf /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">US President Donald Trump's special envoy for West Asia (Middle East) in his second term. A real estate businessman turned diplomat, Witkoff was Trump's choice for sensitive regional negotiations including the Gaza ceasefire and Iran nuclear talks. He led the US delegation at the February 2025 Muscat talks that set up the Geneva meeting.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text"><em>Steve Witkoff</em>'s unorthodox diplomatic style — blunt and transactional — was seen by some analysts as a feature, not a bug, when dealing with Iran's equally hard-nosed negotiators.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="person" style="--d:2.76s;--card-color:#e5c07b">
+    <span class="card-num">27</span>
+    <span class="card-tag tag-person">Key Person</span>
+    <div class="card-term">Rafael Grossi</div>
+    <div class="card-pron">/ ˌræfɪˈel ˈɡrɒsi /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The Director General of the IAEA since 2019. An Argentine diplomat and nuclear expert who has persistently pressed Iran to restore transparency and inspector access to its nuclear sites. His public warnings about Iran's advancing programme have kept international pressure focused on Tehran's nuclear activities throughout the crisis period.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text"><em>Rafael Grossi</em>'s statement that he had held "in-depth technical discussions" with Araghchi was interpreted as a cautiously optimistic signal that inspector access might soon be restored.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="person" style="--d:2.8s;--card-color:#e5c07b">
+    <span class="card-num">28</span>
+    <span class="card-tag tag-person">Key Person</span>
+    <div class="card-term">Maj. Gen. Mohammed Pakpour</div>
+    <div class="card-pron">/ pækˈpʊər /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Chief commander of the IRGC Ground Forces (and in this context, supervising the naval exercises). A senior figure within Iran's parallel military establishment, Pakpour's public visibility during the Hormuz drills was intended to demonstrate command cohesion and signal that Iran's military leadership was united behind the show of force.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Major General <em>Pakpour</em>'s personal supervision of the Hormuz exercises lent them added political weight, suggesting the drills had the direct blessing of Iran's supreme military command.</div>
+    </div>
+  </div>
+
+  <!-- BONUS TERMS -->
+  <div class="card" data-cat="military" style="--d:2.84s;--card-color:#c0392b">
+    <span class="card-num">29</span>
+    <span class="card-tag tag-military">Military</span>
+    <div class="card-term">Saber-rattling</div>
+    <div class="card-pron">/ ˈseɪbər ˌrætəlɪŋ /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">The display or threat of military force used as a bargaining tool or political signal, without the immediate intent to actually use that force. It is a form of coercive diplomacy — using the appearance of military readiness to influence an adversary's behaviour at the negotiating table or in the international arena.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Both Washington and Tehran were engaged in textbook <em>saber-rattling</em> — aircraft carriers and IRGC speedboats substituting for the frank communication that neither government could openly conduct.</div>
+    </div>
+  </div>
+
+  <div class="card" data-cat="diplomacy" style="--d:2.88s;--card-color:#7fa3b8">
+    <span class="card-num">30</span>
+    <span class="card-tag tag-diplomacy">Diplomacy</span>
+    <div class="card-term">Islamic Republic</div>
+    <div class="card-pron">/ ɪzˈlæmɪk rɪˈpʌblɪk /</div>
+    <div class="card-rule"></div>
+    <div class="card-def">Iran's formal governmental system since the 1979 revolution, which combines a Shia theocracy with elected republican institutions. The Supreme Leader (currently Ali Khamenei) holds ultimate authority over all state decisions, including foreign policy and nuclear strategy, making him the final arbiter of whether any nuclear deal is acceptable to Iran.</div>
+    <div class="card-example">
+      <div class="ex-label">Example sentence</div>
+      <div class="ex-text">Any deal Araghchi signs in Geneva must ultimately receive the blessing of the Supreme Leader — the <em>Islamic Republic</em>'s constitution gives elected officials limited room to negotiate independently on matters of national security.</div>
+    </div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div class="empty" id="empty">
+    <div class="empty-big">NO INTEL</div>
+    <p>No matching terms found. Adjust your search.</p>
+  </div>
+
+</div>
+
+<footer>
+  Source: The Hindu · Iran–US Geneva Talks Coverage · February 2025 · Geopolitical Lexicon by Claude
+</footer>
+
+<script>
+  // Cursor glow
+  const cg = document.getElementById('cg');
+  document.addEventListener('mousemove', e => {
+    cg.style.left = e.clientX + 'px';
+    cg.style.top  = e.clientY + 'px';
+  });
+
+  // Scroll progress
+  const pb = document.getElementById('pb');
+  window.addEventListener('scroll', () => {
+    pb.style.width = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%';
+  });
+
+  // Search + Filter
+  const si      = document.getElementById('si');
+  const fbns    = document.querySelectorAll('.filter-btn');
+  const cards   = document.querySelectorAll('.card[data-cat]');
+  const empty   = document.getElementById('empty');
+  const vc      = document.getElementById('vc');
+  let activeF   = 'all';
+  let searchQ   = '';
+
+  function update() {
+    let n = 0;
+    cards.forEach(c => {
+      const matchF = activeF === 'all' || c.dataset.cat === activeF;
+      const matchS = searchQ === '' || c.innerText.toLowerCase().includes(searchQ);
+      const show   = matchF && matchS;
+      c.style.display = show ? '' : 'none';
+      if (show) n++;
+    });
+    vc.textContent = n;
+    empty.style.display = n === 0 ? 'block' : 'none';
+  }
+
+  si.addEventListener('input', e => { searchQ = e.target.value.toLowerCase(); update(); });
+
+  fbns.forEach(b => {
+    b.addEventListener('click', () => {
+      fbns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      activeF = b.dataset.f;
+      update();
+    });
+  });
+
+  // Subtle tilt on hover
+  cards.forEach(c => {
+    c.addEventListener('mousemove', e => {
+      const r  = c.getBoundingClientRect();
+      const x  = (e.clientX - r.left) / r.width  - 0.5;
+      const y  = (e.clientY - r.top)  / r.height - 0.5;
+      c.style.transform = `translateY(-3px) rotateX(${-y*3}deg) rotateY(${x*3}deg)`;
+    });
+    c.addEventListener('mouseleave', () => { c.style.transform = ''; });
+  });
+
+  // Intersection observer (scroll reveal)
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; }});
+  }, { threshold: 0.08 });
+  cards.forEach(c => io.observe(c));
+</script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Articles</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-bg: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --gradient-start: #3b82f6;
+            --gradient-end: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 500px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+        }
+
+        /* Timeline / Date Groups */
+        .timeline-section {
+            margin-bottom: 60px;
+            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .date-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            /* sticky */
+            background: var(--primary-bg);
+            /* ensure it overlays content behind it */
+            z-index: 10;
+            display: block;
+            padding-top: 10px;
+            /* add some padding for sticky */
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 10px 0;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: var(--card-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .article-card:hover::before {
+            opacity: 1;
+        }
+
+        .article-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .article-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            /* Ensure it behaves well in grid */
+        }
+
+        .article-link:hover .article-title {
+            color: var(--accent);
+        }
+
+        .read-more {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: auto;
+        }
+
+        .article-card:hover .read-more {
+            color: var(--text-main);
+        }
+
+        .icon-arrow {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .icon-arrow {
+            transform: translateX(4px);
+        }
+
+        .category-tag {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Knowledge Base</h1>
+            <p class="subtitle">Exploring technology, programming, and insights. A curated list of articles ordered
+                chronologically.</p>
+
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search articles...">
+            </div>
+        </header>
+
+        <div id="articlesContainer">
+            <!-- July 18, 2025 -->
+            <div class="timeline-section" style="animation-delay: 0.1s">
+                <div class="date-header">February 17, 2026</div>
+                <div class="articles-grid">
+                    <a href="./files/2026/02-feb/17/01-godless_lake_glossary_v2.html" class="article-link"
+                        data-title="‘Godless’ lake in Japan warns of climate crisis">
+                        <div class="article-card">
+                            <span class="category-tag">Posts</span>
+                            <div class="article-title">‘Godless’ lake in Japan warns of climate crisis</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <br>
+                    <a href="./files/2026/02-feb/17/02-genome_glossary.html" class="article-link"
+                        data-title="Single genome-editing strategy can help treat multiple disorders">
+                        <div class="article-card">
+                            <span class="category-tag">Posts</span>
+                            <div class="article-title">Single genome-editing strategy can help treat multiple disorders
+                            </div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <br>
+                    <a href="./files/2026/02-feb/17/03-iran_us_glossary.html" class="article-link"
+                        data-title="Iran–US Crisis Decoded">
+                        <div class="article-card">
+                            <span class="category-tag">Posts</span>
+                            <div class="article-title">Iran–US Crisis Decoded</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <br>
+                    <a href="./files/2026/02-feb/17/04-nse-glossary.html" class="article-link"
+                        data-title="NSE Gas Futures Decoded">
+                        <div class="article-card">
+                            <span class="category-tag">Posts</span>
+                            <div class="article-title">NSE Gas Futures Decoded</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <br>
+                    <a href="./files/2026/02-feb/17/05-trade-glossary-30.html" class="article-link"
+                        data-title="Trade Terms Decoded">
+                        <div class="article-card">
+                            <span class="category-tag">Posts</span>
+                            <div class="article-title">Trade Terms Decoded</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <br>
+                    <a href="./files/2026/02-feb/17/06-unemployment_glossary.html" class="article-link"
+                        data-title="The Language of Unemployment">
+                        <div class="article-card">
+                            <span class="category-tag">Posts</span>
+                            <div class="article-title">The Language of Unemployment</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <br>
+                </div>
+            </div>
+
+            <!-- May 14, 2025 
+            <div class="timeline-section" style="animation-delay: 0.2s">
+                <div class="date-header">May 14, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/linux_directory_table.html" class="article-link" data-title="Linux Directory Table">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Linux Directory Table</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            May 07, 2025
+            <div class="timeline-section" style="animation-delay: 0.3s">
+                <div class="date-header">May 07, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/mayosfy.html" class="article-link" data-title="Mayosfy">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Mayosfy</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <a href="MISC/opensource-licensing.html" class="article-link" data-title="Opensource Licensing">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Opensource Licensing</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            May 06, 2025 
+            <div class="timeline-section" style="animation-delay: 0.4s">
+                <div class="date-header">May 06, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/string-and-its-mutability-in-various-languages.html" class="article-link"
+                        data-title="String And Its Mutability In Various Languages">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">String And Its Mutability In Various Languages</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+             May 05, 2025 
+            <div class="timeline-section" style="animation-delay: 0.5s">
+                <div class="date-header">May 05, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/sql_vs_no_sql_databases.html" class="article-link"
+                        data-title="Sql Vs No Sql Databases">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Sql Vs No Sql Databases</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            May 04, 2025 
+            <div class="timeline-section" style="animation-delay: 0.6s">
+                <div class="date-header">May 04, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/Quantum_Computing_Comparison.html" class="article-link"
+                        data-title="Quantum Computing Comparison">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Quantum Computing Comparison</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <a href="MISC/opensource_licensing.html" class="article-link"
+                        data-title="Opensource Licensing (Alternate)">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Opensource Licensing (Alternate)</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            May 02, 2025 
+            <div class="timeline-section" style="animation-delay: 0.7s">
+                <div class="date-header">May 02, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/servers_in_various_server_side_lanaguages.html" class="article-link"
+                        data-title="Servers In Various Server Side Lanaguages">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Servers In Various Server Side Lanaguages</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 28, 2025 
+            <div class="timeline-section" style="animation-delay: 0.8s">
+                <div class="date-header">Apr 28, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/ngrok-error-mobile.html" class="article-link" data-title="Ngrok Error Mobile">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Ngrok Error Mobile</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 22, 2025 
+            <div class="timeline-section" style="animation-delay: 0.9s">
+                <div class="date-header">Apr 22, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/Why_Bharat_Matters_-_S_Jaishankar_abbr.html" class="article-link"
+                        data-title="Why Bharat Matters - S Jaishankar Abbr">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Why Bharat Matters - S Jaishankar Abbr</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 21, 2025 
+            <div class="timeline-section" style="animation-delay: 1.0s">
+                <div class="date-header">Apr 21, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/ruby_gems_vs_bundler.html" class="article-link" data-title="Ruby Gems Vs Bundler">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Ruby Gems Vs Bundler</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 17, 2025 
+            <div class="timeline-section" style="animation-delay: 1.1s">
+                <div class="date-header">Apr 17, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/migration_change_vs_up_down_method.html" class="article-link"
+                        data-title="Migration Change Vs Up Down Method">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Migration Change Vs Up Down Method</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 16, 2025 
+            <div class="timeline-section" style="animation-delay: 1.2s">
+                <div class="date-header">Apr 16, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/rails-debugger.html" class="article-link" data-title="Rails Debugger">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Rails Debugger</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <a href="MISC/courses.html" class="article-link" data-title="Courses">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Courses</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 15, 2025 
+            <div class="timeline-section" style="animation-delay: 1.3s">
+                <div class="date-header">Apr 15, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/world_heritage_sites.html" class="article-link" data-title="World Heritage Sites">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">World Heritage Sites</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <a href="MISC/rails_routes.html" class="article-link" data-title="Rails Routes">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Rails Routes</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <a href="MISC/Rails Routing Reference Table.html" class="article-link"
+                        data-title="Rails Routing Reference Table">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Rails Routing Reference Table</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 14, 2025 
+            <div class="timeline-section" style="animation-delay: 1.4s">
+                <div class="date-header">Apr 14, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/Rails-Eager-Loading.html" class="article-link" data-title="Rails Eager Loading">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Rails Eager Loading</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 11, 2025 
+            <div class="timeline-section" style="animation-delay: 1.5s">
+                <div class="date-header">Apr 11, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/class_method_vs_scope.html" class="article-link" data-title="Class Method Vs Scope">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Class Method Vs Scope</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 10, 2025 
+            <div class="timeline-section" style="animation-delay: 1.6s">
+                <div class="date-header">Apr 10, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/require_require_relative_autoloading.html" class="article-link"
+                        data-title="Require Require Relative Autoloading">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Require Require Relative Autoloading</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                    <a href="MISC/ducktyping_monkey_patching.html" class="article-link"
+                        data-title="Ducktyping Monkey Patching">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Ducktyping Monkey Patching</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 09, 2025 
+            <div class="timeline-section" style="animation-delay: 1.7s">
+                <div class="date-header">Apr 09, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/closures_in_ruby.html" class="article-link" data-title="Closures In Ruby">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Closures In Ruby</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Apr 08, 2025 
+            <div class="timeline-section" style="animation-delay: 1.8s">
+                <div class="date-header">Apr 08, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/delete-delete_all_vs_destroy_destroy_all.html" class="article-link"
+                        data-title="Delete Delete All Vs Destroy Destroy All">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Delete Delete All Vs Destroy Destroy All</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            Mar 16, 2025 
+            <div class="timeline-section" style="animation-delay: 1.9s">
+                <div class="date-header">Mar 16, 2025</div>
+                <div class="articles-grid">
+                    <a href="MISC/oops-object-model.html" class="article-link" data-title="Oops Object Model">
+                        <div class="article-card">
+                            <span class="category-tag">MISC</span>
+                            <div class="article-title">Oops Object Model</div>
+                            <div class="read-more">Read Article <span class="icon-arrow">→</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div> <!-- Mar 16, 2025 -->
+
+            <div class="empty-state" id="emptyState">
+                <h3>No articles found</h3>
+                <p>Try adjusting your search terms.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const sections = document.querySelectorAll('.timeline-section');
+            let hasGlobalResults = false;
+
+            sections.forEach(section => {
+                const articles = section.querySelectorAll('.article-link');
+                let hasSectionResults = false;
+
+                articles.forEach(article => {
+                    const title = article.getAttribute('data-title').toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        article.style.display = 'block';
+                        hasSectionResults = true;
+                        hasGlobalResults = true;
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+
+                if (hasSectionResults) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            document.getElementById('emptyState').style.display = hasGlobalResults ? 'none' : 'block';
+        });
+    </script>
+</body>
+
+</html>

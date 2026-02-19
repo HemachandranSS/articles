@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NSE Natural Gas Futures — Glossary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b0c10;
+      --paper: #f5f0e8;
+      --flame: #e84c1e;
+      --gold: #c9952a;
+      --teal: #0d7c6e;
+      --mist: #ddd7cc;
+      --accent-bg: #1a1a2e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.5;
+    }
+
+    /* ── Header ── */
+    header {
+      position: relative;
+      background: var(--accent-bg);
+      color: var(--paper);
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 40px;
+      background: var(--paper);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+
+    .ticker-tape {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 28px;
+      background: var(--flame);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .ticker-inner {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 22s linear infinite;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: #fff;
+      padding: 0 1rem;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .ticker-item::before { content: '◆ '; }
+
+    .header-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      margin-top: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s ease forwards;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--paper);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s ease forwards;
+    }
+
+    h1 em {
+      color: var(--flame);
+      font-style: italic;
+    }
+
+    .header-sub {
+      font-size: 0.85rem;
+      color: #a0a0b0;
+      margin-top: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Floating gas bubbles ── */
+    .bubbles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -20px;
+      border-radius: 50%;
+      opacity: 0.08;
+      background: var(--teal);
+      animation: rise var(--dur) ease-in infinite;
+      animation-delay: var(--delay);
+    }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1); opacity: 0.08; }
+      80%  { opacity: 0.05; }
+      100% { transform: translateY(-340px) scale(1.3); opacity: 0; }
+    }
+
+    /* ── Main ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    }
+
+    /* ── Cards ── */
+    .glossary {
+      display: grid;
+      gap: 1.6rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--mist);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: transform 0.45s ease, box-shadow 0.35s ease;
+      animation: cardIn 0.6s ease forwards;
+      animation-play-state: paused;
+    }
+
+    .card.visible {
+      animation-play-state: running;
+    }
+
+    @keyframes cardIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--card-accent, var(--teal));
+      transition: width 0.3s ease;
+    }
+
+    .card:hover::before {
+      width: 7px;
+    }
+
+    .card-inner {
+      padding: 1.6rem 1.8rem 1.6rem 2.1rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .term {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border-radius: 2px;
+      background: var(--card-accent, var(--teal));
+      color: #fff;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 0.3rem;
+    }
+
+    .definition {
+      font-size: 0.93rem;
+      line-height: 1.75;
+      color: #3a3a3a;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--mist);
+      margin: 1rem 0;
+    }
+
+    .example-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--card-accent, var(--teal));
+      margin-bottom: 0.5rem;
+    }
+
+    .example {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: #555;
+      font-style: italic;
+      padding-left: 1rem;
+      border-left: 2px solid var(--card-accent, var(--teal));
+    }
+
+    /* Accent colors per category */
+    .cat-market   { --card-accent: #0d7c6e; }
+    .cat-financial { --card-accent: #c9952a; }
+    .cat-entity   { --card-accent: #7b4bbf; }
+    .cat-concept  { --card-accent: #e84c1e; }
+
+    /* ── Floating number ornament ── */
+    .card-num {
+      position: absolute;
+      bottom: 1rem;
+      right: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(0,0,0,0.04);
+      line-height: 1;
+      user-select: none;
+      transition: color 0.3s;
+    }
+
+    .card:hover .card-num {
+      color: rgba(0,0,0,0.07);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--accent-bg);
+      color: #666;
+      text-align: center;
+      padding: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+    }
+
+    footer span { color: var(--flame); }
+
+    /* ── Pulse dot ── */
+    .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--flame);
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,76,30,0.6); }
+      50%       { box-shadow: 0 0 0 6px rgba(232,76,30,0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <!-- Ticker tape -->
+    <div class="ticker-tape">
+      <div class="ticker-inner">
+        <span class="ticker-item">NSE</span>
+        <span class="ticker-item">SEBI APPROVAL</span>
+        <span class="ticker-item">NATURAL GAS FUTURES</span>
+        <span class="ticker-item">IGX COLLABORATION</span>
+        <span class="ticker-item">12 MONTHLY CONTRACTS</span>
+        <span class="ticker-item">PRICE DISCOVERY</span>
+        <span class="ticker-item">HEDGING</span>
+        <span class="ticker-item">DERIVATIVES</span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item">NSE</span>
+        <span class="ticker-item">SEBI APPROVAL</span>
+        <span class="ticker-item">NATURAL GAS FUTURES</span>
+        <span class="ticker-item">IGX COLLABORATION</span>
+        <span class="ticker-item">12 MONTHLY CONTRACTS</span>
+        <span class="ticker-item">PRICE DISCOVERY</span>
+        <span class="ticker-item">HEDGING</span>
+        <span class="ticker-item">DERIVATIVES</span>
+      </div>
+    </div>
+
+    <!-- Floating bubbles -->
+    <div class="bubbles">
+      <div class="bubble" style="width:60px;height:60px;left:10%;--dur:7s;--delay:0s"></div>
+      <div class="bubble" style="width:30px;height:30px;left:25%;--dur:5s;--delay:1.2s"></div>
+      <div class="bubble" style="width:80px;height:80px;left:45%;--dur:9s;--delay:0.5s"></div>
+      <div class="bubble" style="width:20px;height:20px;left:65%;--dur:6s;--delay:2s"></div>
+      <div class="bubble" style="width:50px;height:50px;left:80%;--dur:8s;--delay:0.8s"></div>
+      <div class="bubble" style="width:35px;height:35px;left:90%;--dur:5.5s;--delay:1.7s"></div>
+    </div>
+
+    <p class="header-eyebrow"><span class="live-dot"></span>Financial Terminology Guide</p>
+    <h1>NSE Gas Futures<br><em>Decoded</em></h1>
+    <p class="header-sub">Every complex term from the article — defined with context & examples</p>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <p class="section-label">10 Key Terms</p>
+
+    <div class="glossary" id="glossary">
+
+      <!-- 1 -->
+      <article class="card cat-entity" style="animation-delay:0.05s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">NSE (National Stock Exchange of India)</h2>
+            <span class="badge">Entity</span>
+          </div>
+          <p class="definition">India's largest stock exchange by trading volume, headquartered in Mumbai. It provides a platform for buying and selling financial instruments like equities, bonds, and derivatives. It operates electronic, screen-based trading and maintains market transparency.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"The NSE processed over ₹80,000 crore worth of equity trades in a single session, making it one of the world's busiest exchanges."</p>
+        </div>
+        <div class="card-num">01</div>
+      </article>
+
+      <!-- 2 -->
+      <article class="card cat-entity" style="animation-delay:0.12s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">SEBI (Securities and Exchange Board of India)</h2>
+            <span class="badge">Entity</span>
+          </div>
+          <p class="definition">The statutory regulatory body that oversees and governs the securities markets in India. SEBI protects investor interests, regulates stock exchanges, and approves financial products before they are launched to the public.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"Before launching its new index fund, the asset management company had to obtain formal approval from SEBI."</p>
+        </div>
+        <div class="card-num">02</div>
+      </article>
+
+      <!-- 3 -->
+      <article class="card cat-financial" style="animation-delay:0.19s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Futures (Futures Contract)</h2>
+            <span class="badge">Financial Instrument</span>
+          </div>
+          <p class="definition">A legal agreement to buy or sell a specific commodity or financial asset at a predetermined price at a specified future date. Futures are standardised, traded on an exchange, and used both for hedging risk and for speculative profit.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"An airline bought crude oil futures six months in advance to lock in fuel prices and protect itself against a potential price spike."</p>
+        </div>
+        <div class="card-num">03</div>
+      </article>
+
+      <!-- 4 -->
+      <article class="card cat-concept" style="animation-delay:0.26s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Price Discovery</h2>
+            <span class="badge">Concept</span>
+          </div>
+          <p class="definition">The process through which buyers and sellers in a market collectively determine the fair price of an asset or commodity. Transparent, competitive markets facilitate efficient price discovery, reflecting all available information about supply, demand, and sentiment.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"The introduction of a commodity exchange improved price discovery for wheat, helping farmers know the actual market value of their harvest before selling."</p>
+        </div>
+        <div class="card-num">04</div>
+      </article>
+
+      <!-- 5 -->
+      <article class="card cat-financial" style="animation-delay:0.33s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Monthly Contracts</h2>
+            <span class="badge">Market Term</span>
+          </div>
+          <p class="definition">Futures contracts that expire at the end of each calendar month. In this case, NSE will offer 12 simultaneously active monthly contracts, meaning traders can buy or sell gas futures up to one year in advance at any given time.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"A gas distributor entered into monthly contracts for the next six months to ensure a stable supply price regardless of seasonal demand fluctuations."</p>
+        </div>
+        <div class="card-num">05</div>
+      </article>
+
+      <!-- 6 -->
+      <article class="card cat-entity" style="animation-delay:0.40s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">IGX (Indian Gas Exchange)</h2>
+            <span class="badge">Entity</span>
+          </div>
+          <p class="definition">India's first automated national-level gas trading platform, established to enable transparent spot-market trading of natural gas. IGX connects buyers and sellers of natural gas across different delivery points via an online exchange mechanism.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"A fertiliser plant sourced its gas requirements for the upcoming week directly through IGX, benefiting from competitive spot prices offered by multiple suppliers."</p>
+        </div>
+        <div class="card-num">06</div>
+      </article>
+
+      <!-- 7 -->
+      <article class="card cat-concept" style="animation-delay:0.47s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Spot Trading</h2>
+            <span class="badge">Concept</span>
+          </div>
+          <p class="definition">The purchase or sale of a commodity or financial instrument for immediate delivery and payment, as opposed to a future date. Spot prices reflect the current market value of an asset. IGX facilitates this kind of trading specifically for natural gas in India.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"The power plant bought gas at the spot trading price when futures costs were too high, paying the current market rate for next-day delivery."</p>
+        </div>
+        <div class="card-num">07</div>
+      </article>
+
+      <!-- 8 -->
+      <article class="card cat-financial" style="animation-delay:0.54s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Derivatives</h2>
+            <span class="badge">Financial Instrument</span>
+          </div>
+          <p class="definition">Financial contracts whose value is derived from the performance of an underlying asset, index, or rate — such as commodities, stocks, interest rates, or currencies. Futures, options, and swaps are all types of derivatives. They are used for risk management, speculation, and arbitrage.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"The company used interest rate derivatives to hedge its exposure to rising borrowing costs on its long-term loans."</p>
+        </div>
+        <div class="card-num">08</div>
+      </article>
+
+      <!-- 9 -->
+      <article class="card cat-concept" style="animation-delay:0.61s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Hedging</h2>
+            <span class="badge">Strategy</span>
+          </div>
+          <p class="definition">A risk management strategy in which an investor or business takes an offsetting position in a related asset to reduce the impact of adverse price movements. Hedging limits potential losses but may also cap potential gains. It is commonly used by producers and consumers of commodities.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"The city gas distributor used natural gas futures as a hedging tool, locking in a supply price for the winter months and avoiding the risk of a sudden cost surge."</p>
+        </div>
+        <div class="card-num">09</div>
+      </article>
+
+      <!-- 10 -->
+      <article class="card cat-market" style="animation-delay:0.68s">
+        <div class="card-inner">
+          <div class="card-header">
+            <h2 class="term">Price Volatility</h2>
+            <span class="badge">Market Term</span>
+          </div>
+          <p class="definition">The degree to which the price of an asset fluctuates over a given period. High volatility means prices swing dramatically in short timeframes, increasing uncertainty and financial risk for buyers and sellers. Natural gas is known for its seasonal and geopolitical price volatility.</p>
+          <div class="divider"></div>
+          <p class="example-label">Example Sentence</p>
+          <p class="example">"Extreme price volatility in natural gas markets during the winter of 2021 caused several power generators to face unexpected losses as costs tripled within weeks."</p>
+        </div>
+        <div class="card-num">10</div>
+      </article>
+
+    </div><!-- /glossary -->
+  </main>
+
+  <footer>
+    <p>Source: <span>The Hindu Business Line</span> &nbsp;·&nbsp; NSE–SEBI Natural Gas Futures Approval &nbsp;·&nbsp; Compiled for Educational Use</p>
+  </footer>
+
+  <!-- ===== SCROLL REVEAL ===== -->
+  <script>
+    const cards = document.querySelectorAll('.card');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>

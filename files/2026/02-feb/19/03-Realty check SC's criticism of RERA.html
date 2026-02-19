@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RERA Realty Check — Glossary &amp; Key Terminologies</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #04080f;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.09);
+            --a1: #E07B39;
+            /* amber-orange – real estate vibe */
+            --a2: #4ECDC4;
+            /* teal */
+            --a3: #FF6B9D;
+            /* rose */
+            --a4: #A78BFA;
+            /* violet */
+            --a5: #34D399;
+            /* emerald */
+            --a6: #60A5FA;
+            /* sky blue */
+            --text: #E8EAF6;
+            --muted: #7D8A9C;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── BG ── */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 70% 55% at 15% 8%, rgba(224, 123, 57, 0.14) 0%, transparent 60%),
+                radial-gradient(ellipse 55% 45% at 85% 85%, rgba(78, 205, 196, 0.10) 0%, transparent 55%),
+                radial-gradient(ellipse 45% 40% at 55% 45%, rgba(167, 139, 250, 0.08) 0%, transparent 50%),
+                #04080f;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.16;
+            animation: drift 20s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 520px;
+            height: 520px;
+            background: var(--a1);
+            top: -180px;
+            left: -120px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 420px;
+            height: 420px;
+            background: var(--a2);
+            bottom: -120px;
+            right: -90px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 320px;
+            height: 320px;
+            background: var(--a4);
+            top: 45%;
+            left: 60%;
+            animation-delay: -14s;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(45px, 35px) scale(1.09);
+            }
+        }
+
+        /* particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.45);
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ── Progress bar ── */
+        #sp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--a1), var(--a2));
+            z-index: 1000;
+            width: 0;
+            box-shadow: 0 0 14px var(--a1);
+            transition: width .1s linear;
+        }
+
+        /* ── Header ── */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 24px 44px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(224, 123, 57, 0.14);
+            border: 1px solid rgba(224, 123, 57, 0.32);
+            color: #e0a070;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.2px;
+            text-transform: uppercase;
+            padding: 6px 20px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .badge::before {
+            content: '●';
+            color: var(--a2);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.25;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.18;
+            background: linear-gradient(135deg, #fff 25%, var(--a1) 60%, var(--a2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+
+        /* ── Source banner ── */
+        .banner {
+            position: relative;
+            z-index: 10;
+            max-width: 880px;
+            margin: 0 auto 52px;
+            background: rgba(224, 123, 57, 0.07);
+            border: 1px solid rgba(224, 123, 57, 0.22);
+            border-radius: 14px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.88rem;
+            color: #c08048;
+        }
+
+        .banner span {
+            font-size: 1.25rem;
+        }
+
+        /* ── Search ── */
+        .sw {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            margin: 0 auto 44px;
+            padding: 0 24px;
+        }
+
+        .sw input {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 18px 14px 48px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: .95rem;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .sw input::placeholder {
+            color: var(--muted);
+        }
+
+        .sw input:focus {
+            border-color: var(--a1);
+            box-shadow: 0 0 0 4px rgba(224, 123, 57, .18);
+        }
+
+        .si {
+            position: absolute;
+            left: 38px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        /* ── Stats ── */
+        .stats {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-bottom: 56px;
+            padding: 0 24px;
+        }
+
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 24px;
+            text-align: center;
+        }
+
+        .chip .n {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--a2);
+        }
+
+        .chip .l {
+            font-size: .75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        /* ── Tabs ── */
+        .tabs {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 46px;
+            padding: 0 24px;
+        }
+
+        .tb {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .tb:hover,
+        .tb.active {
+            background: linear-gradient(135deg, var(--a1), var(--a2));
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(224, 123, 57, .38);
+        }
+
+        /* ── Grid ── */
+        .grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        /* ── Card ── */
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: transform .35s cubic-bezier(.23, 1, .32, 1), border-color .35s, box-shadow .35s;
+            overflow: hidden;
+            animation: ci .6s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.012);
+            border-color: rgba(255, 255, 255, .16);
+            box-shadow: 0 26px 64px rgba(0, 0, 0, .52);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--ca, linear-gradient(90deg, var(--a1), var(--a2)));
+            opacity: 0;
+            transition: opacity .35s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.045) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes ci {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ch {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cn {
+            min-width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            font-weight: 800;
+            background: var(--nb, rgba(224, 123, 57, .18));
+            color: var(--nc, var(--a1));
+        }
+
+        .ct {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--tb2, rgba(224, 123, 57, .12));
+            color: var(--tc, var(--a1));
+        }
+
+        .term {
+            font-size: 1.22rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .pron {
+            font-size: .78rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+
+        .div {
+            height: 1px;
+            background: linear-gradient(90deg, var(--ac2, var(--a1)), transparent);
+            opacity: .22;
+            margin-bottom: 14px;
+        }
+
+        .sl {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .meaning {
+            font-size: .915rem;
+            line-height: 1.78;
+            color: #CBD5E1;
+            margin-bottom: 16px;
+        }
+
+        .ex {
+            background: rgba(0, 0, 0, .28);
+            border-left: 3px solid var(--ac2, var(--a2));
+            border-radius: 0 10px 10px 0;
+            padding: 12px 16px;
+        }
+
+        .ex p {
+            font-size: .875rem;
+            line-height: 1.72;
+            color: #94A3B8;
+            font-style: italic;
+        }
+
+        .ex .hl {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--ac2, var(--a2));
+        }
+
+        /* ── Themes ── */
+        .t-orange {
+            --ca: linear-gradient(90deg, #E07B39, #fb923c);
+            --nb: rgba(224, 123, 57, .2);
+            --nc: #fb923c;
+            --tb2: rgba(224, 123, 57, .12);
+            --tc: #fb923c;
+            --ac2: #fb923c;
+        }
+
+        .t-teal {
+            --ca: linear-gradient(90deg, #4ECDC4, #2dd4bf);
+            --nb: rgba(78, 205, 196, .18);
+            --nc: #4ECDC4;
+            --tb2: rgba(78, 205, 196, .12);
+            --tc: #4ECDC4;
+            --ac2: #4ECDC4;
+        }
+
+        .t-rose {
+            --ca: linear-gradient(90deg, #FF6B9D, #fb7185);
+            --nb: rgba(255, 107, 157, .18);
+            --nc: #FF6B9D;
+            --tb2: rgba(255, 107, 157, .12);
+            --tc: #FF6B9D;
+            --ac2: #FF6B9D;
+        }
+
+        .t-violet {
+            --ca: linear-gradient(90deg, #A78BFA, #c4b5fd);
+            --nb: rgba(167, 139, 250, .18);
+            --nc: #A78BFA;
+            --tb2: rgba(167, 139, 250, .12);
+            --tc: #A78BFA;
+            --ac2: #A78BFA;
+        }
+
+        .t-emerald {
+            --ca: linear-gradient(90deg, #34D399, #6ee7b7);
+            --nb: rgba(52, 211, 153, .18);
+            --nc: #34D399;
+            --tb2: rgba(52, 211, 153, .12);
+            --tc: #34D399;
+            --ac2: #34D399;
+        }
+
+        .t-sky {
+            --ca: linear-gradient(90deg, #60A5FA, #93c5fd);
+            --nb: rgba(96, 165, 250, .18);
+            --nc: #60A5FA;
+            --tb2: rgba(96, 165, 250, .12);
+            --tc: #60A5FA;
+            --ac2: #60A5FA;
+        }
+
+        .t-amber {
+            --ca: linear-gradient(90deg, #FCD34D, #fbbf24);
+            --nb: rgba(252, 211, 77, .18);
+            --nc: #FCD34D;
+            --tb2: rgba(252, 211, 77, .12);
+            --tc: #FCD34D;
+            --ac2: #FCD34D;
+        }
+
+        .t-red {
+            --ca: linear-gradient(90deg, #F87171, #fca5a5);
+            --nb: rgba(248, 113, 113, .18);
+            --nc: #F87171;
+            --tb2: rgba(248, 113, 113, .12);
+            --tc: #F87171;
+            --ac2: #F87171;
+        }
+
+        /* no results */
+        .nr {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px;
+            color: var(--muted);
+        }
+
+        .nr .ic {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 28px 24px 48px;
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        footer a {
+            color: var(--a2);
+            text-decoration: none;
+        }
+
+        @media(max-width:640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sp"></div>
+    <div class="bg-canvas"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <div class="badge">🏛️ Article Glossary</div>
+        <h1>Realty Check — RERA<br>Key Terms Explained</h1>
+        <p class="subtitle">Decode the legal, regulatory &amp; real-estate vocabulary from the Supreme Court's critique
+            of RERA and what it means for homebuyers in India.</p>
+    </header>
+
+    <div class="banner">
+        <span>📰</span>
+        <div>
+            <strong>Source Article:</strong> "Realty Check — SC's criticism of RERA underscores need for reform"
+            <br><span>The Hindu Editorial · Feb 2026 · Supreme Court Bench led by CJI Surya Kant</span>
+        </div>
+    </div>
+
+    <div class="sw">
+        <span class="si">🔍</span>
+        <input type="text" id="si" placeholder="Search a term or keyword…" oninput="fc()" />
+    </div>
+
+    <div class="stats">
+        <div class="chip">
+            <div class="n">22</div>
+            <div class="l">Terms Explained</div>
+        </div>
+        <div class="chip">
+            <div class="n">7</div>
+            <div class="l">Categories</div>
+        </div>
+        <div class="chip">
+            <div class="n">22</div>
+            <div class="l">Example Sentences</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tb active" onclick="ft('all',this)">All Terms</button>
+        <button class="tb" onclick="ft('legal',this)">Legal</button>
+        <button class="tb" onclick="ft('regulatory',this)">Regulatory</button>
+        <button class="tb" onclick="ft('finance',this)">Finance</button>
+        <button class="tb" onclick="ft('realestate',this)">Real Estate</button>
+        <button class="tb" onclick="ft('governance',this)">Governance</button>
+        <button class="tb" onclick="ft('judicial',this)">Judicial</button>
+    </div>
+
+    <div class="grid" id="cg"></div>
+
+    <footer>
+        <p>📚 Glossary for the article on RERA Reform · <a href="https://rera.mohua.gov.in/" target="_blank">Official
+                RERA Portal</a> · For educational purposes only</p>
+    </footer>
+
+    <script>
+        const terms = [
+            {
+                term: "RERA",
+                pron: "/ˈreə.rə/",
+                cat: "regulatory",
+                meaning: "Real Estate Regulatory Authority — established under the Real Estate (Regulation and Development) Act, 2016. RERA is a quasi-judicial body set up in each state to protect homebuyers, ensure project accountability, and regulate the real estate sector in India. It mandates project registration, financial discipline, and transparency.",
+                example: "The homebuyer filed a complaint with <span class='hl'>RERA</span> against his builder for failing to deliver the flat two years after the promised possession date.",
+                theme: "t-orange"
+            },
+            {
+                term: "Defalcation",
+                pron: "/ˌdef.ælˈkeɪ.ʃən/",
+                cat: "legal",
+                meaning: "The fraudulent misappropriation or embezzlement of money placed in one's care — especially when a person in a position of trust (like a builder holding buyers' funds) diverts those funds for unauthorized purposes. A serious financial crime.",
+                example: "The promoter was charged with <span class='hl'>defalcation</span> after investigators found that ₹300 crore collected from flat buyers had been siphoned into his personal holding company.",
+                theme: "t-red"
+            },
+            {
+                term: "Escrow Account",
+                pron: "/ˈes.krəʊ əˌkaʊnt/",
+                cat: "finance",
+                meaning: "A third-party bank account where funds are held temporarily until specific contractual conditions are met. Under RERA, builders must deposit 70% of funds collected from buyers into an escrow account so the money can only be used for that specific project — not diverted to other ventures.",
+                example: "Because of RERA's <span class='hl'>escrow account</span> rule, the builder could not use the ₹50 crore collected from Society A buyers to fund his new township project in another city.",
+                theme: "t-teal"
+            },
+            {
+                term: "Real Estate Appellate Tribunal",
+                pron: "/rɪˈæl ɪˈsteɪt əˈpel.ɪt ˌtraɪˈbjuː.nəl/",
+                cat: "judicial",
+                meaning: "A quasi-judicial body established under RERA to hear appeals against orders passed by the Real Estate Regulatory Authority. If a buyer or builder is dissatisfied with a RERA order, they can challenge it before this tribunal, which is mandated to resolve disputes within 60 days.",
+                example: "After the builder challenged the RERA penalty order, the case went to the <span class='hl'>Real Estate Appellate Tribunal</span>, which was supposed to decide within 60 days but took over a year.",
+                theme: "t-violet"
+            },
+            {
+                term: "Carpet Area",
+                pron: "/ˈkɑː.pɪt ˈeər.i.ə/",
+                cat: "realestate",
+                meaning: "The actual usable floor area within the four walls of an apartment, measured wall-to-wall — excluding the thickness of walls, common areas, balconies, or lobbies. RERA mandates that flat sales must be on carpet area, not the larger 'super built-up area' that builders previously used to inflate prices.",
+                example: "The builder advertised 1,200 sq ft, but after RERA mandated disclosure, the actual <span class='hl'>carpet area</span> of the flat was only 850 sq ft.",
+                theme: "t-emerald"
+            },
+            {
+                term: "Regulator / Regulatory Authority",
+                pron: "/ˈreɡ.jʊ.leɪ.tər/",
+                cat: "regulatory",
+                meaning: "A government agency or body empowered by law to oversee a specific sector, enforce compliance with rules, grant or revoke licences, and protect stakeholders' interests. RERA is the regulator for the real estate sector, similar to how SEBI regulates capital markets.",
+                example: "The Supreme Court remarked that the <span class='hl'>regulatory authority</span> lacks the teeth needed to penalise defaulting builders and cancel their registrations promptly.",
+                theme: "t-sky"
+            },
+            {
+                term: "Inter-agency Coordination",
+                pron: "/ˌɪn.tər ˈeɪ.dʒən.si kəʊˌɔː.dɪˈneɪ.ʃən/",
+                cat: "governance",
+                meaning: "The collaborative exchange of information and joint enforcement action between different government departments and agencies. In the context of RERA, it means coordination between the RERA body, local municipal corporations, police, and civic bodies to enforce orders.",
+                example: "The article argues that without better <span class='hl'>inter-agency coordination</span>, RERA orders will remain on paper — builders will continue to violate them without fear of municipal action.",
+                theme: "t-amber"
+            },
+            {
+                term: "Apex Court / Supreme Court",
+                pron: "/ˈeɪ.peks kɔːt/",
+                cat: "judicial",
+                meaning: "The highest court of a country whose decisions are final and binding on all lower courts, tribunals, and authorities. In India, the Supreme Court is the apex court. It routinely reviews the functioning of statutory bodies like RERA.",
+                example: "The <span class='hl'>apex court</span> expressed concern that despite the RERA Act being in force for nearly a decade, homebuyers were still struggling to recover their money from errant builders.",
+                theme: "t-rose"
+            },
+            {
+                term: "Possession",
+                pron: "/pəˈzeʃ.ən/",
+                cat: "realestate",
+                meaning: "In real estate, possession refers to the physical handover of an apartment or property by the builder to the buyer. Delay in possession — not delivering the property by the promised date — is one of the most common grievances buyers file with RERA.",
+                example: "After waiting three years beyond the scheduled date, the buyer finally received <span class='hl'>possession</span> of her flat — along with a modest RERA-ordered compensation for the delay.",
+                theme: "t-teal"
+            },
+            {
+                term: "Penalty for Delay",
+                pron: "/ˈpen.əl.ti fɔːr dɪˈleɪ/",
+                cat: "legal",
+                meaning: "A monetary compensation or interest payment that a builder must pay to a homebuyer for not delivering the property by the agreed date. Under RERA, buyers are entitled to receive interest on their invested amount for every month of delay.",
+                example: "The RERA authority ordered the builder to pay a <span class='hl'>penalty for delay</span> at the rate of SBI's highest marginal cost lending rate, totalling ₹12 lakh in interest to the aggrieved buyer.",
+                theme: "t-orange"
+            },
+            {
+                term: "Builder's Licence / Registration",
+                pron: "/ˈbɪl.dərz ˈlaɪ.səns/",
+                cat: "regulatory",
+                meaning: "A formal authorisation granted to a developer or promoter under RERA to sell, market, or develop real estate projects. It can be revoked or cancelled by RERA if the builder violates norms repeatedly — though this power is rarely exercised in practice.",
+                example: "Consumer groups have demanded that RERA proactively cancel the <span class='hl'>builder's licence</span> of repeat offenders who fail to deliver projects or comply with orders.",
+                theme: "t-violet"
+            },
+            {
+                term: "Lobby / Lobbying",
+                pron: "/ˈlɒb.i / ˈlɒb.i.ɪŋ/",
+                cat: "governance",
+                meaning: "Organised efforts by industry groups or interest groups to influence government decisions, regulations, or legislation in their favour, often through meeting officials, funding campaigns, or public advocacy. The article hints that builder lobbies may be influencing RERA's reluctance to cancel licences.",
+                example: "Critics allege that the powerful real estate <span class='hl'>lobby</span> has pressured state governments to appoint sympathetic officials to RERA positions, diluting its enforcement capacity.",
+                theme: "t-red"
+            },
+            {
+                term: "Pretext",
+                pron: "/ˈpriː.tekst/",
+                cat: "legal",
+                meaning: "A false or weak reason given to justify an action, hiding the real motive. In the article, builders use 'flimsiest of pretexts' — unacceptable excuses like minor regulatory approvals or market downturns — to get their project completion deadlines extended.",
+                example: "The developer cited 'unexpected soil conditions' as a <span class='hl'>pretext</span> to extend the delivery date by two years, though engineers later confirmed there were no such complications.",
+                theme: "t-amber"
+            },
+            {
+                term: "Asymmetry of Information",
+                pron: "/eɪˈsɪm.ɪ.tri əv ˌɪn.fəˈmeɪ.ʃən/",
+                cat: "legal",
+                meaning: "A situation where one party in a transaction has significantly more or better information than the other. In real estate, builders know everything about construction costs, approvals, and legal status, while buyers are largely uninformed — making buyers vulnerable to exploitation.",
+                example: "The glaring <span class='hl'>asymmetry of information</span> between developer and buyer means that most flat buyers sign agreements without realising they contain unfair penalty clauses that favour the builder.",
+                theme: "t-sky"
+            },
+            {
+                term: "Gullible",
+                pron: "/ˈɡʌl.ɪ.bəl/",
+                cat: "legal",
+                meaning: "Easily deceived or cheated due to excessive trust or lack of awareness. The article uses this in context of homebuyers who unknowingly accept unfair contract clauses due to lack of information and legal knowledge.",
+                example: "Many <span class='hl'>gullible</span> first-time homebuyers signed sale agreements with asymmetric penalty clauses without realising the builder faced no consequences for delays while they could be charged heavily for missing an EMI.",
+                theme: "t-rose"
+            },
+            {
+                term: "Standardised Contracts",
+                pron: "/ˈstæn.dər.daɪzd ˈkɒn.trækts/",
+                cat: "regulatory",
+                meaning: "Uniform agreement templates mandated by a regulator, designed to remove unfair or one-sided clauses and ensure both parties are protected equally. The article recommends standardising buyer-seller real estate contracts to protect homebuyers.",
+                example: "The RERA reform panel proposed introducing <span class='hl'>standardised contracts</span> with fixed penalty rates for both builders and buyers, preventing developers from inserting hidden escape clauses.",
+                theme: "t-emerald"
+            },
+            {
+                term: "Complaint Redressal",
+                pron: "/kəmˈpleɪnt rɪˈdres.əl/",
+                cat: "regulatory",
+                meaning: "The process by which an authority receives, reviews, and resolves grievances raised by aggrieved parties. RERA is mandated to provide complaint redressal for homebuyers against builders. The article criticises the slow pace of this process.",
+                example: "The state RERA body's annual report showed that only 38% of <span class='hl'>complaint redressals</span> had been completed within the stipulated 60-day period, raising concerns about systemic delays.",
+                theme: "t-teal"
+            },
+            {
+                term: "Quasi-Judicial Body",
+                pron: "/ˈkweɪ.zaɪ dʒuːˈdɪʃ.əl ˈbɒd.i/",
+                cat: "judicial",
+                meaning: "An authority that is not a formal court of law but is empowered to perform functions similar to a court — such as hearing disputes, examining evidence, and passing binding orders. RERA and appellate tribunals are quasi-judicial bodies.",
+                example: "RERA, as a <span class='hl'>quasi-judicial body</span>, has the power to summon builders, examine documents, and award compensation to buyers — though its orders must be backed by enforcement agencies to be effective.",
+                theme: "t-violet"
+            },
+            {
+                term: "Repercussion",
+                pron: "/ˌriː.pəˈkʌʃ.ən/",
+                cat: "governance",
+                meaning: "An unintended consequence or negative outcome resulting from an action or decision. The article notes that builders extend deadlines 'without fear of repercussions,' meaning there are no real consequences for violating the law.",
+                example: "The lack of any punitive <span class='hl'>repercussions</span> for builders who miss deadlines repeatedly has made RERA orders largely toothless in practice.",
+                theme: "t-red"
+            },
+            {
+                term: "Enactment",
+                pron: "/ɪˈnækt.mənt/",
+                cat: "legal",
+                meaning: "The formal process of passing a bill into law by the legislature. The article refers to the 'enactment of the Real Estate (Regulation and Development) Act, 2016' — the legislative process that brought RERA into existence.",
+                example: "Despite the <span class='hl'>enactment</span> of RERA in 2016, many states delayed notifying rules under the Act, effectively stalling its implementation for years.",
+                theme: "t-orange"
+            },
+            {
+                term: "Promoter / Builder / Developer",
+                pron: "/prəˈməʊ.tər/",
+                cat: "realestate",
+                meaning: "Under the RERA Act, a 'promoter' is the legal term for a person, company, or authority that constructs or develops a real estate project and sells it to buyers. They are primarily responsible for project delivery, compliance, and fund management.",
+                example: "The RERA order held the <span class='hl'>promoter</span> — not the construction contractor — personally liable for the 36-month delay in delivering the housing society.",
+                theme: "t-sky"
+            },
+            {
+                term: "Clique",
+                pron: "/kliːk/",
+                cat: "governance",
+                meaning: "A small, exclusive group of people who share common interests and work together, often to maintain their power or influence — sometimes at the expense of fairness or transparency. The Supreme Court cautioned that RERA appointments should not allow a 'clique to run the show.'",
+                example: "The apex court's concern was that a <span class='hl'>clique</span> of politically connected individuals had been appointed to key RERA positions, compromising the body's independence and effectiveness.",
+                theme: "t-amber"
+            }
+        ];
+
+        let tag = 'all';
+
+        function render(list) {
+            const g = document.getElementById('cg');
+            g.innerHTML = '';
+            if (!list.length) { g.innerHTML = `<div class="nr"><div class="ic">🔎</div><p>No terms match your search.</p></div>`; return; }
+            list.forEach((t, i) => {
+                const d = document.createElement('div');
+                d.className = `card ${t.theme}`;
+                d.dataset.cat = t.cat;
+                d.style.animationDelay = (i % 12 * 60) + 'ms';
+                d.innerHTML = `
+      <div class="ch">
+        <span class="cn">${String(i + 1).padStart(2, '0')}</span>
+        <span class="ct">${t.cat}</span>
+      </div>
+      <div class="term">${t.term}</div>
+      <div class="pron">${t.pron}</div>
+      <div class="div"></div>
+      <div class="sl">📖 Definition</div>
+      <div class="meaning">${t.meaning}</div>
+      <div class="sl">✍️ Example Sentence</div>
+      <div class="ex"><p>${t.example}</p></div>`;
+                d.addEventListener('mousemove', e => {
+                    const r = d.getBoundingClientRect();
+                    d.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+                    d.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+                });
+                g.appendChild(d);
+            });
+        }
+
+        function fc() {
+            const q = document.getElementById('si').value.toLowerCase();
+            let d = terms.filter(t => tag === 'all' || t.cat === tag);
+            if (q) d = d.filter(t => t.term.toLowerCase().includes(q) || t.meaning.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q));
+            render(d);
+        }
+        function ft(t2, btn) {
+            tag = t2;
+            document.querySelectorAll('.tb').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('si').value = '';
+            fc();
+        }
+
+        render(terms);
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('sp').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+        });
+
+        (function () {
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (12 + Math.random() * 20) + 's';
+                p.style.animationDelay = (Math.random() * 22) + 's';
+                const s = (Math.random() * 3 + 1) + 'px';
+                p.style.width = p.style.height = s;
+                c.appendChild(p);
+            }
+        })();
+    </script>
+</body>
+
+</html>
