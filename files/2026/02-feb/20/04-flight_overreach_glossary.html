@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Overreach Glossary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0e0e0e;
+            --s1: #141414;
+            --s2: #1a1a1a;
+            --gold: #d4a853;
+            --gold2: #f0c060;
+            --cyan: #00d4ff;
+            --red: #ff4d4d;
+            --green: #00e5a0;
+            --text: #f0ece0;
+            --muted: #8a8070;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .012) 2px, rgba(255, 255, 255, .012) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .hero-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, .15);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+        }
+
+        .hero-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        .hero-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 12s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-label {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, .35);
+            padding: .3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            background: rgba(212, 168, 83, .05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: .5rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--gold), var(--gold2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            font-size: .85rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin-bottom: .5rem;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            font-size: .8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(14, 14, 14, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #222;
+            padding: .8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .7rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            padding: .55rem 1rem .55rem 2.4rem;
+            border-radius: 8px;
+            outline: none;
+            min-width: 240px;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 168, 83, .2);
+        }
+
+        .search-box::placeholder {
+            color: #4a4030;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-ico {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .9rem;
+            opacity: .5;
+        }
+
+        .pill {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pill.on {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #0e0e0e;
+        }
+
+        .ticker {
+            background: #111;
+            border-bottom: 1px solid #222;
+            padding: .35rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: .72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticker .live {
+            color: var(--green);
+            animation: blink 1.2s step-start infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .masonry {
+            column-count: 3;
+            column-gap: 1.2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem;
+        }
+
+        @media(max-width:900px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media(max-width:560px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        .flip-wrap {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-front {
+            background: var(--s1);
+            border: 1px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flip-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 999px;
+        }
+
+        .cat-aviation .flip-front::before {
+            background: var(--cyan);
+        }
+
+        .cat-regulatory .flip-front::before {
+            background: var(--gold);
+        }
+
+        .cat-legal .flip-front::before {
+            background: var(--red);
+        }
+
+        .cat-safety .flip-front::before {
+            background: var(--green);
+        }
+
+        .cat-general .flip-front::before {
+            background: #a78bfa;
+        }
+
+        .flip-back {
+            background: var(--s2);
+            border: 1px solid #303030;
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .f-num {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--muted);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .f-cat {
+            font-family: 'Fira Code', monospace;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .15rem .55rem;
+            border-radius: 4px;
+        }
+
+        .cat-aviation .f-cat {
+            background: rgba(0, 212, 255, .12);
+            color: var(--cyan);
+        }
+
+        .cat-regulatory .f-cat {
+            background: rgba(212, 168, 83, .12);
+            color: var(--gold);
+        }
+
+        .cat-legal .f-cat {
+            background: rgba(255, 77, 77, .12);
+            color: var(--red);
+        }
+
+        .cat-safety .f-cat {
+            background: rgba(0, 229, 160, .12);
+            color: var(--green);
+        }
+
+        .cat-general .f-cat {
+            background: rgba(167, 139, 250, .12);
+            color: #a78bfa;
+        }
+
+        .f-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .25rem;
+        }
+
+        .f-pos {
+            font-size: .72rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: .7rem;
+        }
+
+        .f-def {
+            font-size: .85rem;
+            color: #c0b89a;
+            line-height: 1.6;
+        }
+
+        .f-hint {
+            margin-top: .9rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+            letter-spacing: .06em;
+        }
+
+        .b-label {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .b-example {
+            font-size: .88rem;
+            color: #f0ece0;
+            font-style: italic;
+            line-height: 1.65;
+            border-left: 2px solid var(--gold);
+            padding: .4rem .75rem;
+            background: rgba(212, 168, 83, .06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .b-back-hint {
+            margin-top: .8rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+        }
+
+        .flip-wrap.hide {
+            display: none;
+        }
+
+        #empty {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            display: none;
+        }
+
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #0e0e0e;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(212, 168, 83, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s;
+            z-index: 200;
+        }
+
+        #btt.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-label">✈️ Aviation · Regulation · Passengers</div>
+        <h1>Flight <em>Overreach</em></h1>
+        <div class="hero-sub">50 Key Terms &amp; Hard Words — Meanings &amp; Example Sentences</div>
+        <div class="hero-author">The Hindu Editorial &nbsp;·&nbsp; DGCA, Unruly Passengers &amp; No-Fly Rules</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="search-box" id="sb" type="text" placeholder="Search terms…" oninput="applyFilters()">
+        </div>
+        <button class="pill on" onclick="setTab('all',this)">All</button>
+        <button class="pill" onclick="setTab('aviation',this)">Aviation</button>
+        <button class="pill" onclick="setTab('regulatory',this)">Regulatory</button>
+        <button class="pill" onclick="setTab('legal',this)">Legal</button>
+        <button class="pill" onclick="setTab('safety',this)">Safety</button>
+        <button class="pill" onclick="setTab('general',this)">General</button>
+    </div>
+
+    <div class="ticker">
+        <span><span class="live">●</span>&nbsp;CLICK ANY CARD TO FLIP AND SEE THE EXAMPLE SENTENCE</span>
+        <span>Showing <strong id="cnt" style="color:var(--gold)">50</strong> / 50 terms</span>
+    </div>
+
+    <div class="masonry" id="grid"></div>
+    <div id="empty">No results found. Try a different keyword.</div>
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const DATA = [
+            {
+                n: 1, w: "Overreach", pos: "noun/verb", cat: "general",
+                def: "Going beyond proper or reasonable limits of authority; exercising more power than one is entitled to.",
+                ex: "The airline's overreach was evident when it banned a passenger for peacefully asking about a delayed flight."
+            },
+            {
+                n: 2, w: "Disruptive behaviour", pos: "noun phrase", cat: "aviation",
+                def: "Actions by a passenger that interfere with the safe and orderly operation of a flight or airport.",
+                ex: "The cabin crew reported the man's disruptive behaviour after he refused to fasten his seatbelt during turbulence."
+            },
+            {
+                n: 3, w: "Unruly", pos: "adjective", cat: "aviation",
+                def: "Disorderly and not submissive to authority; difficult to control.",
+                ex: "The airline filed a report with the DGCA after an unruly passenger attempted to enter the cockpit."
+            },
+            {
+                n: 4, w: "IATA", pos: "acronym", cat: "aviation",
+                def: "International Air Transport Association — the global trade body representing the world's airlines, which sets safety and service standards.",
+                ex: "IATA's data revealed that inflight incidents had risen sharply compared to pre-pandemic levels."
+            },
+            {
+                n: 5, w: "DGCA", pos: "acronym", cat: "regulatory",
+                def: "Directorate General of Civil Aviation — India's national civil aviation regulator responsible for safety oversight, licensing, and airline rules.",
+                ex: "The DGCA issued a show-cause notice to the airline following complaints of negligence in passenger handling."
+            },
+            {
+                n: 6, w: "Flying ban", pos: "noun phrase", cat: "regulatory",
+                def: "An official prohibition preventing a specific individual from boarding any commercial flight, for a defined or indefinite period.",
+                ex: "The passenger received a 90-day flying ban after assaulting a crew member mid-flight."
+            },
+            {
+                n: 7, w: "Competent authority", pos: "noun phrase", cat: "legal",
+                def: "The designated official body or person with the legal power and jurisdiction to make a particular decision or ruling.",
+                ex: "Under current rules, only a competent authority — not the airline itself — can place someone on the no-fly list."
+            },
+            {
+                n: 8, w: "No-fly list", pos: "noun phrase", cat: "regulatory",
+                def: "An official list maintained by aviation authorities of individuals who are banned from flying on commercial airlines.",
+                ex: "The activist's name was wrongly added to the no-fly list, preventing him from attending an international conference."
+            },
+            {
+                n: 9, w: "Tampering", pos: "verb/gerund", cat: "safety",
+                def: "Interfering with something without permission, especially in a way that causes damage or is potentially dangerous.",
+                ex: "Tampering with a smoke detector in an aircraft lavatory is a federal offence in many countries."
+            },
+            {
+                n: 10, w: "Emergency exit", pos: "noun phrase", cat: "safety",
+                def: "A specially designed door in an aircraft used only for evacuating passengers in the event of an emergency.",
+                ex: "A passenger triggered panic when he attempted to open the emergency exit while the aircraft was climbing."
+            },
+            {
+                n: 11, w: "Life-saving equipment", pos: "noun phrase", cat: "safety",
+                def: "Onboard safety devices such as life jackets and oxygen masks intended for use only in genuine emergencies.",
+                ex: "Using life-saving equipment as a prop for a social media video is not only foolish but also a criminal offence."
+            },
+            {
+                n: 12, w: "Sloganeering", pos: "noun", cat: "aviation",
+                def: "The activity of loudly repeating political or protest slogans, especially in a public or confined space.",
+                ex: "The airline asked the group to stop sloganeering in the departure lounge as it was disturbing other passengers."
+            },
+            {
+                n: 13, w: "Intoxication", pos: "noun", cat: "aviation",
+                def: "The state of being affected by alcohol or drugs to the point where physical and mental control is significantly impaired.",
+                ex: "The captain refused to allow the visibly intoxicated passenger to board the aircraft despite holding a valid ticket."
+            },
+            {
+                n: 14, w: "No-fly list procedure", pos: "noun phrase", cat: "regulatory",
+                def: "The formal multi-step process by which a passenger is investigated and potentially added to the official no-fly list — typically involving a committee review.",
+                ex: "The lengthy no-fly list procedure meant that genuinely disruptive passengers could fly again before any decision was reached."
+            },
+            {
+                n: 15, w: "District and sessions judge", pos: "noun phrase", cat: "legal",
+                def: "A senior judicial officer heading the principal court of original jurisdiction in a district in India, handling both civil and criminal cases.",
+                ex: "The independent committee was chaired by a retired district and sessions judge to ensure impartiality."
+            },
+            {
+                n: 16, w: "Cabin crew", pos: "noun phrase", cat: "aviation",
+                def: "The airline staff responsible for passenger safety, comfort, and service during a flight.",
+                ex: "Cabin crew receive extensive training to handle medical emergencies and security threats at 35,000 feet."
+            },
+            {
+                n: 17, w: "Check-in counter", pos: "noun phrase", cat: "aviation",
+                def: "The airport desk where passengers check in their luggage, receive boarding passes, and are screened before a flight.",
+                ex: "An argument at the check-in counter over baggage fees escalated until airport security had to intervene."
+            },
+            {
+                n: 18, w: "High-handedness", pos: "noun", cat: "general",
+                def: "Overbearing or arrogant use of authority; acting in an excessively dictatorial manner.",
+                ex: "Passengers complained about the airline's high-handedness in denying boarding without providing any written explanation."
+            },
+            {
+                n: 19, w: "Moot point", pos: "noun phrase", cat: "general",
+                def: "A matter that is open to debate and has no definitive answer; also used to describe an issue that has become irrelevant.",
+                ex: "Whether the new powers would be misused remained a moot point until real-world cases came before the courts."
+            },
+            {
+                n: 20, w: "Fiasco", pos: "noun", cat: "general",
+                def: "A complete and humiliating failure; a situation that ends in disgraceful confusion.",
+                ex: "The airline's handling of the mass cancellation was a fiasco, leaving thousands stranded with no communication."
+            },
+            {
+                n: 21, w: "Pilot deployment rules", pos: "noun phrase", cat: "aviation",
+                def: "Regulations governing how and where airlines may assign their pilots to operate flights, including duty time limits.",
+                ex: "The regulator found that the airline had violated pilot deployment rules to maximise flight schedules during peak season."
+            },
+            {
+                n: 22, w: "Revenue considerations", pos: "noun phrase", cat: "aviation",
+                def: "Decisions or actions driven primarily by the desire to generate or protect financial income rather than safety or fairness.",
+                ex: "Critics argued that the airline's refusal to refund tickets was driven purely by revenue considerations."
+            },
+            {
+                n: 23, w: "Grievances", pos: "noun (plural)", cat: "general",
+                def: "Official or formal complaints about unfair treatment; a real or perceived cause for complaint.",
+                ex: "The consumer forum was flooded with grievances from passengers who had not received refunds for cancelled flights."
+            },
+            {
+                n: 24, w: "Deflecting", pos: "verb/gerund", cat: "general",
+                def: "Causing something to change direction; diverting attention or criticism away from the real issue.",
+                ex: "The spokesperson was accused of deflecting legitimate passenger complaints by focusing on security concerns."
+            },
+            {
+                n: 25, w: "Legitimate anger", pos: "noun phrase", cat: "general",
+                def: "Justified frustration or fury arising from genuinely unfair or unreasonable treatment.",
+                ex: "Passengers' legitimate anger over a six-hour tarmac delay with no food or water was entirely understandable."
+            },
+            {
+                n: 26, w: "Redress", pos: "noun/verb", cat: "legal",
+                def: "A remedy or compensation for a wrong done; to correct an injustice or unfair situation.",
+                ex: "The court provided redress by ordering the airline to refund all affected passengers within fourteen days."
+            },
+            {
+                n: 27, w: "Safeguard", pos: "noun/verb", cat: "regulatory",
+                def: "A measure taken to protect someone or something from harm, risk, or abuse; to protect through such measures.",
+                ex: "The proposed safeguard requires airlines to record all incidents on CCTV to prevent false accusations against passengers."
+            },
+            {
+                n: 28, w: "Amendment", pos: "noun", cat: "regulatory",
+                def: "A formal change or addition made to a law or set of rules to update or revise its provisions.",
+                ex: "The amendment to aviation rules reduced the timeline for reporting incidents from 72 hours to 24 hours."
+            },
+            {
+                n: 29, w: "Empower", pos: "verb", cat: "regulatory",
+                def: "To give someone the authority, power, or legal right to take a particular action.",
+                ex: "The new regulations empower cabin crew to restrain a passenger if they pose a direct safety threat."
+            },
+            {
+                n: 30, w: "National security", pos: "noun phrase", cat: "regulatory",
+                def: "The protection of a nation's citizens, institutions, and infrastructure from threats — prioritised in aviation's strict security protocols.",
+                ex: "National security concerns have historically resulted in the most severe and immediate no-fly bans."
+            },
+            {
+                n: 31, w: "Phenomenon", pos: "noun", cat: "general",
+                def: "A fact or situation, especially one whose cause is difficult to explain; a remarkable occurrence.",
+                ex: "Air rage has become a recognised phenomenon in aviation, prompting airlines to develop formal response protocols."
+            },
+            {
+                n: 32, w: "Tolerance level", pos: "noun phrase", cat: "general",
+                def: "The degree to which a person or system is willing to accept behaviour, difficulty, or deviation before taking action.",
+                ex: "Airlines have lowered their tolerance levels for verbal abuse of crew following a series of high-profile incidents."
+            },
+            {
+                n: 33, w: "Propose", pos: "verb", cat: "regulatory",
+                def: "To formally put forward a plan, idea, or set of rules for consideration or adoption.",
+                ex: "The DGCA proposed stricter fines to deter passengers from interfering with safety equipment."
+            },
+            {
+                n: 34, w: "Consumption (of alcohol)", pos: "noun", cat: "aviation",
+                def: "The act of drinking or ingesting something — specifically, alcohol — in a regulated context such as an aircraft.",
+                ex: "The airline's policy prohibits consumption of alcohol brought onboard by passengers on domestic routes."
+            },
+            {
+                n: 35, w: "Bhajans", pos: "noun (plural)", cat: "general",
+                def: "Hindu devotional songs — mentioned in the article as an example of disruptive noise on a flight.",
+                ex: "The airline politely asked a group of pilgrims to cease singing bhajans after other passengers complained."
+            },
+            {
+                n: 36, w: "Airing of grievances", pos: "noun phrase", cat: "general",
+                def: "The act of expressing complaints or concerns openly, especially in a public or semi-public setting.",
+                ex: "The protest at the airport was described by organisers as an airing of grievances against the airline's refund policy."
+            },
+            {
+                n: 37, w: "Credible argument", pos: "noun phrase", cat: "general",
+                def: "A convincing and well-supported reason or case that deserves to be taken seriously.",
+                ex: "The consumer group presented a credible argument that the new powers would be used to silence protesting passengers."
+            },
+            {
+                n: 38, w: "Independent committee", pos: "noun phrase", cat: "legal",
+                def: "A panel not affiliated with any of the parties involved in a dispute, established to make impartial decisions.",
+                ex: "An independent committee, free from airline influence, was set up to review all no-fly list recommendations."
+            },
+            {
+                n: 39, w: "Offset", pos: "verb", cat: "general",
+                def: "To counterbalance, compensate for, or reduce the effect of something.",
+                ex: "The regulator feared that the new powers would offset the rights of passengers to raise complaints without fear."
+            },
+            {
+                n: 40, w: "Balance of power", pos: "noun phrase", cat: "general",
+                def: "A state of equilibrium in which no single party holds excessive control or advantage over another.",
+                ex: "Consumer rights groups argued that the amendments would upset the balance of power between airlines and travellers."
+            },
+            {
+                n: 41, w: "Disruptive", pos: "adjective", cat: "aviation",
+                def: "Causing disturbance, interruption, or disorder to an activity or environment.",
+                ex: "Even minor disruptive acts — such as shouting obscenities at cabin crew — can jeopardise crew authority."
+            },
+            {
+                n: 42, w: "Incident", pos: "noun", cat: "aviation",
+                def: "An occurrence that requires a formal report, especially an event that disrupts normal flight operations or passenger safety.",
+                ex: "IATA classifies each inflight incident by severity, from a verbal altercation to a physical assault."
+            },
+            {
+                n: 43, w: "Overshadowed", pos: "verb (past tense)", cat: "general",
+                def: "Made to appear less important; reduced in significance because something else dominated attention.",
+                ex: "Minor passenger complaints were overshadowed by the airline's operational crisis caused by the pilot shortage."
+            },
+            {
+                n: 44, w: "Aviation experts", pos: "noun phrase", cat: "aviation",
+                def: "Professionals with specialised knowledge and experience in the aviation industry, including safety, regulation, and operations.",
+                ex: "Aviation experts cautioned that stripping passengers of procedural rights would create more conflict, not less."
+            },
+            {
+                n: 45, w: "Unfair practices", pos: "noun phrase", cat: "regulatory",
+                def: "Business conduct that is unjust, deceptive, or discriminatory towards consumers or employees.",
+                ex: "The consumer court found that the airline's hidden baggage fees constituted unfair practices under consumer protection law."
+            },
+            {
+                n: 46, w: "Broader", pos: "adjective", cat: "general",
+                def: "Wider in scope, extent, or coverage than before; encompassing more categories or situations.",
+                ex: "The regulator took a broader view of misconduct, adding protest activities to the list of banned inflight behaviours."
+            },
+            {
+                n: 47, w: "Referring (the matter)", pos: "verb/gerund", cat: "legal",
+                def: "Sending a case or issue to a higher or appropriate authority for consideration or decision.",
+                ex: "Currently, airlines must refer a disruptive passenger's case to an independent body rather than acting alone."
+            },
+            {
+                n: 48, w: "Distinction", pos: "noun", cat: "legal",
+                def: "A clear difference or contrast between two things; the act of recognising and treating them differently.",
+                ex: "Experts recommend making a legal distinction between disruptive behaviour on the ground and during flight."
+            },
+            {
+                n: 49, w: "Passenger safety", pos: "noun phrase", cat: "safety",
+                def: "The condition of all persons on board being protected from harm during flight, including both physical and security threats.",
+                ex: "Passenger safety must always take precedence over commercial considerations when deciding how to handle incidents."
+            },
+            {
+                n: 50, w: "Smooth passenger experience", pos: "noun phrase", cat: "aviation",
+                def: "An uninterrupted, comfortable, and problem-free journey for travellers from check-in to disembarkation.",
+                ex: "Airlines invest in conflict de-escalation training to maintain a smooth passenger experience on every flight."
+            }
+        ];
+
+        let activeCat = 'all';
+
+        function buildGrid(data) {
+            const g = document.getElementById('grid');
+            g.innerHTML = '';
+            data.forEach((t, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = `flip-wrap cat-${t.cat}`;
+                wrap.setAttribute('data-cat', t.cat);
+                wrap.setAttribute('data-q', (t.w + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                wrap.style.animationDelay = (i * 0.03) + 's';
+                wrap.innerHTML = `
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="f-num"><span style="font-size:.6rem;opacity:.4">#${String(t.n).padStart(2, '0')}</span><span class="f-cat">${t.cat}</span></div>
+          <div class="f-word">${t.w}</div>
+          <div class="f-pos">${t.pos}</div>
+          <div class="f-def">${t.def}</div>
+          <div class="f-hint">tap to see example →</div>
+        </div>
+        <div class="flip-back">
+          <div class="b-label">✦ Example Sentence</div>
+          <div class="b-example">"${t.ex}"</div>
+          <div class="b-back-hint">← tap to flip back</div>
+        </div>
+      </div>`;
+                wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+                g.appendChild(wrap);
+            });
+        }
+
+        function applyFilters() {
+            const q = document.getElementById('sb').value.toLowerCase().trim();
+            let n = 0;
+            document.querySelectorAll('.flip-wrap').forEach(c => {
+                const mQ = !q || c.getAttribute('data-q').includes(q);
+                const mC = activeCat === 'all' || c.getAttribute('data-cat') === activeCat;
+                if (mQ && mC) { c.classList.remove('hide'); n++; } else c.classList.add('hide');
+            });
+            document.getElementById('cnt').textContent = n;
+            document.getElementById('empty').style.display = n === 0 ? 'block' : 'none';
+        }
+
+        function setTab(cat, btn) {
+            activeCat = cat;
+            document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+            btn.classList.add('on');
+            applyFilters();
+        }
+
+        buildGrid(DATA);
+        window.addEventListener('scroll', () => {
+            document.getElementById('btt').classList.toggle('on', scrollY > 400);
+        });
+    </script>
+</body>
+
+</html>

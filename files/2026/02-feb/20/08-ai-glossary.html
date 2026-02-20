@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Strategy Glossary</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --accent: #e8c840;
+    --accent2: #40e8c8;
+    --accent3: #e840a0;
+    --text: #e8e0d0;
+    --muted: #7a7490;
+    --border: rgba(232,200,64,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 40% at 20% 20%, rgba(232,200,64,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, rgba(64,232,200,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 50% 50%, rgba(232,64,160,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: bgPulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes bgPulse {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  /* Noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 80px 40px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeDown 0.6s ease forwards 0.2s;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.4s;
+  }
+
+  h1 .line1 { color: var(--text); display: block; }
+  h1 .line2 { 
+    color: transparent; 
+    -webkit-text-stroke: 1px var(--accent);
+    display: block;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 500px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.6s;
+  }
+
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.8s;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Search bar */
+  .search-wrap {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 40px;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.3s;
+    letter-spacing: 0.05em;
+  }
+
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: var(--accent); }
+
+  /* Filter tabs */
+  .filter-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 0 40px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  /* Grid */
+  .grid {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    margin: 0 40px 80px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg);
+    padding: 36px 32px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardAppear 0.5s ease forwards;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,200,64,0.06), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before { opacity: 1; }
+  .card:hover { background: var(--surface); }
+
+  .card-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+
+  .card-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.1;
+    transition: color 0.3s;
+  }
+
+  .card:hover .card-word { color: var(--accent); }
+
+  .card-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .card-meaning {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #b0a8a0;
+    margin-bottom: 20px;
+  }
+
+  .example-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-example {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.6;
+    border-left: 2px solid var(--accent3);
+    padding-left: 14px;
+  }
+
+  .card-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 1px;
+  }
+
+  .tag-tech { background: rgba(64,232,200,0.1); color: var(--accent2); }
+  .tag-biz { background: rgba(232,200,64,0.1); color: var(--accent); }
+  .tag-human { background: rgba(232,64,160,0.1); color: var(--accent3); }
+  .tag-edu { background: rgba(160,232,64,0.1); color: #a0e840; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes cardAppear {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hidden { display: none; }
+
+  /* Floating accent line */
+  .accent-line {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100vh;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    z-index: 100;
+    animation: lineScroll 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes lineScroll {
+    0% { transform: scaleY(0.3) translateY(-30%); opacity: 0.4; }
+    100% { transform: scaleY(1) translateY(0); opacity: 1; }
+  }
+
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  @media (max-width: 600px) {
+    .grid { margin: 0 0 60px; }
+    header { padding: 60px 24px 40px; }
+    .stats-bar { gap: 32px; }
+    .filter-bar { padding: 0 16px 32px; }
+    .search-wrap { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="accent-line"></div>
+
+<header>
+  <div class="header-tag">Lexicon · AI & Strategy</div>
+  <h1>
+    <span class="line1">Word</span>
+    <span class="line2">Vault</span>
+  </h1>
+  <p class="subtitle">50 key terms & hard words from <em>"When AI Writes the Code"</em> by M. Muneer</p>
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">50</span><span class="stat-label">Terms</span></div>
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label">Categories</span></div>
+    <div class="stat"><span class="stat-num">50</span><span class="stat-label">Examples</span></div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="Search words, meanings..." id="searchInput" oninput="filterCards()">
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterTag('all', this)">All</button>
+  <button class="filter-btn" onclick="filterTag('tech', this)">Technology</button>
+  <button class="filter-btn" onclick="filterTag('biz', this)">Business</button>
+  <button class="filter-btn" onclick="filterTag('human', this)">Human Skills</button>
+  <button class="filter-btn" onclick="filterTag('edu', this)">Education</button>
+</div>
+
+<div class="grid" id="glossaryGrid"></div>
+
+<footer>WORDVAULT · AI & STRATEGY LEXICON · 50 TERMS</footer>
+
+<script>
+const terms = [
+  { word: "Inflection Point", type: "noun", tag: "biz", meaning: "A critical moment when a significant change occurs, altering the course of events, industries, or systems.", example: "The launch of the smartphone was an inflection point that transformed the entire communications industry." },
+  { word: "Automation", type: "noun", tag: "tech", meaning: "The use of technology to perform tasks with minimal human intervention, replacing manual or repetitive processes.", example: "Factory automation reduced production costs but also displaced thousands of assembly-line workers." },
+  { word: "Artificial Intelligence (AI)", type: "noun", tag: "tech", meaning: "Computer systems that simulate human intelligence to perform tasks like learning, reasoning, and problem-solving.", example: "Artificial intelligence now powers everything from spam filters to complex medical diagnoses." },
+  { word: "Large Language Models (LLMs)", type: "noun", tag: "tech", meaning: "Advanced AI systems trained on massive text datasets to understand and generate human-like language.", example: "Large language models can now draft legal briefs, write poetry, and debug code with remarkable fluency." },
+  { word: "Deep Generalist", type: "noun", tag: "biz", meaning: "A professional with deep expertise in one core field and broad, working knowledge across multiple adjacent disciplines.", example: "The startup's success hinged on its Deep Generalist CEO, who could speak fluently with engineers, designers, and investors alike." },
+  { word: "T-shaped Professional", type: "noun", tag: "biz", meaning: "A person with deep vertical expertise in one area and broad horizontal knowledge across many domains — shaped like the letter T.", example: "Companies increasingly prize T-shaped professionals who can lead cross-functional projects without getting lost in jargon." },
+  { word: "Dilettante", type: "noun", tag: "human", meaning: "A person who dabbles in many subjects superficially without serious commitment or depth in any.", example: "Unlike a dilettante, the Deep Generalist invests real mastery before moving sideways into new fields." },
+  { word: "Functional Silos", type: "noun", tag: "biz", meaning: "Organisational divisions where departments work in isolation, limiting cross-functional communication and collaboration.", example: "The merger failed partly because functional silos prevented the finance and product teams from aligning on priorities." },
+  { word: "Contextual Synthesis", type: "noun", tag: "human", meaning: "The ability to combine information from different sources and interpret it meaningfully within a specific real-world situation.", example: "A doctor's contextual synthesis — reading test results alongside a patient's lifestyle — is something AI cannot yet replicate." },
+  { word: "Strategic Coherence", type: "noun", tag: "biz", meaning: "The alignment and consistency of an organisation's decisions, resources, and actions toward a unified long-term goal.", example: "Without strategic coherence, even a well-funded company can splinter its efforts and fail to outperform competitors." },
+  { word: "Organisational Alignment", type: "noun", tag: "biz", meaning: "The degree to which all parts of an organisation work in harmony toward shared objectives and values.", example: "The restructuring improved organisational alignment by ensuring every team's KPIs connected to the company's five-year vision." },
+  { word: "Empathy", type: "noun", tag: "human", meaning: "The capacity to understand and share the feelings, perspectives, and experiences of another person.", example: "The manager's empathy helped the team navigate grief after a colleague's sudden departure, maintaining morale and trust." },
+  { word: "Algorithms", type: "noun", tag: "tech", meaning: "Step-by-step computational instructions or rules that a computer follows to solve a problem or complete a task.", example: "Social media algorithms curate your feed, but they optimise for engagement rather than your long-term wellbeing." },
+  { word: "Sentiment", type: "noun", tag: "human", meaning: "A feeling, emotion, or opinion held by individuals or groups, often measured in relation to a topic or event.", example: "Market sentiment shifted overnight after the central bank announced an unexpected interest rate hike." },
+  { word: "Relational Intelligence", type: "noun", tag: "human", meaning: "The ability to build, navigate, and sustain meaningful interpersonal relationships with skill and awareness.", example: "In senior leadership, relational intelligence often matters more than technical expertise in getting things done." },
+  { word: "Agile Enterprises", type: "noun", tag: "biz", meaning: "Organisations that are flexible, adaptive, and able to pivot quickly in response to change, feedback, or new information.", example: "Agile enterprises restructured rapidly during the pandemic, shifting supply chains and remote work protocols within weeks." },
+  { word: "Cross-functional Teams", type: "noun", tag: "biz", meaning: "Groups drawn from multiple departments or disciplines to work together on a shared project or goal.", example: "The product launch succeeded because cross-functional teams from engineering, marketing, and legal worked in the same room." },
+  { word: "Rotational Assignments", type: "noun", tag: "biz", meaning: "A professional development practice where employees move through different roles or departments to broaden their experience.", example: "Her rotational assignment across finance, operations, and HR gave her an unusually holistic view of the company's challenges." },
+  { word: "Interdisciplinary", type: "adjective", tag: "edu", meaning: "Involving or combining two or more academic disciplines, fields, or areas of expertise.", example: "The interdisciplinary research team — comprising biologists, economists, and ethicists — produced insights no single field could achieve alone." },
+  { word: "Quantitative Literacy", type: "noun", tag: "edu", meaning: "The ability to understand, interpret, and reason with numerical data, statistics, and mathematical concepts.", example: "Quantitative literacy is now essential for journalists who must interpret public health data for general audiences." },
+  { word: "Systemic Reasoning", type: "noun", tag: "edu", meaning: "The ability to understand how components within a complex system interact, influence, and depend on each other.", example: "Systemic reasoning helped the urban planner see that building a new highway would worsen congestion, not ease it." },
+  { word: "Ethical Reflection", type: "noun", tag: "human", meaning: "The deliberate process of examining one's values and the moral implications of decisions or actions.", example: "Before deploying the surveillance software, the team engaged in ethical reflection about privacy, consent, and potential misuse." },
+  { word: "Externalities", type: "noun", tag: "biz", meaning: "Unintended side effects of an action or decision that affect parties not directly involved in it.", example: "The factory's externalities — pollution and noise — imposed real costs on the surrounding community not reflected in its balance sheet." },
+  { word: "Incentives", type: "noun", tag: "biz", meaning: "Factors — financial, social, or psychological — that motivate individuals or organisations to behave in particular ways.", example: "Poorly designed incentives pushed salespeople to prioritise volume over customer satisfaction, damaging the brand long-term." },
+  { word: "Deployment", type: "noun", tag: "tech", meaning: "The process of releasing a technology, software system, or capability into active real-world use.", example: "The deployment of the new AI model was delayed after stress tests revealed unpredictable behaviour under edge cases." },
+  { word: "Rule-based Tasks", type: "noun", tag: "tech", meaning: "Activities that follow fixed, predetermined steps or logic, making them highly automatable by machines.", example: "Data entry, invoice processing, and form validation are classic rule-based tasks now handled efficiently by software." },
+  { word: "Operational Risk", type: "noun", tag: "biz", meaning: "The risk of loss resulting from failed internal processes, people, systems, or from external events.", example: "Relying on a single cloud provider exposed the firm to significant operational risk when that provider suffered an outage." },
+  { word: "Compensation Frameworks", type: "noun", tag: "biz", meaning: "Structured systems that determine how employees are paid, including salary bands, bonuses, and incentive structures.", example: "The company's compensation framework inadvertently rewarded short-term wins, discouraging engineers from tackling long-term technical debt." },
+  { word: "Regulatory Changes", type: "noun", tag: "biz", meaning: "Alterations to laws or rules governing an industry, which can reshape business practices, costs, and strategies.", example: "The GDPR's regulatory changes forced companies globally to overhaul their data collection and storage practices almost overnight." },
+  { word: "Narrow Optimisation", type: "noun", tag: "biz", meaning: "Focusing exclusively on maximising one specific metric or outcome, often at the expense of broader, systemic health.", example: "Narrow optimisation for quarterly profit caused the retailer to cut training budgets, eroding customer service quality over time." },
+  { word: "Integrative Ability", type: "noun", tag: "human", meaning: "The capacity to bring together disparate ideas, disciplines, or perspectives into a unified, coherent whole.", example: "Her integrative ability — connecting customer psychology with product design — made her the most valuable person in any room." },
+  { word: "Data Informs Strategy", type: "phrase", tag: "biz", meaning: "The principle that decisions and plans should be grounded in and shaped by empirical evidence and data analysis.", example: "The campaign was redesigned after real-time analytics showed data informs strategy more reliably than intuition alone." },
+  { word: "Feasting on Data", type: "phrase", tag: "tech", meaning: "A metaphor describing how AI systems improve by processing enormous volumes of information during training.", example: "The recommendation engine grew remarkably accurate by feasting on data from billions of user interactions over five years." },
+  { word: "Disciplined Fusion", type: "noun", tag: "human", meaning: "The intentional, rigorous integration of knowledge from different fields — as opposed to casual or superficial borrowing.", example: "The architect's work embodied disciplined fusion, blending structural engineering principles with insights from cultural anthropology." },
+  { word: "Lived Experience", type: "noun", tag: "human", meaning: "Knowledge and insight gained through personal, direct participation in events, relationships, or challenges over time.", example: "No amount of research replaces the lived experience of having navigated a startup from idea to acquisition." },
+  { word: "Repeatable Work", type: "noun", tag: "tech", meaning: "Tasks that follow a consistent, predictable pattern and can be performed identically multiple times without variation.", example: "Repeatable work like invoice reconciliation has been among the first categories absorbed by robotic process automation." },
+  { word: "Debugging", type: "verb/noun", tag: "tech", meaning: "The process of identifying, isolating, and fixing errors or unexpected behaviour in computer code or systems.", example: "Debugging the authentication system took three engineers two days — a reminder that elegant code is still difficult to build." },
+  { word: "Fortune-500", type: "noun", tag: "biz", meaning: "An annual list of the 500 largest US companies ranked by total revenue, widely used as a proxy for corporate prestige.", example: "Landing a Fortune-500 advisory contract validated her consultancy's reputation in enterprise digital transformation." },
+  { word: "Synthesise Knowledge", type: "verb phrase", tag: "human", meaning: "To combine and integrate information from multiple sources or disciplines into new, coherent understanding.", example: "A good analyst doesn't just collect data; they synthesise knowledge across departments to surface strategic insights." },
+  { word: "Restrained Phrasing", type: "noun", tag: "human", meaning: "The use of careful, understated language that implies more than it explicitly states, often in corporate communication.", example: "The CEO's restrained phrasing — calling layoffs a 'workforce realignment' — did little to soften the news for affected staff." },
+  { word: "Hesitation (in negotiation)", type: "noun", tag: "human", meaning: "A brief pause or uncertainty that signals discomfort, doubt, or strategic recalibration during discussions.", example: "A skilled negotiator reads hesitation as a signal to probe further rather than push harder with pressure." },
+  { word: "Swiss Army Brain", type: "metaphor", tag: "human", meaning: "A playful metaphor for a mind that is versatile, multi-functional, and equipped to tackle diverse challenges.", example: "The product manager became indispensable — her Swiss Army brain could pivot from UX research to financial modelling in hours." },
+  { word: "Cultural Reform", type: "noun", tag: "biz", meaning: "A deliberate shift in the shared values, norms, and behaviours within an organisation or institution.", example: "The new CEO acknowledged that improving diversity required cultural reform, not just new hiring policies." },
+  { word: "Consequence (in impact)", type: "noun", tag: "human", meaning: "The tangible outcome or result of an action, decision, or capability when applied in the real world.", example: "Turning raw technical skills into real-world consequence requires not just knowledge, but judgment and contextual awareness." },
+  { word: "Medici Institute", type: "proper noun", tag: "edu", meaning: "A non-profit organisation co-founded by the article's author, focused on fostering innovation through interdisciplinary thinking.", example: "The Medici Institute draws its name from the Renaissance family whose patronage catalysed cross-disciplinary breakthroughs in art and science." },
+  { word: "Parallel Obligation", type: "noun", tag: "edu", meaning: "A corresponding duty or responsibility that runs alongside another — here, referring to education systems mirroring corporate adaptation.", example: "If businesses must adapt to AI, educational institutions face a parallel obligation to redesign curricula for the new economy." },
+  { word: "Prioritisation", type: "noun", tag: "biz", meaning: "The process of ranking tasks, goals, or resources by their relative importance, urgency, or strategic value.", example: "With limited engineering resources, smart prioritisation meant shipping the features customers needed most, not those easiest to build." },
+  { word: "Adjacent Domains", type: "noun", tag: "biz", meaning: "Fields, disciplines, or industries that are closely related to one's primary area of expertise.", example: "A cybersecurity expert exploring adjacent domains like insurance and compliance becomes far more valuable to an enterprise client." },
+  { word: "Task-bots", type: "noun", tag: "tech", meaning: "Informal term for automated software agents designed to execute specific, routine, repetitive tasks without human involvement.", example: "Task-bots now handle customer queries at the tier-one support level, freeing human agents for complex, emotionally sensitive cases." },
+  { word: "Upskilling", type: "noun", tag: "edu", meaning: "The process of learning new or enhanced skills, especially to remain relevant in a changing job market or technological landscape.", example: "The bank's upskilling programme trained legacy IT staff in cloud architecture and machine learning fundamentals over 18 months." }
+];
+
+let activeTag = 'all';
+
+function buildCards(data) {
+  const grid = document.getElementById('glossaryGrid');
+  grid.innerHTML = '';
+  data.forEach((t, i) => {
+    const tagClass = `tag-${t.tag}`;
+    const tagLabel = t.tag === 'tech' ? 'Technology' : t.tag === 'biz' ? 'Business' : t.tag === 'human' ? 'Human Skills' : 'Education';
+    const delay = (i % 12) * 60;
+    const card = document.createElement('div');
+    card.className = `card`;
+    card.setAttribute('data-tag', t.tag);
+    card.setAttribute('data-text', (t.word + ' ' + t.meaning + ' ' + t.example).toLowerCase());
+    card.style.animationDelay = delay + 'ms';
+    card.innerHTML = `
+      <div class="card-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="card-tag ${tagClass}">${tagLabel}</div>
+      <div class="card-word">${t.word}</div>
+      <div class="card-type">${t.type}</div>
+      <div class="card-meaning">${t.meaning}</div>
+      <div class="example-label">Example</div>
+      <div class="card-example">${t.example}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(c => {
+    const text = c.getAttribute('data-text');
+    const tag = c.getAttribute('data-tag');
+    const matchesSearch = !q || text.includes(q);
+    const matchesTag = activeTag === 'all' || tag === activeTag;
+    c.classList.toggle('hidden', !(matchesSearch && matchesTag));
+  });
+}
+
+function filterTag(tag, btn) {
+  activeTag = tag;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterCards();
+}
+
+buildCards(terms);
+</script>
+</body>
+</html>

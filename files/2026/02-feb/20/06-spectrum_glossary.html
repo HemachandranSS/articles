@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectrum Redefined Glossary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0e0e0e;
+            --s1: #141414;
+            --s2: #1a1a1a;
+            --gold: #d4a853;
+            --gold2: #f0c060;
+            --cyan: #00d4ff;
+            --red: #ff4d4d;
+            --green: #00e5a0;
+            --text: #f0ece0;
+            --muted: #8a8070;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .012) 2px, rgba(255, 255, 255, .012) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .hero-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, .15);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+        }
+
+        .hero-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        .hero-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 12s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-label {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, .35);
+            padding: .3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            background: rgba(212, 168, 83, .05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: .5rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--gold), var(--gold2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            font-size: .85rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin-bottom: .5rem;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            font-size: .8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(14, 14, 14, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #222;
+            padding: .8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .7rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            padding: .55rem 1rem .55rem 2.4rem;
+            border-radius: 8px;
+            outline: none;
+            min-width: 240px;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 168, 83, .2);
+        }
+
+        .search-box::placeholder {
+            color: #4a4030;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-ico {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .9rem;
+            opacity: .5;
+        }
+
+        .pill {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pill.on {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #0e0e0e;
+        }
+
+        .ticker {
+            background: #111;
+            border-bottom: 1px solid #222;
+            padding: .35rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: .72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .live {
+            color: var(--green);
+            animation: blink 1.2s step-start infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .masonry {
+            column-count: 3;
+            column-gap: 1.2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem;
+        }
+
+        @media(max-width:900px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media(max-width:560px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        .flip-wrap {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-front {
+            background: var(--s1);
+            border: 1px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flip-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 999px;
+        }
+
+        .cat-legal .flip-front::before {
+            background: var(--cyan);
+        }
+
+        .cat-telecom .flip-front::before {
+            background: var(--gold);
+        }
+
+        .cat-finance .flip-front::before {
+            background: var(--red);
+        }
+
+        .cat-policy .flip-front::before {
+            background: var(--green);
+        }
+
+        .cat-general .flip-front::before {
+            background: #a78bfa;
+        }
+
+        .flip-back {
+            background: var(--s2);
+            border: 1px solid #303030;
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .f-num {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--muted);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .f-cat {
+            font-family: 'Fira Code', monospace;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .15rem .55rem;
+            border-radius: 4px;
+        }
+
+        .cat-legal .f-cat {
+            background: rgba(0, 212, 255, .12);
+            color: var(--cyan);
+        }
+
+        .cat-telecom .f-cat {
+            background: rgba(212, 168, 83, .12);
+            color: var(--gold);
+        }
+
+        .cat-finance .f-cat {
+            background: rgba(255, 77, 77, .12);
+            color: var(--red);
+        }
+
+        .cat-policy .f-cat {
+            background: rgba(0, 229, 160, .12);
+            color: var(--green);
+        }
+
+        .cat-general .f-cat {
+            background: rgba(167, 139, 250, .12);
+            color: #a78bfa;
+        }
+
+        .f-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .25rem;
+        }
+
+        .f-pos {
+            font-size: .72rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: .7rem;
+        }
+
+        .f-def {
+            font-size: .85rem;
+            color: #c0b89a;
+            line-height: 1.6;
+        }
+
+        .f-hint {
+            margin-top: .9rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+            letter-spacing: .06em;
+        }
+
+        .b-label {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .b-example {
+            font-size: .88rem;
+            color: #f0ece0;
+            font-style: italic;
+            line-height: 1.65;
+            border-left: 2px solid var(--gold);
+            padding: .4rem .75rem;
+            background: rgba(212, 168, 83, .06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .b-back-hint {
+            margin-top: .8rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+        }
+
+        .flip-wrap.hide {
+            display: none;
+        }
+
+        #empty {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            display: none;
+        }
+
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #0e0e0e;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(212, 168, 83, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s;
+            z-index: 200;
+        }
+
+        #btt.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-label">📡 Telecom · Law · Policy</div>
+        <h1>Spectrum <em>Redefined</em></h1>
+        <div class="hero-sub">50 Key Terms &amp; Hard Words — Meanings &amp; Example Sentences</div>
+        <div class="hero-author">The Hindu Editorial &nbsp;·&nbsp; SC Ruling on Telecom Spectrum &amp; IBC</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="search-box" id="sb" type="text" placeholder="Search terms…" oninput="applyFilters()">
+        </div>
+        <button class="pill on" onclick="setTab('all',this)">All</button>
+        <button class="pill" onclick="setTab('legal',this)">Legal</button>
+        <button class="pill" onclick="setTab('telecom',this)">Telecom</button>
+        <button class="pill" onclick="setTab('finance',this)">Finance</button>
+        <button class="pill" onclick="setTab('policy',this)">Policy</button>
+        <button class="pill" onclick="setTab('general',this)">General</button>
+    </div>
+
+    <div class="ticker">
+        <span><span class="live">●</span>&nbsp;CLICK ANY CARD TO FLIP AND SEE THE EXAMPLE SENTENCE</span>
+        <span>Showing <strong id="cnt" style="color:var(--gold)">50</strong> / 50 terms</span>
+    </div>
+
+    <div class="masonry" id="grid"></div>
+    <div id="empty">No results found. Try a different keyword.</div>
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const DATA = [
+            {
+                n: 1, w: "Spectrum", pos: "noun", cat: "telecom",
+                def: "A range of radio frequencies allocated by the government for use in wireless communication — mobile networks, satellite, broadcasting etc.",
+                ex: "The auction of 5G spectrum raised billions for the government but saddled telecom companies with heavy debt."
+            },
+            {
+                n: 2, w: "Sovereign", pos: "adjective", cat: "legal",
+                def: "Belonging to or exercised by the supreme authority of a nation-state; not subject to private ownership or commercial transfer.",
+                ex: "The court held that underground minerals are sovereign resources that cannot be privately owned in perpetuity."
+            },
+            {
+                n: 3, w: "Finite Natural Resource", pos: "noun phrase", cat: "policy",
+                def: "A resource found in nature that exists in limited quantity and cannot be replenished once exhausted or over-allocated.",
+                ex: "Like oil and freshwater, spectrum is a finite natural resource that must be managed carefully for future generations."
+            },
+            {
+                n: 4, w: "Public Trust Doctrine", pos: "noun phrase", cat: "legal",
+                def: "A legal principle that certain natural resources belong to the public and must be held and managed by the government for the common good.",
+                ex: "The court invoked the public trust doctrine to prevent the privatisation of a coastal wetland for commercial development."
+            },
+            {
+                n: 5, w: "Revocable", pos: "adjective", cat: "legal",
+                def: "Capable of being cancelled, withdrawn, or reversed by the authority that granted it.",
+                ex: "The licence is revocable if the operator fails to meet the network coverage obligations within the specified period."
+            },
+            {
+                n: 6, w: "Insolvency", pos: "noun", cat: "finance",
+                def: "The state of being unable to pay one's debts when they fall due; financial collapse requiring legal restructuring or liquidation.",
+                ex: "After years of price wars, the telecom firm filed for insolvency with liabilities exceeding three times its assets."
+            },
+            {
+                n: 7, w: "IBC (Insolvency and Bankruptcy Code)", pos: "acronym", cat: "legal",
+                def: "India's 2016 law governing insolvency resolution and bankruptcy for companies and individuals, with a time-bound resolution process.",
+                ex: "Under the IBC, a resolution plan must be submitted within 180 days or the company faces liquidation."
+            },
+            {
+                n: 8, w: "Corporate Debtor", pos: "noun phrase", cat: "legal",
+                def: "A company that owes money it cannot repay and has been admitted into the insolvency resolution process under the IBC.",
+                ex: "Once declared a corporate debtor, the company's management is replaced by a court-appointed resolution professional."
+            },
+            {
+                n: 9, w: "Liquidation", pos: "noun", cat: "finance",
+                def: "The process of winding up a company by selling its assets to repay creditors when no viable business rescue plan exists.",
+                ex: "After two failed attempts at resolution, the telecom company was ordered into liquidation and its assets auctioned."
+            },
+            {
+                n: 10, w: "Collateral", pos: "noun", cat: "finance",
+                def: "An asset pledged by a borrower to a lender as security for a loan — which the lender can seize if the borrower defaults.",
+                ex: "Banks treating spectrum as collateral was a legal fiction because spectrum cannot be repossessed and sold like a physical asset."
+            },
+            {
+                n: 11, w: "Legal Fiction", pos: "noun phrase", cat: "legal",
+                def: "An assumption made by a court or adopted by a legal system that treats something untrue as true for practical purposes.",
+                ex: "The practice of listing spectrum on a telecom company's balance sheet was always a legal fiction, as it was never owned."
+            },
+            {
+                n: 12, w: "Contentious", pos: "adjective", cat: "general",
+                def: "Causing or likely to cause disagreement or controversy; disputed.",
+                ex: "The contentious interpretation of spectrum ownership divided regulators, banks, and telecom companies for over a decade."
+            },
+            {
+                n: 13, w: "Deferred Instalments", pos: "noun phrase", cat: "finance",
+                def: "Payments scheduled to be made over future periods rather than all at once; spread-out payment obligations.",
+                ex: "Spectrum winners pay the government through deferred instalments over 16 years, creating long-term liability on their books."
+            },
+            {
+                n: 14, w: "Usage Right", pos: "noun phrase", cat: "legal",
+                def: "A limited, conditional permission to use a resource or asset for a defined period — without conferring ownership.",
+                ex: "A spectrum usage right allows an operator to use designated frequencies for 20 years but does not transfer title."
+            },
+            {
+                n: 15, w: "Average Revenue Per User (ARPU)", pos: "acronym", cat: "telecom",
+                def: "A key telecom metric measuring the average monthly or annual revenue generated from each subscriber.",
+                ex: "Jio's entry into the market slashed ARPU across the industry, forcing operators to slash prices to retain customers."
+            },
+            {
+                n: 16, w: "Monetise", pos: "verb", cat: "finance",
+                def: "To convert an asset or a right into money, especially through sale, pledging, or securitisation.",
+                ex: "The company hoped to monetise its spectrum licence by pledging it with banks to raise emergency capital."
+            },
+            {
+                n: 17, w: "Restructure", pos: "verb", cat: "finance",
+                def: "To reorganise the debts or operations of a company, typically to avoid insolvency; to renegotiate loan terms.",
+                ex: "Banks agreed to restructure the operator's dues after it demonstrated a credible plan to recover profitability."
+            },
+            {
+                n: 18, w: "Ambiguity", pos: "noun", cat: "general",
+                def: "The quality of being open to more than one interpretation; inexactness or uncertainty in meaning.",
+                ex: "The legal ambiguity over spectrum ownership allowed banks and operators to act as if it were a tradeable asset."
+            },
+            {
+                n: 19, w: "Lenders", pos: "noun (plural)", cat: "finance",
+                def: "Financial institutions — banks or non-bank lenders — that provide loans to companies in exchange for interest and security.",
+                ex: "Lenders are now reassessing their exposure to the telecom sector following the Supreme Court's ruling on spectrum."
+            },
+            {
+                n: 20, w: "Reserve Price", pos: "noun phrase", cat: "policy",
+                def: "The minimum price set by the government for spectrum at an auction, below which the spectrum will not be sold.",
+                ex: "Critics argued that high reserve prices discouraged bidding and left large quantities of spectrum unsold."
+            },
+            {
+                n: 21, w: "Spectrum Auction", pos: "noun phrase", cat: "telecom",
+                def: "A competitive bidding process in which the government sells rights to use specific radio frequencies to telecom operators.",
+                ex: "The 5G spectrum auction attracted bids worth over one lakh crore rupees from four major telecom operators."
+            },
+            {
+                n: 22, w: "Underutilised", pos: "adjective", cat: "policy",
+                def: "Not being used to its full potential or capacity; employed less than optimally.",
+                ex: "Vast bands of underutilised spectrum in rural areas are preventing the rollout of affordable broadband services."
+            },
+            {
+                n: 23, w: "DoT (Department of Telecommunications)", pos: "acronym", cat: "policy",
+                def: "India's central government ministry responsible for formulating telecom policies, licensing, and spectrum management.",
+                ex: "The DoT issued a notice to operators who had failed to meet their rural coverage roll-out obligations."
+            },
+            {
+                n: 24, w: "Balance Sheet", pos: "noun phrase", cat: "finance",
+                def: "A financial statement listing a company's assets, liabilities, and shareholders' equity at a specific point in time.",
+                ex: "Spectrum was listed as an intangible asset on the operator's balance sheet, inflating its apparent net worth."
+            },
+            {
+                n: 25, w: "Write-off", pos: "noun/verb", cat: "finance",
+                def: "The formal recognition by a bank or company that a debt or asset has no recoverable value and must be removed from accounts.",
+                ex: "Banks may have to write off over ₹40,000 crore lent to failed telecom firms whose spectrum cannot be recovered."
+            },
+            {
+                n: 26, w: "Defunct", pos: "adjective", cat: "general",
+                def: "No longer existing or functioning; dead or out of operation.",
+                ex: "Creditors of the defunct operator received only a fraction of what they were owed after liquidation."
+            },
+            {
+                n: 27, w: "Cash Flow", pos: "noun phrase", cat: "finance",
+                def: "The movement of money into and out of a business — a key indicator of its ability to service debt and fund operations.",
+                ex: "Banks lent to the telecom firm primarily against its projected future cash flows rather than any physical assets."
+            },
+            {
+                n: 28, w: "Repossessable", pos: "adjective", cat: "legal",
+                def: "Capable of being taken back by a lender or creditor when a borrower defaults on a loan secured against the asset.",
+                ex: "Unlike a car or machine, spectrum is not repossessable — a lender cannot seize and resell radio frequencies."
+            },
+            {
+                n: 29, w: "Verdict", pos: "noun", cat: "legal",
+                def: "A formal decision delivered by a court, especially the Supreme Court, on a matter of law.",
+                ex: "The verdict on spectrum ownership clarifies the legal status of a critical national resource for years to come."
+            },
+            {
+                n: 30, w: "Custodian", pos: "noun", cat: "legal",
+                def: "An entity entrusted with the care and management of something on behalf of others — not the owner, but a steward.",
+                ex: "The state acts as custodian of natural resources, managing them for the benefit of all citizens rather than private profit."
+            },
+            {
+                n: 31, w: "Stewardship", pos: "noun", cat: "policy",
+                def: "The responsible and careful management of something entrusted to one's care, prioritising long-term wellbeing over short-term gain.",
+                ex: "Good stewardship of spectrum requires ensuring it is allocated to productive uses that serve the national interest."
+            },
+            {
+                n: 32, w: "Revenue Maximisation", pos: "noun phrase", cat: "policy",
+                def: "A strategy of setting prices or policies primarily to generate the highest possible income for the government.",
+                ex: "Critics argued that spectrum policy driven by revenue maximisation had weakened the telecom sector's financial health."
+            },
+            {
+                n: 33, w: "Connectivity Goals", pos: "noun phrase", cat: "telecom",
+                def: "Policy objectives aimed at expanding access to mobile and broadband internet services across the population.",
+                ex: "Affordable high-speed internet for rural India is a key connectivity goal that spectrum policy must support."
+            },
+            {
+                n: 34, w: "Airwaves", pos: "noun (plural)", cat: "telecom",
+                def: "Radio frequencies used for wireless transmission — another term for spectrum, treated as a public resource.",
+                ex: "The court ruled that airwaves, like rivers and forests, belong to the people and must be managed accordingly."
+            },
+            {
+                n: 35, w: "Corollary", pos: "noun", cat: "general",
+                def: "A natural consequence or result that logically follows from something already proven or established.",
+                ex: "The corollary of treating spectrum as a public resource is that policy must prioritise access over auction revenue."
+            },
+            {
+                n: 36, w: "Invoke", pos: "verb", cat: "legal",
+                def: "To cite or formally apply a law, principle, or legal mechanism in a specific context or case.",
+                ex: "Lenders tried to invoke the IBC to transfer spectrum to a new owner, but the court rejected that interpretation."
+            },
+            {
+                n: 37, w: "Subscriber Growth", pos: "noun phrase", cat: "telecom",
+                def: "The increase in the number of paying customers subscribing to a telecom operator's services over a given period.",
+                ex: "Rapid subscriber growth in tier-2 cities drove spectrum demand ahead of India's 5G rollout."
+            },
+            {
+                n: 38, w: "Confer", pos: "verb", cat: "legal",
+                def: "To grant or bestow a right, title, or privilege upon someone officially.",
+                ex: "Winning a spectrum auction confers a usage licence but does not confer ownership of the underlying resource."
+            },
+            {
+                n: 39, w: "Conventional", pos: "adjective", cat: "general",
+                def: "Based on or in accordance with what is generally done or believed; standard or traditional.",
+                ex: "Spectrum is not purchased in the conventional sense — operators pay for a time-limited right, not permanent title."
+            },
+            {
+                n: 40, w: "Creditor", pos: "noun", cat: "finance",
+                def: "A person or institution to which money is owed, especially by a company in financial difficulty.",
+                ex: "Secured creditors stood first in line during the liquidation, but recovered only a small fraction of their loans."
+            },
+            {
+                n: 41, w: "Aircel / Reliance Communications", pos: "proper noun", cat: "telecom",
+                def: "Two major Indian telecom operators that collapsed due to debt and price competition, leaving banks with large unpaid loans.",
+                ex: "The bankruptcy of Aircel and Reliance Communications exposed lenders to billions in uncollectible spectrum-backed loans."
+            },
+            {
+                n: 42, w: "Insolvency Proceedings", pos: "noun phrase", cat: "legal",
+                def: "The formal legal process initiated under the IBC when a company cannot repay its debts, aiming for resolution or liquidation.",
+                ex: "Once insolvency proceedings began, all asset sales and management decisions required court approval."
+            },
+            {
+                n: 43, w: "Financial Convenience", pos: "noun phrase", cat: "finance",
+                def: "A practice adopted because it is useful or profitable for financial purposes, regardless of its legal or practical accuracy.",
+                ex: "Classifying spectrum as a tangible asset was a matter of financial convenience rather than legal correctness."
+            },
+            {
+                n: 44, w: "Policy Risk", pos: "noun phrase", cat: "policy",
+                def: "The risk that government decisions, regulations, or laws will have an adverse impact on economic outcomes or investment.",
+                ex: "Aggressive spectrum pricing that leads to operator bankruptcies becomes a policy risk for the entire telecom sector."
+            },
+            {
+                n: 45, w: "Competition", pos: "noun", cat: "telecom",
+                def: "Rivalry between telecom operators for subscribers, which drives investment, but can also trigger destructive price wars.",
+                ex: "The price war between operators reduced tariffs for consumers but eroded competition as weaker players exited."
+            },
+            {
+                n: 46, w: "Warehoused", pos: "adjective/verb", cat: "general",
+                def: "Stored away without being put to productive use — spectrum assigned but left idle by operators.",
+                ex: "Regulatory reports found that significant quantities of spectrum were being warehoused by operators for future use."
+            },
+            {
+                n: 47, w: "Natural Resources", pos: "noun phrase", cat: "policy",
+                def: "Materials or substances found in nature — such as minerals, water, forests, and airwaves — used by humans for economic or social purposes.",
+                ex: "The Supreme Court has consistently held that natural resources must serve public purposes, not private profits."
+            },
+            {
+                n: 48, w: "Legal Ambiguity", pos: "noun phrase", cat: "legal",
+                def: "Uncertainty or lack of clarity in the law that allows multiple, conflicting interpretations by different parties.",
+                ex: "Legal ambiguity over whether spectrum is an asset allowed operators and banks to treat it as pledgeable collateral."
+            },
+            {
+                n: 49, w: "Cautious Lending", pos: "noun phrase", cat: "finance",
+                def: "A more conservative, risk-averse approach by banks to extending loans — often a response to prior losses or new legal clarity.",
+                ex: "Following the ruling, banks will adopt more cautious lending standards for telecom companies with large spectrum liabilities."
+            },
+            {
+                n: 50, w: "Audit (spectrum utilisation)", pos: "noun/verb", cat: "policy",
+                def: "A systematic review and examination of how allocated spectrum is being used — whether efficiently or left idle.",
+                ex: "The DoT must conduct a nationwide audit of spectrum utilisation to identify idle bands that can be reallocated."
+            }
+        ];
+
+        let activeCat = 'all';
+        function buildGrid(data) {
+            const g = document.getElementById('grid'); g.innerHTML = '';
+            data.forEach((t, i) => {
+                const w = document.createElement('div');
+                w.className = `flip-wrap cat-${t.cat}`;
+                w.setAttribute('data-cat', t.cat);
+                w.setAttribute('data-q', (t.w + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                w.style.animationDelay = (i * .03) + 's';
+                w.innerHTML = `<div class="flip-inner">
+      <div class="flip-front">
+        <div class="f-num"><span style="font-size:.6rem;opacity:.4">#${String(t.n).padStart(2, '0')}</span><span class="f-cat">${t.cat}</span></div>
+        <div class="f-word">${t.w}</div><div class="f-pos">${t.pos}</div>
+        <div class="f-def">${t.def}</div><div class="f-hint">tap to see example →</div>
+      </div>
+      <div class="flip-back">
+        <div class="b-label">✦ Example Sentence</div>
+        <div class="b-example">"${t.ex}"</div>
+        <div class="b-back-hint">← tap to flip back</div>
+      </div></div>`;
+                w.addEventListener('click', () => w.classList.toggle('flipped'));
+                g.appendChild(w);
+            });
+        }
+        function applyFilters() {
+            const q = document.getElementById('sb').value.toLowerCase().trim(); let n = 0;
+            document.querySelectorAll('.flip-wrap').forEach(c => {
+                const ok = (!q || c.getAttribute('data-q').includes(q)) && (activeCat === 'all' || c.getAttribute('data-cat') === activeCat);
+                c.classList.toggle('hide', !ok); if (ok) n++;
+            });
+            document.getElementById('cnt').textContent = n;
+            document.getElementById('empty').style.display = n === 0 ? 'block' : 'none';
+        }
+        function setTab(cat, btn) {
+            activeCat = cat; document.querySelectorAll('.pill').forEach(p => p.classList.remove('on')); btn.classList.add('on'); applyFilters();
+        }
+        buildGrid(DATA);
+        window.addEventListener('scroll', () => document.getElementById('btt').classList.toggle('on', scrollY > 400));
+    </script>
+</body>
+
+</html>

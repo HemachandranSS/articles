@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehran Geopolitics Glossary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0e0e0e;
+            --s1: #141414;
+            --s2: #1a1a1a;
+            --gold: #d4a853;
+            --gold2: #f0c060;
+            --cyan: #00d4ff;
+            --red: #ff4d4d;
+            --green: #00e5a0;
+            --text: #f0ece0;
+            --muted: #8a8070;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── SCANLINE OVERLAY ── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .012) 2px, rgba(255, 255, 255, .012) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .hero-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, .15);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+        }
+
+        .hero-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        .hero-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 12s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-label {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, .35);
+            padding: .3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            background: rgba(212, 168, 83, .05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: .5rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--gold), var(--gold2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            font-size: .85rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin-bottom: .5rem;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            font-size: .8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        /* ── CONTROLS ── */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(14, 14, 14, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #222;
+            padding: .8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .7rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            padding: .55rem 1rem .55rem 2.4rem;
+            border-radius: 8px;
+            outline: none;
+            min-width: 240px;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 168, 83, .2);
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-ico {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .9rem;
+            opacity: .5;
+        }
+
+        .pill {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pill.on {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #0e0e0e;
+        }
+
+        /* ── TICKER / COUNT ── */
+        .ticker {
+            background: #111;
+            border-bottom: 1px solid #222;
+            padding: .35rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: .72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticker .live {
+            color: var(--green);
+            animation: blink 1.2s step-start infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* ── MASONRY GRID ── */
+        .masonry {
+            column-count: 3;
+            column-gap: 1.2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem;
+        }
+
+        @media(max-width:900px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media(max-width:560px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        /* ── CARD (flip) ── */
+        .flip-wrap {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-front {
+            background: var(--s1);
+            border: 1px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Neon left bar per category */
+        .flip-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 999px;
+        }
+
+        .cat-diplomacy .flip-front::before {
+            background: var(--cyan);
+        }
+
+        .cat-nuclear .flip-front::before {
+            background: var(--red);
+        }
+
+        .cat-politics .flip-front::before {
+            background: var(--gold);
+        }
+
+        .cat-geopolitics .flip-front::before {
+            background: var(--green);
+        }
+
+        .cat-general .flip-front::before {
+            background: #a78bfa;
+        }
+
+        /* Flip back */
+        .flip-back {
+            background: var(--s2);
+            border: 1px solid #303030;
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Front content */
+        .f-num {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--muted);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .f-cat {
+            font-family: 'Fira Code', monospace;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .15rem .55rem;
+            border-radius: 4px;
+        }
+
+        .cat-diplomacy .f-cat {
+            background: rgba(0, 212, 255, .12);
+            color: var(--cyan);
+        }
+
+        .cat-nuclear .f-cat {
+            background: rgba(255, 77, 77, .12);
+            color: var(--red);
+        }
+
+        .cat-politics .f-cat {
+            background: rgba(212, 168, 83, .12);
+            color: var(--gold);
+        }
+
+        .cat-geopolitics .f-cat {
+            background: rgba(0, 229, 160, .12);
+            color: var(--green);
+        }
+
+        .cat-general .f-cat {
+            background: rgba(167, 139, 250, .12);
+            color: #a78bfa;
+        }
+
+        .f-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .25rem;
+        }
+
+        .f-pos {
+            font-size: .72rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: .7rem;
+        }
+
+        .f-def {
+            font-size: .85rem;
+            color: #c0b89a;
+            line-height: 1.6;
+        }
+
+        .f-hint {
+            margin-top: .9rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+            letter-spacing: .06em;
+        }
+
+        /* Back content (example) */
+        .b-label {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .b-example {
+            font-size: .88rem;
+            color: #f0ece0;
+            font-style: italic;
+            line-height: 1.65;
+            border-left: 2px solid var(--gold);
+            padding: .4rem .75rem;
+            background: rgba(212, 168, 83, .06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .b-back-hint {
+            margin-top: .8rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+        }
+
+        /* ── HIDDEN ── */
+        .flip-wrap.hide {
+            display: none;
+        }
+
+        /* ── NO RESULTS ── */
+        #empty {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            display: none;
+        }
+
+        /* ── BTT ── */
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #0e0e0e;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(212, 168, 83, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s;
+            z-index: 200;
+        }
+
+        #btt.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-label">🌍 Geopolitics · Vocabulary</div>
+        <h1>Tehran Reenters the<br><em>Geopolitical Spotlight</em></h1>
+        <div class="hero-sub">50 Key Terms &amp; Hard Words — Meanings &amp; Example Sentences</div>
+        <div class="hero-author">By Kabir Taneja &nbsp;·&nbsp; Observer Research Foundation</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="search-box" id="sb" type="text" placeholder="Search terms…" oninput="applyFilters()">
+        </div>
+        <button class="pill on" onclick="setTab('all',this)">All</button>
+        <button class="pill" onclick="setTab('diplomacy',this)">Diplomacy</button>
+        <button class="pill" onclick="setTab('nuclear',this)">Nuclear</button>
+        <button class="pill" onclick="setTab('politics',this)">Politics</button>
+        <button class="pill" onclick="setTab('geopolitics',this)">Geopolitics</button>
+        <button class="pill" onclick="setTab('general',this)">General</button>
+    </div>
+
+    <div class="ticker">
+        <span><span class="live">●</span>&nbsp;CLICK ANY CARD TO FLIP AND SEE THE EXAMPLE SENTENCE</span>
+        <span>Showing <strong id="cnt" style="color:var(--gold)">50</strong> / 50 terms</span>
+    </div>
+
+    <div class="masonry" id="grid"></div>
+    <div id="empty">No results found. Try a different keyword.</div>
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const DATA = [
+            {
+                n: 1, w: "Geopolitical", pos: "adjective", cat: "geopolitics",
+                def: "Relating to politics, especially international relations, shaped by geographical factors such as borders, resources, and location.",
+                ex: "The Strait of Hormuz holds immense geopolitical significance, as much of the world's oil passes through it."
+            },
+            {
+                n: 2, w: "Curtail", pos: "verb", cat: "general",
+                def: "To reduce, restrict, or limit something.",
+                ex: "The trade agreement aimed to curtail the import of cheap goods that were hurting domestic manufacturers."
+            },
+            {
+                n: 3, w: "Consortium", pos: "noun", cat: "diplomacy",
+                def: "An association of several organisations, states, or companies working jointly towards a shared goal.",
+                ex: "A consortium of European nations funded the reconstruction of the war-torn city."
+            },
+            {
+                n: 4, w: "JCPOA", pos: "acronym", cat: "nuclear",
+                def: "Joint Comprehensive Plan of Action — the 2015 nuclear agreement between Iran and the P5+1 group, limiting Iran's nuclear activities in return for sanctions relief.",
+                ex: "Diplomats had spent years negotiating the JCPOA before its final text was agreed in Vienna."
+            },
+            {
+                n: 5, w: "P5+1", pos: "proper noun", cat: "diplomacy",
+                def: "The five permanent members of the UN Security Council (USA, UK, France, Russia, China) plus Germany — the group that negotiated with Iran on nuclear matters.",
+                ex: "The P5+1 format was unprecedented in bringing together both Western powers and Russia and China for a single diplomatic objective."
+            },
+            {
+                n: 6, w: "Guardrails", pos: "noun (plural)", cat: "nuclear",
+                def: "Restrictions or safety limits put in place to prevent dangerous outcomes or escalation.",
+                ex: "The treaty established clear guardrails on uranium enrichment that would trigger automatic penalties if crossed."
+            },
+            {
+                n: 7, w: "Nuclear programme", pos: "noun phrase", cat: "nuclear",
+                def: "A country's organised effort to develop nuclear technology — for civilian energy or military weapons.",
+                ex: "International inspectors were sent to verify whether the nuclear programme was truly for peaceful purposes."
+            },
+            {
+                n: 8, w: "Supreme Leader", pos: "noun (title)", cat: "politics",
+                def: "Iran's highest political and religious authority, who holds ultimate power above the elected President.",
+                ex: "Any deal with Iran would ultimately require the endorsement of the Supreme Leader."
+            },
+            {
+                n: 9, w: "Farcical", pos: "adjective", cat: "general",
+                def: "Resembling a farce; absurd, ridiculous, and lacking credibility.",
+                ex: "The hastily arranged summit was dismissed by analysts as farcical, given the parties' opposing demands."
+            },
+            {
+                n: 10, w: "Tatters", pos: "noun (plural)", cat: "general",
+                def: "In tatters — in a state of complete ruin or destruction.",
+                ex: "After the airstrikes, the country's air-defence network lay in tatters and needed complete rebuilding."
+            },
+            {
+                n: 11, w: "Albeit", pos: "conjunction", cat: "general",
+                def: "Although; even though — introduces a concession or qualification.",
+                ex: "The ceasefire was welcomed, albeit with scepticism from both sides about its durability."
+            },
+            {
+                n: 12, w: "Non-negotiable", pos: "adjective", cat: "diplomacy",
+                def: "Not open to discussion or change; an absolute condition that cannot be altered.",
+                ex: "The withdrawal of foreign troops was a non-negotiable demand from the rebel leadership."
+            },
+            {
+                n: 13, w: "Intelligence apparatus", pos: "noun phrase", cat: "politics",
+                def: "The entire system of intelligence agencies, spy networks, and surveillance operations in a country.",
+                ex: "Israel's intelligence apparatus had reportedly tracked the Iranian scientist for over two years."
+            },
+            {
+                n: 14, w: "Interlocutors", pos: "noun (plural)", cat: "diplomacy",
+                def: "People who participate in a dialogue or negotiation, especially as official representatives.",
+                ex: "Back-channel interlocutors played a crucial role in preparing the ground for the formal summit."
+            },
+            {
+                n: 15, w: "Counterpart", pos: "noun", cat: "diplomacy",
+                def: "A person or organisation that has the same role or function in another place or situation.",
+                ex: "The Indian defence minister met her American counterpart on the margins of the NATO summit."
+            },
+            {
+                n: 16, w: "Consummated", pos: "verb", cat: "general",
+                def: "Completed or finalised something; brought to a successful conclusion.",
+                ex: "After decades of negotiations, the peace treaty was finally consummated in a historic ceremony."
+            },
+            {
+                n: 17, w: "Escalation", pos: "noun", cat: "geopolitics",
+                def: "A rapid increase in the intensity or seriousness of a conflict or situation.",
+                ex: "Both powers agreed on confidence-building measures to prevent military escalation along the border."
+            },
+            {
+                n: 18, w: "Kinetic (capacity)", pos: "adjective", cat: "geopolitics",
+                def: "In military/political usage: relating to physical, active military force as opposed to diplomatic or cyber means.",
+                ex: "Defence analysts noted that Iran retained significant kinetic capacity to strike American bases in the region."
+            },
+            {
+                n: 19, w: "Retaliation", pos: "noun", cat: "geopolitics",
+                def: "A counter-action taken in response to an attack or harm, intended to punish the aggressor.",
+                ex: "The naval blockade was seen as retaliation for the seizure of the tanker in international waters."
+            },
+            {
+                n: 20, w: "Sanctions", pos: "noun (plural)", cat: "diplomacy",
+                def: "Official economic or political penalties imposed by one country or group on another to force a policy change.",
+                ex: "Western sanctions on the country's oil sector cut export revenues by nearly sixty percent."
+            },
+            {
+                n: 21, w: "Mediator", pos: "noun", cat: "diplomacy",
+                def: "A neutral third party who helps conflicting parties reach a peaceful agreement.",
+                ex: "Qatar has frequently served as mediator in Middle Eastern disputes because of its unique diplomatic standing."
+            },
+            {
+                n: 22, w: "Geopolitical friction", pos: "noun phrase", cat: "geopolitics",
+                def: "Tension or rivalry between nations arising from competing strategic interests and power politics.",
+                ex: "The pipeline's route through three countries generated significant geopolitical friction over transit rights."
+            },
+            {
+                n: 23, w: "Erstwhile", pos: "adjective", cat: "general",
+                def: "Former; belonging to an earlier period.",
+                ex: "The erstwhile Cold War rivals now cooperate on climate change and pandemic preparedness."
+            },
+            {
+                n: 24, w: "Connectivity", pos: "noun", cat: "geopolitics",
+                def: "A country's ability to connect to others through trade routes, ports, roads, or digital links — a strategic asset.",
+                ex: "India's investment in Chabahar Port is integral to its broader connectivity vision for Central Asia."
+            },
+            {
+                n: 25, w: "Fractious", pos: "adjective", cat: "politics",
+                def: "Irritable, quarrelsome, and difficult to manage; prone to causing trouble.",
+                ex: "The coalition's fractious internal debates delayed the announcement of a unified policy on sanctions."
+            },
+            {
+                n: 26, w: "Posturing", pos: "noun", cat: "politics",
+                def: "Behaviour or statements adopted for strategic effect or to project strength, not necessarily backed by action.",
+                ex: "Military posturing near the border was seen as a pressure tactic ahead of the scheduled talks."
+            },
+            {
+                n: 27, w: "Crossroads", pos: "noun", cat: "general",
+                def: "A critical point at which a decisive choice must be made with far-reaching consequences.",
+                ex: "The election result placed the republic at a crossroads between democratic reform and authoritarian consolidation."
+            },
+            {
+                n: 28, w: "Domestic power plays", pos: "noun phrase", cat: "politics",
+                def: "Internal manoeuvring among political factions or leaders to gain influence or control within a country.",
+                ex: "Domestic power plays between hardliners and reformists delayed Iran's response to the American proposals."
+            },
+            {
+                n: 29, w: "Non-proliferation", pos: "noun", cat: "nuclear",
+                def: "The prevention of the spread of nuclear weapons to additional states.",
+                ex: "The NPT remains the cornerstone of the global non-proliferation regime despite its limitations."
+            },
+            {
+                n: 30, w: "Narrative", pos: "noun", cat: "general",
+                def: "A particular interpretation or presentation of events used to shape opinion or policy.",
+                ex: "The government deployed a nationalistic narrative to consolidate public support after the strikes."
+            },
+            {
+                n: 31, w: "Nuclearised", pos: "adjective", cat: "nuclear",
+                def: "Equipped with or possessing nuclear weapons; describing a region where nuclear arms are present.",
+                ex: "A nuclearised Korean peninsula remains one of the most dangerous scenarios for regional stability."
+            },
+            {
+                n: 32, w: "Stumped", pos: "adjective/verb", cat: "general",
+                def: "Completely at a loss; unable to respond or find a solution; baffled.",
+                ex: "Diplomats were left stumped when the delegation suddenly reversed its position on the key clause."
+            },
+            {
+                n: 33, w: "Advocated", pos: "verb", cat: "diplomacy",
+                def: "Publicly supported or recommended a particular policy, course of action, or cause.",
+                ex: "France had long advocated a multilateral approach to resolving the dispute rather than unilateral sanctions."
+            },
+            {
+                n: 34, w: "Air defence", pos: "noun phrase", cat: "geopolitics",
+                def: "Military systems — radars, missiles, aircraft — designed to detect and destroy hostile aircraft and missiles.",
+                ex: "The S-400 air defence system became a major flashpoint between Turkey and its NATO allies."
+            },
+            {
+                n: 35, w: "Simultaneously", pos: "adverb", cat: "general",
+                def: "At the same time; occurring at the same moment as something else.",
+                ex: "The ambassador simultaneously negotiated a bilateral trade pact while managing a border standoff."
+            },
+            {
+                n: 36, w: "Military build-up", pos: "noun phrase", cat: "geopolitics",
+                def: "The gradual accumulation of armed forces, weapons, and equipment in a particular area as a show of strength or preparation for conflict.",
+                ex: "The military build-up in the Gulf was the largest since coalition forces gathered before the 2003 Iraq invasion."
+            },
+            {
+                n: 37, w: "Diplomacy", pos: "noun", cat: "diplomacy",
+                def: "The management of international relations through negotiation, dialogue, and official representatives.",
+                ex: "Patient diplomacy over two decades eventually led to normalisation of ties between the former enemies."
+            },
+            {
+                n: 38, w: "Muscat", pos: "proper noun", cat: "geopolitics",
+                def: "The capital of Oman; used here because Oman has historically mediated between the US and Iran as a neutral channel.",
+                ex: "Muscat was chosen as the venue for preliminary talks because of Oman's trusted neutrality in regional disputes."
+            },
+            {
+                n: 39, w: "Civil use (of nuclear energy)", pos: "noun phrase", cat: "nuclear",
+                def: "The peaceful application of nuclear technology — such as generating electricity — as distinct from building weapons.",
+                ex: "Tehran argued that all enrichment activities were for civil use and subject to international inspections."
+            },
+            {
+                n: 40, w: "Perks", pos: "noun (plural)", cat: "general",
+                def: "Benefits or advantages that come with a particular deal, role, or situation.",
+                ex: "One of the perks of the regional trade agreement was tariff-free access to a market of eight hundred million consumers."
+            },
+            {
+                n: 41, w: "Taliban", pos: "proper noun", cat: "geopolitics",
+                def: "The Islamic fundamentalist group that governs Afghanistan and with which neighbouring countries must now engage.",
+                ex: "Pakistan's relationship with the Taliban has grown increasingly complicated since the group's return to power."
+            },
+            {
+                n: 42, w: "Shia power", pos: "noun phrase", cat: "geopolitics",
+                def: "A reference to Iran as the leading Shia-majority state, which uses religious identity as a source of regional influence.",
+                ex: "Iran's role as a Shia power gives it leverage over communities in Iraq, Lebanon, and parts of Syria."
+            },
+            {
+                n: 43, w: "Anxieties (geopolitical)", pos: "noun (plural)", cat: "geopolitics",
+                def: "Deep concerns or fears among nations about security, stability, or unpredictability of a major power.",
+                ex: "Regional anxieties peaked as the carrier strike group moved into position within striking range."
+            },
+            {
+                n: 44, w: "Gnawing", pos: "adjective/verb", cat: "general",
+                def: "Persistently worrying or causing gradual damage — like something slowly eating away at a structure.",
+                ex: "The currency crisis was gnawing into the savings of middle-class families across the country."
+            },
+            {
+                n: 45, w: "Moderates", pos: "noun (plural)", cat: "politics",
+                def: "Political figures who hold centrist, pragmatic views and favour engagement over confrontation.",
+                ex: "The moderates in the cabinet argued for accepting the deal, while hardliners demanded tougher terms."
+            },
+            {
+                n: 46, w: "Nationalists narrative", pos: "noun phrase", cat: "politics",
+                def: "A story or political framing that emphasises national identity, pride, and sovereignty — often in response to foreign pressure.",
+                ex: "The military strikes gave hardliners ammunition to construct a nationalists narrative of resistance and survival."
+            },
+            {
+                n: 47, w: "Vis-à-vis", pos: "preposition", cat: "general",
+                def: "In relation to; as compared with; with regard to.",
+                ex: "India's strategic posture vis-à-vis China has evolved significantly since the Galwan clash of 2020."
+            },
+            {
+                n: 48, w: "Committed (capital)", pos: "verb (past tense)", cat: "geopolitics",
+                def: "Formally pledged or allocated a significant sum of money or resources to a project or country.",
+                ex: "Gulf states have committed over four hundred billion dollars in investment to the U.S. economy in recent years."
+            },
+            {
+                n: 49, w: "Brokered", pos: "verb (past tense)", cat: "diplomacy",
+                def: "Arranged or negotiated an agreement as a third-party intermediary.",
+                ex: "The truce, brokered by the UN Special Envoy, held for three months before talks resumed."
+            },
+            {
+                n: 50, w: "Unstumped", pos: "adjective (contextual)", cat: "general",
+                def: "Not confused or at a loss; able to find a clear path forward despite complexity.",
+                ex: "Despite facing intense domestic pressure, the negotiating team remained unstumped and reached a breakthrough."
+            }
+        ];
+
+        let activeCat = 'all';
+
+        function buildGrid(data) {
+            const g = document.getElementById('grid');
+            g.innerHTML = '';
+            data.forEach((t, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = `flip-wrap cat-${t.cat}`;
+                wrap.setAttribute('data-cat', t.cat);
+                wrap.setAttribute('data-q', (t.w + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                wrap.style.animationDelay = (i * 0.03) + 's';
+                wrap.innerHTML = `
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="f-num"><span style="font-size:.6rem;opacity:.4">#${String(t.n).padStart(2, '0')}</span><span class="f-cat">${t.cat}</span></div>
+          <div class="f-word">${t.w}</div>
+          <div class="f-pos">${t.pos}</div>
+          <div class="f-def">${t.def}</div>
+          <div class="f-hint">tap to see example →</div>
+        </div>
+        <div class="flip-back">
+          <div class="b-label">✦ Example Sentence</div>
+          <div class="b-example">"${t.ex}"</div>
+          <div class="b-back-hint">← tap to flip back</div>
+        </div>
+      </div>`;
+                wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+                g.appendChild(wrap);
+            });
+        }
+
+        function applyFilters() {
+            const q = document.getElementById('sb').value.toLowerCase().trim();
+            let n = 0;
+            document.querySelectorAll('.flip-wrap').forEach(c => {
+                const mQ = !q || c.getAttribute('data-q').includes(q);
+                const mC = activeCat === 'all' || c.getAttribute('data-cat') === activeCat;
+                if (mQ && mC) { c.classList.remove('hide'); n++; } else c.classList.add('hide');
+            });
+            document.getElementById('cnt').textContent = n;
+            document.getElementById('empty').style.display = n === 0 ? 'block' : 'none';
+        }
+
+        function setTab(cat, btn) {
+            activeCat = cat;
+            document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+            btn.classList.add('on');
+            applyFilters();
+        }
+
+        buildGrid(DATA);
+        window.addEventListener('scroll', () => {
+            document.getElementById('btt').classList.toggle('on', scrollY > 400);
+        });
+    </script>
+</body>
+
+</html>

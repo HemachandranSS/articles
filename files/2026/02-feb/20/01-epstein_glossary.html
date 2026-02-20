@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossary – From Washington to Delhi: The Shadow of Epstein</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a12;
+            --surface: #111120;
+            --card: #16162a;
+            --border: #2a2a4a;
+            --accent: #7c3aed;
+            --accent2: #06b6d4;
+            --accent3: #f59e0b;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --gold: #fbbf24;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 10%, rgba(124, 58, 237, .18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(6, 182, 212, .12) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 3.5rem 1rem 2rem;
+            background: linear-gradient(180deg, rgba(124, 58, 237, .15) 0%, transparent 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #fff;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .3rem .9rem;
+            border-radius: 999px;
+            margin-bottom: 1.2rem;
+            animation: pulse-badge 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(124, 58, 237, .4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(124, 58, 237, 0);
+            }
+        }
+
+        header h1 {
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff 30%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: .6rem;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: .95rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* Stats bar */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: var(--accent2);
+        }
+
+        .stat-lbl {
+            font-size: .72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        /* Search */
+        .search-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 10, 18, .85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: .8rem 1rem;
+        }
+
+        .search-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-inner input {
+            width: 100%;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            padding: .7rem 1rem .7rem 2.8rem;
+            border-radius: 12px;
+            outline: none;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-inner input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, .2);
+        }
+
+        .search-inner .icon {
+            position: absolute;
+            left: .9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        /* Category tabs */
+        .tabs {
+            max-width: 900px;
+            margin: 1.5rem auto .5rem;
+            padding: 0 1rem;
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .8rem;
+            font-weight: 600;
+            padding: .35rem .9rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        .tab:hover,
+        .tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* Grid */
+        .grid {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 1rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.4rem 1.5rem;
+            transition: transform .25s, box-shadow .25s, border-color .25s;
+            animation: fadeUp .5s ease both;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(124, 58, 237, .07) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity .3s;
+            border-radius: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, .18);
+            border-color: var(--accent);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-num {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72rem;
+            color: var(--accent);
+            background: rgba(124, 58, 237, .12);
+            padding: .15rem .5rem;
+            border-radius: 6px;
+        }
+
+        .card-cat {
+            display: inline-block;
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .2rem .6rem;
+            border-radius: 999px;
+            margin-bottom: .7rem;
+        }
+
+        .cat-politics {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, .25);
+        }
+
+        .cat-legal {
+            background: rgba(6, 182, 212, .15);
+            color: #22d3ee;
+            border: 1px solid rgba(6, 182, 212, .25);
+        }
+
+        .cat-social {
+            background: rgba(245, 158, 11, .15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, .25);
+        }
+
+        .cat-finance {
+            background: rgba(34, 197, 94, .15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, .25);
+        }
+
+        .cat-general {
+            background: rgba(124, 58, 237, .15);
+            color: #a78bfa;
+            border: 1px solid rgba(124, 58, 237, .25);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: .4rem;
+            padding-right: 2rem;
+        }
+
+        .card-pos {
+            font-size: .75rem;
+            color: var(--accent2);
+            font-style: italic;
+            margin-bottom: .6rem;
+            font-weight: 300;
+        }
+
+        .card-def {
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: .9rem;
+        }
+
+        .example-label {
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--accent3);
+            margin-bottom: .35rem;
+        }
+
+        .example {
+            font-size: .85rem;
+            color: #c7d2fe;
+            font-style: italic;
+            line-height: 1.55;
+            border-left: 2px solid var(--accent);
+            padding-left: .75rem;
+            background: rgba(124, 58, 237, .05);
+            border-radius: 0 6px 6px 0;
+            padding-top: .3rem;
+            padding-bottom: .3rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* No results */
+        #no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+            font-size: 1rem;
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Back to top */
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+            z-index: 100;
+        }
+
+        #btt.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="badge">📖 Article Glossary</div>
+        <h1>From Washington to Delhi<br>The Shadow of Epstein</h1>
+        <p>50 key terms &amp; hard words from the article by <strong>Brinda Karat</strong> — with meanings &amp; example
+            sentences</p>
+    </header>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-num">50</div>
+            <div class="stat-lbl">Terms</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">5</div>
+            <div class="stat-lbl">Categories</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">50</div>
+            <div class="stat-lbl">Examples</div>
+        </div>
+    </div>
+
+    <div class="search-wrap">
+        <div class="search-inner">
+            <span class="icon">🔍</span>
+            <input type="text" id="searchBox" placeholder="Search terms, definitions…" oninput="filterCards()">
+        </div>
+    </div>
+
+    <div class="tabs" id="tabsBar">
+        <button class="tab active" onclick="filterCat('all',this)">All</button>
+        <button class="tab" onclick="filterCat('politics',this)">Politics</button>
+        <button class="tab" onclick="filterCat('legal',this)">Legal</button>
+        <button class="tab" onclick="filterCat('social',this)">Social</button>
+        <button class="tab" onclick="filterCat('finance',this)">Finance</button>
+        <button class="tab" onclick="filterCat('general',this)">General</button>
+    </div>
+
+    <div class="grid" id="cardGrid"></div>
+    <div id="no-results">No terms match your search. Try different keywords.</div>
+
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const terms = [
+            {
+                n: 1, word: "Depravity", pos: "noun", cat: "social",
+                def: "Extreme moral corruption or wickedness; the state of being very evil.",
+                ex: "The minister's depravity was exposed when evidence of his involvement in trafficking emerged."
+            },
+            {
+                n: 2, word: "Paedophile", pos: "noun", cat: "social",
+                def: "A person who is sexually attracted to children.",
+                ex: "The court sentenced the paedophile to twenty years in prison without parole."
+            },
+            {
+                n: 3, word: "Impunity", pos: "noun", cat: "legal",
+                def: "Exemption from punishment or freedom from the injurious consequences of an action.",
+                ex: "The corrupt official acted with impunity because he had friends in high places."
+            },
+            {
+                n: 4, word: "Semblance", pos: "noun", cat: "general",
+                def: "The outward appearance or apparent form of something, especially when the underlying reality is different.",
+                ex: "The government tried to maintain a semblance of democracy despite widespread fraud."
+            },
+            {
+                n: 5, word: "Complicity", pos: "noun", cat: "legal",
+                def: "The fact or condition of being involved with others in wrongdoing.",
+                ex: "Her complicity in the cover-up was proved by the recovered emails."
+            },
+            {
+                n: 6, word: "Structural", pos: "adjective", cat: "politics",
+                def: "Relating to the fundamental arrangement or organisation of a system.",
+                ex: "Structural inequalities in the economy have widened the gap between the rich and poor."
+            },
+            {
+                n: 7, word: "Impunity", pos: "noun", cat: "legal",
+                def: "Freedom from punishment, harm, or loss.",
+                ex: "The warlord carried out atrocities with complete impunity."
+            },
+            {
+                n: 8, word: "Entitlement", pos: "noun", cat: "social",
+                def: "The belief that one is inherently deserving of privileges or special treatment.",
+                ex: "The ruling class treated criminality as an entitlement, shielded by wealth and power."
+            },
+            {
+                n: 9, word: "Trafficking", pos: "noun", cat: "legal",
+                def: "The illegal trade or movement of people, especially for the purpose of sexual exploitation.",
+                ex: "International organisations are working to eradicate human trafficking across borders."
+            },
+            {
+                n: 10, word: "Culpability", pos: "noun", cat: "legal",
+                def: "Responsibility for a fault or wrong; blameworthiness.",
+                ex: "The degree of culpability varied among the accused, depending on their level of involvement."
+            },
+            {
+                n: 11, word: "Abetment", pos: "noun", cat: "legal",
+                def: "The action of encouraging or assisting someone to commit a crime or wrongdoing.",
+                ex: "He was charged with abetment because he helped plan the robbery without physically participating."
+            },
+            {
+                n: 12, word: "Non-prosecution", pos: "noun (compound)", cat: "legal",
+                def: "A legal arrangement under which charges are not brought against a person in exchange for certain conditions.",
+                ex: "The sweetheart non-prosecution deal allowed the accused to avoid serious criminal penalties."
+            },
+            {
+                n: 13, word: "Sweetheart deal", pos: "noun (idiom)", cat: "legal",
+                def: "An arrangement that is excessively generous or favourable to one party, often involving corruption.",
+                ex: "Critics argued that the sweetheart deal between the company and regulators was a form of bribery."
+            },
+            {
+                n: 14, word: "Redacting", pos: "verb/gerund", cat: "legal",
+                def: "The process of editing or obscuring text in a document, often to hide sensitive information before publication.",
+                ex: "The government was criticised for redacting the names of powerful individuals from the released files."
+            },
+            {
+                n: 15, word: "Solidarity", pos: "noun", cat: "politics",
+                def: "Unity or agreement of feeling or action, especially among individuals with a common interest.",
+                ex: "Workers across the country expressed solidarity with the striking miners."
+            },
+            {
+                n: 16, word: "Sexualised", pos: "adjective", cat: "social",
+                def: "Having been given or attributed a sexual character or tone, especially inappropriately.",
+                ex: "The advertisement was criticised for its sexualised portrayal of women."
+            },
+            {
+                n: 17, word: "Broker", pos: "noun/verb", cat: "finance",
+                def: "A person who acts as an intermediary in negotiations or transactions; to arrange or negotiate a deal.",
+                ex: "Epstein acted as a broker, connecting businessmen with political figures for a fee."
+            },
+            {
+                n: 18, word: "Facilitator", pos: "noun", cat: "general",
+                def: "A person or thing that makes an action or process easier; someone who assists or enables others.",
+                ex: "The NGO acted as a facilitator, helping communities access government welfare schemes."
+            },
+            {
+                n: 19, word: "Transactional", pos: "adjective", cat: "finance",
+                def: "Relating to or based on a transaction; treating relationships as exchanges with a clear self-interested motive.",
+                ex: "Critics noted that his approach to diplomacy was purely transactional, driven by personal gain."
+            },
+            {
+                n: 20, word: "Governance", pos: "noun", cat: "politics",
+                def: "The action or manner of governing; the system by which an organisation or state operates and is controlled.",
+                ex: "Good governance requires transparency, accountability, and respect for the rule of law."
+            },
+            {
+                n: 21, word: "Fabricated", pos: "adjective", cat: "general",
+                def: "Invented or manufactured; not genuine; made up.",
+                ex: "The defendant claimed the evidence against him was entirely fabricated by his enemies."
+            },
+            {
+                n: 22, word: "Normalised", pos: "verb (past tense)", cat: "social",
+                def: "Made something seem normal or ordinary; caused something unusual to be accepted as standard behaviour.",
+                ex: "Prolonged media silence normalised the politician's corrupt practices."
+            },
+            {
+                n: 23, word: "Ruthless", pos: "adjective", cat: "general",
+                def: "Having or showing no pity or compassion for others.",
+                ex: "The company's ruthless cost-cutting measures led to mass layoffs without compensation."
+            },
+            {
+                n: 24, word: "Invoke", pos: "verb", cat: "politics",
+                def: "To cite or appeal to (something) as an authority or justification; to call upon officially.",
+                ex: "The ambassador invoked diplomatic immunity to avoid questioning by the local police."
+            },
+            {
+                n: 25, word: "Immunity", pos: "noun", cat: "legal",
+                def: "Protection or exemption from legal liability, especially granted to certain officials or witnesses.",
+                ex: "The whistleblower was granted immunity in exchange for testifying against the cartel."
+            },
+            {
+                n: 26, word: "Authentic", pos: "adjective", cat: "general",
+                def: "Of undisputed origin; genuine; not a copy or fabrication.",
+                ex: "Experts confirmed that the leaked letters were authentic and had not been altered."
+            },
+            {
+                n: 27, word: "Trivialise", pos: "verb", cat: "social",
+                def: "To make (something) appear less important, serious, or significant than it actually is.",
+                ex: "The minister trivialised the disaster by calling it a minor inconvenience."
+            },
+            {
+                n: 28, word: "Misogynism (Misogyny)", pos: "noun", cat: "social",
+                def: "Dislike of, contempt for, or ingrained prejudice against women.",
+                ex: "The comedian's jokes were rooted in misogyny and were rightly condemned by the audience."
+            },
+            {
+                n: 29, word: "Semantic", pos: "adjective", cat: "general",
+                def: "Relating to meaning in language; dealing with the meaning of words.",
+                ex: "The politician's semantic tricks were designed to mislead the public without technically lying."
+            },
+            {
+                n: 30, word: "Depravity", pos: "noun", cat: "social",
+                def: "Moral corruption; wickedness; a depraved act.",
+                ex: "The documents revealed the full depravity of the network's operations."
+            },
+            {
+                n: 31, word: "Illuminate", pos: "verb", cat: "general",
+                def: "To help to clarify or explain (a subject or problem); to shed light on.",
+                ex: "The newly released files illuminated the extent of the conspiracy."
+            },
+            {
+                n: 32, word: "Corporates", pos: "noun (plural)", cat: "finance",
+                def: "Large companies or groups of companies (used informally to refer to the corporate world).",
+                ex: "The nexus between corporates and politicians undermined democratic institutions."
+            },
+            {
+                n: 33, word: "Globalised", pos: "adjective", cat: "finance",
+                def: "Made global in scope; operating across multiple countries and cultures as an integrated system.",
+                ex: "The crime ring used a globalised network to launder money across fifty nations."
+            },
+            {
+                n: 34, word: "Mutual dependency", pos: "noun phrase", cat: "social",
+                def: "A state in which two or more parties rely on each other for support or benefit, often creating a bond.",
+                ex: "Mutual dependency between the two leaders made it impossible for either to expose the other."
+            },
+            {
+                n: 35, word: "Conviction", pos: "noun", cat: "legal",
+                def: "A formal declaration that someone is guilty of a criminal offence; the fact of having been found guilty.",
+                ex: "His prior conviction for fraud made it difficult for the jury to believe his current claims of innocence."
+            },
+            {
+                n: 36, word: "Impunity", pos: "noun", cat: "legal",
+                def: "Exemption from punishment or freedom from consequences of one's actions.",
+                ex: "Wealthy individuals often act with impunity because they can afford expensive legal teams."
+            },
+            {
+                n: 37, word: "Survivor", pos: "noun", cat: "social",
+                def: "A person who survives, especially a person who remains alive after an event in which others have died or who copes after trauma.",
+                ex: "The survivors of the trafficking ring testified bravely before the international tribunal."
+            },
+            {
+                n: 38, word: "Cover-up", pos: "noun", cat: "politics",
+                def: "An attempt to prevent people from discovering the truth about a serious mistake or crime.",
+                ex: "Investigative journalists exposed the government's cover-up of the environmental disaster."
+            },
+            {
+                n: 39, word: "Ethically bankrupt", pos: "adjective phrase", cat: "social",
+                def: "Completely lacking in moral principles or values.",
+                ex: "The firm's ethically bankrupt practices included bribing regulators and dumping toxic waste."
+            },
+            {
+                n: 40, word: "Nexus", pos: "noun", cat: "general",
+                def: "A connection or series of connections linking two or more things; a central place or point.",
+                ex: "Investigators discovered a nexus between the pharmaceutical company and corrupt health officials."
+            },
+            {
+                n: 41, word: "Notorious", pos: "adjective", cat: "general",
+                def: "Famous or well known, typically for some bad quality or deed.",
+                ex: "The island was notorious as a site where crimes against minors went unreported."
+            },
+            {
+                n: 42, word: "Indictment", pos: "noun", cat: "legal",
+                def: "A formal charge or accusation of a serious crime; a thing that serves as evidence of a severe failing.",
+                ex: "The indictment named seven executives for their role in the financial fraud."
+            },
+            {
+                n: 43, word: "Sanctioned", pos: "adjective/verb", cat: "politics",
+                def: "Officially permitted or approved; or to impose official penalties on a country or individual.",
+                ex: "The opposition demanded that the minister be sanctioned for his association with the convicted criminal."
+            },
+            {
+                n: 44, word: "Accountability", pos: "noun", cat: "politics",
+                def: "The fact or condition of being responsible to others; answerability.",
+                ex: "Democratic institutions must ensure accountability of public officials for their actions."
+            },
+            {
+                n: 45, word: "Paternalism", pos: "noun", cat: "politics",
+                def: "The practice of limiting freedom and responsibilities of those in one's care in what is felt to be their best interest.",
+                ex: "Critics accused the colonial regime of cultural paternalism towards the populations it governed."
+            },
+            {
+                n: 46, word: "Coded language", pos: "noun phrase", cat: "general",
+                def: "Language that uses indirect or symbolic words to convey a different or hidden meaning, often to avoid direct expression.",
+                ex: "The emails were full of coded language that disguised criminal transactions as ordinary business deals."
+            },
+            {
+                n: 47, word: "Regime", pos: "noun", cat: "politics",
+                def: "A government, especially an authoritarian one; a system or ordered way of doing things.",
+                ex: "The new regime promised reform but quickly reverted to the same corrupt practices."
+            },
+            {
+                n: 48, word: "Criminalisation", pos: "noun", cat: "legal",
+                def: "The action or process of turning an act or a person into a criminal by making the act illegal.",
+                ex: "Activists argued that the criminalisation of peaceful protests was a tool of political repression."
+            },
+            {
+                n: 49, word: "Soliciting", pos: "verb/gerund", cat: "legal",
+                def: "The act of asking for or trying to obtain something; in legal contexts, requesting or enticing someone to commit a crime.",
+                ex: "He was arrested for soliciting bribes from contractors seeking government tenders."
+            },
+            {
+                n: 50, word: "Redress", pos: "noun/verb", cat: "legal",
+                def: "Remedy or compensation for a wrong or grievance; to remedy or set right.",
+                ex: "The survivors sought redress through the courts after years of being ignored by authorities."
+            }
+        ];
+
+        const catCurrent = { v: 'all' };
+
+        function buildCards(list) {
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+            list.forEach((t, i) => {
+                const card = document.createElement('div');
+                card.className = `card cat-data-${t.cat}`;
+                card.setAttribute('data-cat', t.cat);
+                card.setAttribute('data-search', (t.word + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                card.style.animationDelay = (i * 0.04) + 's';
+                card.innerHTML = `
+      <span class="card-num">#${String(t.n).padStart(2, '0')}</span>
+      <span class="card-cat cat-${t.cat}">${t.cat}</span>
+      <div class="card-title">${t.word}</div>
+      <div class="card-pos">${t.pos}</div>
+      <div class="card-def">${t.def}</div>
+      <div class="example-label">✦ Example</div>
+      <div class="example">"${t.ex}"</div>
+    `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCards() {
+            const q = document.getElementById('searchBox').value.toLowerCase();
+            const cat = catCurrent.v;
+            let shown = 0;
+            document.querySelectorAll('#cardGrid .card').forEach(c => {
+                const matchSearch = !q || c.getAttribute('data-search').includes(q);
+                const matchCat = cat === 'all' || c.getAttribute('data-cat') === cat;
+                if (matchSearch && matchCat) { c.classList.remove('hidden'); shown++; }
+                else c.classList.add('hidden');
+            });
+            document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none';
+        }
+
+        function filterCat(cat, btn) {
+            catCurrent.v = cat;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            filterCards();
+        }
+
+        buildCards(terms);
+
+        window.addEventListener('scroll', () => {
+            const btt = document.getElementById('btt');
+            btt.classList.toggle('show', window.scrollY > 400);
+        });
+    </script>
+</body>
+
+</html>

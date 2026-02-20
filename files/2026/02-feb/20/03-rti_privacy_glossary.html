@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTI & Privacy Glossary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0e0e0e;
+            --s1: #141414;
+            --s2: #1a1a1a;
+            --gold: #d4a853;
+            --gold2: #f0c060;
+            --cyan: #00d4ff;
+            --red: #ff4d4d;
+            --green: #00e5a0;
+            --text: #f0ece0;
+            --muted: #8a8070;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .012) 2px, rgba(255, 255, 255, .012) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .hero-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, .15);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+        }
+
+        .hero-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        .hero-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 12s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-label {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, .35);
+            padding: .3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            background: rgba(212, 168, 83, .05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: .5rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--gold), var(--gold2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            font-size: .85rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin-bottom: .5rem;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            font-size: .8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        /* CONTROLS */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(14, 14, 14, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #222;
+            padding: .8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .7rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            padding: .55rem 1rem .55rem 2.4rem;
+            border-radius: 8px;
+            outline: none;
+            min-width: 240px;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 168, 83, .2);
+        }
+
+        .search-box::placeholder {
+            color: #4a4030;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-ico {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .9rem;
+            opacity: .5;
+        }
+
+        .pill {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pill.on {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #0e0e0e;
+        }
+
+        /* TICKER */
+        .ticker {
+            background: #111;
+            border-bottom: 1px solid #222;
+            padding: .35rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: .72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticker .live {
+            color: var(--green);
+            animation: blink 1.2s step-start infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* MASONRY */
+        .masonry {
+            column-count: 3;
+            column-gap: 1.2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem;
+        }
+
+        @media(max-width:900px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media(max-width:560px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        /* FLIP CARD */
+        .flip-wrap {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-front {
+            background: var(--s1);
+            border: 1px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flip-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 999px;
+        }
+
+        .cat-legal .flip-front::before {
+            background: var(--cyan);
+        }
+
+        .cat-governance .flip-front::before {
+            background: var(--gold);
+        }
+
+        .cat-media .flip-front::before {
+            background: var(--red);
+        }
+
+        .cat-privacy .flip-front::before {
+            background: var(--green);
+        }
+
+        .cat-general .flip-front::before {
+            background: #a78bfa;
+        }
+
+        .flip-back {
+            background: var(--s2);
+            border: 1px solid #303030;
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Front */
+        .f-num {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--muted);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .f-cat {
+            font-family: 'Fira Code', monospace;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .15rem .55rem;
+            border-radius: 4px;
+        }
+
+        .cat-legal .f-cat {
+            background: rgba(0, 212, 255, .12);
+            color: var(--cyan);
+        }
+
+        .cat-governance .f-cat {
+            background: rgba(212, 168, 83, .12);
+            color: var(--gold);
+        }
+
+        .cat-media .f-cat {
+            background: rgba(255, 77, 77, .12);
+            color: var(--red);
+        }
+
+        .cat-privacy .f-cat {
+            background: rgba(0, 229, 160, .12);
+            color: var(--green);
+        }
+
+        .cat-general .f-cat {
+            background: rgba(167, 139, 250, .12);
+            color: #a78bfa;
+        }
+
+        .f-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .25rem;
+        }
+
+        .f-pos {
+            font-size: .72rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: .7rem;
+        }
+
+        .f-def {
+            font-size: .85rem;
+            color: #c0b89a;
+            line-height: 1.6;
+        }
+
+        .f-hint {
+            margin-top: .9rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+            letter-spacing: .06em;
+        }
+
+        /* Back */
+        .b-label {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .b-example {
+            font-size: .88rem;
+            color: #f0ece0;
+            font-style: italic;
+            line-height: 1.65;
+            border-left: 2px solid var(--gold);
+            padding: .4rem .75rem;
+            background: rgba(212, 168, 83, .06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .b-back-hint {
+            margin-top: .8rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+        }
+
+        .flip-wrap.hide {
+            display: none;
+        }
+
+        #empty {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            display: none;
+        }
+
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #0e0e0e;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(212, 168, 83, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s;
+            z-index: 200;
+        }
+
+        #btt.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-label">⚖️ RTI · Privacy · Democracy</div>
+        <h1>Privacy, <em>Transparency</em><br>&amp; The RTI Crisis</h1>
+        <div class="hero-sub">50 Key Terms &amp; Hard Words — Meanings &amp; Example Sentences</div>
+        <div class="hero-author">The Hindu Editorial &nbsp;·&nbsp; RTI vs DPDP Act, 2023</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="search-box" id="sb" type="text" placeholder="Search terms…" oninput="applyFilters()">
+        </div>
+        <button class="pill on" onclick="setTab('all',this)">All</button>
+        <button class="pill" onclick="setTab('legal',this)">Legal</button>
+        <button class="pill" onclick="setTab('governance',this)">Governance</button>
+        <button class="pill" onclick="setTab('media',this)">Media</button>
+        <button class="pill" onclick="setTab('privacy',this)">Privacy</button>
+        <button class="pill" onclick="setTab('general',this)">General</button>
+    </div>
+
+    <div class="ticker">
+        <span><span class="live">●</span>&nbsp;CLICK ANY CARD TO FLIP AND SEE THE EXAMPLE SENTENCE</span>
+        <span>Showing <strong id="cnt" style="color:var(--gold)">50</strong> / 50 terms</span>
+    </div>
+
+    <div class="masonry" id="grid"></div>
+    <div id="empty">No results found. Try a different keyword.</div>
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const DATA = [
+            {
+                n: 1, w: "Information Asymmetry", pos: "noun phrase", cat: "governance",
+                def: "A situation where one party (here, the state) possesses significantly more or better information than another (citizens), creating an imbalance of power.",
+                ex: "The RTI Act was enacted precisely to reduce information asymmetry between government officials and ordinary citizens."
+            },
+            {
+                n: 2, w: "Constitution Bench", pos: "noun phrase", cat: "legal",
+                def: "A bench of five or more judges of the Supreme Court of India, constituted to decide cases involving substantial questions of law relating to the Constitution.",
+                ex: "The matter was referred to a Constitution Bench because it raised fundamental questions about the right to privacy versus public accountability."
+            },
+            {
+                n: 3, w: "Petition", pos: "noun", cat: "legal",
+                def: "A formal written application to a court requesting a judicial remedy for a grievance.",
+                ex: "Civil liberties groups filed a petition before the Supreme Court challenging the constitutionality of the new data law."
+            },
+            {
+                n: 4, w: "RTI (Right to Information)", pos: "acronym/noun phrase", cat: "governance",
+                def: "A law (enacted in India in 2005) giving citizens the right to request information held by public authorities, promoting government transparency.",
+                ex: "Using the RTI, a farmer discovered that funds meant for irrigation had been diverted to other projects."
+            },
+            {
+                n: 5, w: "DPDP Act", pos: "acronym", cat: "privacy",
+                def: "Digital Personal Data Protection Act, 2023 — India's law governing how personal data is collected, stored, and processed by entities.",
+                ex: "The DPDP Act introduced significant obligations on companies that collect and process the personal data of Indian users."
+            },
+            {
+                n: 6, w: "Amendment", pos: "noun", cat: "legal",
+                def: "A formal change or addition made to a law, constitution, or document.",
+                ex: "The amendment to the RTI Act was criticised for weakening the public's right to scrutinise government actions."
+            },
+            {
+                n: 7, w: "Foundational", pos: "adjective", cat: "general",
+                def: "Serving as the essential base or principle upon which everything else is built.",
+                ex: "Freedom of expression is foundational to any democracy that claims to value individual liberty."
+            },
+            {
+                n: 8, w: "Withholding", pos: "verb/gerund", cat: "legal",
+                def: "The act of refusing to give or disclose something, especially information, to someone who requests it.",
+                ex: "The officer was penalised for withholding public records that citizens had a legal right to access."
+            },
+            {
+                n: 9, w: "Unwarranted", pos: "adjective", cat: "legal",
+                def: "Not justified or authorised; having no valid reason or basis.",
+                ex: "The court ruled that releasing the complainant's address would constitute an unwarranted invasion of personal privacy."
+            },
+            {
+                n: 10, w: "Public Interest Override", pos: "noun phrase", cat: "legal",
+                def: "A legal provision that allows a rule restricting disclosure to be set aside when the benefit to the public outweighs the privacy interest.",
+                ex: "Under the original RTI, the public interest override allowed inspection of a minister's personal financial records if corruption was suspected."
+            },
+            {
+                n: 11, w: "Public Information Officer (PIO)", pos: "noun phrase", cat: "governance",
+                def: "A designated official in every public authority responsible for receiving and responding to RTI applications.",
+                ex: "The Public Information Officer was obligated to furnish the requested documents within thirty days."
+            },
+            {
+                n: 12, w: "Blanket ban", pos: "noun phrase", cat: "legal",
+                def: "A total and unconditional prohibition covering an entire category without allowing any exceptions.",
+                ex: "Critics argued that the blanket ban on disclosing personal data would let corrupt officials hide behind privacy laws."
+            },
+            {
+                n: 13, w: "Procurement records", pos: "noun phrase", cat: "governance",
+                def: "Official documents recording how a government organisation purchases goods and services, including vendor selection and pricing.",
+                ex: "Investigative journalists used RTI to obtain procurement records and expose inflated costs in the school lunch scheme."
+            },
+            {
+                n: 14, w: "Audit reports", pos: "noun phrase", cat: "governance",
+                def: "Official documents prepared by auditors (such as the CAG) that examine and evaluate the financial accounts of public bodies.",
+                ex: "RTI activists obtained audit reports to prove that the municipal corporation had spent welfare funds irregularly."
+            },
+            {
+                n: 15, w: "Legitimate uses paradox", pos: "noun phrase", cat: "privacy",
+                def: "The contradictory situation where the state can process citizens' personal data without consent, yet citizens cannot access similar public-interest data about the state.",
+                ex: "The legitimate uses paradox reveals that the new law grants surveillance power to the government while denying accountability to citizens."
+            },
+            {
+                n: 16, w: "Data fiduciary", pos: "noun phrase", cat: "privacy",
+                def: "Under the DPDP Act, any entity that determines the purpose and means of processing personal data — analogous to a trustee of that data.",
+                ex: "Hospitals and news organisations could both be classified as data fiduciaries if they collect and use personal information."
+            },
+            {
+                n: 17, w: "Chilling effect", pos: "noun phrase", cat: "media",
+                def: "A situation where a law or policy discourages legitimate activity — such as journalism or free speech — through the threat of legal consequences.",
+                ex: "The high fines under the new regulation had a chilling effect on investigative reporting, with many outlets self-censoring."
+            },
+            {
+                n: 18, w: "Writ petition", pos: "noun phrase", cat: "legal",
+                def: "A formal petition filed before a High Court or Supreme Court invoking its extraordinary jurisdiction to enforce fundamental rights.",
+                ex: "The Reporters' Collective filed a writ petition arguing that the DPDP amendment violated press freedom."
+            },
+            {
+                n: 19, w: "Investigative journalism", pos: "noun phrase", cat: "media",
+                def: "A form of journalism that involves deep, systematic research and reporting, often exposing wrongdoing by powerful individuals or institutions.",
+                ex: "Investigative journalism into mining licences revealed a billion-dollar scam hidden across multiple government departments."
+            },
+            {
+                n: 20, w: "GDPR", pos: "acronym", cat: "privacy",
+                def: "General Data Protection Regulation — the European Union's comprehensive data protection law that balances individual privacy with public accountability and press freedom.",
+                ex: "The GDPR explicitly protects journalistic activity, unlike India's DPDP Act which provides no such exemption."
+            },
+            {
+                n: 21, w: "Accountability", pos: "noun", cat: "governance",
+                def: "The obligation of public officials and institutions to accept responsibility for their actions and to be answerable to the public.",
+                ex: "Without strong accountability mechanisms, public money is routinely misappropriated without consequence."
+            },
+            {
+                n: 22, w: "Transparency", pos: "noun", cat: "governance",
+                def: "The quality of being open and clear about information, actions, and processes so that the public can scrutinise them.",
+                ex: "The annual disclosure of politicians' assets is a basic transparency measure in a functioning democracy."
+            },
+            {
+                n: 23, w: "Citizenry", pos: "noun", cat: "general",
+                def: "The citizens of a country, collectively regarded as a body with rights and responsibilities.",
+                ex: "An informed citizenry is the strongest check against government corruption and overreach."
+            },
+            {
+                n: 24, w: "Exemptions", pos: "noun (plural)", cat: "legal",
+                def: "Official exclusions from a rule or obligation, granted to specific categories of entities or activities.",
+                ex: "Startups received exemptions from certain data protection obligations, while news organisations did not."
+            },
+            {
+                n: 25, w: "Non-compliance", pos: "noun", cat: "legal",
+                def: "Failure to act in accordance with a law, regulation, or requirement.",
+                ex: "Non-compliance with the data protection rules could result in fines running into hundreds of crores of rupees."
+            },
+            {
+                n: 26, w: "Scrutinise", pos: "verb", cat: "governance",
+                def: "To examine or inspect closely and critically, especially to check for errors or wrongdoing.",
+                ex: "Opposition lawmakers demanded the right to scrutinise the defence ministry's expenditure on the helicopter deal."
+            },
+            {
+                n: 27, w: "Constitutional sensitivity", pos: "noun phrase", cat: "legal",
+                def: "A recognition by the court that the matter at hand touches upon fundamental rights or constitutional principles that require careful judicial examination.",
+                ex: "The Chief Justice acknowledged the constitutional sensitivity of the issue before referring it to a larger bench."
+            },
+            {
+                n: 28, w: "Enacted", pos: "verb (past tense)", cat: "legal",
+                def: "Officially made (a bill or proposal) into law through a formal legislative process.",
+                ex: "The RTI Act was enacted in 2005 after years of campaigning by civil society groups across rural India."
+            },
+            {
+                n: 29, w: "Diluting", pos: "verb/gerund", cat: "general",
+                def: "Weakening the force, strength, or effectiveness of something — a law, policy, or principle.",
+                ex: "Activists accused the government of diluting environmental protections to attract industrial investment."
+            },
+            {
+                n: 30, w: "Disclosure", pos: "noun", cat: "legal",
+                def: "The formal communication or release of information, especially information that was previously kept confidential.",
+                ex: "The court ordered full disclosure of the contract terms to allow the public to assess the deal's fairness."
+            },
+            {
+                n: 31, w: "Override", pos: "noun/verb", cat: "legal",
+                def: "A provision or action that supersedes or cancels a prior rule; to set aside an existing rule in favour of a higher priority.",
+                ex: "The public interest override allowed information to be disclosed even if it touched on personal matters."
+            },
+            {
+                n: 32, w: "Prohibits", pos: "verb", cat: "legal",
+                def: "Formally forbids something by law or rule.",
+                ex: "The new regulation prohibits the publication of any data that could be used to identify a private individual without consent."
+            },
+            {
+                n: 33, w: "Body blow", pos: "noun (idiom)", cat: "general",
+                def: "A devastating setback or damaging event that seriously weakens something.",
+                ex: "The court's ruling was a body blow to the anti-corruption campaign that activists had spent years building."
+            },
+            {
+                n: 34, w: "Public spending", pos: "noun phrase", cat: "governance",
+                def: "The money spent by government at various levels on public services, infrastructure, and welfare programmes.",
+                ex: "Detailed RTI disclosures about public spending helped journalists track how welfare funds were actually being used."
+            },
+            {
+                n: 35, w: "State accountability", pos: "noun phrase", cat: "governance",
+                def: "The principle that the government and its institutions must be answerable to citizens for their decisions and use of public resources.",
+                ex: "The RTI Act was designed as a tool of state accountability, making information the lever of democratic power."
+            },
+            {
+                n: 36, w: "Personal information", pos: "noun phrase", cat: "privacy",
+                def: "Data or details relating to a specific individual that can be used to identify them — such as name, address, income, or medical records.",
+                ex: "The Supreme Court had to define what counts as personal information to determine the boundaries of the RTI exemption."
+            },
+            {
+                n: 37, w: "Data protection", pos: "noun phrase", cat: "privacy",
+                def: "The process of safeguarding personal information from misuse, loss, or unauthorised access.",
+                ex: "Strong data protection laws ensure that companies cannot sell users' private information to third parties without consent."
+            },
+            {
+                n: 38, w: "Consent", pos: "noun", cat: "privacy",
+                def: "Voluntary agreement by an individual to allow their personal data to be collected or processed.",
+                ex: "Under GDPR, processing sensitive medical data without explicit consent is illegal regardless of business justification."
+            },
+            {
+                n: 39, w: "Surveillance", pos: "noun", cat: "privacy",
+                def: "The systematic monitoring of individuals, communications, or activities — often by the state — for the purpose of control or information gathering.",
+                ex: "Civil liberties groups warned that the new data law would enable mass surveillance of citizens without judicial oversight."
+            },
+            {
+                n: 40, w: "Monitor", pos: "verb", cat: "privacy",
+                def: "To observe, track, and check something or someone systematically over a period of time.",
+                ex: "The government's power to monitor citizens' digital communications must be balanced by strong oversight mechanisms."
+            },
+            {
+                n: 41, w: "Paradox", pos: "noun", cat: "general",
+                def: "A seemingly contradictory situation that, upon closer examination, reveals a deeper truth or absurdity.",
+                ex: "The paradox of the amendment is that the state can accumulate data about citizens but hide its own records from them."
+            },
+            {
+                n: 42, w: "Democracy", pos: "noun", cat: "governance",
+                def: "A system of government in which citizens hold power, either directly or through elected representatives, and where rights and accountability are protected.",
+                ex: "A democracy without freedom of information is merely a democracy in name, not in substance."
+            },
+            {
+                n: 43, w: "Ironic", pos: "adjective", cat: "general",
+                def: "Relating to a situation that is contrary to expectations, often with wry or sharp implications.",
+                ex: "It is ironic that startups received data-law exemptions while the press — a constitutional institution — did not."
+            },
+            {
+                n: 44, w: "Internet Freedom Foundation", pos: "proper noun", cat: "media",
+                def: "An Indian digital rights organisation that advocates for an open, free and safe internet and challenges laws that restrict online freedoms.",
+                ex: "The Internet Freedom Foundation published a detailed analysis showing how the DPDP amendment would cripple RTI usage."
+            },
+            {
+                n: 45, w: "Reporters' Collective", pos: "proper noun", cat: "media",
+                def: "An Indian journalism organisation focused on public interest investigations, which challenged the DPDP amendment as a threat to press freedom.",
+                ex: "The Reporters' Collective argued in its writ petition that the new law would make investigative journalism financially ruinous."
+            },
+            {
+                n: 46, w: "Writ", pos: "noun", cat: "legal",
+                def: "A formal written order issued by a court commanding an authority to do or refrain from doing a specific act.",
+                ex: "The court issued a writ directing the government to disclose all documents related to the defence procurement deal."
+            },
+            {
+                n: 47, w: "Responsive government", pos: "noun phrase", cat: "governance",
+                def: "A government that actively listens to and acts upon the needs, grievances, and demands of its citizens.",
+                ex: "A responsive government answers RTI requests promptly and uses citizen feedback to improve public services."
+            },
+            {
+                n: 48, w: "Central Public Information Officer (CPIO)", pos: "noun phrase", cat: "governance",
+                def: "The designated officer at the central government level responsible for handling RTI applications and appeals.",
+                ex: "The Supreme Court's 2019 judgment clarified the CPIO's obligations when requests concern personal data of public officials."
+            },
+            {
+                n: 49, w: "Exemption (press)", pos: "noun phrase", cat: "media",
+                def: "A specific legal carve-out that protects journalism and journalistic activity from the full burden of data protection obligations.",
+                ex: "The EU's GDPR includes a press exemption, recognising that journalism in the public interest must be able to process newsworthy personal data."
+            },
+            {
+                n: 50, w: "Public authority", pos: "noun phrase", cat: "governance",
+                def: "Any body constituted under the Constitution, a law, or government order that exercises public power and is subject to RTI obligations.",
+                ex: "Every public authority — from a village panchayat to a ministry — must designate a Public Information Officer under the RTI Act."
+            }
+        ];
+
+        let activeCat = 'all';
+
+        function buildGrid(data) {
+            const g = document.getElementById('grid');
+            g.innerHTML = '';
+            data.forEach((t, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = `flip-wrap cat-${t.cat}`;
+                wrap.setAttribute('data-cat', t.cat);
+                wrap.setAttribute('data-q', (t.w + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                wrap.style.animationDelay = (i * 0.03) + 's';
+                wrap.innerHTML = `
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="f-num"><span style="font-size:.6rem;opacity:.4">#${String(t.n).padStart(2, '0')}</span><span class="f-cat">${t.cat}</span></div>
+          <div class="f-word">${t.w}</div>
+          <div class="f-pos">${t.pos}</div>
+          <div class="f-def">${t.def}</div>
+          <div class="f-hint">tap to see example →</div>
+        </div>
+        <div class="flip-back">
+          <div class="b-label">✦ Example Sentence</div>
+          <div class="b-example">"${t.ex}"</div>
+          <div class="b-back-hint">← tap to flip back</div>
+        </div>
+      </div>`;
+                wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+                g.appendChild(wrap);
+            });
+        }
+
+        function applyFilters() {
+            const q = document.getElementById('sb').value.toLowerCase().trim();
+            let n = 0;
+            document.querySelectorAll('.flip-wrap').forEach(c => {
+                const mQ = !q || c.getAttribute('data-q').includes(q);
+                const mC = activeCat === 'all' || c.getAttribute('data-cat') === activeCat;
+                if (mQ && mC) { c.classList.remove('hide'); n++; } else c.classList.add('hide');
+            });
+            document.getElementById('cnt').textContent = n;
+            document.getElementById('empty').style.display = n === 0 ? 'block' : 'none';
+        }
+
+        function setTab(cat, btn) {
+            activeCat = cat;
+            document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+            btn.classList.add('on');
+            applyFilters();
+        }
+
+        buildGrid(DATA);
+        window.addEventListener('scroll', () => {
+            document.getElementById('btt').classList.toggle('on', scrollY > 400);
+        });
+    </script>
+</body>
+
+</html>

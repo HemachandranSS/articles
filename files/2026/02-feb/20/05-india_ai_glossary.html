@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India AI Glossary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0e0e0e;
+            --s1: #141414;
+            --s2: #1a1a1a;
+            --gold: #d4a853;
+            --gold2: #f0c060;
+            --cyan: #00d4ff;
+            --red: #ff4d4d;
+            --green: #00e5a0;
+            --text: #f0ece0;
+            --muted: #8a8070;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .012) 2px, rgba(255, 255, 255, .012) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .hero-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, .15);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+        }
+
+        .hero-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        .hero-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 12s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-label {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, .35);
+            padding: .3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            background: rgba(212, 168, 83, .05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: .5rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--gold), var(--gold2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            font-size: .85rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin-bottom: .5rem;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            font-size: .8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(14, 14, 14, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #222;
+            padding: .8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .7rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            padding: .55rem 1rem .55rem 2.4rem;
+            border-radius: 8px;
+            outline: none;
+            min-width: 240px;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 168, 83, .2);
+        }
+
+        .search-box::placeholder {
+            color: #4a4030;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-ico {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .9rem;
+            opacity: .5;
+        }
+
+        .pill {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pill.on {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #0e0e0e;
+        }
+
+        .ticker {
+            background: #111;
+            border-bottom: 1px solid #222;
+            padding: .35rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: .72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticker .live {
+            color: var(--green);
+            animation: blink 1.2s step-start infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .masonry {
+            column-count: 3;
+            column-gap: 1.2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem;
+        }
+
+        @media(max-width:900px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media(max-width:560px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        .flip-wrap {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-front {
+            background: var(--s1);
+            border: 1px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flip-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 999px;
+        }
+
+        .cat-ai .flip-front::before {
+            background: var(--cyan);
+        }
+
+        .cat-policy .flip-front::before {
+            background: var(--gold);
+        }
+
+        .cat-tech .flip-front::before {
+            background: var(--red);
+        }
+
+        .cat-economy .flip-front::before {
+            background: var(--green);
+        }
+
+        .cat-general .flip-front::before {
+            background: #a78bfa;
+        }
+
+        .flip-back {
+            background: var(--s2);
+            border: 1px solid #303030;
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .f-num {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--muted);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .f-cat {
+            font-family: 'Fira Code', monospace;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .15rem .55rem;
+            border-radius: 4px;
+        }
+
+        .cat-ai .f-cat {
+            background: rgba(0, 212, 255, .12);
+            color: var(--cyan);
+        }
+
+        .cat-policy .f-cat {
+            background: rgba(212, 168, 83, .12);
+            color: var(--gold);
+        }
+
+        .cat-tech .f-cat {
+            background: rgba(255, 77, 77, .12);
+            color: var(--red);
+        }
+
+        .cat-economy .f-cat {
+            background: rgba(0, 229, 160, .12);
+            color: var(--green);
+        }
+
+        .cat-general .f-cat {
+            background: rgba(167, 139, 250, .12);
+            color: #a78bfa;
+        }
+
+        .f-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .25rem;
+        }
+
+        .f-pos {
+            font-size: .72rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: .7rem;
+        }
+
+        .f-def {
+            font-size: .85rem;
+            color: #c0b89a;
+            line-height: 1.6;
+        }
+
+        .f-hint {
+            margin-top: .9rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+            letter-spacing: .06em;
+        }
+
+        .b-label {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .b-example {
+            font-size: .88rem;
+            color: #f0ece0;
+            font-style: italic;
+            line-height: 1.65;
+            border-left: 2px solid var(--gold);
+            padding: .4rem .75rem;
+            background: rgba(212, 168, 83, .06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .b-back-hint {
+            margin-top: .8rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+        }
+
+        .flip-wrap.hide {
+            display: none;
+        }
+
+        #empty {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            display: none;
+        }
+
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #0e0e0e;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(212, 168, 83, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s;
+            z-index: 200;
+        }
+
+        #btt.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-label">🤖 AI · Technology · Policy</div>
+        <h1>Will India <em>Build AI</em>,<br>or Just Feed It?</h1>
+        <div class="hero-sub">50 Key Terms &amp; Hard Words — Meanings &amp; Example Sentences</div>
+        <div class="hero-author">GTRI Analysis &nbsp;·&nbsp; India's AI Stack, Data &amp; Sovereignty</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="search-box" id="sb" type="text" placeholder="Search terms…" oninput="applyFilters()">
+        </div>
+        <button class="pill on" onclick="setTab('all',this)">All</button>
+        <button class="pill" onclick="setTab('ai',this)">AI / Tech</button>
+        <button class="pill" onclick="setTab('policy',this)">Policy</button>
+        <button class="pill" onclick="setTab('tech',this)">Infrastructure</button>
+        <button class="pill" onclick="setTab('economy',this)">Economy</button>
+        <button class="pill" onclick="setTab('general',this)">General</button>
+    </div>
+
+    <div class="ticker">
+        <span><span class="live">●</span>&nbsp;CLICK ANY CARD TO FLIP AND SEE THE EXAMPLE SENTENCE</span>
+        <span>Showing <strong id="cnt" style="color:var(--gold)">50</strong> / 50 terms</span>
+    </div>
+
+    <div class="masonry" id="grid"></div>
+    <div id="empty">No results found. Try a different keyword.</div>
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const DATA = [
+            {
+                n: 1, w: "AI Stack", pos: "noun phrase", cat: "ai",
+                def: "The layered architecture of components needed to build and deploy AI — from energy and hardware at the base to applications at the top.",
+                ex: "Understanding the full AI stack helps policymakers identify where a country is strong and where it is vulnerable."
+            },
+            {
+                n: 2, w: "Foundation Model", pos: "noun phrase", cat: "ai",
+                def: "A large AI model trained on massive datasets that can be adapted to many tasks — such as GPT-4 or Google's Gemini.",
+                ex: "Building a foundation model requires enormous computing resources and billions of dollars in investment."
+            },
+            {
+                n: 3, w: "Frontier AI", pos: "noun phrase", cat: "ai",
+                def: "The most advanced, cutting-edge AI systems at the absolute limit of current capability, developed by a small number of leading labs.",
+                ex: "Only a handful of countries have the resources and talent to participate meaningfully in frontier AI research."
+            },
+            {
+                n: 4, w: "GPU", pos: "acronym", cat: "tech",
+                def: "Graphics Processing Unit — a specialised chip originally designed for rendering graphics, now essential for training large AI models at scale.",
+                ex: "India's dependence on imported GPUs makes its AI ambitions vulnerable to US export restrictions."
+            },
+            {
+                n: 5, w: "Compute Infrastructure", pos: "noun phrase", cat: "tech",
+                def: "The physical hardware — chips, servers, and high-speed networks — required to train and run AI models.",
+                ex: "Without access to affordable compute infrastructure, Indian AI startups cannot compete with well-funded US labs."
+            },
+            {
+                n: 6, w: "Data Centre", pos: "noun phrase", cat: "tech",
+                def: "A large facility housing computer servers, storage systems, and networking equipment used to process and store data at scale.",
+                ex: "Hyperscale data centres consume as much electricity as a small city, making energy access a major strategic issue."
+            },
+            {
+                n: 7, w: "Technological Sovereignty", pos: "noun phrase", cat: "policy",
+                def: "A nation's ability to control its own technology — including AI — without being dependent on foreign companies or governments.",
+                ex: "France's investment in domestic AI models reflects its commitment to technological sovereignty in the digital age."
+            },
+            {
+                n: 8, w: "Multilingual Data", pos: "noun phrase", cat: "ai",
+                def: "Datasets containing text, speech, or other content in multiple languages — particularly valuable for training AI that serves diverse populations.",
+                ex: "India's multilingual data in Hindi, Tamil, Bengali, and dozens of other languages is a unique asset for AI development."
+            },
+            {
+                n: 9, w: "Strategic Vulnerability", pos: "noun phrase", cat: "policy",
+                def: "A critical weakness in a country's capabilities or supply chain that could be exploited by foreign powers or disrupted.",
+                ex: "Relying solely on imported chips creates a strategic vulnerability that an adversary could exploit during a crisis."
+            },
+            {
+                n: 10, w: "Digital Public Infrastructure (DPI)", pos: "noun phrase", cat: "policy",
+                def: "Government-built digital systems — such as Aadhaar, UPI, and ONDC — that serve as open platforms for public and private services.",
+                ex: "India's digital public infrastructure enables AI applications to reach hundreds of millions of users at low cost."
+            },
+            {
+                n: 11, w: "Hyper-scale Infrastructure", pos: "noun phrase", cat: "tech",
+                def: "Extremely large-scale computing or data-centre operations designed to handle massive workloads efficiently.",
+                ex: "Building hyper-scale infrastructure requires consistent power supply and significant upfront capital investment."
+            },
+            {
+                n: 12, w: "Chip Restrictions", pos: "noun phrase", cat: "policy",
+                def: "Government-imposed export controls limiting the sale of advanced semiconductor chips to certain countries — particularly by the US against China.",
+                ex: "Despite chip restrictions, China has accelerated domestic semiconductor production to reduce dependence on US suppliers."
+            },
+            {
+                n: 13, w: "Intellectual Property (IP)", pos: "noun phrase", cat: "economy",
+                def: "Legal rights over creations of the mind — such as AI models, algorithms, and software — that give owners control and revenue.",
+                ex: "Developing indigenous AI tools helps India capture intellectual property rather than paying royalties to foreign firms."
+            },
+            {
+                n: 14, w: "Developer Ecosystem", pos: "noun phrase", cat: "ai",
+                def: "The community of software developers, tools, libraries, and platforms that collectively enable building of applications on top of an AI system.",
+                ex: "A thriving developer ecosystem around a platform accelerates innovation and creates network effects that are hard to displace."
+            },
+            {
+                n: 15, w: "Application Layer", pos: "noun phrase", cat: "ai",
+                def: "The topmost layer of the AI stack where end-user products and services are built using underlying models and infrastructure.",
+                ex: "India's competitive advantage lies in the application layer — building affordable AI tools for agriculture, healthcare, and logistics."
+            },
+            {
+                n: 16, w: "DeepSeek", pos: "proper noun", cat: "ai",
+                def: "A Chinese AI model developed by a Chinese firm that emerged as a strong competitor to US foundation models, demonstrating China's AI capabilities.",
+                ex: "DeepSeek's release surprised many experts and signalled that China was closing the gap with leading American AI labs."
+            },
+            {
+                n: 17, w: "IndiaAI Mission", pos: "proper noun", cat: "policy",
+                def: "India's government initiative to build domestic AI capabilities including compute resources, datasets, and startup support.",
+                ex: "The IndiaAI Mission allocated funds for shared GPU clusters to reduce the compute cost burden on domestic startups."
+            },
+            {
+                n: 18, w: "Investment Pledge", pos: "noun phrase", cat: "economy",
+                def: "A formal commitment by a company or government to invest a specified amount of money in a country or project in the future.",
+                ex: "The tech giant's investment pledge of five billion dollars was welcomed but critics noted it was spread over a decade."
+            },
+            {
+                n: 19, w: "Grid Reliability", pos: "noun phrase", cat: "tech",
+                def: "The consistency and dependability of the electricity supply network — critical for data centres that cannot tolerate power interruptions.",
+                ex: "Poor grid reliability forces data centres in some Indian states to rely on expensive diesel backup generators."
+            },
+            {
+                n: 20, w: "Transmission Bottleneck", pos: "noun phrase", cat: "tech",
+                def: "A constraint in the electricity transmission network that prevents power from flowing efficiently from generation sources to users.",
+                ex: "Transmission bottlenecks in eastern India mean that surplus solar power cannot reach the data-centre clusters in the south."
+            },
+            {
+                n: 21, w: "Bilateral Trade Agreement", pos: "noun phrase", cat: "policy",
+                def: "A treaty between two countries governing trade terms, tariffs, and rules — including digital trade provisions.",
+                ex: "The proposed India-US bilateral trade agreement could include clauses restricting India's ability to regulate data flows."
+            },
+            {
+                n: 22, w: "Cross-border Data Flows", pos: "noun phrase", cat: "policy",
+                def: "The transfer of data across national boundaries — a key point of tension between data sovereignty and free trade agreements.",
+                ex: "Unrestricted cross-border data flows benefit US tech giants but may undermine India's ability to build domestic AI."
+            },
+            {
+                n: 23, w: "Data Localisation", pos: "noun phrase", cat: "policy",
+                def: "The requirement that data collected within a country be stored and processed within that country's borders.",
+                ex: "India's data localisation push was opposed by US tech companies who argued it would fragment the global internet."
+            },
+            {
+                n: 24, w: "Big Tech", pos: "noun phrase", cat: "economy",
+                def: "The dominant US technology corporations — Google, Meta, Amazon, Microsoft, Apple — that control significant global digital infrastructure.",
+                ex: "Big Tech's dominance in AI infrastructure gives it leverage over smaller nations' digital economies."
+            },
+            {
+                n: 25, w: "Last-mile Integration", pos: "noun phrase", cat: "ai",
+                def: "The final step of deploying technology — connecting it to actual users and existing systems in hospitals, farms, banks, and factories.",
+                ex: "Last-mile integration of AI into public healthcare requires customisation, local language support, and human oversight."
+            },
+            {
+                n: 26, w: "Outsourcing", pos: "noun", cat: "economy",
+                def: "The practice of hiring external companies or individuals, often in other countries, to perform business functions at lower cost.",
+                ex: "India's IT industry was built on outsourcing, but AI automation is now reducing demand for traditional outsourced services."
+            },
+            {
+                n: 27, w: "Conflict of Interest", pos: "noun phrase", cat: "economy",
+                def: "A situation where personal or financial interests could inappropriately influence professional decisions or judgements.",
+                ex: "IT firms face a conflict of interest: building domestic AI would disrupt the very clients who drive their revenues."
+            },
+            {
+                n: 28, w: "Revenue Stream", pos: "noun phrase", cat: "economy",
+                def: "A source of income for a business — one of potentially several distinct channels through which money is earned.",
+                ex: "Cloud services became a critical revenue stream for IT firms as traditional software licensing declined."
+            },
+            {
+                n: 29, w: "Indigenous", pos: "adjective", cat: "general",
+                def: "Originating or produced within a particular country; locally developed rather than imported.",
+                ex: "India aims to develop indigenous AI models to reduce its reliance on American and Chinese platforms."
+            },
+            {
+                n: 30, w: "Technological Dependence", pos: "noun phrase", cat: "policy",
+                def: "A state in which a country relies on foreign nations or companies for critical technology it cannot produce itself.",
+                ex: "Technological dependence on a single supplier creates geopolitical leverage that can be used against dependent nations."
+            },
+            {
+                n: 31, w: "Acquisition (early)", pos: "noun phrase", cat: "economy",
+                def: "The purchase of a startup by a larger company, often before it has grown to its full potential — sometimes used to eliminate competition.",
+                ex: "Many promising Indian AI startups face early acquisition by US tech giants before they can scale to become global competitors."
+            },
+            {
+                n: 32, w: "Cloud Modernisation", pos: "noun phrase", cat: "tech",
+                def: "The process of migrating legacy IT systems to cloud-based infrastructure to improve efficiency, scalability, and cost-effectiveness.",
+                ex: "Hospitals across India require cloud modernisation to integrate AI diagnostics with existing patient record systems."
+            },
+            {
+                n: 33, w: "Legacy System", pos: "noun phrase", cat: "tech",
+                def: "Old or outdated technology infrastructure still in active use, often difficult to upgrade or integrate with modern systems.",
+                ex: "Integrating AI with legacy systems in public banks requires deep technical expertise and careful migration planning."
+            },
+            {
+                n: 34, w: "Cybersecurity Safeguards", pos: "noun phrase", cat: "tech",
+                def: "Technical and procedural measures that protect computer systems and data from cyberattacks, theft, and unauthorised access.",
+                ex: "Deploying AI in defence applications requires robust cybersecurity safeguards to prevent adversarial manipulation."
+            },
+            {
+                n: 35, w: "Regulatory Compliance", pos: "noun phrase", cat: "policy",
+                def: "Adhering to laws, regulations, and guidelines relevant to one's industry or operations — especially when deploying new technologies.",
+                ex: "AI tools used in Indian courts must meet strict regulatory compliance standards before replacing human judgement."
+            },
+            {
+                n: 36, w: "AI Governance", pos: "noun phrase", cat: "policy",
+                def: "The framework of rules, standards, and oversight mechanisms that ensure AI systems are used fairly, safely, and accountably.",
+                ex: "Without clear AI governance structures, autonomous systems could make decisions that violate citizens' rights."
+            },
+            {
+                n: 37, w: "Import Tariff", pos: "noun phrase", cat: "economy",
+                def: "A tax levied on goods imported from another country, used to protect domestic industries or raise revenue.",
+                ex: "High import tariffs on foreign cars encouraged global automakers to set up manufacturing plants inside India."
+            },
+            {
+                n: 38, w: "Cutting Edge", pos: "adjective phrase", cat: "general",
+                def: "At the most advanced stage of development; involving the latest and most innovative technology or ideas.",
+                ex: "Despite rapid progress, India's AI research is not yet at the cutting edge of frontier model development."
+            },
+            {
+                n: 39, w: "Distribution Scale", pos: "noun phrase", cat: "economy",
+                def: "The size and reach of a network through which a product or service can be delivered to users rapidly and at low cost.",
+                ex: "India's 750 million smartphone users give US AI companies an unmatched distribution scale for their products."
+            },
+            {
+                n: 40, w: "Policy Flexibility", pos: "noun phrase", cat: "policy",
+                def: "The freedom a government has to adjust its policies, regulations, and laws in response to changing circumstances.",
+                ex: "Signing restrictive trade agreements could reduce India's policy flexibility to regulate its own digital economy in future."
+            },
+            {
+                n: 41, w: "Economic Sovereignty", pos: "noun phrase", cat: "policy",
+                def: "A nation's ability to make independent economic decisions free from undue external influence or coercion.",
+                ex: "Digital trade clauses that restrict data regulation could erode India's economic sovereignty in the online marketplace."
+            },
+            {
+                n: 42, w: "Sarvam / Gnani / BharatGen", pos: "proper noun", cat: "ai",
+                def: "Three Indian AI startups showcased at the AI Summit — building home-grown language models tailored to Indian languages and contexts.",
+                ex: "Sarvam's multilingual speech model demonstrated that Indian startups could compete in the foundation model space with limited resources."
+            },
+            {
+                n: 43, w: "Sustained Funding", pos: "noun phrase", cat: "economy",
+                def: "Consistent, long-term financial support — not just one-time grants — needed to develop complex technologies over years.",
+                ex: "Without sustained funding, even the most talented AI team will struggle to train models that compete globally."
+            },
+            {
+                n: 44, w: "Shared Compute Infrastructure", pos: "noun phrase", cat: "tech",
+                def: "A government-funded or cooperative pool of computing resources accessible to multiple organisations, reducing individual costs.",
+                ex: "France's shared compute infrastructure gives its startups GPU access without requiring each company to buy expensive hardware."
+            },
+            {
+                n: 45, w: "Human Oversight", pos: "noun phrase", cat: "ai",
+                def: "The requirement for humans to monitor, review, and retain control over AI decisions — especially in high-stakes domains.",
+                ex: "AI-assisted medical diagnoses must include human oversight to catch errors before they affect patient treatment."
+            },
+            {
+                n: 46, w: "Rule-maker", pos: "noun", cat: "policy",
+                def: "A country or entity that sets the norms, standards, and regulations in a particular domain — rather than following rules set by others.",
+                ex: "The US and EU are currently the rule-makers in AI governance, setting standards that the rest of the world must follow."
+            },
+            {
+                n: 47, w: "Responsible Deployment", pos: "noun phrase", cat: "ai",
+                def: "The practice of introducing AI systems into use in ways that are ethical, safe, transparent, and accountable to affected communities.",
+                ex: "Responsible deployment of AI in hiring processes requires audits to detect and correct algorithmic bias."
+            },
+            {
+                n: 48, w: "Data Engineering", pos: "noun phrase", cat: "ai",
+                def: "The process of designing, building, and maintaining systems that collect, store, and prepare data for use in AI and analytics.",
+                ex: "India's large pool of data engineers is well-positioned to support the growing demand for AI data pipeline work."
+            },
+            {
+                n: 49, w: "National Security", pos: "noun phrase", cat: "policy",
+                def: "The protection of a country's people, institutions, and interests from internal and external threats — including digital and AI threats.",
+                ex: "Dependence on foreign AI for critical defence systems poses a serious national security risk."
+            },
+            {
+                n: 50, w: "Back-office Tasks", pos: "noun phrase", cat: "economy",
+                def: "Administrative, data processing, and support functions performed away from customer-facing operations — historically a major part of Indian IT outsourcing.",
+                ex: "AI is automating back-office tasks such as invoice processing and data entry, reducing the need for large outsourcing teams."
+            }
+        ];
+
+        let activeCat = 'all';
+        function buildGrid(data) {
+            const g = document.getElementById('grid'); g.innerHTML = '';
+            data.forEach((t, i) => {
+                const w = document.createElement('div');
+                w.className = `flip-wrap cat-${t.cat}`;
+                w.setAttribute('data-cat', t.cat);
+                w.setAttribute('data-q', (t.w + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                w.style.animationDelay = (i * .03) + 's';
+                w.innerHTML = `<div class="flip-inner">
+      <div class="flip-front">
+        <div class="f-num"><span style="font-size:.6rem;opacity:.4">#${String(t.n).padStart(2, '0')}</span><span class="f-cat">${t.cat}</span></div>
+        <div class="f-word">${t.w}</div><div class="f-pos">${t.pos}</div>
+        <div class="f-def">${t.def}</div><div class="f-hint">tap to see example →</div>
+      </div>
+      <div class="flip-back">
+        <div class="b-label">✦ Example Sentence</div>
+        <div class="b-example">"${t.ex}"</div>
+        <div class="b-back-hint">← tap to flip back</div>
+      </div></div>`;
+                w.addEventListener('click', () => w.classList.toggle('flipped'));
+                g.appendChild(w);
+            });
+        }
+        function applyFilters() {
+            const q = document.getElementById('sb').value.toLowerCase().trim(); let n = 0;
+            document.querySelectorAll('.flip-wrap').forEach(c => {
+                const ok = (!q || c.getAttribute('data-q').includes(q)) && (activeCat === 'all' || c.getAttribute('data-cat') === activeCat);
+                c.classList.toggle('hide', !ok); if (ok) n++;
+            });
+            document.getElementById('cnt').textContent = n;
+            document.getElementById('empty').style.display = n === 0 ? 'block' : 'none';
+        }
+        function setTab(cat, btn) {
+            activeCat = cat; document.querySelectorAll('.pill').forEach(p => p.classList.remove('on')); btn.classList.add('on'); applyFilters();
+        }
+        buildGrid(DATA);
+        window.addEventListener('scroll', () => document.getElementById('btt').classList.toggle('on', scrollY > 400));
+    </script>
+</body>
+
+</html>

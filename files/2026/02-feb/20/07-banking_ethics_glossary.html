@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking Ethics — Lexicon</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0a;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --rust: #8b3a2a;
+    --sage: #4a6741;
+    --cream: #faf7f0;
+    --shadow: rgba(15,14,10,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  header {
+    text-align: center;
+    padding: 80px 40px 60px;
+    position: relative;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    background: linear-gradient(180deg, var(--cream) 0%, var(--paper) 100%);
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '§';
+    position: absolute;
+    font-size: 400px;
+    color: rgba(201,168,76,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    pointer-events: none;
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.04); opacity: 0.7; }
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    animation: fadeDown 0.8s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .header-sub {
+    margin-top: 24px;
+    font-style: italic;
+    font-size: 20px;
+    color: rgba(15,14,10,0.5);
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+
+  .count-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-top: 20px;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Search */
+  .search-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .search-inner {
+    position: relative;
+  }
+
+  .search-inner input {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid rgba(201,168,76,0.4);
+    border-radius: 4px;
+    padding: 14px 20px 14px 48px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .search-inner input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+  }
+
+  .search-inner input::placeholder { color: rgba(15,14,10,0.35); font-style: italic; }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  /* Alphabet nav */
+  .alpha-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    padding: 32px 24px 0;
+    max-width: 700px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+
+  .alpha-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 9px;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+    color: rgba(15,14,10,0.5);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .alpha-btn:hover, .alpha-btn.active {
+    background: var(--gold);
+    color: var(--cream);
+    border-color: var(--gold);
+  }
+
+  /* Main grid */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    columns: 2;
+    column-gap: 40px;
+  }
+
+  @media (max-width: 700px) {
+    main { columns: 1; }
+  }
+
+  /* Term card */
+  .term-card {
+    break-inside: avoid;
+    margin-bottom: 28px;
+    background: var(--cream);
+    border-radius: 4px;
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 24px 26px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    animation: cardIn 0.5s ease both;
+    cursor: default;
+    overflow: hidden;
+  }
+
+  .term-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.25s ease;
+    transform-origin: bottom;
+  }
+
+  .term-card:hover::before { transform: scaleY(1); transform-origin: top; }
+
+  .term-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px var(--shadow);
+    border-color: rgba(201,168,76,0.5);
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .term-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .term-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .term-pos {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    font-style: normal;
+  }
+
+  .term-meaning {
+    font-size: 16px;
+    line-height: 1.65;
+    color: rgba(15,14,10,0.75);
+    margin-bottom: 14px;
+    border-bottom: 1px dashed rgba(201,168,76,0.25);
+    padding-bottom: 14px;
+  }
+
+  .example-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--sage);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .term-example {
+    font-style: italic;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: rgba(15,14,10,0.6);
+  }
+
+  .term-example .highlight {
+    background: linear-gradient(120deg, rgba(201,168,76,0.2) 0%, rgba(201,168,76,0.2) 100%);
+    border-radius: 2px;
+    padding: 0 2px;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* No results */
+  .no-results {
+    text-align: center;
+    padding: 80px 24px;
+    column-span: all;
+    display: none;
+  }
+
+  .no-results .emoji { font-size: 48px; margin-bottom: 16px; }
+  .no-results p { font-style: italic; color: rgba(15,14,10,0.4); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(15,14,10,0.3);
+    letter-spacing: 0.2em;
+  }
+
+  .hidden { display: none !important; }
+
+  /* Stagger animation delays */
+  .term-card:nth-child(1)  { animation-delay: 0.05s; }
+  .term-card:nth-child(2)  { animation-delay: 0.08s; }
+  .term-card:nth-child(3)  { animation-delay: 0.11s; }
+  .term-card:nth-child(4)  { animation-delay: 0.14s; }
+  .term-card:nth-child(5)  { animation-delay: 0.17s; }
+  .term-card:nth-child(6)  { animation-delay: 0.20s; }
+  .term-card:nth-child(7)  { animation-delay: 0.23s; }
+  .term-card:nth-child(8)  { animation-delay: 0.26s; }
+  .term-card:nth-child(9)  { animation-delay: 0.29s; }
+  .term-card:nth-child(10) { animation-delay: 0.32s; }
+  .term-card:nth-child(11) { animation-delay: 0.35s; }
+  .term-card:nth-child(12) { animation-delay: 0.38s; }
+  .term-card:nth-child(n+13) { animation-delay: 0.40s; }
+
+  /* decorative lines in header */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 28px auto 0;
+    animation: fadeDown 0.8s 0.35s ease both;
+  }
+  .ornament-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .ornament-line:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
+  .ornament-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">From the Article</div>
+  <h1>Banking <em>Ethics</em><br>Lexicon</h1>
+  <p class="header-sub">Terminologies, Hard Words &amp; Their Meanings</p>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-dot" style="opacity:0.5"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-line"></div>
+  </div>
+  <div><span class="count-badge">50 Terms Defined</span></div>
+</header>
+
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="searchInput" placeholder="Search a term…" autocomplete="off">
+  </div>
+</div>
+
+<div class="alpha-nav" id="alphaNav">
+  <button class="alpha-btn active" data-letter="all">All</button>
+</div>
+
+<main id="cardGrid">
+
+  <div class="term-card" data-word="ethics">
+    <div class="term-number">01</div>
+    <div class="term-word">Ethics</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">A system of moral principles that govern a person's or institution's behaviour, especially regarding honesty, fairness, and responsibility.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The bank was praised for upholding strong <span class="highlight">ethics</span> even when regulators were not watching.</div>
+  </div>
+
+  <div class="term-card" data-word="compliance">
+    <div class="term-number">02</div>
+    <div class="term-word">Compliance</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The act of conforming to rules, regulations, laws, or standards set by an authority or governing body.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Strict <span class="highlight">compliance</span> with RBI guidelines ensured the bank avoided any regulatory penalty.</div>
+  </div>
+
+  <div class="term-card" data-word="transparency">
+    <div class="term-number">03</div>
+    <div class="term-word">Transparency</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The quality of being open, honest, and free from hidden agendas, especially in communications and financial reporting.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Complete <span class="highlight">transparency</span> in loan documentation helped customers understand every fee involved.</div>
+  </div>
+
+  <div class="term-card" data-word="custodian">
+    <div class="term-number">04</div>
+    <div class="term-word">Custodian</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">A person or institution that is responsible for safeguarding and managing something on behalf of others, such as money or assets.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">As a <span class="highlight">custodian</span> of public deposits, the bank must prioritise the safety of every rupee entrusted to it.</div>
+  </div>
+
+  <div class="term-card" data-word="deregulated">
+    <div class="term-number">05</div>
+    <div class="term-word">Deregulated</div>
+    <div class="term-pos">adjective</div>
+    <div class="term-meaning">Describes an environment in which government controls and restrictions on an industry have been reduced or removed.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">In a <span class="highlight">deregulated</span> banking sector, institutions must self-regulate to prevent unethical practices.</div>
+  </div>
+
+  <div class="term-card" data-word="grievance redressal">
+    <div class="term-number">06</div>
+    <div class="term-word">Grievance Redressal</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A formal mechanism through which complaints or concerns raised by customers or employees are addressed and resolved.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The bank set up a 24-hour <span class="highlight">grievance redressal</span> portal to handle customer disputes swiftly.</div>
+  </div>
+
+  <div class="term-card" data-word="coercion">
+    <div class="term-number">07</div>
+    <div class="term-word">Coercion</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The practice of persuading or forcing someone to act in a desired way through threats, pressure, or intimidation.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Any form of <span class="highlight">coercion</span> to meet sales targets can erode employee morale and institutional trust.</div>
+  </div>
+
+  <div class="term-card" data-word="mis-selling">
+    <div class="term-number">08</div>
+    <div class="term-word">Mis-selling</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The practice of selling a financial product or service to a customer that is inappropriate for their needs, often through misleading information.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The regulatory fine was imposed after the bank was found guilty of <span class="highlight">mis-selling</span> insurance policies to senior citizens.</div>
+  </div>
+
+  <div class="term-card" data-word="institutional ethics">
+    <div class="term-number">09</div>
+    <div class="term-word">Institutional Ethics</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The collective moral standards, values, and principles that guide the decisions and policies of an organisation as a whole.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example"><span class="highlight">Institutional ethics</span> at the cooperative bank were embedded in every HR policy and lending guideline.</div>
+  </div>
+
+  <div class="term-card" data-word="performance-linked pay">
+    <div class="term-number">10</div>
+    <div class="term-word">Performance-Linked Pay</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A compensation structure where a portion of an employee's salary is tied directly to measurable performance outcomes or targets.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The introduction of <span class="highlight">performance-linked pay</span> raised productivity but also increased pressure to sell unsuitable products.</div>
+  </div>
+
+  <div class="term-card" data-word="supervisory mechanism">
+    <div class="term-number">11</div>
+    <div class="term-word">Supervisory Mechanism</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A set of oversight processes, controls, and checks put in place to monitor and regulate activities within an institution.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Robust <span class="highlight">supervisory mechanisms</span> were required once AI began making autonomous lending decisions.</div>
+  </div>
+
+  <div class="term-card" data-word="moral responsibility">
+    <div class="term-number">12</div>
+    <div class="term-word">Moral Responsibility</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The obligation to act in a manner that is ethically right, and to be accountable for the outcomes of one's actions.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The chairman stressed that <span class="highlight">moral responsibility</span> extends beyond rule-following to genuine care for depositors.</div>
+  </div>
+
+  <div class="term-card" data-word="digital lending">
+    <div class="term-number">13</div>
+    <div class="term-word">Digital Lending</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The process of providing loans through online or electronic platforms, from application and assessment to disbursal, without physical interaction.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example"><span class="highlight">Digital lending</span> platforms have made credit accessible to millions but require careful ethical oversight in decision-making.</div>
+  </div>
+
+  <div class="term-card" data-word="credit appraisal">
+    <div class="term-number">14</div>
+    <div class="term-word">Credit Appraisal</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The evaluation of a borrower's creditworthiness and capacity to repay a loan, typically assessing income, assets, and repayment history.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Ethical <span class="highlight">credit appraisal</span> ensures that loans are not pushed on to applicants who cannot repay them.</div>
+  </div>
+
+  <div class="term-card" data-word="artificial intelligence">
+    <div class="term-number">15</div>
+    <div class="term-word">Artificial Intelligence (AI)</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The simulation of human intelligence by computer systems, enabling machines to perform tasks like reasoning, learning, and decision-making.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">As <span class="highlight">artificial intelligence</span> automates loan approvals, human oversight with ethical judgment becomes even more critical.</div>
+  </div>
+
+  <div class="term-card" data-word="onboarding">
+    <div class="term-number">16</div>
+    <div class="term-word">Onboarding</div>
+    <div class="term-pos">noun/gerund</div>
+    <div class="term-meaning">The process of formally welcoming and integrating a new customer or employee into a service or organisation, including documentation and verification.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The digital <span class="highlight">onboarding</span> process must verify customer identity ethically, without bias or discrimination.</div>
+  </div>
+
+  <div class="term-card" data-word="regulatory philosophy">
+    <div class="term-number">17</div>
+    <div class="term-word">Regulatory Philosophy</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The underlying principles and values that guide an institution's approach to adhering to regulations and dealing with regulatory bodies.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">A bank's <span class="highlight">regulatory philosophy</span> should prioritise the spirit of the law rather than mere letter-compliance.</div>
+  </div>
+
+  <div class="term-card" data-word="reserve bank of india">
+    <div class="term-number">18</div>
+    <div class="term-word">Reserve Bank of India (RBI)</div>
+    <div class="term-pos">proper noun</div>
+    <div class="term-meaning">India's central banking institution, responsible for regulating the issue of currency, monetary policy, and the supervision of the banking sector.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The <span class="highlight">Reserve Bank of India</span> issued new draft guidelines to ensure banks market products with full honesty.</div>
+  </div>
+
+  <div class="term-card" data-word="deputy governor">
+    <div class="term-number">19</div>
+    <div class="term-word">Deputy Governor</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A senior official in a central bank who assists the Governor in overseeing monetary policy, regulation, and banking supervision.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The <span class="highlight">Deputy Governor</span> delivered an address warning that banks must go beyond compliance to embrace genuine ethics.</div>
+  </div>
+
+  <div class="term-card" data-word="draft guidelines">
+    <div class="term-number">20</div>
+    <div class="term-word">Draft Guidelines</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A preliminary version of rules or instructions, released for consultation or review before being finalised and enacted officially.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The <span class="highlight">draft guidelines</span> on financial product advertising invited public comments before their final publication.</div>
+  </div>
+
+  <div class="term-card" data-word="autonomy">
+    <div class="term-number">21</div>
+    <div class="term-word">Autonomy</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The right or condition of self-governance; in banking, the freedom institutions have to set their own policies within regulatory boundaries.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Greater <span class="highlight">autonomy</span> in setting lending policies comes with the corresponding responsibility to act ethically.</div>
+  </div>
+
+  <div class="term-card" data-word="board-approved policies">
+    <div class="term-number">22</div>
+    <div class="term-word">Board-Approved Policies</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Rules, frameworks, or procedures that have been formally reviewed and authorised by a company's board of directors.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">All <span class="highlight">board-approved policies</span> on customer data must reflect the bank's commitment to privacy and transparency.</div>
+  </div>
+
+  <div class="term-card" data-word="underscored">
+    <div class="term-number">23</div>
+    <div class="term-word">Underscored</div>
+    <div class="term-pos">verb (past tense)</div>
+    <div class="term-meaning">Emphasised or highlighted the importance of something; drew special attention to a point.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The regulator <span class="highlight">underscored</span> that lapses in ethical conduct would be treated as seriously as financial fraud.</div>
+  </div>
+
+  <div class="term-card" data-word="unequivocally">
+    <div class="term-number">24</div>
+    <div class="term-word">Unequivocally</div>
+    <div class="term-pos">adverb</div>
+    <div class="term-meaning">In a way that leaves no doubt; absolutely clearly and without any ambiguity or uncertainty.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The CEO stated <span class="highlight">unequivocally</span> that customer interest would always take precedence over short-term profits.</div>
+  </div>
+
+  <div class="term-card" data-word="inward honesty">
+    <div class="term-number">25</div>
+    <div class="term-word">Inward Honesty</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Genuine, self-initiated truthfulness that originates from an institution's own values rather than being forced by external scrutiny.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example"><span class="highlight">Inward honesty</span> in reporting must precede any promise of transparency made to the public.</div>
+  </div>
+
+  <div class="term-card" data-word="sensitised">
+    <div class="term-number">26</div>
+    <div class="term-word">Sensitised</div>
+    <div class="term-pos">verb (past tense)</div>
+    <div class="term-meaning">Made aware of and responsive to particular issues, emotions, or ethical concerns through training or education.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Bank staff were <span class="highlight">sensitised</span> to the special needs of elderly customers through a dedicated empathy workshop.</div>
+  </div>
+
+  <div class="term-card" data-word="empathy">
+    <div class="term-number">27</div>
+    <div class="term-word">Empathy</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The ability to understand and share the feelings of another person, especially in customer-facing roles where individual circumstances differ.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Frontline officers must demonstrate <span class="highlight">empathy</span> when dealing with customers who have faced financial distress.</div>
+  </div>
+
+  <div class="term-card" data-word="frontline staff">
+    <div class="term-number">28</div>
+    <div class="term-word">Frontline Staff</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Employees who directly interact with customers at the point of service, representing the institution in face-to-face or digital transactions.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example"><span class="highlight">Frontline staff</span> are often the first to notice when a customer may be sold an unsuitable financial product.</div>
+  </div>
+
+  <div class="term-card" data-word="motivational drives">
+    <div class="term-number">29</div>
+    <div class="term-word">Motivational Drives</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Organised campaigns or programmes designed to inspire and energise employees to perform better and achieve targets.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example"><span class="highlight">Motivational drives</span> can boost sales numbers but must never create unethical pressure on employees.</div>
+  </div>
+
+  <div class="term-card" data-word="security thread">
+    <div class="term-number">30</div>
+    <div class="term-word">Security Thread (metaphor)</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">In the article, used metaphorically to describe ethics as something invisibly woven into institutional policies, much like the thin strip embedded in currency notes to prevent forgery.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Ethical values should run through every policy like a <span class="highlight">security thread</span>, invisible in ordinary handling but vital to authenticity.</div>
+  </div>
+
+  <div class="term-card" data-word="procedural conformity">
+    <div class="term-number">31</div>
+    <div class="term-word">Procedural Conformity</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Following established procedures and steps mechanically, without necessarily embracing the deeper intent or spirit behind those rules.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Mere <span class="highlight">procedural conformity</span> may satisfy auditors but is insufficient to build genuine public trust in a financial institution.</div>
+  </div>
+
+  <div class="term-card" data-word="audit functions">
+    <div class="term-number">32</div>
+    <div class="term-word">Audit Functions</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The processes of systematic examination and verification of financial records, operations, and controls to ensure accuracy, legality, and ethical conduct.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Strengthened <span class="highlight">audit functions</span> were deployed to check whether automated reports reflected fair and accurate information.</div>
+  </div>
+
+  <div class="term-card" data-word="gamut">
+    <div class="term-number">33</div>
+    <div class="term-word">Gamut</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The complete range or entire scope of something; used to signify the full breadth of a category of activities or elements.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The new policy covered the entire <span class="highlight">gamut</span> of banking operations, from account opening to loan closure.</div>
+  </div>
+
+  <div class="term-card" data-word="digitised">
+    <div class="term-number">34</div>
+    <div class="term-word">Digitised</div>
+    <div class="term-pos">adjective/verb (past participle)</div>
+    <div class="term-meaning">Converted into or performed in a digital electronic format, replacing paper-based or manual processes.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Fully <span class="highlight">digitised</span> loan applications reduced processing time but introduced new risks of algorithmic bias.</div>
+  </div>
+
+  <div class="term-card" data-word="alternative channels">
+    <div class="term-number">35</div>
+    <div class="term-word">Alternative Channels</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Non-branch methods of banking service delivery, such as ATMs, internet banking, mobile banking apps, and phone banking.</div>
+    <div class="example-label">Example</div>
+    <div class="term-meaning">Over 95% of banking transactions now take place via alternative channels, reducing the need for physical branch visits.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Banks must apply the same ethical standards across all <span class="highlight">alternative channels</span> as they do at the physical counter.</div>
+  </div>
+
+  <div class="term-card" data-word="human interface">
+    <div class="term-number">36</div>
+    <div class="term-word">Human Interface</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The point at which human judgment, interaction, and decision-making occur within a technological or automated process.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">As AI reduces <span class="highlight">human interface</span> in banking, ethical supervision must compensate for the absence of human judgment.</div>
+  </div>
+
+  <div class="term-card" data-word="predominant">
+    <div class="term-number">37</div>
+    <div class="term-word">Predominant</div>
+    <div class="term-pos">adjective</div>
+    <div class="term-meaning">Present as the strongest or main element; having or exerting control or power over others.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">AI has become <span class="highlight">predominant</span> in fraud detection, handling millions of transactions that humans could not review manually.</div>
+  </div>
+
+  <div class="term-card" data-word="corollary">
+    <div class="term-number">38</div>
+    <div class="term-word">Corollary</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">A natural consequence or result that follows logically from something already established or proven.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">A culture of transparency is the natural <span class="highlight">corollary</span> of an institution that truly values its customers over profits.</div>
+  </div>
+
+  <div class="term-card" data-word="soft theme">
+    <div class="term-number">39</div>
+    <div class="term-word">Soft Theme</div>
+    <div class="term-pos">noun phrase (colloquial)</div>
+    <div class="term-meaning">A subject or concern regarded as secondary, optional, or less rigorous than hard, quantifiable, or legally binding requirements.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Ethics in lending should never be dismissed as a <span class="highlight">soft theme</span>; it is as critical as capital adequacy ratios.</div>
+  </div>
+
+  <div class="term-card" data-word="oversight">
+    <div class="term-number">40</div>
+    <div class="term-word">Oversight</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The act of supervising or watching over a process or group to ensure proper functioning, accuracy, and adherence to standards.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Effective regulatory <span class="highlight">oversight</span> prevented the bank from adopting aggressive digital marketing tactics.</div>
+  </div>
+
+  <div class="term-card" data-word="HR function">
+    <div class="term-number">41</div>
+    <div class="term-word">HR Function</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The human resources department or role within an organisation, responsible for recruiting, training, managing, and motivating staff.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">The <span class="highlight">HR function</span> must ensure that performance targets do not push staff into ethically questionable sales behaviour.</div>
+  </div>
+
+  <div class="term-card" data-word="prescribed timelines">
+    <div class="term-number">42</div>
+    <div class="term-word">Prescribed Timelines</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Formally set or mandated time limits within which a task, target, or resolution must be completed.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Grievances must be resolved within the <span class="highlight">prescribed timelines</span> to maintain customer confidence in the bank's accountability.</div>
+  </div>
+
+  <div class="term-card" data-word="marketing">
+    <div class="term-number">43</div>
+    <div class="term-word">Marketing</div>
+    <div class="term-pos">noun</div>
+    <div class="term-meaning">The activities and strategies used to promote and sell products or services, including advertising, branding, and customer communication.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Ethical <span class="highlight">marketing</span> of financial products requires honest disclosure of all risks involved to the customer.</div>
+  </div>
+
+  <div class="term-card" data-word="aggressive marketing">
+    <div class="term-number">44</div>
+    <div class="term-word">Aggressive Marketing</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A sales approach that uses high-pressure tactics or persistent persuasion to push products onto customers, often disregarding suitability or consent.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example"><span class="highlight">Aggressive marketing</span> of investment products to retirees led to regulatory action and reputational damage for the lender.</div>
+  </div>
+
+  <div class="term-card" data-word="institutional stability">
+    <div class="term-number">45</div>
+    <div class="term-word">Institutional Stability</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">The ability of an organisation to maintain consistent, reliable, and sound functioning over time, especially in the face of pressures or challenges.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">A positive management-employee relationship is the backbone of long-term <span class="highlight">institutional stability</span> in any bank.</div>
+  </div>
+
+  <div class="term-card" data-word="internal reporting mechanism">
+    <div class="term-number">46</div>
+    <div class="term-word">Internal Reporting Mechanism</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Systems and channels within an organisation through which employees can report concerns, irregularities, or data, including whistleblowing channels.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">A robust <span class="highlight">internal reporting mechanism</span> allows staff to flag ethical violations without fear of retaliation.</div>
+  </div>
+
+  <div class="term-card" data-word="balance sheet">
+    <div class="term-number">47</div>
+    <div class="term-word">Balance Sheet</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">A financial statement that summarises an institution's assets, liabilities, and shareholders' equity at a specific point in time.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Even an automated <span class="highlight">balance sheet</span> must be reviewed by ethical supervisors to ensure nothing material has been concealed.</div>
+  </div>
+
+  <div class="term-card" data-word="financial products">
+    <div class="term-number">48</div>
+    <div class="term-word">Financial Products</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Instruments or services offered by financial institutions such as loans, insurance policies, mutual funds, deposits, and credit cards.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Customers must be given clear and accurate information about all <span class="highlight">financial products</span> before they sign any agreement.</div>
+  </div>
+
+  <div class="term-card" data-word="incentive schemes">
+    <div class="term-number">49</div>
+    <div class="term-word">Incentive Schemes</div>
+    <div class="term-pos">noun phrase</div>
+    <div class="term-meaning">Structured reward programmes offered to employees to encourage higher performance, sales, or achievement of specific organisational goals.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">Poorly designed <span class="highlight">incentive schemes</span>, such as luxury trips for top sellers, may incentivise unethical product pushing.</div>
+  </div>
+
+  <div class="term-card" data-word="permissible">
+    <div class="term-number">50</div>
+    <div class="term-word">Permissible</div>
+    <div class="term-pos">adjective</div>
+    <div class="term-meaning">Allowed or acceptable within a set of rules, laws, or norms, even if not necessarily advisable or ethical in all circumstances.</div>
+    <div class="example-label">Example</div>
+    <div class="term-example">While technically <span class="highlight">permissible</span>, linking foreign trips to sales performance can quietly encourage mis-selling over time.</div>
+  </div>
+
+  <div class="no-results" id="noResults">
+    <div class="emoji">🔍</div>
+    <p>No terms found for your search.</p>
+  </div>
+
+</main>
+
+<footer>
+  Banking Ethics Lexicon &nbsp;·&nbsp; 50 Terms &nbsp;·&nbsp; Based on R. Mohan's Article
+</footer>
+
+<script>
+  // Build alphabet nav
+  const cards = Array.from(document.querySelectorAll('.term-card'));
+  const letters = new Set(cards.map(c => c.dataset.word[0].toUpperCase()));
+  const alphaNav = document.getElementById('alphaNav');
+  [...letters].sort().forEach(l => {
+    const btn = document.createElement('button');
+    btn.className = 'alpha-btn';
+    btn.textContent = l;
+    btn.dataset.letter = l;
+    btn.addEventListener('click', () => filterByLetter(l, btn));
+    alphaNav.appendChild(btn);
+  });
+
+  let activeFilter = 'all';
+
+  function filterByLetter(letter, btn) {
+    activeFilter = letter;
+    document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }
+
+  document.querySelector('.alpha-btn[data-letter="all"]').addEventListener('click', function() {
+    activeFilter = 'all';
+    document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    applyFilters();
+  });
+
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', applyFilters);
+
+  function applyFilters() {
+    const q = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+    cards.forEach(card => {
+      const word = card.dataset.word.toLowerCase();
+      const text = card.textContent.toLowerCase();
+      const matchSearch = !q || text.includes(q);
+      const matchLetter = activeFilter === 'all' || word[0].toUpperCase() === activeFilter;
+      if (matchSearch && matchLetter) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+  }
+</script>
+</body>
+</html>
