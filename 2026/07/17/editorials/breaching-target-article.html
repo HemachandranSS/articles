@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breaching the Target</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --border: #ddd;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.15;
+        }
+
+        .article-header h1 .vocab-words {
+            color: #f9ca24;
+            border-bottom: 2px dashed rgba(249, 202, 36, 0.5);
+        }
+
+        .article-header h1 .vocab-words:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block { flex: 1; }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover { background: rgba(255, 255, 255, 0.25); }
+
+        .modal-body { padding: 20px 22px 24px; }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .modal-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border: 1px solid rgba(26, 107, 60, 0.16);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            margin-top: 8px;
+        }
+
+        .modal-link-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(26, 107, 60, 0.14);
+            background: #ddf1e4;
+        }
+
+        @media (max-width: 600px) {
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 { font-size: 1.45rem; }
+            .article-body p { font-size: 0.97rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1><span class="vocab-words" data-modal-title="Breaching (verb) மீறுதல்"
+                    data-modal-meaning="– breaking through a limit, barrier, or rule."
+                    data-modal-synonyms="violating, crossing, infringing">Breaching</span> the target</h1>
+            <p class="byline">Editorial Desk</p>
+            <p class="byline-desc">Rising inflation leaves no room for a cut in interest rates</p>
+            <p class="article-meta">Editorial &nbsp;|&nbsp; Economy &nbsp;|&nbsp; Inflation</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="India (proper noun) இந்தியா"
+                    data-modal-meaning="– the country in South Asia."
+                    data-modal-synonyms="the Republic of India">India</span>’s retail inflation
+                <span class="vocab-words" data-modal-title="breached (verb) மீறியது"
+                    data-modal-meaning="– exceeded or broke through a limit or level."
+                    data-modal-synonyms="exceeded, crossed, surpassed">breached</span> the RBI’s 4%
+                target for the first time under the new CPI series, rising to 4.38% in June from 3.93% in May and
+                about 2.7% a year earlier. The latest print reflects a broader
+                <span class="vocab-silent" data-modal-title="pass-through (noun) பரவல்"
+                    data-modal-meaning="– the transfer of a cost increase from one stage of production to another."
+                    data-modal-synonyms="transmission, transfer, spillover">pass-through</span> of price pressures
+                that had, until recently, remained
+                <span class="vocab-words" data-modal-title="concentrated (adjective) குவிந்த"
+                    data-modal-meaning="– gathered together in one place or area."
+                    data-modal-synonyms="focused, clustered, centralized">concentrated</span> at the producer level,
+                largely driven by <span class="vocab-words" data-modal-title="spiralling (adjective) அதிகரித்து செல்லும்"
+                    data-modal-meaning="– increasing rapidly and out of control."
+                    data-modal-synonyms="soaring, escalating, rising">spiralling</span> transport and fuel costs
+                since the U.S.-Iran conflict in late February. Consequently, the gap between wholesale and retail
+                inflation has only marginally narrowed. Wholesale inflation as measured by the
+                <span class="vocab-words" data-modal-title="WPI (noun) थोक मूल्य सूचकांक / மொத்த விலை குறியீடு"
+                    data-modal-meaning="– Wholesale Price Index."
+                    data-modal-synonyms="Wholesale Price Index">WPI</span>, now based on 2022-23, remained elevated
+                at 9.87% in June, up from 9.68% in May. Fuel and power continued to exert the greatest
+                <span class="vocab-silent" data-modal-title="pressure (noun) அழுத்தம்"
+                    data-modal-meaning="– the use of persuasion, influence, or force."
+                    data-modal-synonyms="strain, force, burden">pressure</span> on producers, recording inflation of
+                27.41%, only marginally lower than May’s 28.18%. As India imports nearly 90% of its crude oil
+                requirements, the value of merchandise imports surged to $70.8 billion in June from about $54.1
+                billion a year earlier, even though import volumes did not rise proportionately. This underscores how
+                imported inflation, amplified by crude prices that briefly crossed $110 a barrel, has driven
+                <span class="vocab-words" data-modal-title="systemic (adjective) அமைப்புசார்ந்த"
+                    data-modal-meaning="– relating to a system as a whole rather than any particular part."
+                    data-modal-synonyms="structural, widespread, institutional">systemic</span> price pressures across
+                the economy. The rupee’s sharp
+                <span class="vocab-silent" data-modal-title="depreciation (noun) மதிப்பிழைவு"
+                    data-modal-meaning="– a reduction in the value of something, especially a currency."
+                    data-modal-synonyms="weakening, fall, decline">depreciation</span> during the conflict added to
+                these pressures, although RBI intervention in the foreign exchange market helped cushion the fall.</p>
+
+            <p>The transport category merits closer examination. Transport inflation more than doubled to 4.31% in
+                June from 1.75% in May, while the sub-group, “transport services for goods”, remained
+                <span class="vocab-words" data-modal-title="elevated (adjective) உயர்ந்த"
+                    data-modal-meaning="– raised to a higher level."
+                    data-modal-synonyms="high, increased, raised">elevated</span>, rising to 7.70% from 7.63%.
+                Another notable pressure point has been restaurants and hotels. Although the government announced a
+                modest reduction in commercial LPG prices earlier this month, it has done little to offset the
+                <span class="vocab-words" data-modal-title="steep (adjective) கடுமையான / அதிகமான"
+                    data-modal-meaning="– very large or sudden."
+                    data-modal-synonyms="sharp, severe, drastic">steep</span> increases through May and June, when
+                the price of a 19.2 kg commercial cylinder in Delhi climbed to around ₹2,930 before easing marginally.
+                The system-wide impact is also evident in food prices, with the Consumer Food Price Index (CFPI)
+                rising to 5.32% from 4.78% in May. Another significant price pressure on the CFPI that must be factored
+                in is the projection of a <span class="vocab-silent" data-modal-title="deficient (adjective) குறைவான"
+                    data-modal-meaning="– lacking something essential."
+                    data-modal-synonyms="inadequate, insufficient, short">deficient</span> southwest monsoon and its
+                impact on agriculture, though the extent will become clearer in the weeks ahead. Meanwhile, despite
+                the Centre more than doubling import duties on gold and silver from 6% to 15% in May, Commerce
+                Ministry data suggest that bullion imports have remained
+                <span class="vocab-words" data-modal-title="robust (adjective) வலிமையான"
+                    data-modal-meaning="– strong and healthy; vigorous."
+                    data-modal-synonyms="strong, solid, resilient">robust</span> amid global uncertainties,
+                contributing to higher jewellery prices and household inflation. Although the
+                <span class="vocab-silent" data-modal-title="ceasefire (noun) போர் நிறுத்தம்"
+                    data-modal-meaning="– a temporary suspension of fighting."
+                    data-modal-synonyms="truce, armistice, peace">ceasefire</span> announced in late June briefly
+                eased crude prices, they have begun rising again. Given continuing
+                <span class="vocab-words" data-modal-title="geopolitical (adjective) புவியியல் அரசியல் சார்ந்த"
+                    data-modal-meaning="– relating to politics, especially international relations, as influenced by geography."
+                    data-modal-synonyms="strategic, international, political">geopolitical</span> uncertainty and
+                persistent upstream price pressures, inflation is unlikely to return to the RBI’s 4% target soon,
+                leaving no room for a rate cut at the Monetary Policy Committee’s August meeting.</p>
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) parent.insertBefore(temp.firstChild, node);
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+
+                    let meaning = '';
+                    let synonyms = '';
+
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+
+                    if (!meaning) {
+                        html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    }
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) {
+                openModal(el);
+                return;
+            }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>

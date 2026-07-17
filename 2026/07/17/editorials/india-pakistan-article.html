@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>It is not all bad between India and Pakistan</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --border: #ddd;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.25;
+        }
+
+        .article-header h1 .vocab-words {
+            color: #f9ca24;
+            border-bottom: 2px dashed rgba(249, 202, 36, 0.5);
+        }
+
+        .article-header h1 .vocab-words:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        /* Vocab word style — hard/important words: visible highlight */
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        /* Vocab word style — moderate words: no visible highlight, modal on click */
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        /* ──────────── MODAL ──────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block {
+            flex: 1;
+        }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        /* ──────────── Responsive ──────────── */
+        @media (max-width: 600px) {
+
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 {
+                font-size: 1.45rem;
+            }
+
+            .article-body p {
+                font-size: 0.97rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ ARTICLE ══ -->
+    <article class="article-wrapper">
+
+        <header class="article-header">
+            <h1>It is not all bad between India and Pakistan</h1>
+            <p class="byline">Tara Kartha</p>
+            <p class="byline-desc">Former Director, National Security Council Secretariat</p>
+            <p class="article-meta">Opinion &nbsp;|&nbsp; Geopolitics &nbsp;|&nbsp; South Asia</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">Ever since a letter written by 117 <span class='vocab-silent'
+                    data-modal-title='eminent (adjective) புகழ்பெற்ற / சிறந்த'
+                    data-modal-meaning='– (of a person) famous and respected within a particular sphere or profession.'
+                    data-modal-synonyms='illustrious, distinguished, renowned, esteemed'>eminent</span> Pakistanis and
+                Indians emerged in the <span class='vocab-silent' data-modal-title='public domain (noun) பொது களம்'
+                    data-modal-meaning='– information or work that is accessible to the public and not protected by copyright.'
+                    data-modal-synonyms='publicly available, common knowledge'>public domain</span>, an <span
+                    class='vocab-words' data-modal-title='acrimonious (adjective) கசப்பான / மிகவும் கடுமையான'
+                    data-modal-meaning='– (typically of speech or a debate) angry and bitter.'
+                    data-modal-synonyms='bitter, angry, rancorous, harsh'>acrimonious</span> debate has begun on whether
+                India should reopen <span class='vocab-silent'
+                    data-modal-title='dialogue (noun) உரையாடல் / பேச்சுவார்த்தை'
+                    data-modal-meaning='– discussion directed towards exploration of a subject or resolution of a problem.'
+                    data-modal-synonyms='conversation, discussion, talks'>dialogue</span> with its neighbour, with most
+                pointing to the inability of Pakistan to ever live peacefully with India. While this is understandable
+                in the <span class='vocab-words' data-modal-title='aftermath (noun) விளைவு / பின்விளைவு'
+                    data-modal-meaning='– the consequences or after-effects of a significant unpleasant event.'
+                    data-modal-synonyms='repercussions, consequences, wake'>aftermath</span> of the Pahalgam horror
+                (2025), the fact remains that India and Pakistan have, on many occasions, shown far greater <span
+                    class='vocab-words' data-modal-title='circumspection (noun) எச்சரிக்கை / முன்விவேகம்'
+                    data-modal-meaning='– the quality of being wary and unwilling to take risks; prudence.'
+                    data-modal-synonyms='caution, prudence, carefulness'>circumspection</span> than their western
+                counterparts and have also quietly cooperated to a surprising degree. Clearly, there is <span
+                    class='vocab-silent' data-modal-title='potential (noun) சாத்தியக்கூறு'
+                    data-modal-meaning='– latent qualities or abilities that may be developed and lead to future success.'
+                    data-modal-synonyms='possibility, capability, promise'>potential</span> for cooperation. Equally,
+                however, this potential has been hit progressively harder by terrorism.
+            </p>
+
+            <h2>Wars, yet with <span class='vocab-words' data-modal-title='restraint (noun) கட்டுப்பாடு / நிதானம்'
+                    data-modal-meaning='– unemotional, dispassionate, or moderate behavior; self-control.'
+                    data-modal-synonyms='self-control, moderation, discipline'>restraint</span></h2>
+
+            <p>Every foreign <span class='vocab-silent' data-modal-title='correspondent (noun) நிருபர்'
+                    data-modal-meaning='– a person employed by a news organization to gather, report, or contribute news, articles, etc., regularly from a distant place.'
+                    data-modal-synonyms='reporter, journalist, envoy'>correspondent</span> writing on the India-Pakistan
+                relationship, will frame it with reference to their three wars (1947, 1965, 1971). But few realise that
+                during all three wars, both sides made efforts not to bomb each other's cities and <span
+                    class='vocab-silent' data-modal-title='civilian (noun) பொதுமக்கள்'
+                    data-modal-meaning='– a person not in the armed services or the police force.'
+                    data-modal-synonyms='non-combatant, ordinary citizen'>civilian</span> spaces. But there were some
+                targets, such as the church at Ambala that was hit in 1965 as Pakistan tried to target the air base.
+                Military historian Rana Chhina notes that the only serious attack on civilian areas was at Chhearta,
+                hours after a ceasefire was called, but originally meant to target a key radar station in Amritsar.</p>
+
+            <p>Even in 1971, both sides restricted attacks to military targets, including oil storage sites. Official
+                sources in India note that military <span class='vocab-words'
+                    data-modal-title='casualties (noun) உயிரிழப்புகள் / காயப்பட்டவர்கள்'
+                    data-modal-meaning='– a person killed or injured in a war or accident.'
+                    data-modal-synonyms='victims, fatalities, losses'>casualties</span> for all three wars at 8,211,
+                while Pakistan's broad figures point to some 15,000. Sadly, no <span class='vocab-silent'
+                    data-modal-title='credible (adjective) நம்பகமான'
+                    data-modal-meaning='– able to be believed; convincing.'
+                    data-modal-synonyms='believable, plausible, reliable'>credible</span> sources are available for
+                civilian casualties, though accounts of the war show life going on 'courageously' in Pakistani towns,
+                with the same <span class='vocab-silent' data-modal-title='fortitude (noun) மன உறுதி'
+                    data-modal-meaning='– courage in pain or adversity.'
+                    data-modal-synonyms='courage, bravery, endurance, resilience'>fortitude</span> reported from
+                Amritsar, a <span class='vocab-words' data-modal-title='flash point (noun) மோதல் புள்ளி'
+                    data-modal-meaning='– a place, event, or time at which trouble, such as violence or anger, flares up.'
+                    data-modal-synonyms='trouble spot, powder keg, eruption point'>flash point</span> in all major wars.
+                Consider that Allied air bombing during the Second World War killed an estimated 3,00,000-6,00,000
+                civilians in German cities under the new concept of "area bombing". Attacks against just Dresden, with
+                hardly any military value, killed 25,000. Then there was the bombing of Tokyo that killed 1,00,000.
+                Allied planes even mined the seas to deny fishing in "Operation Starvation". Germany was hardly any
+                better, killing thousands but its crimes have been recorded. Those by the West are hard to find, but new
+                <span class='vocab-words' data-modal-title='doctrines (noun) கோட்பாடுகள் / கொள்கைகள்'
+                    data-modal-meaning='– a belief or set of beliefs held and taught by a Church, political party, or other group.'
+                    data-modal-synonyms='creeds, dogmas, principles, policies'>doctrines</span> of both held human life
+                cheap. In contrast, India and Pakistan militaries kept to a battlefield concept. Once terrorism came
+                into play, all these <span class='vocab-silent'
+                    data-modal-title='niceties (noun) நுணுக்கங்கள் / நளினங்கள்'
+                    data-modal-meaning='– a fine detail or distinction, especially one regarded as intricate and fastidious; polite behavior.'
+                    data-modal-synonyms='subtleties, nuances, politeness'>niceties</span> were set aside. But even as
+                Pakistan suffered terror attacks, including two attempts on General Musharraf's life, in 2003, a third
+                was foiled quietly with Indian intelligence support; that <span class='vocab-words'
+                    data-modal-title='tacitly (adverb) மறைமுகமாக'
+                    data-modal-meaning='– in a way that is understood or implied without being directly stated.'
+                    data-modal-synonyms='implicitly, indirectly, silently'>tacitly</span> it acknowledged strong
+                Pakistani action against terrorist groups. True, this was in the aftermath of 9/11, where Islamabad was
+                told to cooperate or 'be bombed back into the Stone Age' according to the General.
+            </p>
+
+            <div class="pull-quote">Conflict has made headlines, but quiet cooperation has also shaped India-Pakistan
+                relations.</div>
+
+            <h2><span class='vocab-silent' data-modal-title='Fragile (adjective) உடையக்கூடிய / பலவீனமான'
+                    data-modal-meaning='– easily broken, damaged or destroyed; vulnerable.'
+                    data-modal-synonyms='brittle, vulnerable, delicate'>Fragile</span> bridges</h2>
+
+            <p>In yet another instance, after 26/11, President Asif Ali Zardari, instructed his ISI Chief General Shuja
+                Pasha to visit Delhi and cooperate in the investigation. This was <span class='vocab-silent'
+                    data-modal-title='flatly (adverb) திட்டவட்டமாக'
+                    data-modal-meaning='– showing little interest or emotion; firm and unequivocal.'
+                    data-modal-synonyms='categorically, absolutely, unhesitatingly'>flatly</span> refused by the then
+                Chief, General Kayani. A year later U.S. Vice-President Joe Biden was telling the British that Mr.
+                Zardari was afraid of 'being taken out'. Later, the 'Memogate' scandal had Mr. Zardari's <span
+                    class='vocab-words' data-modal-title='fervent (adjective) தீவிரமான / உணர்ச்சிபூர்வமான'
+                    data-modal-meaning='– having or displaying a passionate intensity.'
+                    data-modal-synonyms='impassioned, passionate, intense, vehement'>fervent</span> appeal for help
+                against the generals. Later, Nawaz Sharif reached out as well, being the first to congratulate Prime
+                Minister Narendra Modi, and attending his <span class='vocab-silent'
+                    data-modal-title='inaugural (noun) பதவியேற்பு'
+                    data-modal-meaning='– making the beginning of an institution, activity, or period of office.'
+                    data-modal-synonyms='opening, launch, swearing-in'>inaugural</span> in 2014. Mr. Modi then made a
+                surprise visit to Raiwind for a Sharif family wedding in December 2015. In January 2016, the Pathankot
+                attack happened. This time, Islamabad registered a case for investigation. Less than a year later, Mr.
+                Sharif himself was forced out of office on corruption charges that were never proven. Mr. Modi, Atal
+                Bihari Vajpayee and Manmohan Singh all invested significant <span class='vocab-words'
+                    data-modal-title='political capital (noun) அரசியல் மூலதனம்'
+                    data-modal-meaning='– the trust, goodwill, and influence a politician has with the public and other political figures.'
+                    data-modal-synonyms='leverage, influence, goodwill'>political capital</span> in reaching out to
+                Pakistan. All three faced failure, with Manmohan Singh particularly <span class='vocab-words'
+                    data-modal-title='reviled (verb) இகழப்பட்டார் / திட்டப்பட்டார்'
+                    data-modal-meaning='– criticize in an abusive or angrily insulting manner.'
+                    data-modal-synonyms='condemned, attacked, vilified, abused'>reviled</span> for his efforts.</p>
+
+            <p>Then came the 2005 nuclear <span class='vocab-words'
+                    data-modal-title='confidence-building (adjective) நம்பிக்கையை உருவாக்கும்'
+                    data-modal-meaning='– measures or actions designed to reduce tensions and build trust.'
+                    data-modal-synonyms='trust-building, reassuring'>confidence-building</span> agreement, which still
+                holds, with the last meeting held in January 2026. In contrast, arms control agreements between Russia
+                and the U.S. have collapsed. The agreement was tested on March 9, 2022, when India acknowledged that a
+                technical <span class='vocab-silent' data-modal-title='malfunction (noun) பழுது / கோளாறு'
+                    data-modal-meaning='– a failure to function normally.'
+                    data-modal-synonyms='breakdown, failure, fault'>malfunction</span> during routine maintenance led to
+                the accidental firing of a missile into Pakistan. No damage was reported, and Delhi ordered a high-level
+                inquiry.</p>
+
+            <p>While Prime Minister Imran Khan and politicians reacted strongly, Gen. Qamar Bajwa's response showed
+                notable restraint. Gen. Bajwa also advocated using Pakistan's <span class='vocab-words'
+                    data-modal-title='geo-economic (adjective) புவி-பொருளாதார'
+                    data-modal-meaning='– the economic policies or conditions of a country as seen in a global perspective, driving foreign policy.'
+                    data-modal-synonyms='global economic, strategically economic'>geo-economic</span> potential by
+                opening trade corridors with India, possibly due to the country's economic crisis. However, most
+                remarkably, even as India faced Chinese <span class='vocab-words'
+                    data-modal-title='incursions (noun) ஊடுருவல்கள் / படையெடுப்புகள்'
+                    data-modal-meaning='– an invasion or attack, especially a sudden or brief one.'
+                    data-modal-synonyms='invasions, attacks, raids, intrusions'>incursions</span> in Galwan, both
+                countries reaffirmed their ceasefire commitment during Gen. Bajwa's tenure, despite the earlier <span
+                    class='vocab-words' data-modal-title='abrogation (noun) ரத்து / நீக்கம்'
+                    data-modal-meaning='– the repeal or abolition of a law, right, or agreement.'
+                    data-modal-synonyms='repeal, revocation, cancellation, nullification'>abrogation</span> of Article
+                370 in 2019.</p>
+
+            <p>There are many more instances of cooperation, though not all are publicly recorded. The constant point is
+                that relations <span class='vocab-words' data-modal-title='deteriorated (verb) மோசமடைந்தது'
+                    data-modal-meaning='– become progressively worse.'
+                    data-modal-synonyms='worsened, declined, degraded'>deteriorated</span> sharply once terrorism began,
+                initially targeting the military and more recently civilians, as seen in the horrific Pahalgam attack.
+                Pakistan has suffered further as groups it once supported, such as the Taliban, turned against it.</p>
+
+            <h2>The path to cooperation</h2>
+
+            <p>In 2025, terrorism rose by 34% amid growing <span class='vocab-silent'
+                    data-modal-title='unrest (noun) அமைதியின்மை / கொந்தளிப்பு'
+                    data-modal-meaning='– a state of dissatisfaction, disturbance, and agitation in a group of people, typically involving public demonstrations or disorder.'
+                    data-modal-synonyms='disruption, turmoil, agitation, rebellion'>unrest</span> in Occupied Kashmir,
+                the tribal areas and Balochistan. Years of military rule have weakened state institutions. Yet,
+                cooperation remains possible in areas such as glacial melt, stubble-burning alternatives and
+                particularly narcotics <span class='vocab-words'
+                    data-modal-title='trafficking (noun) கடத்தல் / சட்டவிரோத வியாபாரம்'
+                    data-modal-meaning='– deal or trade in something illegal.'
+                    data-modal-synonyms='smuggling, illicit trade'>trafficking</span>, an area where both countries have
+                previously worked together. The key step is for Rawalpindi to demonstrate clearly an end to its support
+                for terrorism. That could even open the way for a <span class='vocab-silent'
+                    data-modal-title='renegotiation (noun) மறுபரிசீலனை / மறுபேச்சுவார்த்தை'
+                    data-modal-meaning='– the action of negotiating something again in order to change the original agreed terms.'
+                    data-modal-synonyms='reassessment, re-evaluation'>renegotiation</span> of the Indus Waters Treaty to
+                <span class='vocab-silent' data-modal-title='mutual (adjective) பரஸ்பர'
+                    data-modal-meaning='– held in common by two or more parties.'
+                    data-modal-synonyms='reciprocal, shared, joint'>mutual</span> benefit.
+            </p>
+        </div>
+
+    </article>
+
+    <!-- ══ MODAL ══ -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        // Automatically wrap all generic >4 letter words in the article body with a silent modal
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                // Skip if already in a vocab span, or inside titles/quotes
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+
+                // Regex to find words length >= 4
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) {
+                        parent.insertBefore(temp.firstChild, node);
+                    }
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        // Parse title: "word (pos) தமிழ்" → { word, tamil }
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+
+                    let meaning = '';
+                    let synonyms = '';
+
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+
+                    if (!meaning) {
+                        html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    }
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const antonyms = el.dataset.modalAntonyms || '';
+            const link = el.dataset.modalLink || '';
+
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            if (antonyms) html += row('Antonyms', antonyms);
+
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn" style="margin-right: 8px;">Search on Google ↗</a>`;
+            if (link) html += `<a href="${escHtml(link)}" target="_blank" rel="noopener" class="modal-link-btn">Learn more ↗</a>`;
+
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) { openModal(el); return; }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Third language should start in Class 6 and stop in Class 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#f4f1eb;--card-bg:#fffef9;--text:#1a1a1a;--muted:#555;--accent:#1a6b3c;--accent-light:#e8f5ee;--border:#ddd;--vocab-color:#1a5276;--vocab-hover:#1a6b3c;--modal-bg:#fff;--overlay:rgba(0,0,0,.55);--radius:10px}
+        body{font-family:'Merriweather',Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 16px 80px;line-height:1.9}
+        .article-wrapper{max-width:860px;margin:0 auto;background:var(--card-bg);border-radius:14px;box-shadow:0 4px 32px rgba(0,0,0,.10);overflow:hidden}
+        .article-header{background:linear-gradient(135deg,#0d3325 0%,#1a5c38 60%,#2ecc71 100%);padding:40px 44px 30px;color:#fff}
+        .article-header h1{font-family:'Inter',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.5px;margin-bottom:10px;line-height:1.12}
+        .article-header h1 .vocab-words{color:#f9ca24;border-bottom:2px dashed rgba(249,202,36,.5)}
+        .article-header h1 .vocab-words:hover{color:#fff;border-bottom-color:#fff}
+        .article-header .byline{font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:#a8f0c6;margin-top:10px}
+        .article-header .byline-desc{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:400;color:rgba(255,255,255,.7);line-height:1.5;margin-top:4px;font-style:italic}
+        .article-meta{font-family:'Inter',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);margin-top:18px;letter-spacing:.5px;text-transform:uppercase}
+        .article-body{padding:36px 44px 44px}
+        .article-body p{font-size:1.05rem;color:var(--text);margin-bottom:1.6em;text-align:justify}
+        .article-body h2{font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);margin:2em 0 .6em;text-transform:uppercase;letter-spacing:.5px}
+        .drop-cap::first-letter{float:left;font-size:3.8rem;line-height:.8;font-weight:700;margin:4px 8px 0 0;color:var(--accent);font-family:'Inter',sans-serif}
+        .pull-quote{font-family:'Inter',sans-serif;font-size:1.15rem;font-weight:600;color:var(--accent);padding:16px 24px;border-left:4px solid var(--accent);background:var(--accent-light);margin:2em 0;line-height:1.6}
+        .vocab-words{color:var(--vocab-color);border-bottom:2px dotted var(--vocab-color);cursor:pointer;transition:color .18s,border-color .18s,background .18s;border-radius:2px;padding:0 1px}
+        .vocab-words:hover{color:var(--vocab-hover);border-bottom-color:var(--vocab-hover);background:var(--accent-light)}
+        .vocab-silent{cursor:pointer;border-radius:2px;padding:0 1px;transition:background .15s}
+        .vocab-silent:hover{background:var(--accent-light)}
+        .modal-overlay{display:none;position:fixed;inset:0;background:var(--overlay);z-index:1000;align-items:center;justify-content:center;padding:20px}
+        .modal-overlay.active{display:flex}
+        .modal-box{background:var(--modal-bg);border-radius:var(--radius);max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .22s cubic-bezier(.4,1.4,.6,1) both;overflow:hidden}
+        @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+        .modal-head{background:linear-gradient(90deg,#0d3325,#1a5c38);padding:18px 22px 14px;display:flex;align-items:flex-start;gap:14px}
+        .modal-icon{width:38px;height:38px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem;color:#fff;margin-top:2px}
+        .modal-title-block{flex:1}
+        .modal-word{font-family:'Inter',sans-serif;font-size:1.2rem;font-weight:700;color:#f9ca24;line-height:1.2}
+        .modal-tamil{font-family:'Inter',sans-serif;font-size:.82rem;color:rgba(255,255,255,.65);margin-top:3px;font-style:italic}
+        .modal-close{background:rgba(255,255,255,.12);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+        .modal-close:hover{background:rgba(255,255,255,.25)}
+        .modal-body{padding:20px 22px 24px}
+        .modal-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+        .modal-label{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);min-width:80px;padding-top:2px}
+        .modal-value{font-family:'Merriweather',serif;font-size:.95rem;color:var(--text);line-height:1.55}
+        .modal-link-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border-radius:999px;background:var(--accent-light);color:var(--accent-dark);border:1px solid rgba(26,107,60,.16);text-decoration:none;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:700;line-height:1;transition:transform .18s ease, box-shadow .18s ease, background .18s ease;margin-top:8px}
+        .modal-link-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(26,107,60,.14);background:#ddf1e4}
+        @media (max-width:600px){.article-header,.article-body{padding:24px 18px}.article-header h1{font-size:1.45rem}.article-body p{font-size:.97rem}}
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>‘Third language should start in Class 6 and stop in Class 9’</h1>
+            <p class="byline">Krishnadas Rajagopal</p>
+            <p class="byline-desc">SC judge asks Centre to not bring a third language in Class 9 as part of three-language scheme; T.N. says schools under Centre’s Navodaya scheme are incompatible with two-language policy in State</p>
+            <p class="article-meta">News &nbsp;|&nbsp; Education &nbsp;|&nbsp; Policy</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="Supreme Court (noun) உச்ச நீதிமன்றம்" data-modal-meaning="– the highest court in the judicial system." data-modal-synonyms="apex court, highest court">Supreme Court</span> judge, Justice B.V. Nagarathna, made an oral appeal in open court to the government to not introduce a third language (R3) in Class 9 as part of the <span class="vocab-words" data-modal-title="three-language scheme (noun) மூன்று மொழித் திட்டம்" data-modal-meaning="– an education policy requiring study of three languages." data-modal-synonyms="language formula, trilingual policy">three-language scheme</span>, saying it would be too <span class="vocab-words" data-modal-title="stressful (adjective) மனஅழுத்தமான" data-modal-meaning="– causing mental or emotional pressure." data-modal-synonyms="pressurising, taxing, demanding">stressful</span> for children with <span class="vocab-silent" data-modal-title="Board exams (noun) பொதுத்தேர்வுகள்" data-modal-meaning="– formal school examinations conducted at board level." data-modal-synonyms="final exams, public exams">Board exams</span> just a year away. She said a third language should be introduced in Class 6 and stopped in Class 9. “Third language should stop in Class 9, not start in Class 9,” Justice Nagarathna, heading a <span class="vocab-words" data-modal-title="Division Bench (noun) இரு நீதிபதிகள் அமர்வு" data-modal-meaning="– a court bench consisting of two judges." data-modal-synonyms="bench, panel, two-judge bench">Division Bench</span>, said. The <span class="vocab-silent" data-modal-title="pressure (noun) அழுத்தம்" data-modal-meaning="– the burden or strain caused by demands." data-modal-synonyms="stress, strain, load">pressure</span> of the Class 10 Board exam starts as early as in Class 8, she added.</p>
+
+            <p>“Tell the Union of India to please not do this... Tell the government not to do it. Why introduce third language in Class 9? That is stressful. Why not Class 6?” Justice Nagarathna said.</p>
+
+            <p>The judge, who is in line to become the first woman <span class="vocab-words" data-modal-title="Chief Justice of India (noun) இந்திய தலைமை நீதிபதி" data-modal-meaning="– the head of the Supreme Court of India." data-modal-synonyms="CJI, chief justice">Chief Justice of India</span> as per the <span class="vocab-silent" data-modal-title="seniority norm (noun) மூப்புரிமை விதி" data-modal-meaning="– a rule based on length of service or rank." data-modal-synonyms="service rule, order of precedence">seniority norm</span>, recalled how, while she was in school, the teaching of lessons meant for Class 10 would begin in Class 8 itself. “And this was in 1976. You can just imagine what the <span class="vocab-words" data-modal-title="pressure (noun) அழுத்தம்" data-modal-meaning="– stress or burden caused by demands." data-modal-synonyms="stress, strain, burden">pressure</span> would be on children now,” she remarked.</p>
+
+            <h2>‘Backdoor’ ploy</h2>
+            <p>The Supreme Court was hearing <span class="vocab-words" data-modal-title="petitions (noun) மனுக்கள்" data-modal-meaning="– formal written requests made to a court or authority." data-modal-synonyms="pleas, applications, requests">petitions</span> filed on the introduction of <span class="vocab-silent" data-modal-title="Navodaya schools (noun) நவோதய பள்ளிகள்" data-modal-meaning="– residential schools under the Jawahar Navodaya Vidyalaya scheme." data-modal-synonyms="residential schools, JNV schools">Navodaya schools</span> in Tamil Nadu. The State government, during the previous Dravida Munnetra Kazhagam (DMK) <span class="vocab-words" data-modal-title="regime (noun) ஆட்சி" data-modal-meaning="– a system or period of government." data-modal-synonyms="government, administration, rule">regime</span>, had maintained that the schools envisioned under the Jawahar Navodaya Vidyalaya Scheme were “fundamentally incompatible” with the <span class="vocab-words" data-modal-title="two-language policy (noun) இரு மொழிக் கொள்கை" data-modal-meaning="– an education policy that uses two languages in schooling." data-modal-synonyms="bilingual policy, language policy">two-language policy</span> followed in Tamil Nadu.</p>
+
+            <p>The State had, in earlier hearings, argued that the Navodaya scheme based on the three-language formula was a <span class="vocab-words" data-modal-title="deviation (noun) விலகல்" data-modal-meaning="– a departure from an accepted rule or standard." data-modal-synonyms="departure, divergence, shift">deviation</span> from the <span class="vocab-silent" data-modal-title="mandate (noun) ஆணை / அதிகாரப்பூர்வ விதி" data-modal-meaning="– an official order or authority to act." data-modal-synonyms="directive, authority, instruction">mandate</span> of the Tamil Nadu Tamil Learning Act, 2006. The State had submitted that the three-language formula was considered a core <span class="vocab-words" data-modal-title="pedagogical (adjective) கல்வியியல் சார்ந்த" data-modal-meaning="– relating to teaching methods or education." data-modal-synonyms="educational, instructional, teaching">pedagogical</span> and administrative framework of the Navodaya scheme. It required compulsory instruction in Hindi, English, and the mother tongue/regional language. The Tamil Nadu government had maintained that the <span class="vocab-words" data-modal-title="imposition (noun) திணிப்பு" data-modal-meaning="– the forceful introduction of something unwanted." data-modal-synonyms="enforcement, enforcement, coercion">imposition</span> of the scheme was a “backdoor” ploy to make Hindi compulsory.</p>
+
+            <p>The court suggested that Tamil Nadu could have its “own education system” without denying children the option of <span class="vocab-silent" data-modal-title="enrolling (verb) சேர்தல்" data-modal-meaning="– registering or signing up for a school or course." data-modal-synonyms="registering, admitting, joining">enrolling</span> in Navodaya schools. Justice Nagarathna pointed out that Hindi was not compulsory under the three-language scheme. “...All other States have Navodaya schools, then why not have them for the children of Tamil Nadu?” the judge asked senior advocate H. Sairpya Padmanabhan, <span class="vocab-words" data-modal-title="Additional Advocate General (noun) கூடுதல் அரசு வழக்கறிஞர்" data-modal-meaning="– a senior government law officer assisting the Advocate General." data-modal-synonyms="AAG, government counsel">Additional Advocate General</span> for Tamil Nadu.</p>
+
+            <p>While the earlier DMK regime was of the opinion that the <span class="vocab-words" data-modal-title="implementation (noun) செயல்படுத்தல்" data-modal-meaning="– the process of putting a plan or law into effect." data-modal-synonyms="execution, enforcement, application">implementation</span> of the Navodaya scheme was unnecessary in Tamil Nadu, which already provided quality residential education to <span class="vocab-words" data-modal-title="meritorious (adjective) தகுதியான" data-modal-meaning="– deserving praise because of skill or achievement." data-modal-synonyms="deserving, talented, excellent">meritorious</span> students from rural and economically weaker sections, Ms. Padmanabhan adopted a <span class="vocab-silent" data-modal-title="cautious tone (noun) எச்சரிக்கையான நடை" data-modal-meaning="– a careful and restrained manner of speaking." data-modal-synonyms="careful approach, restrained tone">cautious tone</span>, saying the new government was engaged in talks about the Navodaya school scheme and needed some time to <span class="vocab-words" data-modal-title="chalk out (phrasal verb) திட்டமிடுதல்" data-modal-meaning="– to plan something in detail." data-modal-synonyms="plan, map out, work out">chalk out</span> its course of action.</p>
+
+            <p>Acknowledging the <span class="vocab-words" data-modal-title="intricacies (noun) நுணுக்கங்கள்" data-modal-meaning="– complicated details or aspects." data-modal-synonyms="complexities, subtleties, details">intricacies</span> of a “change of <span class="vocab-silent" data-modal-title="guard (noun) ஆட்சி மாற்றம்" data-modal-meaning="– a change in the controlling group or leadership." data-modal-synonyms="leadership, administration, regime">guard</span>” in the State, the court gave time till August 11, the next date of hearing.</p>
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <script>
+        const modal=document.getElementById('meaningModal');
+        const modalWord=document.getElementById('modalWordTitle');
+        const modalTamil=document.getElementById('modalTamilTitle');
+        const modalBody=document.getElementById('modalBodyContent');
+        const closeBtn=document.getElementById('modalCloseBtn');
+        function wrapAllWords(){const article=document.querySelector('.article-body');const walk=document.createTreeWalker(article,NodeFilter.SHOW_TEXT,null,false);const nodes=[];let n;while(n=walk.nextNode())nodes.push(n);nodes.forEach(node=>{const parent=node.parentElement;if(parent.closest('.vocab-words')||parent.closest('.vocab-silent')||parent.tagName==='H2')return;const text=node.nodeValue;if(text.trim().length===0)return;const replaced=text.replace(/\b([A-Za-z]{4,})\b/g,"<span class='vocab-silent dynamic-word'>$1</span>");if(replaced!==text){const temp=document.createElement('span');temp.innerHTML=replaced;while(temp.firstChild)parent.insertBefore(temp.firstChild,node);parent.removeChild(node);}});}
+        wrapAllWords();
+        function parseTitle(raw){if(!raw)return{word:'',tamil:''};const match=raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);if(match)return{word:match[1].trim(),tamil:match[2].trim()};return{word:raw.trim(),tamil:''};}
+        async function openModal(el){if(el.classList.contains('dynamic-word')){const word=el.textContent.trim().toLowerCase();modalWord.textContent=word;modalTamil.textContent='Translating...';modalBody.innerHTML='<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';modal.classList.add('active');document.body.style.overflow='hidden';try{const [dictRes,transRes]=await Promise.allSettled([fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)]);let meaning='';let synonyms='';if(dictRes.status==='fulfilled'&&dictRes.value.ok){const data=await dictRes.value.json();meaning=data[0]?.meanings[0]?.definitions[0]?.definition||'';const synonymsRaw=data[0]?.meanings[0]?.synonyms||[];synonyms=synonymsRaw.slice(0,4).join(', ');}if(transRes.status==='fulfilled'&&transRes.value.ok){const transData=await transRes.value.json();modalTamil.textContent=transData[0]?.[0]?.[0]||'';}else{modalTamil.textContent='';}let html='';if(meaning)html+=row('Meaning',`– ${meaning}`);if(synonyms)html+=row('Synonyms',synonyms);if(!meaning)html='<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';html+=`<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=html;}catch(e){modalTamil.textContent='';let errorHtml='<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';errorHtml+=`<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=errorHtml;}return;}const rawTitle=el.dataset.modalTitle||'';const meaning=el.dataset.modalMeaning||'';const synonyms=el.dataset.modalSynonyms||'';const {word,tamil}=parseTitle(rawTitle);const searchWord=word||rawTitle;modalWord.textContent=searchWord;modalTamil.textContent=tamil;let html='';if(meaning)html+=row('Meaning',meaning);if(synonyms)html+=row('Synonyms',synonyms);html+=`<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=html;modal.classList.add('active');document.body.style.overflow='hidden';}
+        function row(label,value){return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;}
+        function closeModal(){modal.classList.remove('active');document.body.style.overflow='';}
+        document.addEventListener('click',function(e){const el=e.target.closest('.vocab-words, .vocab-silent');if(el){openModal(el);return;}if(e.target===modal)closeModal();});
+        closeBtn.addEventListener('click',closeModal);
+        document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+    </script>
+</body>
+</html>

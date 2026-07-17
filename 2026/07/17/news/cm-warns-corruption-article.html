@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will not tolerate corruption, CM warns Ministers, officials</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #f4f1eb; --card-bg: #fffef9; --text: #1a1a1a; --muted: #555;
+            --accent: #1a6b3c; --accent-light: #e8f5ee; --border: #ddd;
+            --vocab-color: #1a5276; --vocab-hover: #1a6b3c; --modal-bg: #fff;
+            --overlay: rgba(0,0,0,0.55); --radius: 10px;
+        }
+        body { font-family:'Merriweather', Georgia, serif; background:var(--bg); color:var(--text); min-height:100vh; padding:40px 16px 80px; line-height:1.9; }
+        .article-wrapper { max-width:860px; margin:0 auto; background:var(--card-bg); border-radius:14px; box-shadow:0 4px 32px rgba(0,0,0,.10); overflow:hidden; }
+        .article-header { background:linear-gradient(135deg,#0d3325 0%,#1a5c38 60%,#2ecc71 100%); padding:40px 44px 30px; color:#fff; }
+        .article-header h1 { font-family:'Inter',sans-serif; font-size:2rem; font-weight:700; letter-spacing:-.5px; margin-bottom:10px; line-height:1.12; }
+        .article-header h1 .vocab-words { color:#f9ca24; border-bottom:2px dashed rgba(249,202,36,.5); }
+        .article-header h1 .vocab-words:hover { color:#fff; border-bottom-color:#fff; }
+        .article-header .byline { font-family:'Inter',sans-serif; font-size:.88rem; font-weight:600; color:#a8f0c6; margin-top:10px; }
+        .article-header .byline-desc { font-family:'Inter',sans-serif; font-size:.8rem; font-weight:400; color:rgba(255,255,255,.7); line-height:1.5; margin-top:4px; font-style:italic; }
+        .article-meta { font-family:'Inter',sans-serif; font-size:.78rem; color:rgba(255,255,255,.55); margin-top:18px; letter-spacing:.5px; text-transform:uppercase; }
+        .article-body { padding:36px 44px 44px; }
+        .article-body p { font-size:1.05rem; color:var(--text); margin-bottom:1.6em; text-align:justify; }
+        .article-body h2 { font-family:'Inter',sans-serif; font-size:1.1rem; font-weight:700; color:var(--accent); margin:2em 0 .6em; text-transform:uppercase; letter-spacing:.5px; }
+        .drop-cap::first-letter { float:left; font-size:3.8rem; line-height:.8; font-weight:700; margin:4px 8px 0 0; color:var(--accent); font-family:'Inter',sans-serif; }
+        .pull-quote { font-family:'Inter',sans-serif; font-size:1.15rem; font-weight:600; color:var(--accent); padding:16px 24px; border-left:4px solid var(--accent); background:var(--accent-light); margin:2em 0; line-height:1.6; }
+        .vocab-words { color:var(--vocab-color); border-bottom:2px dotted var(--vocab-color); cursor:pointer; transition:color .18s,border-color .18s,background .18s; border-radius:2px; padding:0 1px; }
+        .vocab-words:hover { color:var(--vocab-hover); border-bottom-color:var(--vocab-hover); background:var(--accent-light); }
+        .vocab-silent { cursor:pointer; border-radius:2px; padding:0 1px; transition:background .15s; }
+        .vocab-silent:hover { background:var(--accent-light); }
+        .modal-overlay { display:none; position:fixed; inset:0; background:var(--overlay); z-index:1000; align-items:center; justify-content:center; padding:20px; }
+        .modal-overlay.active { display:flex; }
+        .modal-box { background:var(--modal-bg); border-radius:var(--radius); max-width:480px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.25); animation:popIn .22s cubic-bezier(.4,1.4,.6,1) both; overflow:hidden; }
+        @keyframes popIn { from { transform:scale(.85); opacity:0; } to { transform:scale(1); opacity:1; } }
+        .modal-head { background:linear-gradient(90deg,#0d3325,#1a5c38); padding:18px 22px 14px; display:flex; align-items:flex-start; gap:14px; }
+        .modal-icon { width:38px; height:38px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.15rem; color:#fff; margin-top:2px; }
+        .modal-title-block { flex:1; }
+        .modal-word { font-family:'Inter',sans-serif; font-size:1.2rem; font-weight:700; color:#f9ca24; line-height:1.2; }
+        .modal-tamil { font-family:'Inter',sans-serif; font-size:.82rem; color:rgba(255,255,255,.65); margin-top:3px; font-style:italic; }
+        .modal-close { background:rgba(255,255,255,.12); border:none; color:#fff; width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:background .15s; flex-shrink:0; }
+        .modal-close:hover { background:rgba(255,255,255,.25); }
+        .modal-body { padding:20px 22px 24px; }
+        .modal-row { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+        .modal-label { font-family:'Inter',sans-serif; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--accent); min-width:80px; padding-top:2px; }
+        .modal-value { font-family:'Merriweather',serif; font-size:.95rem; color:var(--text); line-height:1.55; }
+        .modal-link-btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:9px 14px; border-radius:999px; background:var(--accent-light); color:var(--accent-dark); border:1px solid rgba(26,107,60,.16); text-decoration:none; font-family:'Inter',sans-serif; font-size:.78rem; font-weight:700; line-height:1; transition:transform .18s ease, box-shadow .18s ease, background .18s ease; margin-top:8px; }
+        .modal-link-btn:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(26,107,60,.14); background:#ddf1e4; }
+        @media (max-width:600px) { .article-header,.article-body { padding:24px 18px; } .article-header h1 { font-size:1.45rem; } .article-body p { font-size:.97rem; } }
+    </style>
+</head>
+
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1><span class="vocab-words" data-modal-title="Will (verb) திட்டவட்டமாக கூறுதல்"
+                    data-modal-meaning="– to express a firm intention or determination."
+                    data-modal-synonyms="intend, decide, resolve">Will</span> not tolerate corruption, CM warns Ministers, officials</h1>
+            <p class="byline">The Hindu Bureau</p>
+            <p class="byline-desc">Chairing a <span class="vocab-silent" data-modal-title="Cabinet (noun) அமைச்சரவை"
+                    data-modal-meaning="– a group of senior government ministers."
+                    data-modal-synonyms="ministry, executive, council">Cabinet</span> meeting, Vijay makes it clear
+                that he will not hesitate to take action. He also asks Ministers not to make a spectacle out of
+                inspections related to their departments</p>
+            <p class="article-meta">News &nbsp;|&nbsp; Governance &nbsp;|&nbsp; Administration</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="Chief Minister (noun) முதலமைச்சர்"
+                    data-modal-meaning="– the head of the government in a State."
+                    data-modal-synonyms="CM, premier, head minister">Chief Minister</span> C. Joseph Vijay on
+                Thursday warned his <span class="vocab-silent" data-modal-title="Cabinet colleagues (noun) அமைச்சரவை சகாக்கள்"
+                    data-modal-meaning="– fellow ministers in the same cabinet."
+                    data-modal-synonyms="ministers, colleagues, officials">Cabinet colleagues</span> and senior
+                <span class="vocab-words" data-modal-title="officials (noun) அதிகாரிகள்"
+                    data-modal-meaning="– people holding public or administrative office."
+                    data-modal-synonyms="functionaries, administrators, officers">officials</span> that he would not
+                tolerate <span class="vocab-words" data-modal-title="corruption (noun) ஊழல்"
+                    data-modal-meaning="– dishonest or fraudulent conduct by those in power."
+                    data-modal-synonyms="bribery, malpractice, dishonesty">corruption</span> or
+                <span class="vocab-words" data-modal-title="irregularities (noun) முறைகேடுகள்"
+                    data-modal-meaning="– departures from the normal or expected way; wrongdoing."
+                    data-modal-synonyms="anomalies, violations, improprieties">irregularities</span> in their
+                departments. Sources said the Chief Minister made it clear during a Cabinet meeting that he would not
+                hesitate to take <span class="vocab-words" data-modal-title="action (noun) நடவடிக்கை"
+                    data-modal-meaning="– the process of doing something to achieve an aim or resolve a problem."
+                    data-modal-synonyms="measure, step, intervention">action</span> against anyone found
+                <span class="vocab-silent" data-modal-title="guilty (adjective) குற்றவாளி ஆன"
+                    data-modal-meaning="– responsible for an offense or wrongdoing."
+                    data-modal-synonyms="culpable, blameworthy, liable">guilty</span>, and that no one could fault
+                him for doing so.</p>
+
+            <p>“Do not think that we will be in power for only five years, and that you can do whatever you want. We
+                will continue to govern the State,” he is learnt to have said at the meeting. Mr. Vijay also advised
+                the Ministers not to make a <span class="vocab-words" data-modal-title="spectacle (noun) காட்சி / வெட்டி அரங்கு"
+                    data-modal-meaning="– a strange, noisy, or embarrassing display."
+                    data-modal-synonyms="display, scene, show">spectacle</span> out of inspections related to their
+                departments.</p>
+
+            <p>“We are here to <span class="vocab-silent" data-modal-title="serve (verb) சேவை செய்ய"
+                    data-modal-meaning="– to provide a service or be useful to."
+                    data-modal-synonyms="help, assist, support">serve</span> the people. Do not bring the government
+                into <span class="vocab-words" data-modal-title="disrepute (noun) கெட்ட பெயர்"
+                    data-modal-meaning="– loss of respect or reputation."
+                    data-modal-synonyms="dishonour, discredit, shame">disrepute</span>. I will also take action
+                against officials who are unwilling to <span class="vocab-silent" data-modal-title="cooperate (verb) ஒத்துழைக்க"
+                    data-modal-meaning="– to work jointly toward the same end."
+                    data-modal-synonyms="collaborate, assist, work together">cooperate</span> with the government in
+                <span class="vocab-words" data-modal-title="implementing (verb) செயல்படுத்துதல்"
+                    data-modal-meaning="– putting a decision, plan, or agreement into effect."
+                    data-modal-synonyms="executing, carrying out, enforcing">implementing</span> its
+                <span class="vocab-silent" data-modal-title="programmes (noun) திட்டங்கள்"
+                    data-modal-meaning="– planned series of actions or activities."
+                    data-modal-synonyms="schemes, plans, initiatives">programmes</span> and
+                <span class="vocab-words" data-modal-title="achieving (verb) அடைதல்"
+                    data-modal-meaning="– successfully bringing about or accomplishing."
+                    data-modal-synonyms="attaining, accomplishing, realizing">achieving</span> its goals,” he said.
+            </p>
+
+            <h2>Budget discussion</h2>
+
+            <p>Details of the upcoming State Budget were also discussed during the Cabinet meeting. Speaking to
+                reporters after the meeting, Law Minister R. Nirmalkumar said it was a routine meeting ahead of the
+                presentation of the Budget. “In today’s Cabinet meeting, <span class="vocab-words" data-modal-title="deliberations (noun) கலந்தாய்வுகள்"
+                    data-modal-meaning="– long and careful discussion."
+                    data-modal-synonyms="discussions, consultations, debates">deliberations</span> were held on what
+                should be included in the Budget, and how it should be presented. These matters cannot be
+                <span class="vocab-silent" data-modal-title="disclosed (verb) வெளியிடப்பட்ட"
+                    data-modal-meaning="– made known or revealed."
+                    data-modal-synonyms="revealed, published, exposed">disclosed</span> publicly yet,” the Minister
+                said.</p>
+
+            <h2>Custodial death</h2>
+
+            <p>To a query, he said strict action would be taken against those responsible for the death of remand
+                prisoner S. Sabari Varman in Nagercoil.</p>
+
+            <p>“If a death occurs in prison, this government will definitely take <span class="vocab-words" data-modal-title="stringent (adjective) கடுமையான"
+                    data-modal-meaning="– strict, precise, and exacting."
+                    data-modal-synonyms="strict, severe, tough">stringent</span> action. Previous governments used to
+                <span class="vocab-silent" data-modal-title="cover up (phrasal verb) மறைத்துவைத்தல்"
+                    data-modal-meaning="– to hide a mistake or wrongdoing."
+                    data-modal-synonyms="conceal, suppress, hide">cover up</span> such incidents. However, based on
+                the Chief Minister’s orders, cases were <span class="vocab-words" data-modal-title="registered (verb) பதிவு செய்யப்பட்ட"
+                    data-modal-meaning="– officially recorded."
+                    data-modal-synonyms="filed, logged, entered">registered</span> two days ago, and everyone
+                involved has been <span class="vocab-words" data-modal-title="arrested (verb) கைது செய்யப்பட்ட"
+                    data-modal-meaning="– taken into custody by legal authority."
+                    data-modal-synonyms="detained, apprehended, held">arrested</span>,” he said. He added that in
+                cases of prison or lock-up deaths, the government would stand by the victims.</p>
+
+            <h2>DMK-AIADMK-BJP ‘pact’</h2>
+
+            <p>Claiming that the DMK, the AIADMK, and the BJP were trying to form a government together, he
+                <span class="vocab-words" data-modal-title="sarcastically (adverb) கிண்டலாக"
+                    data-modal-meaning="– in a way that is sharply mocking or ironic."
+                    data-modal-synonyms="mockingly, ironically, derisively">sarcastically</span> said, “Unable to run
+                their own parties, the DMK and the AIADMK might <span class="vocab-silent" data-modal-title="merge (verb) ஒன்றிணை"
+                    data-modal-meaning="– combine or come together to form one entity."
+                    data-modal-synonyms="unite, combine, join">merge</span> with the BJP in two or three years,
+                securing, perhaps, two Cabinet Minister posts each for (DMK president) Mr. Stalin’s family and (AIADMK
+                general secretary) Mr. Palaniswami’s family.”</p>
+
+            <p>The Minister claimed that attempts were being made to “buy” TVK MLAs, with offers ranging from ₹30
+                crore to ₹50 crore.</p>
+
+            <p>Alleging corruption in the <span class="vocab-words" data-modal-title="Registration Department (noun) பதிவுத் துறை"
+                    data-modal-meaning="– the government office that handles registration work."
+                    data-modal-synonyms="registry, records office, registrar">Registration Department</span> over the
+                past five years, the Minister levelled serious charges against former Registration Minister P. Moorthy.
+                “A person was stationed at every registration office to collect the ‘Minister’s cutting’ (<span class="vocab-silent" data-modal-title="commission (noun) கமிஷன் / தரகு"
+                    data-modal-meaning="– a percentage paid to someone for arranging a deal or service."
+                    data-modal-synonyms="cut, fee, bribe">commission</span>). If you were to register a property
+                worth ₹1 lakh, ₹20,000 would be spent on bribes,” the Minister claimed.</p>
+
+            <p>He emphasised that if anyone demands a <span class="vocab-silent" data-modal-title="bribe (noun) லஞ்சம்"
+                    data-modal-meaning="– money or favour offered to influence someone illegally."
+                    data-modal-synonyms="gratification, payoff, inducement">bribe</span>, action will be taken
+                immediately if a complaint is lodged via the toll-free number.</p>
+
+            <p>When asked about the cancellation of several projects initiated during the previous administration, he
+                said, “Projects in every department were designed with a 20% to 30% commission built into them. By
+                revising old <span class="vocab-silent" data-modal-title="tenders (noun) டெண்டர்கள்"
+                    data-modal-meaning="– formal offers or bids for work."
+                    data-modal-synonyms="bids, quotations, proposals">tenders</span>, we are cutting down the money
+                meant for commission. We have instructed officials to eliminate the 30% commission that was taken
+                previously, and resubmit the tenders.”</p>
+
+            <p>Regarding the appointment of government <span class="vocab-words" data-modal-title="lawyers (noun) வழக்கறிஞர்கள்"
+                    data-modal-meaning="– legal professionals."
+                    data-modal-synonyms="advocates, counsel, attorneys">lawyers</span>, he said that 80% to 90% of
+                the appointments had already been made. If any <span class="vocab-silent" data-modal-title="unsuitable (adjective) பொருத்தமற்ற"
+                    data-modal-meaning="– not appropriate for a particular purpose."
+                    data-modal-synonyms="unfit, inappropriate, unqualified">unsuitable</span> or
+                <span class="vocab-words" data-modal-title="inept (adjective) திறமையற்ற"
+                    data-modal-meaning="– having or showing no skill; clumsy or incompetent."
+                    data-modal-synonyms="incompetent, incapable, unskilled">inept</span> individuals were found to
+                have been appointed, they will be replaced, he added.</p>
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) parent.insertBefore(temp.firstChild, node);
+                    parent.removeChild(node);
+                }
+            });
+        }
+        wrapAllWords();
+
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+                    let meaning = '';
+                    let synonyms = '';
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+                    if (!meaning) html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) { return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`; }
+        function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
+        document.addEventListener('click', function (e) { const el = e.target.closest('.vocab-words, .vocab-silent'); if (el) { openModal(el); return; } if (e.target === modal) closeModal(); });
+        closeBtn.addEventListener('click', closeModal);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+
+</html>

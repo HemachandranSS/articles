@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wealth of lacunae</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --border: #ddd;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.25;
+        }
+
+        .article-header h1 .vocab-words {
+            color: #f9ca24;
+            border-bottom: 2px dashed rgba(249, 202, 36, 0.5);
+        }
+
+        .article-header h1 .vocab-words:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        /* Vocab word style — hard/important words: visible highlight */
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        /* Vocab word style — moderate words: no visible highlight, modal on click */
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        /* ──────────── MODAL ──────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block {
+            flex: 1;
+        }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .modal-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border: 1px solid rgba(26, 107, 60, 0.16);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            margin-top: 8px;
+        }
+
+        .modal-link-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(26, 107, 60, 0.14);
+            background: #ddf1e4;
+        }
+
+        /* ──────────── Responsive ──────────── */
+        @media (max-width: 600px) {
+
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 {
+                font-size: 1.45rem;
+            }
+
+            .article-body p {
+                font-size: 0.97rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ ARTICLE ══ -->
+    <article class="article-wrapper">
+
+        <header class="article-header">
+            <h1>Wealth of <span class='vocab-words' data-modal-title='lacunae (noun) இடைவெளி / குறைபாடு'
+                    data-modal-meaning='– an unfilled space or missing portion; a gap.'
+                    data-modal-synonyms='gaps, omissions, deficiencies'>lacunae</span></h1>
+            <p class="byline">The Hindu Editorial</p>
+            <p class="byline-desc">Cybersecurity, transparency are non-negotiable in vital installations</p>
+            <p class="article-meta">Editorial &nbsp;|&nbsp; Cyber Security &nbsp;|&nbsp; Infrastructure</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">The <span class='vocab-words' data-modal-title='ransomware (noun) பிணைமென்பொருள்'
+                    data-modal-meaning='– malicious software that blocks access to data until payment is made.'
+                    data-modal-synonyms='malware, extortionware'>ransomware</span> attack against a contractor involved in the Kudankulam nuclear power
+                project is concerning, even if nothing threatening the plant's <span class='vocab-silent'
+                    data-modal-title='integrity (noun) ஒருமைப்பாடு'
+                    data-modal-meaning='– the state of being whole and undivided.'
+                    data-modal-synonyms='soundness, unity, wholeness'>integrity</span> was stolen. In 2019, malware was
+                found on the same facility's administrative network, but the NPCIL maintained that the
+                <span class='vocab-silent' data-modal-title='operational (adjective) செயல்பாட்டு'
+                    data-modal-meaning='– relating to the running or functioning of a system.'
+                    data-modal-synonyms='working, active, functional'>operational</span> reactor network was
+                unaffected. The new <span class='vocab-silent' data-modal-title='incident (noun) சம்பவம்'
+                    data-modal-meaning='– an event or occurrence, often negative or unusual.'
+                    data-modal-synonyms='event, occurrence, case'>incident</span> extends the same theme. India's
+                <span class='vocab-words' data-modal-title='breach disclosure (noun) மீறல் வெளிப்படுத்தல்'
+                    data-modal-meaning='– the public reporting of a security breach.'
+                    data-modal-synonyms='incident reporting, disclosure'>breach disclosure</span>
+                regime is inconsistent and often plainly <span class='vocab-words'
+                    data-modal-title='opaque (adjective) ஒளிபுகா / தெளிவற்ற'
+                    data-modal-meaning='– not able to be seen through; not transparent.'
+                    data-modal-synonyms='nontransparent, cloudy, obscure'>opaque</span>. Affected organisations tend to
+                believe admitting a breach will damage public confidence, share prices, contracts, and invite
+                <span class='vocab-words' data-modal-title='regulatory (adjective) ஒழுங்குமுறை சார்ந்த'
+                    data-modal-meaning='– relating to rules or regulations issued by an authority.'
+                    data-modal-synonyms='statutory, supervisory, administrative'>regulatory</span>
+                <span class='vocab-words' data-modal-title='scrutiny (noun) ஆய்வு'
+                    data-modal-meaning='– critical observation or examination.'
+                    data-modal-synonyms='inspection, survey, study'>scrutiny</span>. So, they tend to ease their
+                language in public statements and avoid disclosure until <span class='vocab-silent'
+                    data-modal-title='compelled (verb) கட்டாயப்படுத்தப்பட்டது'
+                    data-modal-meaning='– force or oblige (someone) to do something.'
+                    data-modal-synonyms='forced, coerced, driven'>compelled</span>. Many organisations also lack mature
+                incident response <span class='vocab-silent' data-modal-title='capabilities (noun) திறன்கள்'
+                    data-modal-meaning='– the power or ability to do something.'
+                    data-modal-synonyms='abilities, skills, competence'>capabilities</span>, not uncommonly because they
+                treat cybersecurity as a matter of <span class='vocab-words'
+                    data-modal-title='compliance (noun) இணக்கம்'
+                    data-modal-meaning='– the action or fact of complying with a wish or command.'
+                    data-modal-synonyms='obedience, observance, agreement'>compliance</span> rather than necessity. So,
+                assessing what data has been affected in the early stages of an attack becomes technically
+                impossible. According to public information, the facility's core
+                <span class='vocab-silent' data-modal-title='infrastructure (noun) அடிப்படை அமைப்பு'
+                    data-modal-meaning='– the basic physical and organisational structures needed for operation.'
+                    data-modal-synonyms='framework, base, foundation'>infrastructure</span> is unaffected; instead,
+                According to public information, the facility's core infrastructure is unaffected; instead, a group
+                called ‘World Leaks’ mounted a ransomware attack <span class='vocab-silent'
+                    data-modal-title='compromising (verb) சமரசம் செய்துகொள்ளும் / ஆபத்தில் அகப்படும்'
+                    data-modal-meaning='– bringing into disrepute or danger by indiscreet, foolish, or reckless behavior.'
+                    data-modal-synonyms='endangering, jeopardizing'>compromising</span> systems belonging to Reliance
+                Infrastructure, one of the engineering contractors of Units 3 and 4. The data in the incident were
+                hosted by Yotta Data Services, which said it detected suspicious activity on its servers on May 29.
+            </p>
+
+            <div class="pull-quote">Radical transparency is impossible here but basic cyber-hygiene and proactive
+                communication are non-negotiable.</div>
+
+            <p>According to <span class='vocab-silent' data-modal-title='open-source intelligence (noun) திறந்த மூல உளவுத்தகவல்'
+                    data-modal-meaning='– information gathered from publicly available sources.'
+                    data-modal-synonyms='public intelligence, OSINT'>open-source intelligence</span> platform
+                RansomLook, the data began appearing on World Leaks on
+                June 11. However, the NPCIL issued a formal <span class='vocab-words' data-modal-title='clarification (noun) விளக்கம்'
+                    data-modal-meaning='– the action of making a statement clearer.'
+                    data-modal-synonyms='explanation, statement, explanation'>clarification</span> only on July 15, following <span
+                    class='vocab-silent' data-modal-title='widespread (adjective) பரவலான'
+                    data-modal-meaning='– found or distributed over a large area or number of people.'
+                    data-modal-synonyms='extensive, prevalent, general'>widespread</span> media reports. Some 14.3 GB of
+                files have been released, including the layouts of ventilation systems, floor plans of an alleged
+                “control room”, supplier and vendor lists, and insurance paperwork. While the files have not been
+                independently <span class='vocab-words' data-modal-title='authenticated (verb) அங்கீகரிக்கப்பட்டது'
+                    data-modal-meaning='– prove or show (something) to be true, genuine, or valid.'
+                    data-modal-synonyms='verified, proven, confirmed'>authenticated</span>, the actors and their <span
+                    class='vocab-silent' data-modal-title='incentives (noun) ஊக்கங்கள்'
+                    data-modal-meaning='– a thing that motivates or encourages one to do something.'
+                    data-modal-synonyms='motivations, inducements, stimuli'>incentives</span> merit a closer look. The
+                NPCIL has said that the files only pertain to infrastructure beyond the facility’s nuclear island.
+                However, such information can still serve so-called intelligence preparation activities. India is the
+                third-most <span class='vocab-silent' data-modal-title='breached (verb) மீறப்பட்ட'
+                    data-modal-meaning='– broken through or violated.'
+                    data-modal-synonyms='violated, penetrated, compromised'>breached</span> country and has already <span class='vocab-words'
+                    data-modal-title='brooked (verb) சகித்துக்கொள்'
+                    data-modal-meaning='– tolerate or allow (something, typically dissent or opposition).'
+                    data-modal-synonyms='tolerated, allowed, endured'>brooked</span> similar attacks against AIIMS
+                Delhi, airlines, and State government portals. In this <span class='vocab-words'
+                    data-modal-title='milieu (noun) சூழல்' data-modal-meaning='– a person’s social environment.'
+                    data-modal-synonyms='environment, background, setting'>milieu</span>, the government has positioned
+                Kudankulam as the centrepiece of India’s nuclear power ambitions. As CERT-In is conducting an
+                investigation and Reliance and Yotta have shared their findings with the government, CERT-In and NPCIL
+                should also clarify the nature and authenticity of the files, whether data were <span
+                    class='vocab-words' data-modal-title='exfiltrated (verb) திருடப்பட்டது'
+                    data-modal-meaning='– withdraw (troops or spies) surreptitiously; extract (data) stealthily.'
+                    data-modal-synonyms='smuggled, extracted, hijacked'>exfiltrated</span> before detection, and whether
+                any <span class='vocab-silent' data-modal-title='credentials (noun) சான்றளிப்புகள்'
+                    data-modal-meaning='– a qualification, achievement, personal quality, or aspect of a person s background, typically when used to indicate that they are suitable for something.'
+                    data-modal-synonyms='qualifications, documents'>credentials</span> or supplier accounts have been
+                exposed. <span class='vocab-silent' data-modal-title='Radical (adjective) தீவிரமான'
+                    data-modal-meaning='– (especially of change or action) relating to or affecting the fundamental nature of something; far-reaching or thorough.'
+                    data-modal-synonyms='thorough, complete, total'>Radical</span> transparency is impossible here but
+                basic cyber-<span class='vocab-silent' data-modal-title='hygiene (noun) சுகாதாரம்'
+                    data-modal-meaning='– conditions or practices conducive to maintaining health and preventing disease, especially through cleanliness.'
+                    data-modal-synonyms='cleanliness, sanitation'>hygiene</span> and <span class='vocab-words'
+                    data-modal-title='proactive (adjective) முன்முயற்சி எடுக்கும்'
+                    data-modal-meaning='– creating or controlling a situation by causing something to happen rather than responding to it after it has happened.'
+                    data-modal-synonyms='enterprising, take-charge, energetic'>proactive</span> communication are
+                non-negotiable.
+            </p>
+        </div>
+
+    </article>
+
+    <!-- ══ MODAL ══ -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        // Automatically wrap all generic >4 letter words in the article body with a silent modal
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                // Skip if already in a vocab span, or inside titles/quotes
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+
+                // Regex to find words length >= 4
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) {
+                        parent.insertBefore(temp.firstChild, node);
+                    }
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        // Parse title: "word (pos) தமிழ்" → { word, tamil }
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+
+                    let meaning = '';
+                    let synonyms = '';
+
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+
+                    if (!meaning) {
+                        html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    }
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const antonyms = el.dataset.modalAntonyms || '';
+            const link = el.dataset.modalLink || '';
+
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            if (antonyms) html += row('Antonyms', antonyms);
+
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn" style="margin-right: 8px;">Search on Google ↗</a>`;
+            if (link) html += `<a href="${escHtml(link)}" target="_blank" rel="noopener" class="modal-link-btn">Learn more ↗</a>`;
+
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) { openModal(el); return; }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>

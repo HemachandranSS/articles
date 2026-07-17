@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beyond Political Reshuffles, Renew Education in India</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --border: #ddd;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.25;
+        }
+
+        .article-header h1 .vocab-words {
+            color: #f9ca24;
+            border-bottom: 2px dashed rgba(249, 202, 36, 0.5);
+        }
+
+        .article-header h1 .vocab-words:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        /* Vocab word style — hard/important words: visible highlight */
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        /* Vocab word style — moderate words: no visible highlight, modal on click */
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        /* ──────────── MODAL ──────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block {
+            flex: 1;
+        }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .modal-link-btn {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 7px 16px;
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .modal-link-btn:hover {
+            background: #114d2b;
+        }
+
+        /* ──────────── Responsive ──────────── */
+        @media (max-width: 600px) {
+
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 {
+                font-size: 1.45rem;
+            }
+
+            .article-body p {
+                font-size: 0.97rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ ARTICLE ══ -->
+    <article class="article-wrapper">
+
+        <header class="article-header">
+            <h1>Beyond political <span class='vocab-words'
+                    data-modal-title='reshuffles (noun) மாற்றங்கள் / மறுசீரமைப்பு'
+                    data-modal-meaning='– a reorganisation, especially of jobs in a political cabinet or corporate hierarchy.'
+                    data-modal-synonyms='reorganisation, restructuring, shake-up' data-modal-link=''>reshuffles</span>,
+                renew education in India</h1>
+            <p class="byline">Gitanjali J. Angmo</p>
+            <p class="byline-desc">Founder of the Himalayan Institute of Alternatives, Ladakh, and an education reformer
+                and public intellectual working to reimagine education, democracy, ecology and Himalayan futures through
+                grassroots leadership and innovation</p>
+            <p class="article-meta">The Hindu Editorial &nbsp;|&nbsp; Opinion &nbsp;|&nbsp; Education</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">When <span class='vocab-silent' data-modal-title='Parliament (noun) பாரளுமன்றம்'
+                    data-modal-meaning='– the highest legislature of a country, consisting of elected representatives.'
+                    data-modal-synonyms='legislature, assembly, congress'>Parliament</span> assembles next week, there
+                will be debates, <span class='vocab-words' data-modal-title='disruptions (noun) இடையூறுகள்'
+                    data-modal-meaning='– disturbances or problems that interrupt an event, activity, or process.'
+                    data-modal-synonyms='interruptions, disturbances, upheavals' data-modal-link=''>disruptions</span>
+                and <span class='vocab-silent' data-modal-title='legislation (noun) சட்டமியற்றல்'
+                    data-modal-meaning='– laws considered collectively; the process of making or enacting laws.'
+                    data-modal-synonyms='laws, statutes, acts, bills'>legislation</span>. Television studios will reduce
+                complex issues to political <span class='vocab-silent'
+                    data-modal-title='arithmetic (noun) கணக்கீடு / எண்ணியல்'
+                    data-modal-meaning='– here used figuratively: the calculation of political gains and losses.'
+                    data-modal-synonyms='calculation, math, reckoning'>arithmetic</span>, and headlines will declare
+                winners and losers. Yet, I cannot help asking whether the true measure of Parliament is not by the
+                number of Bills it passes, but by the questions it chooses to confront and <span class='vocab-words'
+                    data-modal-title='resolve (verb) தீர்க்க'
+                    data-modal-meaning='– settle or find a solution to a problem or contentious matter.'
+                    data-modal-synonyms='settle, tackle, fix, solve' data-modal-link=''>resolve</span>. For the past
+                several days, one such question has been waiting outside its doors. My husband, Sonam Wangchuk,
+                scientist, engineer, educator and social <span class='vocab-silent'
+                    data-modal-title='reformer (noun) சீர்திருத்தவாதி'
+                    data-modal-meaning='– a person who makes changes to a system, institution, or practice to improve it.'
+                    data-modal-synonyms='activist, campaigner, advocate, change-maker'>reformer</span>, has been on an
+                <span class='vocab-silent' data-modal-title='indefinite (adjective) காலவரையற்ற'
+                    data-modal-meaning='– lasting for an unknown or unstated length of time.'
+                    data-modal-synonyms='open-ended, unspecified, unlimited'>indefinite</span> fast. Every morning I
+                watch with growing anxiety as his body weakens. His body is paying the price for a <span
+                    class='vocab-words' data-modal-title='conviction (noun) நம்பிக்கை / உறுதிப்பாடு'
+                    data-modal-meaning='– a firmly held belief or opinion; a formal declaration that someone is guilty of a crime.'
+                    data-modal-synonyms='belief, principle, certainty, commitment' data-modal-link=''>conviction</span>
+                that education deserves the nation's urgent attention. Every day begins with the same silent question:
+                how much longer can his body endure?
+            </p>
+
+            <p>This is not merely a family's private concern. It has become a test of our national <span
+                    class='vocab-words' data-modal-title='conscience (noun) மனசாட்சி'
+                    data-modal-meaning='– an inner feeling or voice viewed as acting as a guide to the rightness or wrongness of one'
+                    s behaviour.' data-modal-synonyms='morals, ethics, principles, sense of right'
+                    data-modal-link=''>conscience</span>. Those who choose the path of non-violent <span
+                    class='vocab-silent' data-modal-title='sacrifice (noun) தியாகம்'
+                    data-modal-meaning='– the act of giving up something valued for the sake of something else regarded as more important.'
+                    data-modal-synonyms='offering, surrender, selflessness'>sacrifice</span> hope their suffering will
+                awaken society's conscience to a greater purpose. If this fast <span class='vocab-words'
+                    data-modal-title='culminates (verb) உச்சக்கட்டத்தை அடைகிறது'
+                    data-modal-meaning='– reaches a climax or point of highest development.'
+                    data-modal-synonyms='concludes, ends, peaks, results in' data-modal-link=''>culminates</span> only
+                in the <span class='vocab-silent' data-modal-title='resignation (noun) ராஜினாமா / பதவி விலகல்'
+                    data-modal-meaning='– the action of resigning from a position or office.'
+                    data-modal-synonyms='stepping down, quitting, retirement'>resignation</span> or <span
+                    class='vocab-words' data-modal-title='reshuffling (verb) மறுசீரமைத்தல்'
+                    data-modal-meaning='– reorganizing personnel or responsibilities, especially in government.'
+                    data-modal-synonyms='reorganising, restructuring' data-modal-link=''>reshuffling</span> of the Union
+                Education Minister, India would have reduced an extraordinary act of <span class='vocab-words'
+                    data-modal-title='conviction (noun) உறுதி / நம்பிக்கை'
+                    data-modal-meaning='– a firmly held belief or opinion.'
+                    data-modal-synonyms='belief, certainty, commitment' data-modal-link=''>conviction</span> and
+                personal sacrifice to an ordinary political outcome. Public <span class='vocab-words'
+                    data-modal-title='accountability (noun) பொறுப்புணர்வு'
+                    data-modal-meaning='– the fact or condition of being responsible to others; answerable for one' s
+                    actions.' data-modal-synonyms='responsibility, answerability, liability'
+                    data-modal-link=''>accountability</span> is the <span class='vocab-words'
+                    data-modal-title='cornerstone (noun) அடிப்படை / மூலக்கல்'
+                    data-modal-meaning='– an important quality or feature on which a particular thing depends or is based.'
+                    data-modal-synonyms='foundation, basis, pillar, bedrock' data-modal-link=''>cornerstone</span> of
+                <span class='vocab-silent' data-modal-title='democracy (noun) ஜனநாயகம்'
+                    data-modal-meaning='– a system of government in which power is vested in the people, who rule either directly or through freely elected representatives.'
+                    data-modal-synonyms='republic, self-governance, popular rule'>democracy</span>. Ministers must have
+                the moral courage to own their failures and step aside when necessary. But individuals are <span
+                    class='vocab-words' data-modal-title='transient (adjective) தற்காலிகமான'
+                    data-modal-meaning='– lasting only for a short time; impermanent.'
+                    data-modal-synonyms='temporary, short-lived, fleeting, passing' data-modal-link=''>transient</span>;
+                <span class='vocab-silent' data-modal-title='institutions (noun) நிறுவனங்கள்'
+                    data-modal-meaning='– established organisations or foundations, especially those dedicated to education, public service, or culture.'
+                    data-modal-synonyms='organisations, establishments, bodies'>institutions</span> endure. More
+                important than replacing a Minister is defining an educational future for which every Minister,
+                regardless of party, is held accountable.
+            </p>
+
+            <div class="pull-quote">More important than replacing a Minister is defining an educational future for which
+                every Minister, regardless of party, is held accountable.</div>
+
+            <p>Fifteen years ago, around half of India's population was under 25. <span class='vocab-silent'
+                    data-modal-title='Economists (noun) பொருளாதார வல்லுனர்கள்'
+                    data-modal-meaning='– experts who study the production, distribution, and consumption of goods and services.'
+                    data-modal-synonyms='financial analysts, economic experts'>Economists</span> celebrated this as
+                India's <span class='vocab-words' data-modal-title='demographic dividend (noun) மக்கள்தொகை ஈவு'
+                    data-modal-meaning='– the economic growth potential that can result from shifts in a population' s
+                    age structure, mainly when the share of the working-age population is larger than the
+                    non-working-age share.' data-modal-synonyms='population advantage, youth dividend'
+                    data-modal-link=''>demographic dividend</span>, perhaps the greatest <span class='vocab-silent'
+                    data-modal-title='developmental (adjective) வளர்ச்சிக்குரிய'
+                    data-modal-meaning='– relating to the growth or development of something, especially a nation or person.'
+                    data-modal-synonyms='growth-related, progressive, evolutionary'>developmental</span> opportunity
+                available to any nation in the 21st century. In one of my articles, I had argued that while India has
+                invested significantly in access to education, it has missed out on excellence. <span
+                    class='vocab-words' data-modal-title='Enrolment (noun) சேர்க்கை'
+                    data-modal-meaning='– the act of officially registering or being registered as a member or participant.'
+                    data-modal-synonyms='registration, admission, intake' data-modal-link=''>Enrolment</span> has grown,
+                but learning has not been transformed. If India <span class='vocab-words'
+                    data-modal-title='aspires (verb) விரும்புகிறது'
+                    data-modal-meaning='– to have a strong desire to achieve something.'
+                    data-modal-synonyms='aims, strives, desires, seeks' data-modal-link=''>aspires</span> to become a
+                Vishwa Guru, it must educate this generation differently. But India seems to have missed the
+                opportunity.
+            </p>
+
+            <h2>What demographic dividend is</h2>
+
+            <p>A demographic dividend is <span class='vocab-words'
+                    data-modal-title='realised (verb) உணரப்படுகிறது / நிறைவேற்றப்படுகிறது'
+                    data-modal-meaning='– made real or achieved; also means to become fully aware of something.'
+                    data-modal-synonyms='achieved, attained, accomplished' data-modal-link=''>realised</span> by
+                producing better thinkers, wiser leaders, confident <span class='vocab-words'
+                    data-modal-title='innovators (noun) புதுமையாளர்கள்'
+                    data-modal-meaning='– people who introduce new methods, ideas, or products.'
+                    data-modal-synonyms='pioneers, trailblazers, creators, inventors'
+                    data-modal-link=''>innovators</span>, skilled researchers and teachers, ethical <span
+                    class='vocab-words' data-modal-title='entrepreneurs (noun) தொழில்முனைவோர்'
+                    data-modal-meaning='– people who set up and run a business or businesses, taking on financial risks in the hope of profit.'
+                    data-modal-synonyms='business starters, founders, self-starters'
+                    data-modal-link=''>entrepreneurs</span>, honest public servants and <span class='vocab-words'
+                    data-modal-title='compassionate (adjective) இரக்கமுள்ள'
+                    data-modal-meaning='– feeling or showing sympathy and concern for others.'
+                    data-modal-synonyms='kind, caring, empathetic, humane' data-modal-link=''>compassionate</span>
+                citizens. This, therefore, is the moment to rise above personalities, parties and politics. Sonam
+                Wangchuk's fast should become the <span class='vocab-words'
+                    data-modal-title='catalyst (noun) ஊக்கி / மாற்றத்தை ஏற்படுத்துபவர்'
+                    data-modal-meaning='– a person or thing that precipitates an event or change; in chemistry, a substance that speeds up a reaction.'
+                    data-modal-synonyms='trigger, stimulus, spark, impetus' data-modal-link=''>catalyst</span> for a
+                national awakening on the future of education. The question is larger than whether one Minister should
+                resign. It is whether India will dare rebuild the education system that will shape the next century. We
+                need more than a reshuffle — we need reform, renewal, and a <span class='vocab-words'
+                    data-modal-title='renaissance (noun) மறுமலர்ச்சி'
+                    data-modal-meaning='– a revival of or renewed interest in something; a period of renewal and growth.'
+                    data-modal-synonyms='revival, renewal, rebirth, regeneration' data-modal-link=''>renaissance</span>.
+                In my view, that renaissance rests on 10 urgent reforms.</p>
+
+            <p>First, reform the system of examination. Assessment determines learning. As long as examinations reward
+                memory, schools will teach memory. If examinations reward thinking, schools will <span
+                    class='vocab-words' data-modal-title='cultivate (verb) வளர்க்கும்'
+                    data-modal-meaning='– try to acquire or develop a quality, skill, or sentiment; to foster growth.'
+                    data-modal-synonyms='develop, nurture, foster, encourage' data-modal-link=''>cultivate</span>
+                thinkers. Within three years, every examination, from school boards to JEE, NEET, CUET and the UPSC,
+                should <span class='vocab-words' data-modal-title='progressively (adverb) படிப்படியாக'
+                    data-modal-meaning='– happening or developing gradually or in stages.'
+                    data-modal-synonyms='gradually, incrementally, step by step' data-modal-link=''>progressively</span>
+                evaluate conceptual understanding, application, creativity, analytical reasoning, ethical judgement and
+                real world problem-solving rather than recall. <span class='vocab-words'
+                    data-modal-title='Competency-based (adjective) திறன் அடிப்படையிலான'
+                    data-modal-meaning='– an approach focused on demonstrated mastery of skills rather than time spent in a course.'
+                    data-modal-synonyms='skill-based, outcome-based, proficiency-based'
+                    data-modal-link=''>Competency-based</span> assessment should become the national norm.</p>
+
+            <p>Second, India must <span class='vocab-words' data-modal-title='dismantle (verb) கலைத்துவிட வேண்டும்'
+                    data-modal-meaning='– take to pieces; bring an end to a system or organization by separating it into parts.'
+                    data-modal-synonyms='abolish, break up, disassemble, dissolve' data-modal-link=''>dismantle</span>
+                the coaching culture that it has <span class='vocab-words'
+                    data-modal-title='inadvertently (adverb) அறியாமலேயே'
+                    data-modal-meaning='– without intention; accidentally.'
+                    data-modal-synonyms='unintentionally, accidentally, unknowingly'
+                    data-modal-link=''>inadvertently</span> created as a parallel education system. Families spend
+                fortunes on coaching because India's entrance examinations reward repetition more than reflection.
+                Multiple examination windows, greater weightage to school performance and <span class='vocab-words'
+                    data-modal-title='portfolios (noun) சாதனைக் கோப்புகள்'
+                    data-modal-meaning='– a set of pieces of creative work collected to display someone' s skills; also
+                    a range of investments.' data-modal-synonyms='work samples, project records, dossiers'
+                    data-modal-link=''>portfolios</span>, and redesigned entrance tests can gradually restore learning
+                to schools and childhood to children.</p>
+
+            <h2>Respect for teaching</h2>
+
+            <p>Third, build the world's best teachers: No education system can rise above the quality of its teachers as
+                is seen in Finland, Singapore, South Korea and Japan. India needs a National Teacher Excellence Mission
+                that treats teaching as one of the most respected <span class='vocab-silent'
+                    data-modal-title='professions (noun) தொழில்கள்'
+                    data-modal-meaning='– paid occupations that require prolonged training and a formal qualification.'
+                    data-modal-synonyms='careers, occupations, vocations'>professions</span> through <span
+                    class='vocab-silent' data-modal-title='rigorous (adjective) கடுமையான / குற்றமற்ற'
+                    data-modal-meaning='– extremely thorough and careful; demanding high standards.'
+                    data-modal-synonyms='strict, thorough, demanding, exacting'>rigorous</span> preparation, continuous
+                professional development, <span class='vocab-silent' data-modal-title='mentoring (noun) வழிகாட்டல்'
+                    data-modal-meaning='– the process of guiding a less experienced person by sharing knowledge and advice.'
+                    data-modal-synonyms='coaching, guiding, tutoring, advising'>mentoring</span>, research opportunities
+                and leadership training.</p>
+
+            <p>Fourth, every vacant teaching position represents thousands of lost learning opportunities. Vacancies
+                from Anganwadis and primary schools to central universities, IITs, IIMs, NITs and AIIMS should be filled
+                through transparent, <span class='vocab-words'
+                    data-modal-title='merit-based (adjective) தகுதி அடிப்படையிலான'
+                    data-modal-meaning='– based on a person' s ability and talent rather than on connections or
+                    privileges.' data-modal-synonyms='ability-based, performance-based, fair'
+                    data-modal-link=''>merit-based</span> recruitment within three months.</p>
+
+            <p>Fifth, reconnect education with society. Education must prepare young people not just for employment but
+                also for citizenship. Every undergraduate should complete a semester of <span class='vocab-words'
+                    data-modal-title='apprenticeship (noun) பயிற்சி / கல்விமான் பணி'
+                    data-modal-meaning='– a period of time working for an employer to learn a trade or profession.'
+                    data-modal-synonyms='training, internship, mentorship' data-modal-link=''>apprenticeship</span>,
+                research, <span class='vocab-words' data-modal-title='entrepreneurship (noun) தொழில்முனைவு'
+                    data-modal-meaning='– the activity of setting up businesses and taking on financial risks to make a profit.'
+                    data-modal-synonyms='enterprise, business development, innovation'
+                    data-modal-link=''>entrepreneurship</span>, rural immersion, community service or industry
+                experience before graduation. Knowledge acquires meaning when tested against reality.</p>
+
+            <p>Sixth, India must restore faith in its government schools. Every child deserves an equal education until
+                the age of 13, regardless of income or geography. Laboratories, libraries, sports facilities, digital
+                infrastructure, sanitation and qualified teachers should become <span class='vocab-words'
+                    data-modal-title='guaranteed (adjective) உறுதிப்படுத்தப்பட்ட'
+                    data-modal-meaning='– certain to happen; formally promised or assured.'
+                    data-modal-synonyms='assured, secured, confirmed, promised' data-modal-link=''>guaranteed</span>
+                minimum national standards. This can only happen when <span class='vocab-words'
+                    data-modal-title='policymakers (noun) கொள்கை வகுப்பாளர்கள்'
+                    data-modal-meaning='– people who are responsible for making policy, especially in government.'
+                    data-modal-synonyms='lawmakers, legislators, administrators, planners'
+                    data-modal-link=''>policymakers</span> have a personal stake in public education and those
+                responsible for governing public institutions also trust them with their own families.</p>
+
+            <p>Seventh, trust educational institutions with greater <span class='vocab-silent'
+                    data-modal-title='academic (adjective) கல்விசார'
+                    data-modal-meaning='– relating to education and scholarship, especially at college or university level.'
+                    data-modal-synonyms='scholarly, educational, intellectual'>academic</span> freedom that they
+                deserve. <span class='vocab-silent' data-modal-title='Governments (noun) அரசுகள்'
+                    data-modal-meaning='– the governing bodies of nations or states, who make and enforce laws.'
+                    data-modal-synonyms='administrations, authorities, states'>Governments</span> should define learning
+                outcomes and ensure accountability. They should not <span class='vocab-words'
+                    data-modal-title='micromanage (verb) நுட்பமாக கட்டுப்படுத்துதல்'
+                    data-modal-meaning='– control every part, however small, of an enterprise or activity.'
+                    data-modal-synonyms='over-control, interfere, meddle with' data-modal-link=''>micromanage</span>
+                <span class='vocab-words' data-modal-title='pedagogy (noun) கற்பித்தல் கலை / கல்வி முறை'
+                    data-modal-meaning='– the method and practice of teaching; the study of teaching methods.'
+                    data-modal-synonyms='teaching method, instruction, education' data-modal-link=''>pedagogy</span>,
+                <span class='vocab-silent' data-modal-title='curriculum (noun) பாடத்திட்டம்'
+                    data-modal-meaning='– the subjects comprising a course of study in a school or college.'
+                    data-modal-synonyms='syllabus, course, programme of study'>curriculum</span> innovation or research.
+                The world's finest institutions <span class='vocab-words'
+                    data-modal-title='flourish (verb) செழிப்பாக வளர்கின்றன'
+                    data-modal-meaning='– grow or develop in a healthy or vigorous way, especially as the result of a particularly favourable environment.'
+                    data-modal-synonyms='thrive, prosper, bloom, succeed' data-modal-link=''>flourish</span> because
+                they are trusted to innovate, collaborate and respond to local contexts. Academic freedom produces
+                excellence.
+            </p>
+
+            <p>Eight, what is measured improves. <span class='vocab-words'
+                    data-modal-title='Transparency (noun) வெளிப்படைத்தன்மை'
+                    data-modal-meaning='– the quality of being open, honest, and easy to understand; not hiding anything.'
+                    data-modal-synonyms='openness, clarity, accountability, honesty'
+                    data-modal-link=''>Transparency</span> is one of the most powerful drivers of reform. A real-time
+                national public education dashboard should be set up, on which every stakeholder can compare schools and
+                universities using verified measures of learning outcomes, teacher vacancies, infrastructure, research
+                output, <span class='vocab-words' data-modal-title='accreditation (noun) அங்கீகாரம்'
+                    data-modal-meaning='– official recognition that an institution meets the standards set by a professional or regulatory body.'
+                    data-modal-synonyms='certification, recognition, endorsement, approval'
+                    data-modal-link=''>accreditation</span>, employability, and student well-being.</p>
+
+            <p>Ninth, public investment in education should rise to at least six per cent of GDP, accompanied by an
+                increase in research funding to at least two per cent of GDP. Nations become knowledge economies not
+                through <span class='vocab-words' data-modal-title='aspiration (noun) அபிலாஷை / விருப்பம்'
+                    data-modal-meaning='– a hope or ambition of achieving something.'
+                    data-modal-synonyms='ambition, goal, dream, desire' data-modal-link=''>aspiration</span> alone, but
+                through sustained investment in schools, universities, laboratories and ideas.</p>
+
+            <p>Tenth, educational reform must outlive <span class='vocab-silent'
+                    data-modal-title='electoral (adjective) தேர்தல்'
+                    data-modal-meaning='– relating to elections or voters.'
+                    data-modal-synonyms='voting, elective, democratic'>electoral</span> cycles and not begin afresh
+                every time governments change. India needs an independent <span class='vocab-silent'
+                    data-modal-title='statutory (adjective) சட்டபூர்வமான'
+                    data-modal-meaning='– required, permitted, or enacted by statute (written law).'
+                    data-modal-synonyms='legal, legislative, mandated, official'>statutory</span> national education
+                reform <span class='vocab-silent' data-modal-title='commission (noun) ஆணையம்'
+                    data-modal-meaning='– a group of people officially charged with a particular function.'
+                    data-modal-synonyms='committee, board, panel, authority'>commission</span> that establishes
+                measurable national <span class='vocab-words' data-modal-title='benchmarks (noun) அளவுகோல்கள்'
+                    data-modal-meaning='– standards or points of reference against which things may be compared or assessed.'
+                    data-modal-synonyms='standards, yardsticks, criteria, measures'
+                    data-modal-link=''>benchmarks</span>, <span class='vocab-words'
+                    data-modal-title='audits (noun) தணிக்கைகள்'
+                    data-modal-meaning='– official inspections of an organisation' s accounts or systems by an
+                    independent body.' data-modal-synonyms='inspections, reviews, assessments, checks'
+                    data-modal-link=''>audits</span> implementation, publishes annual progress reports to Parliament,
+                tracks outcomes across every State/Union Territory and holds governments accountable to measurable
+                outcomes rather than political <span class='vocab-words'
+                    data-modal-title='rhetoric (noun) வெற்று வார்த்தைகள்'
+                    data-modal-meaning='– language designed to have a persuasive or impressive effect, often regarded as lacking in sincerity.'
+                    data-modal-synonyms='bombast, hyperbole, oratory, empty words' data-modal-link=''>rhetoric</span>.
+            </p>
+
+            <h2>Education beyond political divides</h2>
+
+            <p>None of these reforms belongs to one political party or to one <span class='vocab-silent'
+                    data-modal-title='ideology (noun) கொள்கை / சித்தாந்தம்'
+                    data-modal-meaning='– a system of ideas and ideals forming the basis of an economic or political theory.'
+                    data-modal-synonyms='doctrine, belief system, philosophy'>ideology</span>. Every government has
+                contributed something valuable, yet every government has also inherited <span class='vocab-words'
+                    data-modal-title='unresolved (adjective) தீர்க்கப்படாத'
+                    data-modal-meaning='– not settled or decided; still unsettled.'
+                    data-modal-synonyms='unsettled, unanswered, pending, outstanding'
+                    data-modal-link=''>unresolved</span> structural weaknesses. Education must become India's first
+                genuinely <span class='vocab-words' data-modal-title='bipartisan (adjective) இருகட்சி ஆதரவான'
+                    data-modal-meaning='– of or involving the agreement or cooperation of two political parties that usually oppose each other.'
+                    data-modal-synonyms='cross-party, nonpartisan, cooperative, joint'
+                    data-modal-link=''>bipartisan</span> national <span class='vocab-silent'
+                    data-modal-title='mission (noun) து பாரவு / இலக்கு'
+                    data-modal-meaning='– an important goal or purpose that is accompanied by strong conviction.'
+                    data-modal-synonyms='goal, purpose, calling, objective'>mission</span>. History offers nations only
+                a few defining moments when public attention, moral conviction and political urgency <span
+                    class='vocab-silent' data-modal-title='converge (verb) ஒன்றிணைகின்றன'
+                    data-modal-meaning='– (of lines, roads, or paths) tend to meet at a point; come together.'
+                    data-modal-synonyms='meet, unite, merge, coincide'>converge</span>. This may be one of them.
+                Parliament will eventually <span class='vocab-words' data-modal-title='adjourn (verb) ஒத்திவைக்கும்'
+                    data-modal-meaning='– break off a meeting, legal case, or other activity temporarily.'
+                    data-modal-synonyms='recess, suspend, postpone, break up' data-modal-link=''>adjourn</span>. But
+                whether the child entering class one this year will grow into an innovator or an <span
+                    class='vocab-silent' data-modal-title='imitator (noun) பிறரை பினொற்றுபவர்'
+                    data-modal-meaning='– a person who copies or mimics others rather than creating something original.'
+                    data-modal-synonyms='copycat, follower, mimic'>imitator</span>, a responsible <span
+                    class='vocab-silent' data-modal-title='citizen (noun) குடிமகன்'
+                    data-modal-meaning='– a legally recognized subject or national of a state or commonwealth.'
+                    data-modal-synonyms='national, resident, subject, inhabitant'>citizen</span> or a passive <span
+                    class='vocab-silent' data-modal-title='spectator (noun) பார்வையாளர்'
+                    data-modal-meaning='– a person who watches but does not participate.'
+                    data-modal-synonyms='observer, onlooker, bystander, watcher'>spectator</span> depends on the
+                education we choose to build today.</p>
+
+            <p>The question before India is no longer who will lead the Ministry of Education. It is whether we, as a
+                nation, have the vision and the resolve to build an education system worthy of our children. That
+                responsibility belongs not to one government or one political party, but to every citizen who believes
+                that education is the foundation upon which every other national aspiration rests.</p>
+
+            <p>If Sonam Wangchuk's fast helps us begin that journey, then his sacrifice will not merely have drawn
+                attention to a crisis. It will have helped awaken a nation. History will remember whether we dared to
+                transform a personal sacrifice into a national <span class='vocab-words'
+                    data-modal-title='renaissance (noun) மறுமலர்ச்சி'
+                    data-modal-meaning='– a revival of or renewed interest in something; a period of renewal and growth.'
+                    data-modal-synonyms='revival, renewal, rebirth, regeneration' data-modal-link=''>renaissance</span>.
+                That responsibility belongs to all of us.</p>
+        </div>
+
+    </article>
+
+    <!-- ══ MODAL ══ -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        // Automatically wrap all generic >4 letter words in the article body with a silent modal
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                // Skip if already in a vocab span, or inside titles/quotes
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+
+                // Regex to find words length >= 4
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) {
+                        parent.insertBefore(temp.firstChild, node);
+                    }
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        // Parse title: "word (pos) தமிழ்" → { word, tamil }
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+
+                    let meaning = '';
+                    let synonyms = '';
+
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+
+                    if (!meaning) {
+                        html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    }
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const antonyms = el.dataset.modalAntonyms || '';
+            const link = el.dataset.modalLink || '';
+
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            if (antonyms) html += row('Antonyms', antonyms);
+
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn" style="margin-right: 8px;">Search on Google ↗</a>`;
+            if (link) html += `<a href="${escHtml(link)}" target="_blank" rel="noopener" class="modal-link-btn">Learn more ↗</a>`;
+
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) { openModal(el); return; }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>

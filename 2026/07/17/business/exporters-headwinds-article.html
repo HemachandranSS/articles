@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exporters will have to contend with headwinds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#f4f1eb;--card-bg:#fffef9;--text:#1a1a1a;--muted:#555;--accent:#1a6b3c;--accent-light:#e8f5ee;--vocab-color:#1a5276;--vocab-hover:#1a6b3c;--modal-bg:#fff;--overlay:rgba(0,0,0,.55);--radius:10px}
+        body{font-family:'Merriweather',Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 16px 80px;line-height:1.9}
+        .article-wrapper{max-width:860px;margin:0 auto;background:var(--card-bg);border-radius:14px;box-shadow:0 4px 32px rgba(0,0,0,.10);overflow:hidden}
+        .article-header{background:linear-gradient(135deg,#0d3325 0%,#1a5c38 60%,#2ecc71 100%);padding:40px 44px 30px;color:#fff}
+        .article-header h1{font-family:'Inter',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.5px;margin-bottom:10px;line-height:1.04}
+        .article-header h1 .vocab-words{color:#f9ca24;border-bottom:2px dashed rgba(249,202,36,.5)}
+        .article-header h1 .vocab-words:hover{color:#fff;border-bottom-color:#fff}
+        .article-header .byline{font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:#a8f0c6;margin-top:10px}
+        .article-header .byline-desc{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:400;color:rgba(255,255,255,.7);line-height:1.5;margin-top:4px;font-style:italic}
+        .article-meta{font-family:'Inter',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);margin-top:18px;letter-spacing:.5px;text-transform:uppercase}
+        .article-body{padding:36px 44px 44px}
+        .article-body p{font-size:1.05rem;color:var(--text);margin-bottom:1.6em;text-align:justify}
+        .article-body h2{font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);margin:2em 0 .6em;text-transform:uppercase;letter-spacing:.5px}
+        .drop-cap::first-letter{float:left;font-size:3.8rem;line-height:.8;font-weight:700;margin:4px 8px 0 0;color:var(--accent);font-family:'Inter',sans-serif}
+        .pull-quote{font-family:'Inter',sans-serif;font-size:1.15rem;font-weight:600;color:var(--accent);padding:16px 24px;border-left:4px solid var(--accent);background:var(--accent-light);margin:2em 0;line-height:1.6}
+        .vocab-words{color:var(--vocab-color);border-bottom:2px dotted var(--vocab-color);cursor:pointer;transition:color .18s,border-color .18s,background .18s;border-radius:2px;padding:0 1px}
+        .vocab-words:hover{color:var(--vocab-hover);border-bottom-color:var(--vocab-hover);background:var(--accent-light)}
+        .vocab-silent{cursor:pointer;border-radius:2px;padding:0 1px;transition:background .15s}
+        .vocab-silent:hover{background:var(--accent-light)}
+        .modal-overlay{display:none;position:fixed;inset:0;background:var(--overlay);z-index:1000;align-items:center;justify-content:center;padding:20px}
+        .modal-overlay.active{display:flex}
+        .modal-box{background:var(--modal-bg);border-radius:var(--radius);max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+        .modal-head{background:linear-gradient(90deg,#0d3325,#1a5c38);padding:18px 22px 14px;display:flex;align-items:flex-start;gap:14px}
+        .modal-icon{width:38px;height:38px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem;color:#fff;margin-top:2px}
+        .modal-title-block{flex:1}
+        .modal-word{font-family:'Inter',sans-serif;font-size:1.2rem;font-weight:700;color:#f9ca24;line-height:1.2}
+        .modal-tamil{font-family:'Inter',sans-serif;font-size:.82rem;color:rgba(255,255,255,.65);margin-top:3px;font-style:italic}
+        .modal-close{background:rgba(255,255,255,.12);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+        .modal-body{padding:20px 22px 24px}
+        .modal-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+        .modal-label{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);min-width:80px;padding-top:2px}
+        .modal-value{font-family:'Merriweather',serif;font-size:.95rem;color:var(--text);line-height:1.55}
+        .modal-link-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border-radius:999px;background:var(--accent-light);color:var(--accent-dark);border:1px solid rgba(26,107,60,.16);text-decoration:none;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:700;line-height:1;margin-top:8px}
+        @media (max-width:600px){.article-header,.article-body{padding:24px 18px}.article-header h1{font-size:1.45rem}.article-body p{font-size:.97rem}}
+    </style>
+</head>
+
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1><span class="vocab-words" data-modal-title="Exporters (noun) ஏற்றுமதியாளர்கள்" data-modal-meaning="– people or firms that sell goods to other countries." data-modal-synonyms="exporting firms, sellers">Exporters</span> will have to contend with headwinds</h1>
+            <p class="byline">Dipti Deshpande &amp; Adhish Verma</p>
+            <p class="byline-desc">Value gains in petro exports, and adverse trends in farm and smartphones shipments may mar the export show this year</p>
+            <p class="article-meta">BusinessLine Editorial &nbsp;|&nbsp; Exports &nbsp;|&nbsp; Trade</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="merchandise exports (noun) பொருட்கள் ஏற்றுமதி" data-modal-meaning="– exports of physical goods." data-modal-synonyms="goods exports, merchandise trade">India’s merchandise exports</span> have displayed admirable resilience despite the ebb and flow of the West Asia conflict, prompting some justified optimism. However, beneath the headline numbers lie four challenges that could make this fiscal year a difficult one for exports.</p>
+
+            <p>First, export resilience may be reflecting <span class="vocab-words" data-modal-title="value gains (noun) மதிப்பு உயர்வு" data-modal-meaning="– increases in value, often from price effects rather than volume growth." data-modal-synonyms="price gains, valuation growth">value gains</span> rather than volume growth. The one-year growth in dollar value of exports has been heavily influenced by prices. For instance, the 16 per cent growth in exports in the first quarter of this fiscal was driven by a nearly 35 per cent rise in the value of India’s oil exports.</p>
+
+            <p>Second, smartphones and agricultural products — the two large engines of India’s exports — have run into <span class="vocab-words" data-modal-title="headwinds (noun) प्रतिकूल परिस्थितियाँ / प्रतिकूल हवाएँ" data-modal-meaning="– difficulties or problems that hinder progress." data-modal-synonyms="obstacles, challenges, pressures">headwinds</span>. The former, which helped sustain overall export growth through successive tariff and geopolitical shocks, is expected to face fresh turbulence during the remaining months of 2026.</p>
+
+            <div class="pull-quote">“The export show this year may be marred by headwinds in petro exports, farm shipments and smartphones.”</div>
+
+            <p>The share of smartphones in total merchandise exports rose to 6.7 per cent last fiscal from virtually nil in fiscal 2022. However, most industry forecasts point to a slowdown in global smartphone demand due to ‘chipflation’, with shortages of memory chips pushing up device costs. Moreover, these shortages could also affect the production costs of other electronic goods, which account for about 11 per cent of total merchandise exports.</p>
+
+            <p><span class="vocab-words" data-modal-title="farm worries (noun) कृषि चिंताएँ" data-modal-meaning="– concerns relating to agriculture and farm output." data-modal-synonyms="agricultural concerns, crop worries">Farm worries</span> are also likely to weigh on export performance. Agricultural exports, accounting for 10 per cent of merchandise exports, may also be entering a difficult phase, driven largely by domestic factors. Yet its fortunes remain closely tied to weather-related shocks and government export curbs aimed at meeting domestic priorities.</p>
+
+            <p>Fresh uncertainty surrounding U.S. tariffs and the trade deal with India has been pushed back yet again, which could create renewed headwinds for exports. At the same time, European Commission’s recent decision to reduce its annual tariff-free steel import quotas may dampen certain steel exports from India to the region.</p>
+
+            <p>However, it is not all doom and gloom. Recent and upcoming free trade agreements (FTAs) provide grounds for optimism. India now has FTAs with more than half of the world’s largest importers, and that share is set to rise further once the terms of the proposed U.S. FTA are finalised.</p>
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal=document.getElementById('meaningModal');
+        const modalWord=document.getElementById('modalWordTitle');
+        const modalTamil=document.getElementById('modalTamilTitle');
+        const modalBody=document.getElementById('modalBodyContent');
+        const closeBtn=document.getElementById('modalCloseBtn');
+        function wrapAllWords(){const article=document.querySelector('.article-body');const walk=document.createTreeWalker(article,NodeFilter.SHOW_TEXT,null,false);const nodes=[];let n;while(n=walk.nextNode())nodes.push(n);nodes.forEach(node=>{const parent=node.parentElement;if(parent.closest('.vocab-words')||parent.closest('.vocab-silent')||parent.tagName==='H2')return;const text=node.nodeValue;if(text.trim().length===0)return;const replaced=text.replace(/\b([A-Za-z]{4,})\b/g,"<span class='vocab-silent dynamic-word'>$1</span>");if(replaced!==text){const temp=document.createElement('span');temp.innerHTML=replaced;while(temp.firstChild)parent.insertBefore(temp.firstChild,node);parent.removeChild(node);}});}
+        wrapAllWords();
+        function parseTitle(raw){if(!raw)return{word:'',tamil:''};const match=raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);if(match)return{word:match[1].trim(),tamil:match[2].trim()};return{word:raw.trim(),tamil:''};}
+        function row(label,value){return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;}
+        async function openModal(el){if(el.classList.contains('dynamic-word')){const word=el.textContent.trim().toLowerCase();modalWord.textContent=word;modalTamil.textContent='Translating...';modalBody.innerHTML='<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';modal.classList.add('active');document.body.style.overflow='hidden';try{const [dictRes,transRes]=await Promise.allSettled([fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)]);let meaning='';let synonyms='';if(dictRes.status==='fulfilled'&&dictRes.value.ok){const data=await dictRes.value.json();meaning=data[0]?.meanings[0]?.definitions[0]?.definition||'';const synonymsRaw=data[0]?.meanings[0]?.synonyms||[];synonyms=synonymsRaw.slice(0,4).join(', ');}if(transRes.status==='fulfilled'&&transRes.value.ok){const transData=await transRes.value.json();modalTamil.textContent=transData[0]?.[0]?.[0]||'';}else{modalTamil.textContent='';}let html='';if(meaning)html+=row('Meaning',`– ${meaning}`);if(synonyms)html+=row('Synonyms',synonyms);if(!meaning)html='<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';html+=`<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=html;}catch(e){modalTamil.textContent='';modalBody.innerHTML='<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p><a href="https://www.google.com/search?q='+encodeURIComponent(word)+'+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>';}return;}const rawTitle=el.dataset.modalTitle||'';const meaning=el.dataset.modalMeaning||'';const synonyms=el.dataset.modalSynonyms||'';const {word,tamil}=parseTitle(rawTitle);const searchWord=word||rawTitle;modalWord.textContent=searchWord;modalTamil.textContent=tamil;let html='';if(meaning)html+=row('Meaning',meaning);if(synonyms)html+=row('Synonyms',synonyms);html+=`<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=html;modal.classList.add('active');document.body.style.overflow='hidden';}
+        document.addEventListener('click',function(e){const el=e.target.closest('.vocab-words, .vocab-silent');if(el){openModal(el);return;}if(e.target===modal)modal.classList.remove('active');document.body.style.overflow='';});
+        closeBtn.addEventListener('click',function(){modal.classList.remove('active');document.body.style.overflow='';});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape'){modal.classList.remove('active');document.body.style.overflow='';}});
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossary – AI Impact Summit: New Delhi Declaration</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0e0e0e;
+            --s1: #141414;
+            --s2: #1a1a1a;
+            --gold: #d4a853;
+            --gold2: #f0c060;
+            --cyan: #00d4ff;
+            --red: #ff4d4d;
+            --green: #00e5a0;
+            --purple: #a78bfa;
+            --text: #f0ece0;
+            --muted: #8a8070;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, .012) 2px, rgba(255, 255, 255, .012) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .hero-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 160, .15);
+            animation: spin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 25s;
+        }
+
+        .hero-ring:nth-child(2) {
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        .hero-ring:nth-child(3) {
+            width: 260px;
+            height: 260px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 12s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-label {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--green);
+            border: 1px solid rgba(0, 229, 160, .35);
+            padding: .3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 229, 160, .05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: .5rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--green), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            position: relative;
+            z-index: 1;
+            font-size: .85rem;
+            color: var(--muted);
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin-bottom: .5rem;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            font-size: .8rem;
+            color: var(--green);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        /* CONTROLS */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(14, 14, 14, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #222;
+            padding: .8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .7rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            padding: .55rem 1rem .55rem 2.4rem;
+            border-radius: 8px;
+            outline: none;
+            min-width: 240px;
+            transition: border .2s, box-shadow .2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 2px rgba(0, 229, 160, .2);
+        }
+
+        .search-box::placeholder {
+            color: #4a4030;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-ico {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .9rem;
+            opacity: .5;
+        }
+
+        .pill {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pill:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .pill.on {
+            background: var(--green);
+            border-color: var(--green);
+            color: #0e0e0e;
+        }
+
+        /* TICKER */
+        .ticker {
+            background: #111;
+            border-bottom: 1px solid #222;
+            padding: .35rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: .72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticker .live {
+            color: var(--green);
+            animation: blink 1.2s step-start infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* MASONRY */
+        .masonry {
+            column-count: 3;
+            column-gap: 1.2rem;
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem;
+        }
+
+        @media(max-width:900px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media(max-width:560px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        /* FLIP CARD */
+        .flip-wrap {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-front {
+            background: var(--s1);
+            border: 1px solid #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flip-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            border-radius: 999px;
+        }
+
+        .cat-tech .flip-front::before {
+            background: var(--green);
+        }
+
+        .cat-business .flip-front::before {
+            background: var(--cyan);
+        }
+
+        .cat-politics .flip-front::before {
+            background: var(--red);
+        }
+
+        .cat-events .flip-front::before {
+            background: var(--gold);
+        }
+
+        .cat-general .flip-front::before {
+            background: var(--purple);
+        }
+
+        .flip-back {
+            background: var(--s2);
+            border: 1px solid #303030;
+            position: absolute;
+            inset: 0;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Front */
+        .f-num {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--muted);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .f-cat {
+            font-family: 'Fira Code', monospace;
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .15rem .55rem;
+            border-radius: 4px;
+        }
+
+        .cat-tech .f-cat {
+            background: rgba(0, 229, 160, .12);
+            color: var(--green);
+        }
+
+        .cat-business .f-cat {
+            background: rgba(0, 212, 255, .12);
+            color: var(--cyan);
+        }
+
+        .cat-politics .f-cat {
+            background: rgba(255, 77, 77, .12);
+            color: var(--red);
+        }
+
+        .cat-events .f-cat {
+            background: rgba(212, 168, 83, .12);
+            color: var(--gold);
+        }
+
+        .cat-general .f-cat {
+            background: rgba(167, 139, 250, .12);
+            color: var(--purple);
+        }
+
+        .f-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .25rem;
+        }
+
+        .f-pos {
+            font-size: .72rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: .7rem;
+        }
+
+        .f-def {
+            font-size: .85rem;
+            color: #c0b89a;
+            line-height: 1.6;
+        }
+
+        .f-hint {
+            margin-top: .9rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+            letter-spacing: .06em;
+        }
+
+        /* Back */
+        .b-label {
+            font-family: 'Fira Code', monospace;
+            font-size: .65rem;
+            color: var(--green);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: .6rem;
+        }
+
+        .b-example {
+            font-size: .88rem;
+            color: #f0ece0;
+            font-style: italic;
+            line-height: 1.65;
+            border-left: 2px solid var(--green);
+            padding: .4rem .75rem;
+            background: rgba(0, 229, 160, .06);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .b-back-hint {
+            margin-top: .8rem;
+            font-size: .65rem;
+            color: #444;
+            font-family: 'Fira Code', monospace;
+            text-align: right;
+        }
+
+        .flip-wrap.hide {
+            display: none;
+        }
+
+        #empty {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            display: none;
+        }
+
+        #btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #0e0e0e;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(0, 229, 160, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .3s;
+            z-index: 200;
+        }
+
+        #btt.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-label">🤖 AI Impact · Delhi Declaration</div>
+        <h1>The Global AI Impact Summit<br><em>New Delhi Declaration</em></h1>
+        <div class="hero-sub">50 Key Terms &amp; Hard Words — Meanings &amp; Example Sentences</div>
+        <div class="hero-author">Aroon Deep &nbsp;·&nbsp; AI Policy &amp; Events</div>
+    </div>
+
+    <div class="controls">
+        <div class="search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="search-box" id="sb" type="text" placeholder="Search terms…" oninput="applyFilters()">
+        </div>
+        <button class="pill on" onclick="setTab('all',this)">All</button>
+        <button class="pill" onclick="setTab('tech',this)">Tech/AI</button>
+        <button class="pill" onclick="setTab('business',this)">Business</button>
+        <button class="pill" onclick="setTab('politics',this)">Politics</button>
+        <button class="pill" onclick="setTab('events',this)">Events</button>
+        <button class="pill" onclick="setTab('general',this)">General</button>
+    </div>
+
+    <div class="ticker">
+        <span><span class="live">●</span>&nbsp;CLICK ANY CARD TO FLIP AND SEE THE EXAMPLE SENTENCE</span>
+        <span>Showing <strong id="cnt" style="color:var(--green)">50</strong> / 50 terms</span>
+    </div>
+
+    <div class="masonry" id="grid"></div>
+    <div id="empty">No results found. Try a different keyword.</div>
+    <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        const DATA = [
+            { n: 1, word: "High-profile", pos: "adjective", cat: "general", def: "Attracting much attention or publicity.", ex: "High-profile AI executives visited New Delhi." },
+            { n: 2, word: "Executives", pos: "noun", cat: "business", def: "People with senior managerial responsibility in a business.", ex: "The AI executives gathered to discuss the future." },
+            { n: 3, word: "Democratised", pos: "verb (past participle)", cat: "politics", def: "Made accessible to everyone.", ex: "The technology must be democratised to make a difference." },
+            { n: 4, word: "Instalment", pos: "noun", cat: "events", def: "Any of several parts of something which are published, broadcast, or made public in sequence.", ex: "In its first instalment, the U.K. hosted a small dialogue." },
+            { n: 5, word: "Convenes", pos: "verb", cat: "events", def: "Comes or brings together for a meeting.", ex: "There is no international organisation that convenes these gatherings." },
+            { n: 6, word: "Multilateral", pos: "adjective", cat: "politics", def: "Agreed upon or participated in by three or more parties, especially governments.", ex: "The multilateral AI dialogue saw a significant shift." },
+            { n: 7, word: "Vocally", pos: "adverb", cat: "general", def: "Expressing opinions or feelings freely or loudly.", ex: "He was vocally rejecting a safety-first approach." },
+            { n: 8, word: "Unrestrained", pos: "adjective", cat: "general", def: "Not restricted or controlled; unchecked.", ex: "He emphasized unrestrained investment into frontier research." },
+            { n: 9, word: "Frontier", pos: "noun/adjective", cat: "tech", def: "The extreme limit of understanding or achievement in a particular area.", ex: "Commitments were made for frontier deep tech research." },
+            { n: 10, word: "Commercialisation", pos: "noun", cat: "business", def: "The process of managing or running something principally for financial gain.", ex: "They discussed the commercialisation of the technology." },
+            { n: 11, word: "Capabilities", pos: "noun", cat: "tech", def: "The extent of someone's or something's ability to do things.", ex: "AI's capabilities must be available to as many people as possible." },
+            { n: 12, word: "Under-represented", pos: "adjective", cat: "politics", def: "Provided with inadequate representation.", ex: "They aimed to expand representation for languages that have been under-represented." },
+            { n: 13, word: "Domestic", pos: "adjective", cat: "business", def: "Existing or occurring inside a particular country; not foreign.", ex: "Sarvam launched India's first domestically trained LLMs." },
+            { n: 14, word: "Sentiment", pos: "noun", cat: "business", def: "A view, attitude, or general feeling toward a situation or event.", ex: "The government sought to drum up investor sentiment." },
+            { n: 15, word: "Enthusiastic", pos: "adjective", cat: "general", def: "Having or showing intense and eager enjoyment, interest, or approval.", ex: "The technology has seen already-enthusiastic adoption in India." },
+            { n: 16, word: "Adoption", pos: "noun", cat: "business", def: "The action or fact of choosing to take up, follow, or use something.", ex: "The summit encouraged the technology's adoption in healthcare." },
+            { n: 17, word: "Capital", pos: "noun", cat: "business", def: "Wealth in the form of money or other assets; or human resources (human capital).", ex: "Human capital is essential for AI development." },
+            { n: 18, word: "Inclusion", pos: "noun", cat: "politics", def: "The action or state of including or of being included within a group or structure.", ex: "Inclusion for social empowerment was a key priority." },
+            { n: 19, word: "Resilience", pos: "noun", cat: "politics", def: "The capacity to withstand or to recover quickly from difficulties.", ex: "Working groups focused on resilience and innovation." },
+            { n: 20, word: "Touted", pos: "verb", cat: "business", def: "Attempted to sell (something) or promote it aggressively.", ex: "The government touted $250 billion in investment commitments." },
+            { n: 21, word: "Commitments", pos: "noun", cat: "business", def: "Pledges or undertakings; an engagement or obligation that restricts freedom of action.", ex: "The summit received massive investment commitments." },
+            { n: 22, word: "Consensus", pos: "noun", cat: "politics", def: "A general agreement.", ex: "India achieved broad consensus among 88 countries." },
+            { n: 23, word: "Parameter", pos: "noun", cat: "tech", def: "A numerical or other measurable factor forming one of a set that defines a system.", ex: "The event saw the launch of multi-billion parameter LLMs." },
+            { n: 24, word: "Subsidised", pos: "adjective", cat: "business", def: "Supported financially to make it cheaper.", ex: "The firm enjoys subsidised access to computing resources." },
+            { n: 25, word: "Efficient", pos: "adjective", cat: "tech", def: "Achieving maximum productivity with minimum wasted effort or expense.", ex: "The firm says its new models are highly efficient." },
+            { n: 26, word: "Benchmarks", pos: "noun", cat: "tech", def: "A standard or point of reference against which things may be compared or assessed.", ex: "The model beats comparable models at many benchmarks." },
+            { n: 27, word: "Beta", pos: "noun", cat: "tech", def: "A trial of machinery, software, or other products, in the final stages of its development.", ex: "They launched a chatbot interface in beta to interact with its LLMs." },
+            { n: 28, word: "Plagued", pos: "verb", cat: "events", def: "Caused continual trouble or distress to.", ex: "The event was plagued by a series of setbacks." },
+            { n: 29, word: "Setbacks", pos: "noun", cat: "events", def: "A reversal or check in progress.", ex: "A series of setbacks occurred almost every day." },
+            { n: 30, word: "Plenary", pos: "noun", cat: "events", def: "A meeting or session attended by all participants at a conference.", ex: "The plenary with the heads of state was delayed." },
+            { n: 31, word: "Keynotes", pos: "noun", cat: "events", def: "A central theme or main speech, typically one set or introduced at the start of a conference.", ex: "CEOs delivered the keynotes at the summit." },
+            { n: 32, word: "Overwhelmed", pos: "verb", cat: "events", def: "Buried or drowned beneath a huge mass of something; defeated completely.", ex: "Organisers were overwhelmed by an unexpected number of participants." },
+            { n: 33, word: "Logistics", pos: "noun", cat: "events", def: "The detailed coordination of a complex operation involving many people, facilities, or supplies.", ex: "Security and logistics issues abounded during the summit." },
+            { n: 34, word: "Abounded", pos: "verb", cat: "general", def: "Existed in large numbers or amounts.", ex: "Problems and traffic snarls abounded on the opening day." },
+            { n: 35, word: "Snarls", pos: "noun", cat: "events", def: "A situation involving complications and confusion, often used to refer to traffic jams.", ex: "Significant traffic snarls delayed many attendees." },
+            { n: 36, word: "Exhibitor", pos: "noun", cat: "business", def: "A person or company that displays items of interest or products at an exhibition.", ex: "An exhibitor at the summit's concurrent expo faced embarrassment." },
+            { n: 37, word: "Concurrent", pos: "adjective", cat: "events", def: "Existing, happening, or done at the same time.", ex: "The expo was concurrent with the main summit events." },
+            { n: 38, word: "Premises", pos: "noun", cat: "events", def: "A house or building, together with its land and outbuildings.", ex: "The university was ordered to vacate the premises." },
+            { n: 39, word: "Apprehended", pos: "verb", cat: "general", def: "Arrested (someone) for a crime.", ex: "The police quickly apprehended the protesters." },
+            { n: 40, word: "Pacts", pos: "noun", cat: "business", def: "Formal agreements between individuals or parties.", ex: "The event also saw high-profile pacts between major tech companies." },
+            { n: 41, word: "Subsea", pos: "adjective", cat: "tech", def: "Situated, occurring, or done beneath the sea or seabed.", ex: "They announced a subsea cable system to connect India and the U.S." },
+            { n: 42, word: "Capacity", pos: "noun", cat: "tech", def: "The maximum amount that something can contain or produce.", ex: "OpenAI will lease 100 megawatts of data centre capacity." },
+            { n: 43, word: "Infrastructure", pos: "noun", cat: "tech", def: "The basic physical and organizational structures needed for operation.", ex: "Yotta announced a $2 billion deep data centre infrastructure build-out." },
+            { n: 44, word: "Voluntary", pos: "adjective", cat: "politics", def: "Done, given, or acting of one's own free will.", ex: "Nearly all commitments were described as voluntary." },
+            { n: 45, word: "Non-binding", pos: "adjective", cat: "politics", def: "Not holding someone to a particular action or decision legally.", ex: "The agreement is non-binding, encouraging wider participation." },
+            { n: 46, word: "Charter", pos: "noun", cat: "politics", def: "A written grant by a country's legislative or sovereign power, by which a body such as a company or university is founded and its rights are defined.", ex: "The declaration includes a charter for democratic diffusion." },
+            { n: 47, word: "Diffusion", pos: "noun", cat: "politics", def: "The spreading of something more widely.", ex: "The democratic diffusion of AI remains a primary goal." },
+            { n: 48, word: "Repository", pos: "noun", cat: "tech", def: "A place, building, or receptacle where things are or may be stored.", ex: "The Commons acts as a repository of tools and benchmarks." },
+            { n: 49, word: "Catalyse", pos: "verb", cat: "business", def: "Cause or accelerate (a reaction or process).", ex: "The summit is expected to catalyse long-term partnerships." },
+            { n: 50, word: "Broad-based", pos: "adjective", cat: "general", def: "Covering a large number of people or spanning a wide scope.", ex: "There was a broad-based global consensus on leveraging AI." }
+        ];
+
+        let activeCat = 'all';
+
+        function buildGrid(data) {
+            const g = document.getElementById('grid');
+            g.innerHTML = '';
+            data.forEach((t, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = `flip-wrap cat-${t.cat}`;
+                wrap.setAttribute('data-cat', t.cat);
+                wrap.setAttribute('data-q', (t.word + ' ' + t.def + ' ' + t.ex).toLowerCase());
+                wrap.style.animationDelay = (i * 0.03) + 's';
+                wrap.innerHTML = `
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="f-num"><span style="font-size:.6rem;opacity:.4">#${String(t.n).padStart(2, '0')}</span><span class="f-cat">${t.cat}</span></div>
+          <div class="f-word">${t.word}</div>
+          <div class="f-pos">${t.pos}</div>
+          <div class="f-def">${t.def}</div>
+          <div class="f-hint">tap to see example →</div>
+        </div>
+        <div class="flip-back">
+          <div class="b-label">✦ Example Sentence</div>
+          <div class="b-example">"${t.ex}"</div>
+          <div class="b-back-hint">← tap to flip back</div>
+        </div>
+      </div>`;
+                wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+                g.appendChild(wrap);
+            });
+        }
+
+        function applyFilters() {
+            const q = document.getElementById('sb').value.toLowerCase().trim();
+            let n = 0;
+            document.querySelectorAll('.flip-wrap').forEach(c => {
+                const mQ = !q || c.getAttribute('data-q').includes(q);
+                const mC = activeCat === 'all' || c.getAttribute('data-cat') === activeCat;
+                if (mQ && mC) { c.classList.remove('hide'); n++; } else c.classList.add('hide');
+            });
+            document.getElementById('cnt').textContent = n;
+            document.getElementById('empty').style.display = n === 0 ? 'block' : 'none';
+        }
+
+        function setTab(cat, btn) {
+            activeCat = cat;
+            document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+            btn.classList.add('on');
+            applyFilters();
+        }
+
+        buildGrid(DATA);
+        window.addEventListener('scroll', () => {
+            document.getElementById('btt').classList.toggle('on', scrollY > 400);
+        });
+    </script>
+</body>
+
+</html>
