@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronic Gold Receipts</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --border: #ddd;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.15;
+        }
+
+        .article-header h1 .vocab-words {
+            color: #f9ca24;
+            border-bottom: 2px dashed rgba(249, 202, 36, 0.5);
+        }
+
+        .article-header h1 .vocab-words:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block {
+            flex: 1;
+        }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .modal-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border: 1px solid rgba(26, 107, 60, 0.16);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            margin-top: 8px;
+        }
+
+        .modal-link-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(26, 107, 60, 0.14);
+            background: #ddf1e4;
+        }
+
+        @media (max-width: 600px) {
+
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 {
+                font-size: 1.45rem;
+            }
+
+            .article-body p {
+                font-size: 0.97rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1><span class="vocab-words" data-modal-title="Electronic Gold Receipts மின்னணு தங்க ரசீதுகள்"
+                    data-modal-meaning="an exchange-traded security representing ownership of physical gold in a dematerialized electronic form."
+                    data-modal-synonyms="EGR, demat gold">Electronic Gold Receipts</span>: a new way to own gold</h1>
+            <p class="byline">Vaishali R. Venkat</p>
+            <p class="byline-desc">The yellow metal has long gone digital, but this time it is offering the convenience
+                of electronic investing along with ownership of physical gold.</p>
+            <p class="article-meta">Business &nbsp;|&nbsp; Markets & Finance &nbsp;|&nbsp; New Age gold</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">In May 2026, the <span class="vocab-words"
+                    data-modal-title="National Stock Exchange (NSE) தேசிய பங்கு சந்தை"
+                    data-modal-meaning="India's leading stock exchange." data-modal-synonyms="NSE">National Stock
+                    Exchange of India (NSE)</span> introduced Electronic Gold Receipts (EGRs), a new exchange-traded
+                segment for buying and selling gold in electronic form. The initiative aims at improving transparency in
+                gold pricing, standardise quality, and provide investors with a regulated and secure way to own the
+                yellow metal, while making India's gold market more efficient. It enables investors to own physical gold
+                without the need to store it at home or in a bank locker.</p>
+
+            <h2>Gold exchange journey</h2>
+            <p>On September 28, 2021, the <span class="vocab-words" data-modal-title="SEBI செபி"
+                    data-modal-meaning="The Securities and Exchange Board of India, regulates the securities and commodity market in India."
+                    data-modal-synonyms="market regulator">Securities and Exchange Board of India (SEBI)</span> approved
+                the framework for Gold Exchange and SEBI (Vault Managers) Regulations, 2021. The Centre notified EGRs as
+                securities under the Securities Contracts (Regulation) Act, 1956, in December 2021. Further, on April
+                11, 2022, SEBI issued a ‘Comprehensive Risk Management Framework’ for EGRs. Together, they laid the
+                regulatory foundation for EGR trading in India.</p>
+
+            <p>In September 2022, the <span class="vocab-words"
+                    data-modal-title="Bombay Stock Exchange (BSE) பம்பாய் பங்குச் சந்தை"
+                    data-modal-meaning="Asia's oldest and India's prominent stock exchange."
+                    data-modal-synonyms="BSE">Bombay Stock Exchange (BSE)</span> received SEBI's final nod to unveil the
+                EGR segment. It became the first bourse in India to launch EGR on October 24, 2022 on Muhurat trading
+                session. Initially, BSE introduced two EGR products backed by 995 and 999 purity gold with trading in
+                multiples of 1 gram and physical delivery in multiples of 10/100 grams.</p>
+
+            <h2>What are EGRs?</h2>
+            <p>Electronic Gold Receipts (EGRs) are exchange-traded securities representing ownership of physical gold
+                (specified purity) stored in SEBI-regulated vaults. They can be held electronically in a demat account,
+                bought and sold in different denominations on the bourse and converted into physical gold via prescribed
+                process.</p>
+
+            <h2>Buying/selling EGRs</h2>
+            <p>EGRs can be traded from Monday to Friday during market hours. Trading is available from 9 a.m. to 11:30
+                p.m., or up to 11:55 p.m., during the U.S. daylight saving period. Like shares, EGRs follow a <span
+                    class="vocab-words" data-modal-title="T+1 settlement சுழற்சி"
+                    data-modal-meaning="a trade settlement cycle where transactions are settled the next trading day."
+                    data-modal-synonyms="next day settlement">T+1 settlement cycle</span> with the receipts credited to
+                the buyer's demat account the next trading day. Retail investors, jewellers, bullion traders, refiners,
+                institutional investors and other eligible market participants can buy EGRs via registered stockbrokers.
+                Investors need both trading and demat accounts to buy and sell EGRs.</p>
+
+            <h2>Benefits of EGRs</h2>
+            <p>EGRs combine the advantages of physical gold with the convenience of electronic investing. As a
+                SEBI-recognised security, each EGR is backed by a specified quantity of gold of a defined purity,
+                securely stored in SEBI-regulated vaults. This offers a transparent and standardised way to own gold
+                while removing concerns over purity and personal storage.</p>
+
+            <p>One of the biggest advantages is EGRs enable transparent price discovery via exchange trading, ensuring
+                uniform price across India at any given point in time. Investors can buy and sell EGRs during market
+                hours, hold them in a demat account and choose from denominations based on budget. The gold backing an
+                EGR is stored safely in regulated vaults, so investors need not worry about its purity.</p>
+
+            <p>Those who prefer physical gold can convert EGRs into gold whenever needed. EGRs offer liquidity,
+                settlement guarantee, <span class="vocab-words"
+                    data-modal-title="fungibility ஒன்றுக்கொன்று மாற்றத்தக்க தன்மை"
+                    data-modal-meaning="the property of a good or commodity whose individual units are essentially interchangeable."
+                    data-modal-synonyms="exchangeability">fungibility</span> and can help diversify investment
+                portfolios.</p>
+
+            <p>The EGRs are available in two purity standards: 999 (99.9% pure gold) and 995 (99.5% pure gold). In each
+                purity category, investors have six different denominations such as 10 mg, 100 mg, 1 g, 10 g, 100 g and
+                1 kg. Whether you want to test the waters with a tiny investment or accumulate over time, EGRs offer
+                denominations to suit first-time buyers and seasoned investors.</p>
+
+            <h2>Costs to bear</h2>
+            <p>Apart from the cost of purchasing EGRs, investors may also incur brokerage, demat (depository) and
+                vault-storage charges and other applicable transaction charges. Those opting for physical delivery of
+                gold may also have to bear purity testing and transportation charges. There is no GST for EGR trading.
+                However, investors opting for physical delivery must pay 3% GST on gold value.</p>
+
+            <div class="pull-quote">
+                Buying and selling EGRs is only one part of the story. The real questions lie behind the scenes: Why did
+                India create a Gold Exchange?
+            </div>
+
+            <p>How does physical gold become an Electronic Gold Receipt? And should EGRs find a place in your portfolio?
+                Behind every EGR lies a vault. The story behind its doors will unfold in the next part.</p>
+
+            <p><em>(The writer is an NISM & CRISIL-certified Wealth Manager and certified in NISM’s Research Analyst
+                    module)</em></p>
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) parent.insertBefore(temp.firstChild, node);
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+
+                    let meaning = '';
+                    let synonyms = '';
+
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+
+                    if (!meaning) {
+                        html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    }
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) {
+                openModal(el);
+                return;
+            }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>

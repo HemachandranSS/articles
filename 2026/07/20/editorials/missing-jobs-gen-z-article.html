@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Missing Jobs for Gen Z</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --border: #ddd;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.15;
+        }
+
+        .article-header h1 .vocab-words {
+            color: #f9ca24;
+            border-bottom: 2px dashed rgba(249, 202, 36, 0.5);
+        }
+
+        .article-header h1 .vocab-words:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block {
+            flex: 1;
+        }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .modal-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border: 1px solid rgba(26, 107, 60, 0.16);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            margin-top: 8px;
+        }
+
+        .modal-link-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(26, 107, 60, 0.14);
+            background: #ddf1e4;
+        }
+
+        @media (max-width: 600px) {
+
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 {
+                font-size: 1.45rem;
+            }
+
+            .article-body p {
+                font-size: 0.97rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>The stark reality of the missing jobs for India’s <span class="vocab-words"
+                    data-modal-title="Gen Z (Generation Z) ஜென் Z"
+                    data-modal-meaning="individuals born between 1997 and 2012, succeeding Millennials."
+                    data-modal-synonyms="youth, young adults">Gen Z</span></h1>
+            <p class="byline">Santosh Kumar Dash</p>
+            <p class="byline-desc">Assistant Professor at IRMA, Tribhuvan Sahkari University, Anand, Gujarat</p>
+            <p class="article-meta">Editorial &nbsp;|&nbsp; Society & Economy &nbsp;|&nbsp; Employment</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">India has one of the world’s largest youth populations (371 million, according to United
+                Nations data of 2025), often described as a <span class="vocab-words"
+                    data-modal-title="demographic dividend மக்கட்தொகை ஈவுத்தொகை"
+                    data-modal-meaning="– economic growth potential resulting from a shift in a population's age structure, mainly when the working-age population is larger."
+                    data-modal-synonyms="population advantage">demographic dividend</span>. But this demographic
+                dividend is only a promise and does not guarantee an automatic outcome. It pays off only when the
+                transition occurs, enabling young people to move from classrooms into decent, productive work with
+                higher skills. Right now, that transition is faltering, and the evidence is visible in Gen Z’s
+                employment patterns.</p>
+
+            <p>The term ‘Gen Z’ refers to individuals born between 1997 and 2012. They succeeded the <span
+                    class="vocab-words" data-modal-title="Millennials (Generation Y) மில்லினியல்ஸ்"
+                    data-modal-meaning="– individuals born between 1981 and 1996."
+                    data-modal-synonyms="Gen Y">Millennials</span> (also known as Generation Y), who were born between
+                1981 and 1996. The working-age population for Gen Z broadly falls within the 15-26 age group, while
+                Millennials are aged between the years 27 to 42. According to the 2023-24 <span class="vocab-words"
+                    data-modal-title="PLFS ஆய்வறிக்கை"
+                    data-modal-meaning="– Periodic Labour Force Survey, a vital statistical tool by the Government of India."
+                    data-modal-synonyms="employment survey">Periodic Labour Force Survey (PLFS)</span>, India has an
+                estimated 29.94 crore working-age Gen Z individuals (aged 15-26 years), compared with 35 crore
+                Millennials (aged 27-42 years). Using the same datasets, we analyse their occupational patterns, <span
+                    class="vocab-words" data-modal-title="labour force participation rate தொழிலாளர் பங்கேற்பு விகிதம்"
+                    data-modal-meaning="– the proportion of the working-age population that engages actively in the labour market."
+                    data-modal-synonyms="LFPR, workforce rate">labour force participation rates</span>, unemployment
+                levels, and access to social security systems.</p>
+
+            <h2>Gen Z Work Status</h2>
+            <p>PLFS 2023-24 estimates show that a large share of Gen Z remains engaged in education. The data show that
+                41.7% of young males and 38.4% of young females are studying. While this partly explains their delayed
+                entry into the labour market, the situation of the remaining youth is a cause for concern.</p>
+            <p>When young people do enter the labour market, many are absorbed into non-salaried and casual forms of
+                employment. Among young males, 15.8% are engaged as unpaid family workers, 12.3% are in casual work —
+                possibly with segments of the informal economy — and only 14.8% are regular wage earners. Among female
+                Gen Z individuals, about 35% are engaged in domestic duties (out of the labour force), 10.7% work as
+                unpaid family workers, and only 4.7% are regular wage earners.</p>
+            <p>These patterns underline the fact that women bear this burden disproportionately. Among Gen Z females,
+                27.1% are engaged in domestic duties only, compared with just 0.32% of males. Even where women want paid
+                work, they face higher unemployment and weaker labour market attachment. This is not only a matter of
+                jobs. It also reflects childcare burdens, safety concerns, mobility constraints and social norms, and
+                the design of work itself. India cannot talk seriously about harnessing its demographic advantage while
+                leaving such a large share of young women outside the paid economy.</p>
+
+            <p>What happens when young people try to enter the labour market? The answer is concerning: too many of them
+                are unable to find adequate employment opportunities.</p>
+
+            <p>The first indicator to consider is the labour force participation rate (LFPR). Among Gen Z, 41.7% are in
+                the labour force, against 75% of Millennials. Within Gen Z, rural participation (44.1%) exceeds urban
+                participation (37.2%), suggesting that rural youth tend to enter the labour market earlier, whereas
+                urban youth spend more time in education and training. A sharp gender divide is also evident. Among
+                young males, labour force participation is 59.3% in rural India and 51.3% in urban India, compared to
+                just 28% and 21.1% respectively for young females.</p>
+            <p>The unemployment situation is even more alarming. The overall unemployment rate for Gen Z is 11.9%,
+                compared to only 2% among Millennials. In urban India, the situation deteriorates further, with Gen Z
+                unemployment rising to 17.1%.</p>
+            <p>For urban young women, it reaches a staggering 22.6%. This is not merely a temporary labour-market
+                friction; it is a serious warning sign that the economy is struggling to absorb young jobseekers,
+                particularly in areas where aspirations and educational qualifications are often higher.</p>
+
+            <h2>The Graduate Trap, Social Security Mirage</h2>
+            <p>For most of the youth, education offers a gateway of opportunity: more education leading to better jobs
+                and lower unemployment. Instead, our estimate shows the opposite at the top end. Among Gen Z males with
+                graduate-level education or above, unemployment stands at 29%. Among Gen Z females, it is even higher at
+                36.9%. This is the heart of India’s silent jobs crisis. The country is producing educated young people
+                faster than it is producing suitable jobs for them.</p>
+
+            <p>A similar disparity persists among Millennials. Only 5.2% of male graduates and above are unemployed, but
+                the corresponding figure for women is significantly higher at 13.8%.</p>
+            <p>This disconnect perhaps points to a deeper mismatch between the education system and labour market
+                requirements. While part of the problem relates to skill mismatches, it is also increasingly shaped by
+                automation and the growing adoption of artificial intelligence, both of which are altering the nature of
+                available jobs.</p>
+            <p>That mismatch carries a deeper risk. When higher education no longer improves employment prospects
+                quickly or reliably, frustration rises, family investment in education comes under strain, and
+                confidence in the growth story weakens. A labour market that cannot absorb its educated youth is not
+                just inefficient. It can become socially corrosive and destabilising. Even for those who do find work,
+                the quality of employment remains deeply concerning. Only 20.1% of Gen Z individuals are covered by
+                social security, and just 14.1% have a formal job contract. Among the remaining 79.9% who lack social
+                security coverage, only 3.2% have a job contract. Overall, only 17.3% of Gen Z workers have any form of
+                contractual employment.</p>
+
+            <p>This implies that most are entering the workforce without either. The challenge, therefore, is not merely
+                unemployment but the widespread prevalence of informal, insecure, and weakly protected work. Further, in
+                recent years, there has been growing evidence of the informalisation of formal employment among the Gen
+                Z population.</p>
+
+            <p>The situation among Millennials is only marginally better. Merely 26% have a job contract, while only
+                28.6% are covered by social security.</p>
+            <p>The recent large-scale violent labour protests in Noida, Uttar Pradesh, led by industrial and factory
+                workers demanding higher wages and better working conditions, reflect the frustration that insecure and
+                poorly protected employment can produce.</p>
+
+            <h2>A Promise Deferred</h2>
+            <p>India’s jobs debate is too often discussed in silos: unemployment, skilling, women’s work and labour
+                force participation, and informality. However, these are not separate problems. They are one connected
+                failure of labour market transition. Young people (Gen Z) are staying in education longer, but the
+                bridge from education to work is weak. Women face structural barriers that keep them out or push them
+                into unpaid roles. And even when work is found, it is too often outside the protections of formal
+                employment.</p>
+            <p>It is time India moves beyond merely celebrating its large demographic dividend and begins treating the
+                issue with greater urgency. Skill programmes have value, but they cannot substitute for actual job
+                creation. The answer lies in expanding labour-intensive sectors, building stronger school-to-work
+                pathways, linking training more closely to employers, and making it easier for women to enter and remain
+                in paid work. Apprenticeships, formal hiring incentives, urban employment expansion, safe transport and
+                childcare support all need to be part of the response.</p>
+
+            <div class="pull-quote">
+                The numbers tell a blunt story. India’s youth challenge is no longer about whether young people are
+                ready for work. It is about whether the economy is ready for them.
+            </div>
+
+            <p>Until that changes, the demographic dividend will remain what it has so far been: a promise deferred.
+                Celebrating India’s demographic dividend means little when young people are denied the jobs they
+                deserve.</p>
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) parent.insertBefore(temp.firstChild, node);
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+
+                    let meaning = '';
+                    let synonyms = '';
+
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        const synonymsRaw = data[0]?.meanings[0]?.synonyms || [];
+                        synonyms = synonymsRaw.slice(0, 4).join(', ');
+                    }
+
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else {
+                        modalTamil.textContent = '';
+                    }
+
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+
+                    if (!meaning) {
+                        html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';
+                    }
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    let errorHtml = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p>';
+                    errorHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = errorHtml;
+                }
+                return;
+            }
+
+            const rawTitle = el.dataset.modalTitle || '';
+            const meaning = el.dataset.modalMeaning || '';
+            const synonyms = el.dataset.modalSynonyms || '';
+            const { word, tamil } = parseTitle(rawTitle);
+            const searchWord = word || rawTitle;
+
+            modalWord.textContent = searchWord;
+            modalTamil.textContent = tamil;
+
+            let html = '';
+            if (meaning) html += row('Meaning', meaning);
+            if (synonyms) html += row('Synonyms', synonyms);
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) {
+                openModal(el);
+                return;
+            }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>
