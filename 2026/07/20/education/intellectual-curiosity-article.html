@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Better Questions — What is Intellectual Curiosity?</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #1a6b3c;
+            --accent-light: #e8f5ee;
+            --vocab-color: #1a5276;
+            --vocab-hover: #1a6b3c;
+            --modal-bg: #fff;
+            --overlay: rgba(0, 0, 0, 0.55);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 16px 80px;
+            line-height: 1.9;
+        }
+
+        .article-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 40px 44px 30px;
+            color: #fff;
+        }
+
+        .article-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            line-height: 1.15;
+        }
+
+        .article-header .byline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #a8f0c6;
+            margin-top: 10px;
+        }
+
+        .article-header .byline-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 18px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            padding: 36px 44px 44px;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 2em 0 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 3.8rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin: 4px 8px 0 0;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pull-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 16px 24px;
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+            margin: 2em 0;
+            line-height: 1.6;
+        }
+
+        .vocab-words {
+            color: var(--vocab-color);
+            border-bottom: 2px dotted var(--vocab-color);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s, background 0.18s;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+
+        .vocab-words:hover {
+            color: var(--vocab-hover);
+            border-bottom-color: var(--vocab-hover);
+            background: var(--accent-light);
+        }
+
+        .vocab-silent {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 1px;
+            transition: background 0.15s;
+        }
+
+        .vocab-silent:hover {
+            background: var(--accent-light);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--modal-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            background: linear-gradient(90deg, #0d3325, #1a5c38);
+            padding: 18px 22px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .modal-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.15rem;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .modal-title-block {
+            flex: 1;
+        }
+
+        .modal-word {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f9ca24;
+            line-height: 1.2;
+        }
+
+        .modal-tamil {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .modal-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            min-width: 80px;
+            padding-top: 2px;
+        }
+
+        .modal-value {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .modal-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--accent-light);
+            color: #0d3325;
+            border: 1px solid rgba(26, 107, 60, 0.16);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1;
+            transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+            margin-top: 8px;
+        }
+
+        .modal-link-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(26, 107, 60, 0.14);
+            background: #ddf1e4;
+        }
+
+        @media (max-width: 600px) {
+
+            .article-header,
+            .article-body {
+                padding: 24px 18px;
+            }
+
+            .article-header h1 {
+                font-size: 1.45rem;
+            }
+
+            .article-body p {
+                font-size: 0.97rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>Ask Better Questions: What is <span class="vocab-words"
+                    data-modal-title="intellectual curiosity அறிவார்ந்த ஆர்வம்"
+                    data-modal-meaning="an intrinsic desire to learn, explore, and understand the world, driven by genuine interest rather than external rewards."
+                    data-modal-synonyms="inquisitiveness, thirst for knowledge">intellectual curiosity</span>? Why is it
+                important?</h1>
+            <p class="byline">Founder & CEO, Inomi Learning</p>
+            <p class="byline-desc">A Gurugram-based career and college guidance firm &mdash; info@inomi.in</p>
+            <p class="article-meta">Education &nbsp;|&nbsp; Pedagogy &nbsp;|&nbsp; Learning & Skills</p>
+        </header>
+
+        <div class="article-body">
+
+            <p class="drop-cap">A bright, hardworking child genuinely good at academics and with a stellar profile is
+                stumped when asked: "What are you curious about? What do you find yourself thinking about when nobody's
+                asking you to think about anything?" They're not sure and have no answer; surprisingly, they've never
+                really thought about this before. But when researching what the <span class="vocab-words"
+                    data-modal-title="Ivy League आइवी लीग / சிறந்த பல்கலைக்கழகங்கள்"
+                    data-modal-meaning="a group of eight prestigious American universities known for academic excellence and selectivity."
+                    data-modal-synonyms="elite universities, top-tier institutions">Ivy League</span> and top
+                universities look for these days, they will all say,
+                "<span class="vocab-words" data-modal-title="intellectual curiosity அறிவார்ந்த ஆர்வம்"
+                    data-modal-meaning="an intrinsic desire to learn, explore, and understand the world, driven by genuine interest rather than external rewards."
+                    data-modal-synonyms="inquisitiveness, thirst for knowledge">intellectual curiosity</span>…"</p>
+
+            <h2>Third Pillar</h2>
+
+            <p>So, what is "intellectual curiosity?" In 2011, a team of <span class="vocab-words"
+                    data-modal-title="psychologists உளவியலாளர்கள்"
+                    data-modal-meaning="scientists who study mind, behaviour, and mental processes."
+                    data-modal-synonyms="behavioural scientists">psychologists</span> at the University of Edinburgh,
+                the U.K., studied data from around 200 studies involving 50,000 students and asked: what actually
+                predicts how well a student does academically? The predictable answers were <span class="vocab-words"
+                    data-modal-title="intelligence அறிவு / IQ"
+                    data-modal-meaning="the ability to acquire and apply knowledge and skills; often measured by IQ tests."
+                    data-modal-synonyms="cognition, IQ">intelligence</span>, <span class="vocab-words"
+                    data-modal-title="conscientiousness கடமையுணர்வு"
+                    data-modal-meaning="the quality of being careful, diligent, and responsible; a key personality trait linked to academic and professional success."
+                    data-modal-synonyms="diligence, thoroughness, responsibility">conscientiousness</span>, working
+                hard, showing up, and being <span class="vocab-words" data-modal-title="disciplined ஒழுக்கமான"
+                    data-modal-meaning="trained to obey rules or a code of behaviour; showing a controlled form of behaviour."
+                    data-modal-synonyms="regulated, self-controlled, orderly">disciplined</span>. Then came the finding
+                that should have changed how we think about education: Intellectual curiosity, the hunger to explore, to
+                understand, to keep asking why... This impacts <span class="vocab-words"
+                    data-modal-title="academic performance கல்வி செயல்திறன்"
+                    data-modal-meaning="a student's achievement in formal education, measured by grades, test scores, and other assessments."
+                    data-modal-synonyms="scholastic achievement, educational attainment">academic performance</span>
+                almost as much as intelligence itself. The researchers called it "the third pillar". Intelligence,
+                effort, curiosity. All three matter. Yet our education system spends almost all of its energy on the
+                first two and almost none on the third.</p>
+
+            <p>In 2022, <span class="vocab-words" data-modal-title="PISA பிசா மதிப்பீடு"
+                    data-modal-meaning="Programme for International Student Assessment — an international evaluation testing 15-year-olds across dozens of countries in reading, math, and science."
+                    data-modal-synonyms="student assessment, international test">PISA</span>, the international
+                assessment that tests 15-year-olds across 81 countries, found that curiosity had the greatest
+                relationship with performance in Maths compared to any other factor measured. Eighty-one points
+                separated students with high curiosity from students with low curiosity. That is not a small gap. The
+                same research also consistently finds that curiosity <span class="vocab-words"
+                    data-modal-title="declines குறைகிறது / சரிவு"
+                    data-modal-meaning="becomes progressively smaller or fewer in number; decreases."
+                    data-modal-synonyms="diminishes, wanes, reduces">declines</span> as children get older, not because
+                they become less curious but because systems around them teach them that curiosity is not being <span
+                    class="vocab-words" data-modal-title="rewarded வெகுமதி அளிக்கப்படுகிறது"
+                    data-modal-meaning="recognised and given an incentive for a behaviour or achievement."
+                    data-modal-synonyms="incentivised, recognised">rewarded</span>.</p>
+
+            <p>Why does this matter now? Think about what a typical high-achieving Indian classroom actually rewards:
+                recall, speed, <span class="vocab-words" data-modal-title="accuracy துல்லியம்"
+                    data-modal-meaning="the quality of being correct or precise; freedom from error or defect."
+                    data-modal-synonyms="precision, correctness">accuracy</span> on a defined set of problems covering
+                the chapter, answering in the exact words used in the textbook, and finishing the paper on time. Now
+                think about what curiosity requires. Time to wander. Permission to ask a question with no guaranteed
+                answer. The safety of not knowing something yet and finding that interesting rather than threatening.
+            </p>
+
+            <p>Research has found that when children enter school, the number of questions they ask per hour actually
+                declines and stays down throughout primary school. Not because they have fewer questions. But because
+                they learn quickly that asking questions is not what school is for. When <span class="vocab-words"
+                    data-modal-title="feedback கருத்து மதிப்பீடு"
+                    data-modal-meaning="information given to a learner about their performance, aimed at improving future efforts."
+                    data-modal-synonyms="evaluation, response, assessment">feedback</span> is about rankings and scores,
+                curiosity goes down. When feedback is about whether you understood something correctly, curiosity goes
+                up.</p>
+
+            <h2>Crucial Skills</h2>
+
+            <p>The <span class="vocab-words" data-modal-title="World Economic Forum உலக பொருளாதார மன்றம்"
+                    data-modal-meaning="an international non-governmental organisation that engages political, business, cultural and other leaders to shape global, regional and industry agendas."
+                    data-modal-synonyms="WEF, Davos forum">World Economic Forum</span> surveys over 1,000 of the world's
+                largest employers every year and asks them what skills they need most. In the 2025 report covering 14
+                million workers across 55 countries, curiosity and <span class="vocab-words"
+                    data-modal-title="lifelong learning தொடர் கற்றல்"
+                    data-modal-meaning="the ongoing, self-motivated pursuit of knowledge for personal or professional development throughout one's life."
+                    data-modal-synonyms="continuous learning, perpetual education">lifelong learning</span> appeared in
+                the top 10 core skills. <span class="vocab-words"
+                    data-modal-title="analytical thinking பகுப்பாய்வு சிந்தனை"
+                    data-modal-meaning="a methodical, step-by-step approach to thinking that breaks complex problems into smaller, manageable parts."
+                    data-modal-synonyms="critical thinking, logical reasoning">Analytical thinking</span> was number
+                one. <span class="vocab-words" data-modal-title="creative thinking படைப்பாற்றல் சிந்தனை"
+                    data-modal-meaning="the ability to think about things in new and unusual ways, generate novel ideas, and find connections across domains."
+                    data-modal-synonyms="innovation, lateral thinking">Creative thinking</span> was number four. All
+                three require the same underlying <span class="vocab-words"
+                    data-modal-title="disposition மனநிலை / சாய்வு"
+                    data-modal-meaning="a natural tendency or inclination to behave or think in a particular way."
+                    data-modal-synonyms="tendency, inclination, attitude">disposition</span>: a person who finds
+                problems interesting, not threatening; someone who can sit with <span class="vocab-words"
+                    data-modal-title="uncertainty நிச்சயமற்ற நிலை"
+                    data-modal-meaning="the state of being uncertain or not fully known; ambiguity about what will happen."
+                    data-modal-synonyms="ambiguity, unpredictability">uncertainty</span> and not get overwhelmed;
+                someone who actually wants to understand rather than produce the right output.</p>
+
+            <p><span class="vocab-words" data-modal-title="intellectual curiosity அறிவார்ந்த ஆர்வம்"
+                    data-modal-meaning="an intrinsic desire to learn, explore, and understand the world, driven by genuine interest rather than external rewards."
+                    data-modal-synonyms="inquisitiveness, thirst for knowledge">Intellectual curiosity</span> is not a
+                technical skill. You cannot teach it with a <span class="vocab-words"
+                    data-modal-title="coding bootcamp கோடிங் பயிற்சி"
+                    data-modal-meaning="an intensive short-term training programme focused on programming and software development."
+                    data-modal-synonyms="tech training, intensive workshop">coding bootcamp</span>. It is built or
+                destroyed over years of schooling, by the questions a teacher encourages or discourages, by whether a
+                child feels safe not knowing yet, by what gets celebrated in a classroom or, for that matter, even at
+                home.</p>
+
+            <div class="pull-quote">
+                Intellectual curiosity is not a technical skill. It is built or destroyed over years of schooling — by
+                the questions a teacher encourages or discourages.
+            </div>
+
+            <p>The <span class="vocab-words" data-modal-title="NEP 2020 தேசிய கல்வி கொள்கை 2020"
+                    data-modal-meaning="National Education Policy 2020 — India's comprehensive overhaul of its education system, emphasising inquiry-based, competency-led learning over rote memorisation."
+                    data-modal-synonyms="National Education Policy">NEP 2020</span> encourages <span class="vocab-words"
+                    data-modal-title="inquiry-based learning விசாரணை அடிப்படையிலான கற்றல்"
+                    data-modal-meaning="a student-centred pedagogical approach where learners explore questions and problems rather than passively receiving information."
+                    data-modal-synonyms="discovery learning, problem-based learning">inquiry-based</span>, <span
+                    class="vocab-words" data-modal-title="competency-led education திறன் சார்ந்த கல்வி"
+                    data-modal-meaning="an educational approach focused on students demonstrating measurable skills and knowledge, rather than rote completion of courses."
+                    data-modal-synonyms="skills-based education, outcome-led learning">competency-led education</span>
+                and calls for a massive shift away from <span class="vocab-words"
+                    data-modal-title="rote learning மனப்பாடம்"
+                    data-modal-meaning="learning by memorisation rather than through understanding; characterised by repetition without comprehension."
+                    data-modal-synonyms="memorisation, cramming">rote learning</span>. But <span class="vocab-words"
+                    data-modal-title="policy implementation கொள்கை செயலாக்கம்"
+                    data-modal-meaning="the process of translating government policies into concrete action and programmes on the ground."
+                    data-modal-synonyms="policy execution, operationalisation">policy and practical
+                    implementation</span> are completely different things. The <span class="vocab-words"
+                    data-modal-title="CBSE மத்திய இடைநிலைக் கல்விக் குழுமம்"
+                    data-modal-meaning="Central Board of Secondary Education — a national-level board of education in India, controlling and coordinating the public and private schools."
+                    data-modal-synonyms="central board, national board">CBSE</span> allows any combination of subjects
+                but schools face <span class="vocab-words" data-modal-title="curricular challenges பாடத்திட்ட சவால்கள்"
+                    data-modal-meaning="obstacles related to the design, coverage, and delivery of the prescribed course of study in schools."
+                    data-modal-synonyms="curriculum constraints, syllabus pressures">curricular challenges</span>, board
+                exams and parents who want marks.</p>
+
+            <p>But curiosity doesn't require a <span class="vocab-words"
+                    data-modal-title="curriculum overhaul பாடத்திட்ட சீரமைப்பு"
+                    data-modal-meaning="a comprehensive redesign of what schools teach and how, often to align with changing societal or labour-market needs."
+                    data-modal-synonyms="curriculum reform, syllabus revamp">curriculum overhaul</span>. It requires
+                small, deliberate choices. It's noticing which students are quietly curious in ways that don't show up
+                in marks and finding a way to feed that, rather than smooth it over. Today, machines are getting better
+                every year. But what we're not encouraging is what these machines actually need: asking better questions
+                to get better answers!</p>
+
+        </div>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('meaningModal');
+        const modalWord = document.getElementById('modalWordTitle');
+        const modalTamil = document.getElementById('modalTamilTitle');
+        const modalBody = document.getElementById('modalBodyContent');
+        const closeBtn = document.getElementById('modalCloseBtn');
+
+        function wrapAllWords() {
+            const article = document.querySelector('.article-body');
+            const walk = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            let n;
+            while (n = walk.nextNode()) nodes.push(n);
+            nodes.forEach(node => {
+                const parent = node.parentElement;
+                if (parent.closest('.vocab-words') || parent.closest('.vocab-silent') || parent.tagName === 'H2') return;
+                const text = node.nodeValue;
+                if (text.trim().length === 0) return;
+                const replaced = text.replace(/\b([A-Za-z]{4,})\b/g, "<span class='vocab-silent dynamic-word'>$1</span>");
+                if (replaced !== text) {
+                    const temp = document.createElement('span');
+                    temp.innerHTML = replaced;
+                    while (temp.firstChild) parent.insertBefore(temp.firstChild, node);
+                    parent.removeChild(node);
+                }
+            });
+        }
+
+        wrapAllWords();
+
+        function parseTitle(raw) {
+            if (!raw) return { word: '', tamil: '' };
+            const match = raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);
+            if (match) return { word: match[1].trim(), tamil: match[2].trim() };
+            return { word: raw.trim(), tamil: '' };
+        }
+
+        async function openModal(el) {
+            if (el.classList.contains('dynamic-word')) {
+                const word = el.textContent.trim().toLowerCase();
+                modalWord.textContent = word;
+                modalTamil.textContent = 'Translating...';
+                modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                try {
+                    const [dictRes, transRes] = await Promise.allSettled([
+                        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),
+                        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)
+                    ]);
+                    let meaning = '', synonyms = '';
+                    if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+                        const data = await dictRes.value.json();
+                        meaning = data[0]?.meanings[0]?.definitions[0]?.definition || '';
+                        synonyms = (data[0]?.meanings[0]?.synonyms || []).slice(0, 4).join(', ');
+                    }
+                    if (transRes.status === 'fulfilled' && transRes.value.ok) {
+                        const transData = await transRes.value.json();
+                        modalTamil.textContent = transData[0]?.[0]?.[0] || '';
+                    } else { modalTamil.textContent = ''; }
+                    let html = '';
+                    if (meaning) html += row('Meaning', `– ${meaning}`);
+                    if (synonyms) html += row('Synonyms', synonyms);
+                    if (!meaning) html = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found.</p>';
+                    html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                    modalBody.innerHTML = html;
+                } catch (e) {
+                    modalTamil.textContent = '';
+                    modalBody.innerHTML = `<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p><a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+                }
+                return;
+            }
+            const rawTitle = el.dataset.modalTitle || '';
+            const { word, tamil } = parseTitle(rawTitle);
+            modalWord.textContent = word || rawTitle;
+            modalTamil.textContent = tamil;
+            let html = '';
+            if (el.dataset.modalMeaning) html += row('Meaning', el.dataset.modalMeaning);
+            if (el.dataset.modalSynonyms) html += row('Synonyms', el.dataset.modalSynonyms);
+            html += `<a href="https://www.google.com/search?q=${encodeURIComponent(word || rawTitle)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
+            modalBody.innerHTML = html;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function row(label, value) {
+            return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest('.vocab-words, .vocab-silent');
+            if (el) { openModal(el); return; }
+            if (e.target === modal) closeModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+
+</html>
