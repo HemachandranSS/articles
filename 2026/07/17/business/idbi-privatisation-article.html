@@ -6,43 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IDBI Bank’s long, bumpy road to privatisation</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <style>
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        :root{--bg:#f4f1eb;--card-bg:#fffef9;--text:#1a1a1a;--muted:#555;--accent:#1a6b3c;--accent-light:#e8f5ee;--vocab-color:#1a5276;--vocab-hover:#1a6b3c;--modal-bg:#fff;--overlay:rgba(0,0,0,.55);--radius:10px}
-        body{font-family:'Merriweather',Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 16px 80px;line-height:1.9}
-        .article-wrapper{max-width:860px;margin:0 auto;background:var(--card-bg);border-radius:14px;box-shadow:0 4px 32px rgba(0,0,0,.10);overflow:hidden}
-        .article-header{background:linear-gradient(135deg,#0d3325 0%,#1a5c38 60%,#2ecc71 100%);padding:40px 44px 30px;color:#fff}
-        .article-header h1{font-family:'Inter',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.5px;margin-bottom:10px;line-height:1.05}
-        .article-header h1 .vocab-words{color:#f9ca24;border-bottom:2px dashed rgba(249,202,36,.5)}
-        .article-header h1 .vocab-words:hover{color:#fff;border-bottom-color:#fff}
-        .article-header .byline{font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:#a8f0c6;margin-top:10px}
-        .article-header .byline-desc{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:400;color:rgba(255,255,255,.7);line-height:1.5;margin-top:4px;font-style:italic}
-        .article-meta{font-family:'Inter',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);margin-top:18px;letter-spacing:.5px;text-transform:uppercase}
-        .article-body{padding:36px 44px 44px}
-        .article-body p{font-size:1.05rem;color:var(--text);margin-bottom:1.6em;text-align:justify}
-        .article-body h2{font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);margin:2em 0 .6em;text-transform:uppercase;letter-spacing:.5px}
-        .drop-cap::first-letter{float:left;font-size:3.8rem;line-height:.8;font-weight:700;margin:4px 8px 0 0;color:var(--accent);font-family:'Inter',sans-serif}
-        .pull-quote{font-family:'Inter',sans-serif;font-size:1.15rem;font-weight:600;color:var(--accent);padding:16px 24px;border-left:4px solid var(--accent);background:var(--accent-light);margin:2em 0;line-height:1.6}
-        .vocab-words{color:var(--vocab-color);border-bottom:2px dotted var(--vocab-color);cursor:pointer;transition:color .18s,border-color .18s,background .18s;border-radius:2px;padding:0 1px}
-        .vocab-words:hover{color:var(--vocab-hover);border-bottom-color:var(--vocab-hover);background:var(--accent-light)}
-        .vocab-silent{cursor:pointer;border-radius:2px;padding:0 1px;transition:background .15s}
-        .vocab-silent:hover{background:var(--accent-light)}
-        .modal-overlay{display:none;position:fixed;inset:0;background:var(--overlay);z-index:1000;align-items:center;justify-content:center;padding:20px}
-        .modal-overlay.active{display:flex}
-        .modal-box{background:var(--modal-bg);border-radius:var(--radius);max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}
-        .modal-head{background:linear-gradient(90deg,#0d3325,#1a5c38);padding:18px 22px 14px;display:flex;align-items:flex-start;gap:14px}
-        .modal-icon{width:38px;height:38px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem;color:#fff;margin-top:2px}
-        .modal-title-block{flex:1}
-        .modal-word{font-family:'Inter',sans-serif;font-size:1.2rem;font-weight:700;color:#f9ca24;line-height:1.2}
-        .modal-tamil{font-family:'Inter',sans-serif;font-size:.82rem;color:rgba(255,255,255,.65);margin-top:3px;font-style:italic}
-        .modal-close{background:rgba(255,255,255,.12);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
-        .modal-body{padding:20px 22px 24px}
-        .modal-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
-        .modal-label{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);min-width:80px;padding-top:2px}
-        .modal-value{font-family:'Merriweather',serif;font-size:.95rem;color:var(--text);line-height:1.55}
-        .modal-link-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border-radius:999px;background:var(--accent-light);color:var(--accent-dark);border:1px solid rgba(26,107,60,.16);text-decoration:none;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:700;line-height:1;margin-top:8px}
-        @media (max-width:600px){.article-header,.article-body{padding:24px 18px}.article-header h1{font-size:1.45rem}.article-body p{font-size:.97rem}}
-    </style>
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
 </head>
 
 <body>
@@ -87,21 +51,7 @@
         </div>
     </div>
 
-    <script>
-        const modal=document.getElementById('meaningModal');
-        const modalWord=document.getElementById('modalWordTitle');
-        const modalTamil=document.getElementById('modalTamilTitle');
-        const modalBody=document.getElementById('modalBodyContent');
-        const closeBtn=document.getElementById('modalCloseBtn');
-        function wrapAllWords(){const article=document.querySelector('.article-body');const walk=document.createTreeWalker(article,NodeFilter.SHOW_TEXT,null,false);const nodes=[];let n;while(n=walk.nextNode())nodes.push(n);nodes.forEach(node=>{const parent=node.parentElement;if(parent.closest('.vocab-words')||parent.closest('.vocab-silent')||parent.tagName==='H2')return;const text=node.nodeValue;if(text.trim().length===0)return;const replaced=text.replace(/\b([A-Za-z]{4,})\b/g,"<span class='vocab-silent dynamic-word'>$1</span>");if(replaced!==text){const temp=document.createElement('span');temp.innerHTML=replaced;while(temp.firstChild)parent.insertBefore(temp.firstChild,node);parent.removeChild(node);}});}
-        wrapAllWords();
-        function parseTitle(raw){if(!raw)return{word:'',tamil:''};const match=raw.match(/^(.*?)\s*([\u0B80-\u0BFF].*)$/u);if(match)return{word:match[1].trim(),tamil:match[2].trim()};return{word:raw.trim(),tamil:''};}
-        function row(label,value){return `<div class="modal-row"><span class="modal-label">${label}</span><span class="modal-value">${value}</span></div>`;}
-        async function openModal(el){if(el.classList.contains('dynamic-word')){const word=el.textContent.trim().toLowerCase();modalWord.textContent=word;modalTamil.textContent='Translating...';modalBody.innerHTML='<p style="color:#888;font-family:Inter,sans-serif;font-size:0.9rem;">Fetching definition...</p>';modal.classList.add('active');document.body.style.overflow='hidden';try{const [dictRes,transRes]=await Promise.allSettled([fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`),fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(word)}`)]);let meaning='';let synonyms='';if(dictRes.status==='fulfilled'&&dictRes.value.ok){const data=await dictRes.value.json();meaning=data[0]?.meanings[0]?.definitions[0]?.definition||'';const synonymsRaw=data[0]?.meanings[0]?.synonyms||[];synonyms=synonymsRaw.slice(0,4).join(', ');}if(transRes.status==='fulfilled'&&transRes.value.ok){const transData=await transRes.value.json();modalTamil.textContent=transData[0]?.[0]?.[0]||'';}else{modalTamil.textContent='';}let html='';if(meaning)html+=row('Meaning',`– ${meaning}`);if(synonyms)html+=row('Synonyms',synonyms);if(!meaning)html='<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Definition not found in online dictionary.</p>';html+=`<a href="https://www.google.com/search?q=${encodeURIComponent(word)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=html;}catch(e){modalTamil.textContent='';modalBody.innerHTML='<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;margin-bottom:8px;">Error connecting to APIs.</p><a href="https://www.google.com/search?q='+encodeURIComponent(word)+'+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>';}return;}const rawTitle=el.dataset.modalTitle||'';const meaning=el.dataset.modalMeaning||'';const synonyms=el.dataset.modalSynonyms||'';const {word,tamil}=parseTitle(rawTitle);const searchWord=word||rawTitle;modalWord.textContent=searchWord;modalTamil.textContent=tamil;let html='';if(meaning)html+=row('Meaning',meaning);if(synonyms)html+=row('Synonyms',synonyms);html+=`<a href="https://www.google.com/search?q=${encodeURIComponent(searchWord)}+meaning" target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;modalBody.innerHTML=html;modal.classList.add('active');document.body.style.overflow='hidden';}
-        document.addEventListener('click',function(e){const el=e.target.closest('.vocab-words, .vocab-silent');if(el){openModal(el);return;}if(e.target===modal)modal.classList.remove('active');document.body.style.overflow='';});
-        closeBtn.addEventListener('click',function(){modal.classList.remove('active');document.body.style.overflow='';});
-        document.addEventListener('keydown',function(e){if(e.key==='Escape'){modal.classList.remove('active');document.body.style.overflow='';}});
-    </script>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
 </body>
 
 </html>
