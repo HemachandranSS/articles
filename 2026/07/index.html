@@ -46,7 +46,7 @@
             gap: 12px
         }
 
-        a {
+        .links a {
             display: block;
             padding: 16px 18px;
             border-radius: 12px;
@@ -56,12 +56,162 @@
             font-weight: 700
         }
 
-        a span {
+        .links a span {
             display: block;
             font-size: .85rem;
             font-weight: 500;
             color: #a8f0c6;
             margin-top: 4px
+        }
+
+        .article-card {
+            background: #fffef9;
+            border-radius: 10px;
+            box-shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ece9e2;
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 24px;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+            transform: translateY(-2px);
+        }
+
+        .card-accent-bar {
+            width: 4px;
+            flex-shrink: 0;
+            background: #1a6b3c;
+        }
+
+        .article-card.business .card-accent-bar {
+            background: #2f61a1;
+        }
+
+        .article-card.osfy .card-accent-bar {
+            background: #9333ea;
+        }
+
+        .card-body {
+            padding: 14px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tag-business {
+            background: #eaf0f7;
+            color: #1a5276;
+        }
+
+        .tag-osfy {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        .card-topic {
+            font-size: 0.68rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-family: Merriweather, Georgia, serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.4;
+            margin-bottom: 0px;
+        }
+
+        .article-card:hover .card-title {
+            color: #1a6b3c;
+        }
+
+        .card-author {
+            font-size: 0.72rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0;
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: #ddd;
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover .card-arrow {
+            color: #1a6b3c;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .card-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-button.article-link {
+            background: #e8f5ee;
+            color: #0d3325;
+            border-color: rgba(26, 107, 60, 0.15);
+        }
+
+        .card-button.google-link {
+            background: #fff;
+            color: #1f1f1f;
+            border-color: #d9d9d9;
+        }
+
+        .card-button.google-link:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
@@ -81,6 +231,47 @@
         <div class="links">
             <a href="17/index.html">July 17, 2026 <span>Open the day archive</span></a>
         </div>
+        <h1>July 2026 Business Today Issue</h1>
+        <div class="article-card business">
+            <div class="card-accent-bar"></div>
+            <div class="card-body">
+                <div class="card-meta">
+                    <span class="tag tag-business">Business Today</span>
+                    <span class="card-topic">FMCG · Dairy Innovation</span>
+                </div>
+                <div class="card-title">The Milky Way</div>
+                <div class="card-author">Krishna Gopalan</div>
+                <div class="card-actions">
+                    <a class="card-button article-link" target="_blank" href="business_today/the-milky-way.html">Open
+                        Article</a>
+                    <a class="card-button google-link" target="_blank"
+                        href="https://www.google.com/search?q=The+Milky+Way+Business+Today+Krishna+Gopalan+Dairy">Google</a>
+                </div>
+            </div>
+            <div class="card-arrow">›</div>
+        </div>
+
+        <h1>July 2026 Open Source For You</h1>
+        <div class="article-card osfy">
+            <div class="card-accent-bar"></div>
+            <div class="card-body">
+                <div class="card-meta">
+                    <span class="tag tag-osfy">Open Source For You</span>
+                    <span class="card-topic">Science & Tech · Quantum Computing</span>
+                </div>
+                <div class="card-title">How Chemistry and Materials Science can Benefit from Quantum Computing</div>
+                <div class="card-author">Dr Magesh Kasthuri & Dr Anand Nayyar</div>
+                <div class="card-actions">
+                    <a class="card-button article-link" target="_blank"
+                        href="open-source-for-you/how-chemistry-and-materials-science-can-benefit-from-quantum-computing.html">Open
+                        Article</a>
+                    <a class="card-button google-link" target="_blank"
+                        href="https://www.google.com/search?q=How+Chemistry+and+Materials+Science+can+Benefit+from+Quantum+Computing+Open+Source+For+You">Google</a>
+                </div>
+            </div>
+            <div class="card-arrow">›</div>
+        </div>
+
     </main>
 
     <script src="../../assets/js/index.js"></script>
