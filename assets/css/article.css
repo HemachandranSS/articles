@@ -220,8 +220,15 @@ body {
 }
 
 @keyframes popIn {
-    from { transform: scale(0.85); opacity: 0; }
-    to   { transform: scale(1);    opacity: 1; }
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .modal-head {
@@ -246,7 +253,9 @@ body {
     margin-top: 2px;
 }
 
-.modal-title-block { flex: 1; }
+.modal-title-block {
+    flex: 1;
+}
 
 .modal-word {
     font-family: 'Inter', sans-serif;
@@ -280,9 +289,13 @@ body {
     flex-shrink: 0;
 }
 
-.modal-close:hover { background: rgba(255, 255, 255, 0.25); }
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
 
-.modal-body { padding: 20px 22px 24px; }
+.modal-body {
+    padding: 20px 22px 24px;
+}
 
 .modal-row {
     display: flex;
@@ -336,9 +349,85 @@ body {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
-    .article-header,
-    .article-body { padding: 24px 18px; }
 
-    .article-header h1 { font-size: 1.45rem; }
-    .article-body p   { font-size: 0.97rem; }
+    .article-header,
+    .article-body {
+        padding: 24px 18px;
+    }
+
+    .article-header h1 {
+        font-size: 1.45rem;
+    }
+
+    .article-body p {
+        font-size: 0.97rem;
+    }
+}
+
+/* Image Modal Styles */
+.image-modal-box {
+    position: relative;
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 95vw;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.image-modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    max-height: 85vh;
+}
+
+.image-modal-body img {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 6px;
+    cursor: zoom-in;
+}
+
+.image-meta-info {
+    margin-top: 12px;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+}
+
+/* Make article images visually indicate clickability and set default alignment */
+.article-image-figure {
+    margin: 28px 0;
+    text-align: center;
+}
+
+.article-image-figure img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-image-figure figcaption {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.article-image-figure img:hover {
+    transform: scale(1.01);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }

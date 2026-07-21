@@ -164,3 +164,51 @@
     wrapAllWords();
 
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const imageModal = document.getElementById("imageModal");
+    const modalHDImage = document.getElementById("modalHDImage");
+    const imageMetaInfo = document.getElementById("imageMetaInfo");
+    const imgModalCloseBtn = document.getElementById("imgModalCloseBtn");
+
+    // Attach click event to all figures/article images
+    document.querySelectorAll(".article-image-figure img").forEach((img) => {
+        img.addEventListener("click", () => {
+            if (!imageModal) return;
+            modalHDImage.src = img.src;
+            modalHDImage.alt = img.alt || "HD Image";
+
+            // Wait for image load to capture actual HD resolution
+            const tempImg = new Image();
+            tempImg.src = img.src;
+            tempImg.onload = () => {
+                const hdWidth = tempImg.naturalWidth;
+                const hdHeight = tempImg.naturalHeight;
+                imageMetaInfo.innerHTML = `<strong>Resolution:</strong> ${hdWidth} × ${hdHeight} px (HD Original)`;
+            };
+
+            imageModal.style.display = "flex";
+        });
+    });
+
+    // Close Modal Events
+    const closeImgModal = () => {
+        if (!imageModal) return;
+        imageModal.style.display = "none";
+        modalHDImage.src = "";
+    };
+
+    if (imgModalCloseBtn) imgModalCloseBtn.addEventListener("click", closeImgModal);
+
+    if (imageModal) {
+        imageModal.addEventListener("click", (e) => {
+            if (e.target === imageModal) closeImgModal();
+        });
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && imageModal && imageModal.style.display === "flex") {
+            closeImgModal();
+        }
+    });
+});
