@@ -362,6 +362,20 @@ body {
     .article-body p {
         font-size: 0.97rem;
     }
+
+    .key-terms-list {
+        columns: 1 !important;
+        -webkit-columns: 1 !important;
+        -moz-columns: 1 !important;
+    }
+}
+
+/* ── KEY TERMS LIST ── */
+.key-terms-list {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    line-height: 1.8;
 }
 
 /* Image Modal Styles */
