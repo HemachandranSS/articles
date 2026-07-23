@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Security in the Age of AI and Microservices</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        /* Responsive CSS Grid for Key Terminologies List */
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>API Security in the Age of AI and Microservices</h1>
+            <p class="subtitle">Your APIs are doing more than ever. So are the people trying to break them.</p>
+            <p class="byline">BY VISHAL TANNA — OPEN SOURCE FOR YOU (JULY 2026)</p>
+            <p class="article-meta">Cybersecurity & Technology &nbsp;|&nbsp; API Governance, Microservices Architecture
+                & AI Threat Mitigation</p>
+        </header>
+
+        <figure class="article-image-figure">
+            <img src="https://cdn.magzter.com/Linux%20For%20You/1782467129/articles/dInbUFSRcs1qg6JnUs/API-SECURITY-IN-THE-AGE-OF-AI-AND-MICROSERVICES.jpg"
+                alt="API Security in the Age of AI and Microservices Banner Header" />
+            <figcaption>ARTICLE HEADER: Feature illustration from Open Source For You magazine (July 2026) highlighting
+                evolving threat vectors in API security. PHOTO: OPEN SOURCE FOR YOU</figcaption>
+        </figure>
+
+        <div class="article-body">
+            <p class="drop-cap">A couple of months back, a friend of mine called me looking a bit shaken. He runs a
+                small <span class="vocab-words"
+                    data-modal-title="SaaS (Software as a Service) (noun) மென்பொருள் சேவை மாதிரி"
+                    data-modal-meaning="– a software licensing and delivery model in which software is licensed on a subscription basis and centrally hosted."
+                    data-modal-synonyms="cloud software, hosted application, subscription software">SaaS</span>, maybe a
+                thousand customers, nothing huge. Their <span class="vocab-words"
+                    data-modal-title="API (Application Programming Interface) (noun) பயன்பாட்டு நிரலாக்க இடைமுகம்"
+                    data-modal-meaning="– a set of protocols and rules that allow distinct software applications to communicate and exchange data."
+                    data-modal-synonyms="interface, software connector, web service endpoint">API</span> had been
+                quietly leaking data for about three weeks before anyone noticed. Not a hack in the dramatic Hollywood
+                sense. No <span class="vocab-words" data-modal-title="firewall (noun) பிணையத் தடுப்புச்சுவர்"
+                    data-modal-meaning="– a network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules."
+                    data-modal-synonyms="network filter, traffic barrier, security gateway">firewall</span> got smashed
+                through. No <span class="vocab-words"
+                    data-modal-title="zero-day exploit (noun phrase) பூஜ்ஜிய நாள் பாதுகாப்பு துஷ்பிரயோகம்"
+                    data-modal-meaning="– a cyber attack that targets a software vulnerability previously unknown to the software vendor."
+                    data-modal-synonyms="unpatched vulnerability attack, zero-day threat, undisclosed flaw exploit">zero-day
+                    exploit</span>. Somebody had just figured out that one of their <span class="vocab-words"
+                    data-modal-title="endpoints (noun) தகவல் தொடர்பு முனைப்புள்ளிகள்"
+                    data-modal-meaning="– specific URLs or URI paths where APIs receive requests and access resources."
+                    data-modal-synonyms="API URLs, access routes, web interfaces">endpoints</span> accepted a customer
+                ID in the URL and didn’t bother checking whether the person making the request owned that ID. So they
+                wrote a tiny script. Looped through IDs one through fifty thousand. Pulled down whatever came back.</p>
+
+            <p>What got me wasn’t the breach itself. It was how ordinary it was. No movie villain. No nation-state
+                actor. Just a bored person with <span class="vocab-words"
+                    data-modal-title="curl (noun) கர்ல் கட்டளை வரி கருவி"
+                    data-modal-meaning="– a command-line tool used to transfer data to or from a server using various network protocols."
+                    data-modal-synonyms="HTTP command-line client, data transfer utility, URL fetch tool">curl</span>
+                and a text editor. And here’s the thing that really sticks with me. With AI tools today, you don’t even
+                need to bore someone with curl. You can ask a model to write the script, point it at any API, and walk
+                away while it goes hunting.</p>
+
+            <p>That’s where we are now. APIs are the connective tissue of pretty much every product anyone ships. <span
+                    class="vocab-words" data-modal-title="microservices (noun) நுண் சேவைகள் கட்டமைப்பு"
+                    data-modal-meaning="– an architectural style that structures an application as a collection of small, autonomous services."
+                    data-modal-synonyms="modular services, decoupled architecture, distributed services">Microservices</span>
+                talk to each other through them. Mobile apps depend on them. Partners integrate through them. <span
+                    class="vocab-words" data-modal-title="AI agents (noun phrase) செயற்கை நுண்ணறிவு முகவர்கள்"
+                    data-modal-meaning="– autonomous software programs powered by AI that perform multi-step tasks and make API calls independently."
+                    data-modal-synonyms="autonomous agents, AI bots, LLM agents">AI agents</span> are starting to use
+                them autonomously, which is its own can of worms. And the attackers have new tools too.</p>
+
+            <p>So let’s talk about what’s changed, and what you can do about it that doesn’t require a security budget
+                you don’t have.</p>
+
+            <h2>The world your API lives in now</h2>
+            <p>A few years ago, when you said ‘API’, you usually meant a single <span class="vocab-words"
+                    data-modal-title="backend (noun) பின்புல சேவை அமைப்பு"
+                    data-modal-meaning="– the server side of an application responsible for data processing, database operations, and core logic."
+                    data-modal-synonyms="server-side, core application server, data layer">backend</span> serving a
+                single <span class="vocab-words" data-modal-title="frontend (noun) முன்பக்கப் பயனர் இடைமுகம்"
+                    data-modal-meaning="– the presentation layer of an application that users interact with directly."
+                    data-modal-synonyms="user interface (UI), client-side, presentation layer">frontend</span>. Maybe a
+                couple of mobile clients too. The traffic was mostly humans clicking buttons, the shape was predictable,
+                and you had a decent sense of who your callers were.</p>
+
+            <p>That’s not the world anymore. Today your typical mid-sized product might have anywhere from ten to a
+                hundred microservices, all calling each other constantly. There’s a public API for partners. There’s a
+                mobile app. There’s a <span class="vocab-words"
+                    data-modal-title="webhook system (noun phrase) வெப்ஹூக் நிகழ்வு அறிவிப்பு அமைப்பு"
+                    data-modal-meaning="– an automated system that pushes real-time event notifications to other applications via HTTP POST requests."
+                    data-modal-synonyms="event callback system, HTTP push framework, automated alert pipeline">webhook
+                    system</span> pushing events out to integrations. There’s maybe an internal automation that hits
+                your endpoints from a <span class="vocab-words"
+                    data-modal-title="queue worker (noun phrase) வரிசை செயலாக்க நிரல்"
+                    data-modal-meaning="– a background process that pulls and executes asynchronous tasks from a job queue."
+                    data-modal-synonyms="background job processor, task consumer, async worker">queue worker</span>. And
+                now, increasingly, there are AI agents calling your API on behalf of users, making decisions you didn’t
+                anticipate, and stringing together requests in ways no human ever would.</p>
+
+            <p>Each of these callers has different needs, different risk profiles, different ways of misbehaving. And
+                every single one of them is a door into your system.</p>
+
+            <p>The old model of “I’ll just put authentication on it and call it a day” doesn’t really cut it anymore.
+                You need to think about who’s calling, what they’re allowed to ask for, how often, in what patterns, and
+                what to do when the pattern starts looking weird.</p>
+
+            <h2>Why AI changed the game, even for people who aren’t using AI</h2>
+            <p>I’ll be honest. A year ago I thought a lot of the “AI changes everything in security” talk was overhyped.
+                It felt like every vendor was slapping AI onto their pitch deck. Then I watched a junior engineer at a
+                meetup write, in about forty minutes, a passable API <span class="vocab-words"
+                    data-modal-title="fuzzer (noun) பிழை சோதனைக் கருவி (ஃப்பஸர்)"
+                    data-modal-meaning="– an automated testing tool that inputs malformed or random data into software to discover security vulnerabilities."
+                    data-modal-synonyms="fuzzing tool, fault injection utility, automated vulnerability scanner">fuzzer</span>
+                using nothing but an <span class="vocab-words"
+                    data-modal-title="LLM (Large Language Model) (noun phrase) பெரிய மொழி மாதிரி"
+                    data-modal-meaning="– an AI model trained on massive amounts of text data capable of understanding and generating human-like code and language."
+                    data-modal-synonyms="generative AI model, neural language model, AI core">LLM</span> and a coffee.
+                No security background. No exploit knowledge. Just curiosity and the ability to ask good questions.</p>
+
+            <p>That moment changed my mind. The barrier to entry for poking at APIs has collapsed. What used to require
+                some skill and patience now requires the ability to type. Attackers don’t need to be experts anymore.
+                They need an idea and access to a model.</p>
+
+            <p>And here’s the other side. AI agents are now legitimate callers of APIs. Tools like assistants and
+                automations are out there in the wild, making API calls on behalf of real users. They sometimes make
+                weird requests. They sometimes <span class="vocab-words"
+                    data-modal-title="hallucinate parameters (verb phrase) தவறான அல்லது கற்பனை அளவுருக்களை உருவாக்குதல்"
+                    data-modal-meaning="– when generative AI models generate non-existent or incorrect API request keys/values."
+                    data-modal-synonyms="generate invalid inputs, fabricate query params, yield malformed data">hallucinate
+                    parameters</span>. They sometimes loop because they think they got the wrong answer the first time.
+                Your API needs to be okay with this, but also not be easily tricked by it.</p>
+
+            <p>So you’ve got two trends pushing at the same time. The pool of people who can attack your API just got
+                way bigger. And the pool of legitimate nonhuman callers also just got way bigger. Distinguishing between
+                the two is the new game.</p>
+
+            <h2>The five things that go wrong most often</h2>
+            <p>After looking at way too many API breach postmortems, I’ve started to notice the same handful of issues
+                coming up over and over. The <span class="vocab-words"
+                    data-modal-title="OWASP API Security Top 10 (noun phrase) OWASP API பாதுகாப்பு முதல் 10 விதிகளின் பட்டியல்"
+                    data-modal-meaning="– a standard awareness document outlining the most critical security risks facing web APIs."
+                    data-modal-synonyms="OWASP Top 10, API security standard, web vulnerability guide">OWASP API
+                    Security Top 10</span> covers them formally if you want the official list, but here’s the
+                plain-English version of the ones I see most.</p>
+
+            <ul>
+                <li><strong><span class="vocab-words"
+                            data-modal-title="Broken Object-Level Authorisation (BOLA) (noun phrase) பொருள் நிலை அதிகார அங்கீகாரக் கோளாறு"
+                            data-modal-meaning="– a vulnerability where an API fails to verify whether a user has permission to access a specific resource object ID."
+                            data-modal-synonyms="IDOR, insecure direct object reference, object access flaw">Broken
+                            object-level authorisation</span>:</strong> This is the one my friend got hit by. Your
+                    endpoint takes an ID, returns the object, but doesn’t check whether the caller actually has the
+                    right to see that object. Embarrassingly common.</li>
+                <li><strong>Weak or missing authentication:</strong> Tokens that don’t expire. Tokens whose signatures
+                    aren’t being verified. Basic auth with hard-coded credentials still in use because it works and
+                    nobody wants to touch it.</li>
+                <li><strong><span class="vocab-words"
+                            data-modal-title="Excessive Data Exposure (noun phrase) அதிகப்படியான தரவு வெளிப்பாடு"
+                            data-modal-meaning="– when an API returns more data fields than necessary in the response, relying on the client side to filter them out."
+                            data-modal-synonyms="over-fetching, sensitive data leak, unfiltered API response">Excessive
+                            data exposure</span>:</strong> Your endpoint returns the full user object including the
+                    password hash and the internal admin notes, and the frontend just shows the name. The frontend
+                    hiding field is not the same as the backend not sending them.</li>
+                <li><strong>Missing rate limits:</strong> An endpoint that can be called ten thousand times in a minute
+                    by a single client is essentially an open door for scraping, brute force, and denial of service.
+                </li>
+                <li><strong>Outdated dependencies:</strong> Half the breaches I read about start with a library that had
+                    a known vulnerability which nobody patched. Boring. Preventable. Still happens constantly.</li>
+            </ul>
+
+            <p>If you fix nothing else this quarter, fix these five. I mean it.</p>
+
+            <h2>Authentication and authorisation are not the same thing</h2>
+            <p>This trips up so many developers that it’s worth saying clearly. <span class="vocab-words"
+                    data-modal-title="Authentication (noun) பயனடையாளச் சரிபார்ப்பு"
+                    data-modal-meaning="– the process of verifying who a user or entity identity claims to be."
+                    data-modal-synonyms="identity verification, credential checking, user verification">Authentication</span>
+                is who you are. <span class="vocab-words" data-modal-title="Authorisation (noun) அதிகார அனுமதி அளிப்பு"
+                    data-modal-meaning="– the process of determining what actions or data an authenticated identity is permitted to access."
+                    data-modal-synonyms="permission control, access rights check, privilege validation">Authorisation</span>
+                is what you’re allowed to do.</p>
+
+            <p>Authentication is mostly a solved problem at this point. <span class="vocab-words"
+                    data-modal-title="OAuth 2.0 (noun phrase) ஓ-ஆத் 2.0 அணுகல் தரநிலை"
+                    data-modal-meaning="– an industry-standard authorization framework enabling third-party application access without sharing user credentials."
+                    data-modal-synonyms="token authorization protocol, delegation framework, open auth standard">OAuth
+                    2.0</span>, <span class="vocab-words"
+                    data-modal-title="OpenID Connect (OIDC) (noun phrase) ஓபன் ஐடி கனெக்ட் நெறிமுறை"
+                    data-modal-meaning="– an identity layer built on top of the OAuth 2.0 framework to verify end-user identities."
+                    data-modal-synonyms="OIDC, identity protocol, user authentication layer">OpenID Connect</span>,
+                <span class="vocab-words" data-modal-title="JWTs (JSON Web Tokens) (noun phrase) ஜேசன் வெப் டோக்கன்கள்"
+                    data-modal-meaning="– compact, URL-safe means of representing claims to be transferred between two parties cryptographically."
+                    data-modal-synonyms="JSON tokens, signed web tokens, auth bearer tokens">JWTs</span> signed with
+                proper algorithms. The libraries exist. The patterns are well known. You can mess it up, but the path to
+                doing it right is clear.
+            </p>
+
+            <p>Authorisation is where most apps fall apart. And it’s harder because it depends on your specific business
+                logic. There’s no library that knows whether user 47291 should be allowed to update invoice 88420. That
+                depends on whether user 47291 owns the invoice, or works for the company that owns it, or has been
+                delegated permission, or any number of other things that are unique to your product.</p>
+
+            <p>Here’s the simplest version of what an authorisation check on a per-object basis might look like in a
+                node service:</p>
+
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1782467129/articles/dInbUFSRcs1qg6JnUs/LkpkwGpNp1782806238001.jpg"
+                    alt="Code Example 1: Node.js Object Level Authorization Check" />
+                <figcaption>CODE SNIPPET 1: Per-object ownership authorization check implemented in a Node.js API route
+                    to prevent BOLA vulnerabilities. PHOTO: OPEN SOURCE FOR YOU</figcaption>
+            </figure>
+
+            <p>It’s three extra lines. Three lines that prevent your API from becoming the next inventory script story.
+                Yet I see endpoints without this check probably more often than I see endpoints with it. The trick is to
+                make this check impossible to forget. Either build a <span class="vocab-words"
+                    data-modal-title="middleware (noun) இடைநிலைச் மென்பொருள்"
+                    data-modal-meaning="– software that bridges gaps between lower-level applications or frameworks and request processing pipelines."
+                    data-modal-synonyms="request handler, pipeline filter, interceptor">middleware</span> that runs on
+                every request and checks ownership, or push authorisation into a policy layer like <span
+                    class="vocab-words" data-modal-title="Open Policy Agent (OPA) (noun phrase) திறந்த கொள்கை முகவர்"
+                    data-modal-meaning="– an open-source, general-purpose policy engine that decouples policy decisions from application code."
+                    data-modal-synonyms="OPA policy engine, centralized access control, authorization engine">Open
+                    Policy Agent</span> so it’s centralised and reviewable. Whatever you do, don’t rely on every
+                developer to remember every time.</p>
+
+            <h2>Microservices made the problem harder, then easier, then harder again</h2>
+            <p>When microservices first became the thing, a lot of teams ran into a weird security problem. Inside the
+                <span class="vocab-words" data-modal-title="cluster (noun) கணினித் தொகுப்பு (கிளஸ்டர்)"
+                    data-modal-meaning="– a set of connected servers or containers working together to run microservice applications."
+                    data-modal-synonyms="server cluster, container group, Kubernetes cluster">cluster</span>, services
+                trusted each other completely. The reasoning was: we’re all behind the same firewall, so what could go
+                wrong? Well, quite a lot, especially once attackers got a foothold in any one service and could pivot
+                freely from there.
+            </p>
+
+            <p>The industry’s answer to this has been <span class="vocab-words"
+                    data-modal-title="mutual TLS (mTLS) (noun phrase) பரஸ்பர டிரான்ஸ்போர்ட் லேயர் செக்யூரிட்டி"
+                    data-modal-meaning="– two-way cryptographic authentication where both client and server verify each other's X.509 certificates."
+                    data-modal-synonyms="two-way TLS, mutual authentication, dual-certificate verification">mutual
+                    TLS</span> and <span class="vocab-words"
+                    data-modal-title="service meshes (noun phrase) சேவை வலைப்பின்னல் கட்டமைப்பு"
+                    data-modal-meaning="– a dedicated infrastructure layer for handling service-to-service communication, security, and observability."
+                    data-modal-synonyms="service network, microservice mesh, Istio/Linkerd infrastructure">service
+                    meshes</span>. Both ends of every internal connection authenticate each other cryptographically.
+                Identity flows through the mesh transparently. You write your service like it’s calling plain HTTP, and
+                the mesh handles the encryption and identity verification.</p>
+
+            <p>If you’re using Istio, Linkerd, or Cilium, you get a lot of this for free. Worth setting up if you
+                haven’t. The first time you watch a service refuse to talk to another service that isn’t supposed to be
+                calling it, you'll wonder how you ever lived without it.</p>
+
+            <p>The harder part again is that microservices multiply the number of places where things can go wrong.
+                Every internal endpoint is a potential entry point if an attacker manages to land somewhere in your
+                cluster. So the same care you’d put into public endpoints needs to extend inward. No service should
+                trust another service just because they share a network.</p>
+
+            <h2>Rate limiting, the boring superpower</h2>
+            <p>Nothing about <span class="vocab-words" data-modal-title="rate limiting (noun phrase) வீதக் கட்டுப்பாடு"
+                    data-modal-meaning="– a strategy for limiting network traffic by capping how often a user/IP can repeat an action within a timeframe."
+                    data-modal-synonyms="throttling, traffic shaping, request capping">rate limiting</span> is exciting.
+                Nobody puts “implemented sophisticated rate limiting” on their resume. And yet I would bet that more
+                breaches and abuse incidents are prevented by a thoughtful rate limit than by any other single
+                technique.</p>
+
+            <p>The idea is simple. Limit how many requests a given caller can make in a given window. If they exceed it,
+                slow them down or reject them outright. This blunts pretty much every automated attack. <span
+                    class="vocab-words"
+                    data-modal-title="Credential stuffing (noun phrase) திருடப்பட்ட சான்றுகளால் தாக்குதல்"
+                    data-modal-meaning="– automated injection of stolen username/password pairs into website login forms to gain unauthorized access."
+                    data-modal-synonyms="automated login attack, account takeover attempt, credential replay">Credential
+                    stuffing</span>. Scraping. Enumeration. <span class="vocab-words"
+                    data-modal-title="Brute force (noun phrase) முரட்டுத்தனமான கடவுச்சொல் தாக்குதல்"
+                    data-modal-meaning="– a trial-and-error method used to guess passwords or encryption keys by attempting every possible combination."
+                    data-modal-synonyms="dictionary attack, exhaustive key search, automated guessing">Brute
+                    force</span>. All of them depend on being able to make a lot of requests quickly. Take that away and
+                the attacker gets bored and moves on.</p>
+
+            <p>The trick is that rate limits aren’t one-size-fits-all. A user logging in might reasonably make five
+                login attempts in a few minutes. An automation pulling reports might reasonably make a thousand requests
+                in a few minutes. A public unauthenticated endpoint should be much more restricted than an authenticated
+                one.</p>
+
+            <p>Tools like NGINX, Envoy, or cloud-managed <span class="vocab-words"
+                    data-modal-title="API gateways (noun phrase) API நுழைவாயில்கள்"
+                    data-modal-meaning="– an API management tool that sits between a client and a collection of backend services to manage traffic and routing."
+                    data-modal-synonyms="API reverse proxy, edge gateway, routing proxy">gateways</span> can do this for
+                you. Or you can do it in your application using libraries like express-rate-limit for Node or
+                django-ratelimit for Django. Wherever you put it, just put it somewhere.</p>
+
+            <p>A reasonable starting point might look like this in Express:</p>
+
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1782467129/articles/dInbUFSRcs1qg6JnUs/VAOrudLR11782806291792.jpg"
+                    alt="Code Example 2: Express Rate Limiting Implementation" />
+                <figcaption>CODE SNIPPET 2: Rate-limiting middleware set up in Express.js capping login attempts to 5
+                    per 15 minutes. PHOTO: OPEN SOURCE FOR YOU</figcaption>
+            </figure>
+
+            <p>Five attempts per fifteen minutes for login. That single change makes credential stuffing impractical for
+                most attackers.</p>
+
+            <h2>Input validation and the lie of frontend safety</h2>
+            <p>I’ve said this in the previous article (OSFY, June 2026) and I'll say it again because it bears
+                repeating. Frontend validation is a UX feature, not a security feature. Anyone with curl, or these days
+                anyone with an LLM and ten minutes, can skip your beautiful form and hit your API with whatever shape of
+                data they want.</p>
+
+            <p>Validate everything on the server. Use a <span class="vocab-words"
+                    data-modal-title="schema validator (noun phrase) தரவுத் திட்டச் சரிபார்ப்பி"
+                    data-modal-meaning="– a library that verifies incoming data payloads against a predefined structural blueprint or schema."
+                    data-modal-synonyms="data validator, JSON schema parser, input sanitizer">schema validator</span>
+                like Zod, Joi, Yup, or Pydantic for Python. Define exactly what shape each endpoint accepts. Reject
+                anything that doesn’t match. Don’t try to be clever. Don’t try to coerce weird input into the right
+                shape. Just reject it.</p>
+
+            <p>This sounds obvious, but I see APIs that happily accept extra fields and stick them straight into a
+                database insert without checking. That’s how you get <span class="vocab-words"
+                    data-modal-title="mass assignment vulnerabilities (noun phrase) திரள் தரவுப் பணிப்புப் பாதுகாப்புப் பிழை"
+                    data-modal-meaning="– flaws where unverified client-supplied properties automatically overwrite sensitive internal database fields."
+                    data-modal-synonyms="auto-binding vulnerability, over-posting flaw, parameter pollution">mass
+                    assignment vulnerabilities</span>, where a user sends
+                <code>{ “name”: “Alice”, “isAdmin”: true }</code> and your endpoint dutifully grants them admin rights
+                because nobody filtered the input.
+            </p>
+
+            <p>The pattern is simple. Define the shape you expect. Strip everything else. Trust nothing.</p>
+
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1782467129/articles/dInbUFSRcs1qg6JnUs/wrmbK6fuL1782806331287.jpg"
+                    alt="Code Example 3: Server-side Schema Validation with Zod" />
+                <figcaption>CODE SNIPPET 3: Strict input validation schema built using Zod to block mass-assignment
+                    attacks and enforce structural hygiene. PHOTO: OPEN SOURCE FOR YOU</figcaption>
+            </figure>
+
+            <p>That <code>.strict()</code> at the end is the magic. It rejects requests with unexpected fields, instead
+                of silently passing them through.</p>
+
+            <h2>Logging without leaking, monitoring without panicking</h2>
+            <p>You need logs to figure out what happened. But logs can become a security problem if you’re not careful.
+            </p>
+
+            <p>The most common mistake is logging request bodies wholesale. Some of those bodies contain passwords, API
+                keys, credit card numbers, personal data. Once that ends up in your <span class="vocab-words"
+                    data-modal-title="log aggregator (noun phrase) பதிவுத் தொகுப்பு அமைப்பு"
+                    data-modal-meaning="– a centralized software platform that collects, organizes, and parses logs from multiple application services."
+                    data-modal-synonyms="centralized logging, log management system, SIEM aggregator">log
+                    aggregator</span>, you’ve effectively expanded the scope of where that sensitive data lives. Now
+                your logging system needs the same protections as your database.</p>
+
+            <p>A better approach is to decide ahead of time what’s worth logging. Method, path, status code, response
+                time, the identity of the caller, any error code. Skip the body unless you’ve explicitly scrubbed it of
+                sensitive fields. Some logging libraries have builtin <span class="vocab-words"
+                    data-modal-title="redaction (noun) உணர்திறன் தரவுத் திருத்தம் / நீக்கம்"
+                    data-modal-meaning="– the process of removing or masking confidential information from documents or log outputs."
+                    data-modal-synonyms="data masking, sanitization, sensitive field stripping">redaction</span>. Use
+                it.</p>
+
+            <p>On the monitoring side, watch for patterns rather than individual events. A single 401 doesn’t mean
+                anything. A thousand 401s from one IP in five minutes means something. A user account that suddenly
+                starts hitting endpoints it has never hit before, especially in rapid succession, is worth a look. A
+                spike in 500 errors on an endpoint that’s been quiet for months is interesting.</p>
+
+            <p>Tools like Datadog, Grafana, or Elastic Stack can help you set up these kinds of alerts. The key is to
+                alert on patterns that are actually unusual, not just on raw thresholds, or you’ll drown in noise and
+                stop paying attention.</p>
+
+            <h2>Secrets, tokens, and the mess people make of them</h2>
+            <p>I covered this in the zero-trust article (OSFY, June 2026), but it’s worth revisiting in the API-specific
+                context because the patterns are slightly different.</p>
+
+            <p>API keys are still everywhere, and that’s mostly okay if you treat them like passwords. Rotate them.
+                Don’t commit them to git. Use a <span class="vocab-words"
+                    data-modal-title="secrets manager (noun phrase) இரகசிய மேலாண்மை மென்பொருள்"
+                    data-modal-meaning="– a secure vault system used to store, rotate, and manage sensitive credentials and API tokens."
+                    data-modal-synonyms="key vault, credentials manager, HashiCorp Vault">secrets manager</span>. Give
+                each integration its own key so you can revoke them individually. Set expiry dates and enforce them.</p>
+
+            <p>For internal service-to-service calls, prefer short-lived tokens issued by an identity service over
+                long-lived API keys. The pattern is similar to user authentication, just with services as the subject.
+                <span class="vocab-words"
+                    data-modal-title="SPIFFE-style workload identities (noun phrase) SPIFFE தரநிலை பணிச்சுமை அடையாளங்கள்"
+                    data-modal-meaning="– standard framework providing secure, cryptographically verifiable identities to software workloads in cloud platforms."
+                    data-modal-synonyms="workload ID framework, cryptographic workload identity, SPIRE tokens">SPIFFE-style
+                    workload identities</span> are great for this if you’re at the scale where managing tokens by hand
+                becomes a chore.
+            </p>
+
+            <p>For partner APIs and public APIs, OAuth 2.0 with proper <span class="vocab-words"
+                    data-modal-title="scopes (noun) அணுகல் வரம்புகள் (ஸ்கோப்ஸ்)"
+                    data-modal-meaning="– defined boundaries or permission sets granted to an access token specifying allowed actions."
+                    data-modal-synonyms="permission boundaries, token permissions, access scopes">scopes</span> is your
+                friend. Define scopes that mean something. <code>read:invoices</code> and <code>write:invoices</code>
+                are different things and should be granted separately. Don’t fall into the trap of giving every
+                integration full access just because it’s easier.</p>
+
+            <p>And please, please, do not put API keys in mobile apps and call them secret. Anyone with a few minutes
+                and the right tools can pull every string out of your APK or IPA. Mobile apps should authenticate
+                through a user session, not through a shared secret embedded in the binary.</p>
+
+            <h2>When AI agents are calling your API</h2>
+            <p>This is the new wrinkle and it’s worth thinking about specifically. AI agents acting on behalf of users
+                are starting to show up as legitimate callers. They’re going to make requests that look weird. They’re
+                going to retry things. They’re going to hallucinate parameters and send you nonsense. They’re also going
+                to be targeted by attackers trying to manipulate them into doing things they shouldn’t.</p>
+
+            <p>A few things help. First, treat agent traffic as a distinct caller category if you can. Issue tokens
+                specifically for agent use, with scopes that reflect what an agent should be allowed to do on the user’s
+                behalf. Don’t just give them the user’s full session.</p>
+
+            <p>Second, watch for unusual patterns. An agent that suddenly starts trying to access a different user’s
+                data is either compromised or being manipulated. Either way, that’s worth alerting on.</p>
+
+            <p>Third, think hard about destructive actions. If an agent can delete records, transfer money, or send
+                messages to other people, those actions should require additional confirmation or be subject to stricter
+                rate limits. The cost of an agent making a mistake on a read endpoint is small. The cost of an agent
+                being tricked into wiring money somewhere is not.</p>
+
+            <p><span class="vocab-words" data-modal-title="Prompt injection (noun phrase) தூண்டுதல் ஊடுருவல் தாக்குதல்"
+                    data-modal-meaning="– a vulnerability where untrusted inputs manipulate an LLM into performing unauthorized actions or bypassing safety guardrails."
+                    data-modal-synonyms="LLM manipulation attack, indirect prompt injection, prompt hijacking">Prompt
+                    injection</span>, where an attacker tries to manipulate an AI agent through cleverly crafted input,
+                is a whole topic of its own. The short version is that your API can’t assume the agent is operating with
+                clean inputs. Treat agent requests as semi-trusted, not fully trusted, and design accordingly.</p>
+
+            <h2>Versioning, deprecation, and the long tail of old endpoints</h2>
+            <p>Here’s a quiet problem that gets very loud at the worst times. You released version 1 of your API four
+                years ago. You released version 2 two years ago. You released version 3 last month. You documented
+                version 3. You forgot about version 1 entirely. And it’s still out there, still serving traffic, still
+                using the authentication patterns you’ve since abandoned.</p>
+
+            <p>This is how a lot of breaches happen. Not through the shiny new endpoint. Through the forgotten old one.
+            </p>
+
+            <p>Build <span class="vocab-words" data-modal-title="deprecation (noun) வழக்கிலிழக்கச் செய்தல்"
+                    data-modal-meaning="– the process of declaring an API version or feature obsolete before completely shutting it down."
+                    data-modal-synonyms="phasing out, retirement, obsolescence marking">deprecation</span> into your API
+                design from day one. Mark old versions clearly. Communicate end-of-life dates aggressively. Turn off
+                endpoints when their time is up, even if it means breaking the one customer who never migrated.
+                Especially if it means breaking the one customer who never migrated.</p>
+
+            <p>Audit your API surface regularly. Pull a list of every endpoint that’s receiving traffic. Compare it to
+                what’s documented. Anything on the list that isn’t in the docs is a candidate for removal. Anything in
+                the docs that isn’t on the list is a candidate for being formally deprecated.</p>
+
+            <h2>What you can do this week, this month, this quarter</h2>
+            <p><strong>This week</strong>, pick your three highest traffic endpoints. Look at the authorisation logic.
+                Make sure each one checks not just authentication but also whether the caller is allowed to do what
+                they're asking. If any of them just check "is this user logged in" and then return the requested object
+                regardless of ownership, fix that first.</p>
+
+            <p><strong>This month</strong>, audit your authentication. Are tokens actually being verified properly? Are
+                signatures being checked? Are expiry times reasonable? Is there a way to revoke a token if it leaks? If
+                the answer to any of these is "I'm not sure," go find out.</p>
+
+            <p>Add rate limiting to your login endpoint, your password reset endpoint, and any endpoint that returns
+                sensitive data or sends emails. Five per fifteen minutes is a reasonable starting point for human-facing
+                endpoints.</p>
+
+            <p><strong>This quarter</strong>, set up structured logging if you don't have it. Ship the logs somewhere
+                central. Set up alerts on the patterns that matter.</p>
+
+            <p>Review your dependency tree for known vulnerabilities, ideally with an automated tool that runs on every
+                build. Tools like Snyk, Dependabot, or npm audit do most of the work for you.</p>
+
+            <p>Then keep going. Security isn't a project you finish. It's a habit that gets a bit stronger every sprint.
+            </p>
+
+            <h2>The road ahead</h2>
+            <p>A few trends worth keeping an eye on.</p>
+            <ul>
+                <li><strong>AI-powered API testing tools</strong> are getting genuinely useful, both for defenders and
+                    attackers. Tools like StackHawk and similar are starting to use LLMs to generate test cases that
+                    explore weird edge cases human testers would miss. Worth experimenting with.</li>
+                <li><strong>API gateways are getting smarter.</strong> Modern ones can do <span class="vocab-words"
+                        data-modal-title="anomaly detection (noun phrase) முரண்பாடு கண்டறிதல்"
+                        data-modal-meaning="– the identification of unexpected items or patterns in data that do not conform to expected normal behavior."
+                        data-modal-synonyms="outlier detection, behavioral analysis, pattern discrepancy alert">anomaly
+                        detection</span>, automatically block suspicious patterns, and integrate with identity providers
+                    in ways that would have been a major engineering effort a few years ago. If you're still rolling
+                    your own gateway logic, it might be worth seeing what's available off the shelf.</li>
+                <li><strong><span class="vocab-words" data-modal-title="GraphQL (noun) வரைபட வினவல் மொழி"
+                            data-modal-meaning="– a query language for APIs and runtime for fulfilling queries with existing data providing clients exact control over fetched data."
+                            data-modal-synonyms="graph query language, dynamic API query spec, declarative API protocol">GraphQL</span>
+                        is everywhere now</strong> and it brings its own set of security headaches. <span
+                        class="vocab-words"
+                        data-modal-title="Query complexity attacks (noun phrase) வினவல் சிக்கல் தாக்குதல்கள்"
+                        data-modal-meaning="– malicious nested queries crafted to exhaust server CPU and memory by triggering combinatorial database lookups."
+                        data-modal-synonyms="nested GraphQL DoS, query depth attack, resource exhaustion query">Query
+                        complexity attacks</span>, where someone sends a deeply nested query that takes your server
+                    forever to resolve, are common enough that you should specifically defend against them if you're
+                    using GraphQL. Depth limits and query cost analysis are your friends.</li>
+                <li><strong>And the regulatory environment is tightening.</strong> Data protection laws around the world
+                    are becoming more demanding about how you handle API access, especially for personal data. Building
+                    security in from the start is going to be more cost-effective than retrofitting it when the rules
+                    change.</li>
+            </ul>
+
+            <h2>Code that doesn't trust anyone, including itself</h2>
+            <p>The honest reality is that there's no point at which your API is "secure" and you can stop thinking about
+                it. Every new feature is a new surface. Every new integration is a new caller. Every new tool the
+                attackers get is a new way in. The best you can do is build the habit of doubting your own code,
+                validating every input, checking every permission, logging every meaningful action, and reviewing what
+                you've shipped on a regular schedule. The teams that take this seriously rarely show up in the news. The
+                ones that don't eventually do. Pick a few habits from this article, especially the ones that apply most
+                to what you're building. Start this week. Your API doesn't need to be perfect. It just needs to be a
+                less appealing target than the next one. Most of the time, that's enough.</p>
+
+            <hr style="margin: 2rem 0; border: none; border-top: 1px solid #e2e8f0;" />
+
+            <p><strong>List of 50 Key Terminologies Highlighted in this Article (UPSC GS-III & Security Focus):</strong>
+            </p>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Broken Object Level Authorization (BOLA)</strong> (பொருள் நிலை அதிகார அங்கீகாரக் கோளாறு)
+                </li>
+                <li><strong>Zero-Day Vulnerabilities & Exploits</strong> (பூஜ்ஜிய நாள் பாதுகாப்புப் பலவீனங்கள்)</li>
+                <li><strong>Microservices Architecture Security</strong> (நுண் சேவைகள் கட்டமைப்புப் பாதுகாப்பு)</li>
+                <li><strong>Autonomous AI Agents & API Calls</strong> (தன்னாட்சி AI முகவர்கள் மற்றும் API அழைப்புகள்)
+                </li>
+                <li><strong>Mutual Transport Layer Security (mTLS)</strong> (பரஸ்பர டிரான்ஸ்போர்ட் லேயர் பாதுகாப்பு)
+                </li>
+                <li><strong>Service Mesh Identity Protocols</strong> (சேவை வலைப்பின்னல் அடையாள நெறிமுறைகள்)</li>
+                <li><strong>Open Policy Agent (OPA) Framework</strong> (திறந்த கொள்கை முகவர் கட்டமைப்பு)</li>
+                <li><strong>Credential Stuffing & Brute Force Defense</strong> (கடவுச்சொல் திணிப்பு மற்றும் தாக்குதல்
+                    தடுப்பு)</li>
+                <li><strong>Server-Side Input Validation & Sanitization</strong> (சர்வர் பக்க உள்ளீட்டுச் சரிபார்ப்பு
+                    மற்றும் தூய்மைப்படுத்தல்)</li>
+                <li><strong>Mass Assignment Vulnerability Mitigation</strong> (திரள் தரவுப் பணிப்புப் பாதுகாப்புப்
+                    பிழைத் தணிப்பு)</li>
+                <li><strong>GraphQL Query Complexity & Depth Limits</strong> (கிரேப்QL வினவல் சிக்கல் மற்றும் ஆழ
+                    வரம்புகள்)</li>
+                <li><strong>Indirect Prompt Injection in AI Traffic</strong> (AI போக்குவரத்தில் மறைமுகத் தூண்டுதல்
+                    ஊடுருவல்)</li>
+                <li><strong>Structured Log Redaction & PII Protection</strong> (அமைக்கப்பட்ட பதிவுத் தொகுப்பு திருத்தம்)
+                </li>
+                <li><strong>API Key Rotation & Secrets Management</strong> (API சாவி சுழற்சி மற்றும் இரகசிய மேலாண்மை)
+                </li>
+                <li><strong>SPIFFE Workload Identity Attestation</strong> (SPIFFE பணிச்சுமை அடையாளச் சான்றளிப்பு)</li>
+                <li><strong>OAuth 2.0 Scopes & Granular Permissions</strong> (OAuth 2.0 வரம்புகள் மற்றும் நுண் permisos)
+                </li>
+                <li><strong>API Gateway Anomaly Detection</strong> (API நுழைவாயில் முரண்பாடு கண்டறிதல்)</li>
+                <li><strong>Rate Limiting & Request Throttling</strong> (கோரிக்கை வீதக் கட்டுப்பாடு மற்றும் குறைப்பு)
+                </li>
+                <li><strong>Legacy Endpoint Deprecation Lifecycle</strong> (பழைய முனைப்புள்ளிகள் ரத்துச் சுழற்சி)</li>
+                <li><strong>OWASP API Security Top 10 Standards</strong> (OWASP API பாதுகாப்பு முதல் 10 தரநிலைகள்)</li>
+                <li><strong>Zero Trust Network Architecture (ZTNA)</strong> (பூஜ்ஜிய நம்பிக்கை நெட்வொர்க் கட்டமைப்பு)
+                </li>
+                <li><strong>Autonomous API Fuzzing with LLMs</strong> (LLM மூலம் தன்னாட்சி API ஃப்பஸிங்)</li>
+                <li><strong>JWT Signature Verification Failures</strong> (JWT கையொப்பச் சரிபார்ப்புத் தோல்விகள்)</li>
+                <li><strong>Excessive Data Exposure Risks</strong> (அதிகப்படியான தரவு வெளிப்பாட்டு ஆபத்துகள்)</li>
+                <li><strong>Distributed Denial of Service (DDoS) Mitigation</strong> (விநியோகிக்கப்பட்ட சேவை மறுப்புத்
+                    தாக்குதல் தணிப்பு)</li>
+                <li><strong>Software Dependency Chain Auditing</strong> (மென்பொருள் சார்புச் சங்கிலித் தணிக்கை)</li>
+                <li><strong>East-West Internal Cluster Security</strong> (உள் கிளஸ்டர் கிழக்கு-மேற்கு நெட்வொர்க்
+                    பாதுகாப்பு)</li>
+                <li><strong>North-South Edge Traffic Controls</strong> (எல்லை நெட்வொர்க் வடக்கு-தெற்கு போக்குவரத்து
+                    கட்டுப்பாடுகள்)</li>
+                <li><strong>SaaS Data Exfiltration Prevention</strong> (SaaS தரவு கசிவு தடுப்பு)</li>
+                <li><strong>In-Band vs Out-of-Band API Monitoring</strong> (அலைவரிசைக்கு உட்பட்ட மற்றும் வெளியேயான API
+                    கண்காணிப்பு)</li>
+                <li><strong>Centralized Authorization Policy Engine</strong> (மத்திய மயமாக்கப்பட்ட அதிகாரக் கொள்கை
+                    இயந்திரம்)</li>
+                <li><strong>Identity Provider (IdP) Federation</strong> (அடையாள சேவை வழங்குநர் கூட்டமைப்பு)</li>
+                <li><strong>JSON Schema Validation Enforcement</strong> (JSON திட்டச் சரிபார்ப்பு அமலாக்கம்)</li>
+                <li><strong>Cross-Site Request Forgery (CSRF) Tokens</strong> (CSRF பாதுகாப்பு டோக்கன்கள்)</li>
+                <li><strong>Parameter Pollution Attack Prevention</strong> (அளவுரு மாசுபாட்டுத் தாக்குதல் தடுப்பு)</li>
+                <li><strong>Role-Based Access Control (RBAC)</strong> (பங்கு அடிப்படையிலான அணுகல் கட்டுப்பாடு)</li>
+                <li><strong>Attribute-Based Access Control (ABAC)</strong> (பண்புக்கூறு அடிப்படையிலான அணுகல்
+                    கட்டுப்பாடு)</li>
+                <li><strong>API Endpoint Inventory Discovery</strong> (API முனைப்புள்ளி இருப்பு பட்டியலிடுதல்)</li>
+                <li><strong>Continuous Integration Automated Scanning</strong> (தொடர்ச்சியான ஒருங்கிணைப்பு தானியங்கி
+                    ஸ்கேனிங்)</li>
+                <li><strong>Runtime Application Self-Protection (RASP)</strong> (இயங்குநேர பயன்பாட்டு சுய-பாதுகாப்பு)
+                </li>
+                <li><strong>Web Application and API Protection (WAAP)</strong> (வலை பயன்பாடு மற்றும் API பாதுகாப்பு)
+                </li>
+                <li><strong>Short-Lived Ephemeral Security Tokens</strong> (குறுகிய கால தற்காலிக பாதுகாப்பு டோக்கன்கள்)
+                </li>
+                <li><strong>Mobile Binary Hardening & Secret Protection</strong> (மொபைல் பைனரி கடினமாக்கல் மற்றும்
+                    ரகசியப் பாதுகாப்பு)</li>
+                <li><strong>Non-Human Identity Governance</strong> (மனிதரல்லாத அடையாள நிர்வாகம்)</li>
+                <li><strong>Data Privacy Regulatory Compliance (GDPR/DPDP)</strong> (தரவு தனியுரிமை ஒழுங்குமுறை இணக்கம்)
+                </li>
+                <li><strong>Telemetry & Security Event Auditing</strong> (தொலைத்தொடர்பு மற்றும் பாதுகாப்பு நிகழ்வு
+                    தணிக்கை)</li>
+                <li><strong>Web Application Firewall (WAF) Rulesets</strong> (வலைப் பயன்பாட்டு ஃபயர்வால் விதிகள்)</li>
+                <li><strong>Threat Modeling for Microservices</strong> (நுண் சேவைகளுக்கான அச்சுறுத்தல் மாதிரி)</li>
+                <li><strong>API Gateway Rate Limiting Buckets</strong> (API நுழைவாயில் வீதக் கட்டுப்பாட்டு வாளிகள்)</li>
+                <li><strong>DevSecOps Pipeline Security Integration</strong> (DevSecOps பைப்லைன் பாதுகாப்பு
+                    ஒருங்கிணைப்பு)</li>
+            </ol>
+        </div>
+    </article>
+
+    <!-- Vocabulary Definition Modal Overlay -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <!-- Image HD Modal Overlay -->
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../assets/js/vocab-modal.js"></script>
+
+</body>
+
+</html>
