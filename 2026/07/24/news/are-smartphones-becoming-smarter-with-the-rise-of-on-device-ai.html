@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Are smartphones becoming smarter with the rise of on-device AI?</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        /* Responsive CSS Grid for Key Terminologies List */
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>Are smartphones becoming smarter with the rise of on-device AI?</h1>
+            <p class="subtitle">On-device AI processes machine learning algorithms and generative AI models directly on
+                a smartphone’s local hardware; while physical constraints prevent it from matching the scale of
+                cloud-based large language models, the industry is converging on a hybrid application model</p>
+            <p class="byline">BY HAIDER ALI KHAN</p>
+            <p class="article-meta">EXPLAINER &nbsp;|&nbsp; Edge Computing, Artificial Intelligence & Semiconductor
+                Hardware Architecture</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">The <span class="vocab-words" data-modal-title="Transition (noun) மாற்றம் / இடைமாற்றம்"
+                    data-modal-meaning="– a process or period of changing from one state or condition to another."
+                    data-modal-synonyms="shift, evolution, changeover, transformation">transition</span> of <span
+                    class="vocab-words" data-modal-title="Artificial Intelligence (AI) (noun phrase) செயற்கை நுண்ணறிவு"
+                    data-modal-meaning="– simulation of human intelligence processes by machines and computer systems."
+                    data-modal-synonyms="machine intelligence, automated reasoning, computational intelligence">Artificial
+                    Intelligence (AI)</span> from the <span class="vocab-words"
+                    data-modal-title="Cloud (noun) மேகக்கணக்கியல் அமைப்பு / தொலைநிலைக் கணிப்பகம்"
+                    data-modal-meaning="– network of remote servers hosted on the internet to store, manage, and process data."
+                    data-modal-synonyms="cloud servers, remote datacentres, centralized servers">cloud</span> to the
+                <span class="vocab-words" data-modal-title="Local Device (noun phrase) உள்ளூர் சாதனம்"
+                    data-modal-meaning="– physical hardware (like a smartphone) executing processing tasks directly without remote servers."
+                    data-modal-synonyms="on-premise hardware, edge device, user terminal">local device</span>, often
+                called <span class="vocab-words"
+                    data-modal-title="On-device AI (noun phrase) சாதனக் கட்டமைப்புச் செயற்கை நுண்ணறிவு"
+                    data-modal-meaning="– AI workloads processed locally on embedded silicon rather than transmitted to external cloud servers."
+                    data-modal-synonyms="edge AI, embedded AI, local machine learning">on-device AI</span>, is arguably
+                the most significant shift in the smartphone industry since the inception of the <span
+                    class="vocab-words" data-modal-title="App Ecosystem (noun phrase) செயலிச் சூழல் அமைப்பு"
+                    data-modal-meaning="– network of software applications, platforms, and developers built around a mobile operating system."
+                    data-modal-synonyms="application software environment, mobile ecosystem, app platform">app
+                    ecosystem</span>. For over a decade, consumer AI has been synonymous with the cloud: when you asked
+                a question to an assistant, your data travelled across the globe to a massive <span class="vocab-words"
+                    data-modal-title="Data Centre (noun phrase) தரவு மையம்"
+                    data-modal-meaning="– dedicated building housing computer systems and telecommunication storage infrastructure."
+                    data-modal-synonyms="server farm, computational cluster, datacentre facility">data centre</span>,
+                was processed, and then sent back to your device. Now, users are witnessing a <span class="vocab-words"
+                    data-modal-title="Seismic Shift (idiomatic phrase) மிகப்பெரிய மாற்றம்"
+                    data-modal-meaning="– dramatic, fundamental, or transformative change in structure or technology."
+                    data-modal-synonyms="paradigm shift, radical transition, monumental change">seismic shift</span>.
+                Intelligence is moving from remote servers to the <span class="vocab-words"
+                    data-modal-title="Silicon (noun) சிலிக்கான் நுண்செயலி"
+                    data-modal-meaning="– semiconductor microchips and integrated processing units inside personal electronic hardware."
+                    data-modal-synonyms="semiconductor chip, integrated circuit, microchip processor">silicon</span>
+                residing in their handheld devices.
+            </p>
+
+            <h3>What is on-device AI?</h3>
+
+            <p><span class="vocab-words"
+                    data-modal-title="On-device AI (noun phrase) சாதனத்திலேயே இயங்கும் செயற்கை நுண்ணறிவு"
+                    data-modal-meaning="– running machine learning models locally on device hardware without active server calls."
+                    data-modal-synonyms="local AI, edge computing AI, native machine learning">On-device AI</span>
+                refers to the processing of <span class="vocab-words"
+                    data-modal-title="Machine Learning Algorithms (noun phrase) எந்திரக் கற்றல் வழிமுறைகள்"
+                    data-modal-meaning="– mathematical routines allowing computers to learn patterns from data and make predictions."
+                    data-modal-synonyms="ML algorithms, statistical models, predictive routines">machine learning
+                    algorithms</span> and <span class="vocab-words"
+                    data-modal-title="Generative AI Models (noun phrase) ஆக்கப்பூர்வ செயற்கை நுண்ணறிவு மாதிரிகள்"
+                    data-modal-meaning="– AI models capable of creating new text, images, or audio based on prompts."
+                    data-modal-synonyms="GenAI models, deep learning models, foundational models">generative AI
+                    models</span> directly on the smartphone’s <span class="vocab-words"
+                    data-modal-title="Local Hardware (noun phrase) உள்ளூர் வன்பொருள்"
+                    data-modal-meaning="– physical electronic circuits integrated inside the individual electronic handset."
+                    data-modal-synonyms="on-board chips, physical processor, local silicon">local hardware</span>.
+                Instead of relying on a <span class="vocab-words"
+                    data-modal-title="Constant Connection (noun phrase) தொடர்ச்சியான இணைய இணைப்பு"
+                    data-modal-meaning="– continuous uninterrupted network link to external cloud infrastructure."
+                    data-modal-synonyms="persistent network link, live cloud connection, online access">constant
+                    connection</span> to a remote server, the device performs the computation using dedicated silicon,
+                primarily <span class="vocab-words"
+                    data-modal-title="Neural Processing Units (NPUs) (proper noun phrase) நரம்பியல் செயலாக்க அலகுகள்"
+                    data-modal-meaning="– specialized hardware accelerators optimized for parallel matrix multiplication in neural networks."
+                    data-modal-synonyms="NPU, AI chip, neural accelerator, deep learning engine">Neural Processing Units
+                    (NPUs)</span>.</p>
+
+            <p>In 2026, this is no longer a fringe feature; it is becoming the foundation of how <span
+                    class="vocab-words"
+                    data-modal-title="Premium Smartphones (noun phrase) அதிநவீன உயர்முனைத் திறன்பேசிகள்"
+                    data-modal-meaning="– high-end flagship mobile phones with top-tier hardware capabilities."
+                    data-modal-synonyms="flagship phones, high-end mobile handsets, elite smartphones">premium
+                    smartphones</span> function. Whether it is <span class="vocab-words"
+                    data-modal-title="Real-time Language Translation (noun phrase) நேரடி மொழிபெயர்ப்பு"
+                    data-modal-meaning="– instant conversion of spoken or written language without network latency."
+                    data-modal-synonyms="instant translation, live multilingual translation, on-the-fly translation">real-time
+                    language translation</span>, advanced <span class="vocab-words"
+                    data-modal-title="Computational Photography (noun phrase) கணக்கீட்டு நிழற்படவியல்"
+                    data-modal-meaning="– algorithmic image processing enhancing camera captures using digital software techniques."
+                    data-modal-synonyms="AI photography, algorithmic imaging, computational picture processing">computational
+                    photography</span>, or proactive system optimisation, on-device AI handles these tasks locally. The
+                implications for the user experience are profound with <span class="vocab-words"
+                    data-modal-title="Faster Response Times (noun phrase) வேகமான ප්‍රතිචාර நேரங்கள்"
+                    data-modal-meaning="– minimal latency between user input and AI output due to local computation."
+                    data-modal-synonyms="low latency, instant execution, rapid response rate">faster response
+                    times</span>, privacy and crucially, the ability to function without an <span class="vocab-words"
+                    data-modal-title="Internet Connection (noun phrase) இணைய தொடர்பு"
+                    data-modal-meaning="– active data network link required for online communications."
+                    data-modal-synonyms="network connectivity, web link, data access">internet connection</span>.</p>
+
+            <h3>How has the hardware changed?</h3>
+
+            <p>The shift to on-device AI has been fuelled by rapid advances in <span class="vocab-words"
+                    data-modal-title="Specialised Hardware (noun phrase) சிறப்புப் பயன்பாட்டு வன்பொருள்"
+                    data-modal-meaning="– electronic components custom-designed for dedicated computational workloads."
+                    data-modal-synonyms="purpose-built silicon, dedicated microprocessors, domain-specific hardware">specialised
+                    hardware</span>, particularly the NPU. Unlike general-purpose <span class="vocab-words"
+                    data-modal-title="CPUs (Central Processing Units) (proper noun phrase) மத்திய செயலாக்க அலகுகள்"
+                    data-modal-meaning="– primary microprocessors managing general program execution and sequential logic."
+                    data-modal-synonyms="main processors, logic chips, general CPUs">CPUs</span> or graphics-heavy <span
+                    class="vocab-words"
+                    data-modal-title="GPUs (Graphics Processing Units) (proper noun phrase) வரைபடச் செயலாக்க அலகுகள்"
+                    data-modal-meaning="– specialized processors designed for parallel rendering of complex 3D graphics and matrices."
+                    data-modal-synonyms="graphics chips, parallel computing processors, GPU hardware">GPUs</span>, NPUs
+                are purpose-built to handle the mathematical <span class="vocab-words"
+                    data-modal-title="Heavy Lifting (idiomatic phrase) கடினமான கணிதச் செயலாக்கம்"
+                    data-modal-meaning="– complex, highly demanding computational or matrix calculation workloads."
+                    data-modal-synonyms="intensive computation, intensive processing, heavy workloads">heavy
+                    lifting</span> required by <span class="vocab-words"
+                    data-modal-title="Neural Networks (noun phrase) நரம்பியல் வலைப்பின்னல்கள்"
+                    data-modal-meaning="– interconnected node networks modelled after biological human brain structures."
+                    data-modal-synonyms="deep neural nets, artificial neural networks, ANN architectures">neural
+                    networks</span>.</p>
+
+            <p>In recent years, breakthroughs in <span class="vocab-words"
+                    data-modal-title="Semiconductor Technology (noun phrase) குறைக்கடத்தித் தொழில்நுட்பம்"
+                    data-modal-meaning="– engineering microchips fabricated on silicon wafers at nanometre scales."
+                    data-modal-synonyms="silicon technology, microchip manufacturing, semiconductor engineering">semiconductor
+                    technology</span> have allowed for the integration of these powerful chips into mainstream consumer
+                hardware. As a result, generative AI features that were previously thought to be impossible to run on a
+                mobile phone such as live <span class="vocab-words"
+                    data-modal-title="Voice-to-voice Translation (noun phrase) குரலிலிருந்து குரலாக மொழிபெயர்த்தல்"
+                    data-modal-meaning="– real-time direct translation of spoken audio into another spoken language."
+                    data-modal-synonyms="speech-to-speech translation, live voice translation, continuous audio translation">voice-to-voice
+                    translation</span> or generative photo editing, are now running natively.</p>
+
+            <p>This has made the smartphone an <span class="vocab-words"
+                    data-modal-title="Intelligent Proactive Companion (noun phrase) விவேகமான முன்முயற்சித் துணைவி"
+                    data-modal-meaning="– software system that anticipates user requirements before explicit prompts are entered."
+                    data-modal-synonyms="predictive assistant, proactive smart companion, intuitive digital agent">intelligent,
+                    proactive companion</span> as the device is now capable of system-wide integration, where the AI can
+                understand the user’s workflow, analyse intent and act on their behalf across different applications.
+            </p>
+
+            <h3>What is the most important benefit from on-device AI?</h3>
+
+            <p>Perhaps the greatest advances of on-device AI are the easing of tension between <span class="vocab-words"
+                    data-modal-title="Personalisation and Privacy (noun phrase) தனிப்பயனாக்கம் மற்றும் தனிநபர் ரகசியம்"
+                    data-modal-meaning="– balancing tailor-made user experiences with strict data protection safeguards."
+                    data-modal-synonyms="tailored privacy balance, contextual user privacy, personal data security">personalisation
+                    and privacy</span>. To provide a customised experience, AI needs massive amounts of personal data,
+                including financial and health metrics, calendar schedules and <span class="vocab-words"
+                    data-modal-title="Behavioural Patterns (noun phrase) நடத்தை முறைகள்"
+                    data-modal-meaning="– observed habits, interaction frequencies, and app usage sequences of a device user."
+                    data-modal-synonyms="user usage habits, interaction trends, activity routines">behavioural
+                    patterns</span>.</p>
+
+            <p>Under a cloud-only model, users are understandably hesitant to share their most intimate details that
+                will be processed on remote servers. On-device AI solves this by turning the smartphone into a <span
+                    class="vocab-words"
+                    data-modal-title="Black Box of Personal Intelligence (metaphorical phrase) தனிநபர் நுண்ணறிவின் கருப்புப் பெட்டி"
+                    data-modal-meaning="– secure local hardware environment where personal data remains encrypted and unassailable."
+                    data-modal-synonyms="secure local enclave, private personal vault, encrypted intelligence box">black
+                    box of personal intelligence</span>. Because data never leaves the hardware, <span
+                    class="vocab-words" data-modal-title="User Confidence (noun phrase) பயனாளர்களின் நம்பிக்கை"
+                    data-modal-meaning="– trust placed by consumers in device security and data protection mechanisms."
+                    data-modal-synonyms="consumer trust, user assurance, system reliability trust">user
+                    confidence</span> grows. The device learns from the user locally, creating a bespoke experience that
+                improves with every interaction, without ever compromising the individual’s <span class="vocab-words"
+                    data-modal-title="Digital Footprint (noun phrase) டிஜிட்டல் தடம்"
+                    data-modal-meaning="– record of traceable online activity and personal data left behind by internet usage."
+                    data-modal-synonyms="online trail, electronic footprint, digital metadata history">digital
+                    footprint</span>. This is the holy grail of user experience: having a phone that understands you
+                intimately while keeping that understanding entirely to yourself.</p>
+
+            <h3>What are some of the challenges in adopting on-device AI?</h3>
+
+            <p>Despite the rapid infusion of powerful hardware, a significant gap remains between a device’s
+                capabilities and a user’s adoption. Industry analysts suggest that while flagship smartphones offer an
+                impressive suite of tools like <span class="vocab-words"
+                    data-modal-title="Proactive Writing Assistance (noun phrase) முன்முயற்சி எழுத்து உதவி"
+                    data-modal-meaning="– automated AI text suggestions and grammar auto-completions contextually offered during drafting."
+                    data-modal-synonyms="AI writing help, predictive text generation, auto-drafting assistance">proactive
+                    writing assistance</span>, intelligent summarisation and real-time call translation, these features
+                have yet to trigger a <span class="vocab-words"
+                    data-modal-title="Super-cycle of Upgrades (noun phrase) மிகப்பெரிய புதுப்பிப்புச் சுழற்சி"
+                    data-modal-meaning="– massive surge where millions of consumers upgrade hardware simultaneously due to breakthrough features."
+                    data-modal-synonyms="upgrade wave, massive replacement cycle, hardware refresh boom">super-cycle of
+                    upgrades</span>.</p>
+
+            <p>For most consumers, current AI features are perceived as <span class="vocab-words"
+                    data-modal-title="Nice-to-have Enhancements (noun phrase) இருந்தால் நல்லது போன்ற சிறப்பம்சங்கள்"
+                    data-modal-meaning="– non-essential supplementary features that add convenience but are not mandatory."
+                    data-modal-synonyms="luxury features, optional utility additions, secondary perks">nice-to-have
+                    enhancements</span> rather than essential utilities. This reveals a critical challenge for
+                manufacturers as they must move beyond marketing standalone AI features and integrate the technology so
+                deeply into the system's workflow that the smartphone becomes truly indispensable.</p>
+
+            <p>Furthermore, there is a technical limitation. While on-device AI is incredibly efficient, it has <span
+                    class="vocab-words" data-modal-title="Physical Constraints (noun phrase) பௌதிகக் வரம்புகள்"
+                    data-modal-meaning="– hardware limits on battery capacity, thermal dissipation, and memory bandwidth."
+                    data-modal-synonyms="hardware limitations, thermal ceilings, power constraints">physical
+                    constraints</span>. It cannot yet match the sheer scale and raw power of cloud-based <span
+                    class="vocab-words"
+                    data-modal-title="Large Language Models (LLMs) (proper noun phrase) பிரம்மாண்ட மொழி மாதிரிகள்"
+                    data-modal-meaning="– massive neural networks trained on billions of parameters to understand natural language."
+                    data-modal-synonyms="LLMs, frontier foundation models, massive parameter models">large language
+                    models</span>. The industry is therefore converging on a <span class="vocab-words"
+                    data-modal-title="Hybrid Application Model (noun phrase) கலப்பினச் பயன்பாட்டு மாதிரி"
+                    data-modal-meaning="– architecture splitting tasks between local device NPUs and cloud servers depending on complexity."
+                    data-modal-synonyms="hybrid AI approach, split-compute framework, cloud-edge hybrid">hybrid
+                    application model</span>. In this ecosystem, the heavy lifting, such as processing massive,
+                multi-modal datasets, remains in the cloud, while sensitive and time-critical tasks migrate to the <span
+                    class="vocab-words" data-modal-title="Edge (noun) எட்ஜ் / கணினியின் உள்ளூர் முனை"
+                    data-modal-meaning="– computing performed at the local device boundary rather than centralized remote servers."
+                    data-modal-synonyms="edge architecture, device-side processing, local node">edge</span>.</p>
+
+            <h3>What is the future of on-device AI?</h3>
+
+            <p>The smartphone industry is undergoing an <span class="vocab-words"
+                    data-modal-title="Identity Shift (noun phrase) அடையாள மாற்றம்"
+                    data-modal-meaning="– fundamental transformation in how smartphones are perceived and differentiated by users."
+                    data-modal-synonyms="paradigm shift, core repositioning, functional evolution">identity
+                    shift</span>. The focus has shifted from physical specifications, like the thinness of a bezel or
+                the pixel count of a camera, to the sophistication of the AI models powering the device.</p>
+
+            <p>The game is now in smartphones that are powered by AI with deep, <span class="vocab-words"
+                    data-modal-title="System-wide Integration (noun phrase) கணினி தழுவிய ஒருங்கிணைப்பு"
+                    data-modal-meaning="– seamless operation of AI tools across all native apps, operating system layers, and hardware."
+                    data-modal-synonyms="deep OS integration, full-stack AI integration, universal system hooks">system-wide
+                    integration</span>, that allows agents to navigate multiple applications, understand context and
+                achieve goals on behalf of the user. As hardware becomes increasingly <span class="vocab-words"
+                    data-modal-title="Homogenised (adjective) ஒரே மாதிரியாக மாறின"
+                    data-modal-meaning="– becoming uniform, identical, or standardized across competing smartphone brands."
+                    data-modal-synonyms="standardized, uniformized, identical, commoditized">homogenised</span> across
+                brands, the soul of the smartphone will be defined by its intelligence.</p>
+
+            <p>The bridge to that future is on-device AI, transforming a generic piece of glass and silicon into a truly
+                personal, private, and <span class="vocab-words"
+                    data-modal-title="Proactive Companion (noun phrase) முன்முயற்சியுள்ள டிஜிட்டல் துணைவி"
+                    data-modal-meaning="– digital intelligence actively assisting daily user workflows without explicit commands."
+                    data-modal-synonyms="intelligent assistant, active digital helper, intuitive agent">proactive
+                    companion</span>. The challenge for the coming year will be to see if these devices can move from
+                being impressive technical demonstrators to essential assistants that the average user relies on every
+                single day.</p>
+
+            <hr style="margin: 2rem 0; border: none; border-top: 1px solid #e2e8f0;" />
+
+            <p><strong>List of 50 Key Terminologies Highlighted in this Article (UPSC GS-III Science & Technology
+                    Focus):</strong></p>
+            <ol class="responsive-vocab-grid">
+                <li><strong>On-device AI Architecture</strong> (சாதனக் கட்டமைப்புச் செயற்கை நுண்ணறிவு)</li>
+                <li><strong>Neural Processing Unit (NPU) Silicon</strong> (நரம்பியல் செயலாக்க அலகு)</li>
+                <li><strong>Generative AI Models Execution</strong> (ஆக்கப்பூர்வ செயற்கை நுண்ணறிவு மாதிரிகள்)</li>
+                <li><strong>Cloud vs Edge Computing Paradigm</strong> (மேகக்கணக்கியல் மற்றும் எட்ஜ் கணக்கீட்டு ஒப்பீடு)
+                </li>
+                <li><strong>Machine Learning (ML) Algorithms</strong> (எந்திரக் கற்றல் வழிமுறைகள்)</li>
+                <li><strong>Hybrid AI Application Model</strong> (கலப்பினச் பயன்பாட்டு மாதிரி)</li>
+                <li><strong>System-wide OS Integration</strong> (கணினி தழுவிய ஒருங்கிணைப்பு)</li>
+                <li><strong>Computational Photography Pipelines</strong> (கணக்கீட்டு நிழற்படவியல் தொழில்நுட்பம்)</li>
+                <li><strong>Real-time Voice-to-voice Translation</strong> (நேரடி குரல் மொழிபெயர்ப்பு)</li>
+                <li><strong>Semiconductor Silicon Breakthroughs</strong> (குறைக்கடத்திச் சிலிக்கான் திருப்புமுனைகள்)
+                </li>
+                <li><strong>Data Privacy and On-device Encryption</strong> (தரவு ரகசியத்தன்மை மற்றும் உள்ளூர்
+                    குறியாக்கம்)</li>
+                <li><strong>Latency Reduction in Mobile Processing</strong> (செயலாக்கக் காலதாமதக் குறைப்பு)</li>
+                <li><strong>Offline Autonomous Capabilities</strong> (இணையமற்ற தன்னாட்சி செயல்பாடுகள்)</li>
+                <li><strong>Proactive AI Assistants and Agents</strong> (முன்முயற்சிச் செயற்கை நுண்ணறிவு முகவர்கள்)</li>
+                <li><strong>User Digital Footprint Security</strong> (பயனாளரின் டிஜிட்டல் தடப் பாதுகாப்பு)</li>
+                <li><strong>Black Box Personal Intelligence Vault</strong> (தனிநபர் நுண்ணறிவின் கருப்புப் பெட்டி)</li>
+                <li><strong>Specialised Chipsets (CPUs, GPUs, NPUs)</strong> (சிறப்புப் பயன்பாட்டு நுண்செயலிகள்)</li>
+                <li><strong>Neural Network Heavy Lifting Math</strong> (நரம்பியல் வலைப்பின்னல் கணிதச் செயலாக்கம்)</li>
+                <li><strong>Behavioral Pattern Analysis</strong> (பயனர் நடத்தை முறைப் பகுப்பாய்வு)</li>
+                <li><strong>Hardware Super-cycle Dynamics</strong> (வன்பொருள் புதுப்பிப்புச் சுழற்சி)</li>
+                <li><strong>Physical Thermal and Memory Constraints</strong> (பௌதிக வெப்ப மற்றும் நினைவக வரம்புகள்)</li>
+                <li><strong>Large Language Model (LLM) Scaling</strong> (பிரமாண்ட மொழி மாதிரிகளின் அளவீடு)</li>
+                <li><strong>Flagship Handset Hardware Differentiation</strong> (உயர்முனைச் திறன்பேசி வன்பொருள் வேறுபாடு)
+                </li>
+                <li><strong>Proactive Writing Assistance Tools</strong> (முன்முயற்சி எழுத்து உதவி உபகரணங்கள்)</li>
+                <li><strong>Intelligent Summarisation Engines</strong> (விவேகமான சுருக்கத் தொகுப்பு பொறிகள்)</li>
+                <li><strong>Smartphone Ecosystem Homogenisation</strong> (திறன்பேசிச் சூழல் அமைப்பின் சீரான நிலை)</li>
+                <li><strong>Parallel Processing Matrix Operations</strong> (இணை செயலாக்க அணிக்கோவை கணக்கீடு)</li>
+                <li><strong>Edge AI Low Power Consumption</strong> (எட்ஜ் AI குறைந்த மின்நுகர்வு)</li>
+                <li><strong>Context-aware Autonomous Workflows</strong> (சூழல் உணர்ந்த தன்னாட்சி பணிப்பாய்வு)</li>
+                <li><strong>On-board Silicon Memory Bandwidth</strong> (வன்பொருள் நினைவக அலைவரிசை)</li>
+                <li><strong>Data Sovereignty at Handset Level</strong> (சாதன அளவிலான தரவு இறையாண்மை)</li>
+                <li><strong>AI Hardware Acceleration Standards</strong> (AI வன்பொருள் முடுக்கத் தரநிலைகள்)</li>
+                <li><strong>Natural Language Processing (NLP) at Edge</strong> (எட்ஜ் நேச்சுரல் லாங்குவேஜ் பிராசசிங்)
+                </li>
+                <li><strong>Multi-modal AI Input Processing</strong> (பலமுறைமை AI உள்ளீட்டு செயலாக்கம்)</li>
+                <li><strong>User Identity and Trust Framework</strong> (பயனர் அடையாளம் மற்றும் நம்பிக்கைச் சட்டகம்)</li>
+                <li><strong>Stand-alone vs Deep Native Features</strong> (தனியனுபவ மற்றும் இயல்பு நிலை அம்சங்கள்)</li>
+                <li><strong>Sub-nanometre Semiconductor Fabrication</strong> (சப்-நானோமீட்டர் குறைக்கடத்தி தயாரிப்பு)
+                </li>
+                <li><strong>Client-side Machine Learning Inference</strong> (வாடிக்கையாளர் தரப்பு எந்திரக் கற்றல்
+                    அனுமானம்)</li>
+                <li><strong>Zero-cloud Dependency Operations</strong> (மேகக்கணக்கியல் சார்பற்ற செயல்பாடுகள்)</li>
+                <li><strong>Next-gen Smart Mobile Agents</strong> (அடுத்த தலைமுறை திறன்பேசி முகவர்கள்)</li>
+                <li><strong>Personalized Data Context Engine</strong> (தனிப்பயனாக்கப்பட்ட தரவுச் சூழல் பொறி)</li>
+                <li><strong>Compute Workload Offloading Rules</strong> (கணக்கீட்டு பணிச்சுமை பகிர்வு விதிகள்)</li>
+                <li><strong>Consumer Upgrade Super-cycle Drivers</strong> (நுகர்வோர் மேம்பாட்டு ஊக்கிகள்)</li>
+                <li><strong>Mobile AI Technical Demonstrators</strong> (மொபைல் AI தொழில்நுட்ப செயல்முறை மாதிரிகள்)</li>
+                <li><strong>Ubiquitous Pervasive Mobile Computing</strong> (அனைத்துமிடத்து திறன்பேசிக் கணக்கியல்)</li>
+                <li><strong>On-device Parameter Compression</strong> (சாதன அளவிலான அளவுரு அமுக்கம்)</li>
+                <li><strong>Generative Media Local Rendering</strong> (ஆக்கப்பூர்வ ஊடகங்களின் உள்ளூர் உருவாக்கல்)</li>
+                <li><strong>Encrypted On-device Vector Stores</strong> (குறியாக்கப்பட்ட சாதன வெக்டார் சேமிப்பு)</li>
+                <li><strong>Silicon-level Hardware Security Enclaves</strong> (சிலிக்கான் மட்ட அளவிலான வன்பொருள்
+                    பாதுகாப்பு)</li>
+                <li><strong>Human-smartphone Symbiosis Evolution</strong> (மனித-திறன்பேசி இணைவாழ்வு பரிணாமம்)</li>
+            </ol>
+        </div>
+    </article>
+
+    <!-- TWO FIGURE SECTIONS AFTER ARTICLE SECTION -->
+    <section class="article-figures-section">
+        <figure class="article-image-figure">
+            <img src="https://epaper.thehindu.com/ccidist-ws/th/th_delhi/issues/195738/OPS/GT1G9UUIF.1.png?rev=2026-07-24T00:53:59+05:30&cropFromPage=true"
+                alt="A user interacting with on-device AI voice translation features on a modern smartphone" />
+            <figcaption>ON-DEVICE AI IN ACTION: On-device AI processes machine learning algorithms and generative AI
+                models directly on a smartphone’s local hardware, enabling instant translation and real-time processing
+                without internet connectivity. PHOTO: GETTY IMAGES</figcaption>
+        </figure>
+
+        <figure class="article-image-figure">
+            <img src="images/are-smartphones-becoming-smarter-with-the-rise-of-on-device-ai.png"
+                alt="Diagram showing Neural Processing Unit (NPU) silicon architecture inside a modern mobile SoC" />
+            <figcaption>SILICON REVOLUTION: Purpose-built Neural Processing Units (NPUs) inside modern smartphone SoCs
+                perform the mathematical heavy lifting required by neural networks, turning handsets into secure,
+                private companions. PHOTO: THE HINDU / SPECIAL ARRANGEMENT</figcaption>
+        </figure>
+    </section>
+
+    <!-- Vocabulary Definition Modal Overlay -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <!-- Image HD Modal Overlay -->
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+
+</body>
+
+</html>
