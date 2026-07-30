@@ -13,8 +13,8 @@
 }
 
 :root {
-    --bg: #f4f1eb;
-    --card-bg: #fffef9;
+    --bg: #fcfcfc;
+    --card-bg: #fdfce5;
     --text: #1a1a1a;
     --muted: #555;
     --accent: #1a6b3c;
@@ -23,8 +23,8 @@
     --accent-mid: #1a5c38;
     --border: #ddd;
     --border-light: #ece9e2;
-    --vocab-color: #1a5276;
-    --vocab-hover: #1a6b3c;
+    --vocab-color: #c0392b;
+    --vocab-hover: #922b21;
     --modal-bg: #fff;
     --overlay: rgba(0, 0, 0, 0.55);
     --radius: 10px;
@@ -179,7 +179,7 @@ body {
 .vocab-words:hover {
     color: var(--vocab-hover);
     border-bottom-color: var(--vocab-hover);
-    background: var(--accent-light);
+    background: #fdecea;
 }
 
 .vocab-silent {
