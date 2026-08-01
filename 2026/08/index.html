@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>August 2026 Archive</title>
+    <meta name="description" content="The Hindu archive for August 2026." />
+    <style>
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            background: #f4f1eb;
+            color: #1a1a1a;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px
+        }
+
+        .shell {
+            max-width: 760px;
+            width: 100%;
+            background: #fffef9;
+            border: 1px solid #ece9e2;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+            padding: 32px
+        }
+
+        h1 {
+            font-family: Merriweather, Georgia, serif;
+            font-size: 2rem;
+            margin: 0 0 8px
+        }
+
+        p {
+            margin: 0 0 22px;
+            color: #555;
+            line-height: 1.6
+        }
+
+        .links {
+            display: grid;
+            gap: 12px
+        }
+
+        .links a {
+            display: block;
+            padding: 16px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, #0d3325, #1a5c38);
+            font-weight: 700
+        }
+
+        .links a span {
+            display: block;
+            font-size: .85rem;
+            font-weight: 500;
+            color: #a8f0c6;
+            margin-top: 4px
+        }
+
+        .article-card {
+            background: #fffef9;
+            border-radius: 10px;
+            box-shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ece9e2;
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 24px;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+            transform: translateY(-2px);
+        }
+
+        .card-accent-bar {
+            width: 4px;
+            flex-shrink: 0;
+            background: #1a6b3c;
+        }
+
+        .article-card.business .card-accent-bar {
+            background: #2f61a1;
+        }
+
+        .article-card.osfy .card-accent-bar {
+            background: #9333ea;
+        }
+
+        .card-body {
+            padding: 14px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tag-business {
+            background: #eaf0f7;
+            color: #1a5276;
+        }
+
+        .tag-osfy {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        .card-topic {
+            font-size: 0.68rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-family: Merriweather, Georgia, serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.4;
+            margin-bottom: 0px;
+        }
+
+        .article-card:hover .card-title {
+            color: #1a6b3c;
+        }
+
+        .card-author {
+            font-size: 0.72rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0;
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: #ddd;
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover .card-arrow {
+            color: #1a6b3c;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .card-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-button.article-link {
+            background: #e8f5ee;
+            color: #0d3325;
+            border-color: rgba(26, 107, 60, 0.15);
+        }
+
+        .card-button.google-link {
+            background: #fff;
+            color: #1f1f1f;
+            border-color: #d9d9d9;
+        }
+
+        .card-button.google-link:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+    <main class="shell">
+        <h1>August 2026 Archive</h1>
+        <p>Select the issue date to open the daily index.</p>
+        <div class="links">
+            <a href="01/index.html">August 01, 2026 <span>Open the day archive</span></a>
+        </div>
+
+    </main>
+
+    <script src="../../assets/js/index.js"></script>
+</body>
+
+</html>
