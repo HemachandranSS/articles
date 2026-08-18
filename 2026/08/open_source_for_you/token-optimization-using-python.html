@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>token-optimization-using-python.html</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .pullquote-card {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: #14532d;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .article-figures-section {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · AUGUST 2026</div>
+            <h1>Token Optimization Using Python for Prompt Development</h1>
+            <p class="subtitle">Token optimization is critical for designing precise prompts. A Python framework can be
+                designed to accept an English prompt as input, analyse it, remove duplicate or low-value content, and
+                return a compact prompt that behaves like the original.</p>
+            <p class="byline">By Dr Magesh Kasthuri and Dr Anand Nayyar</p>
+        </header>
+
+        <figure class="article-image-figure" style="margin-bottom: 2rem;">
+            <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/TOKEN-OPTIMIZATION-USING-PYTHON-FOR-PROMPT-DEVELOPMENT.jpg"
+                alt="Token Optimization Using Python Header Graphic" />
+            <figcaption>Token Optimization Using Python for Prompt Development — Cover Graphic (Open Source For You,
+                August 2026)</figcaption>
+        </figure>
+
+        <div class="article-body">
+            <p class="drop-cap">Large language models (LLMs) have made prompt development an important engineering <span
+                    class="vocab-words" data-modal-title="Discipline (noun) துறை / பயிற்சித் துறை"
+                    data-modal-meaning="– a branch of knowledge or field of study."
+                    data-modal-synonyms="field, domain, branch">discipline</span> rather than a casual text-writing
+                activity. A well-written prompt can improve accuracy, reduce <span class="vocab-words"
+                    data-modal-title="Ambiguity (noun) தெளிவின்மை / பலபொருள் தரும் நிலை"
+                    data-modal-meaning="– the quality of being open to more than one interpretation; inexactness."
+                    data-modal-synonyms="uncertainty, vagueness, obscurity">ambiguity</span>, and guide the model
+                towards a <span class="vocab-words" data-modal-title="Predictable (adjective) கணிக்கக்கூடிய"
+                    data-modal-meaning="– able to be predicted or foretold; expected."
+                    data-modal-synonyms="foreseeable, expected, reliable">predictable</span> output. However, as prompts
+                become longer, they also become more expensive, slower to process, and more difficult to maintain. This
+                is where <span class="vocab-words" data-modal-title="Token optimization (noun) டோக்கன் உகப்பாக்கம்"
+                    data-modal-meaning="– process of reducing token consumption while preserving prompt intent."
+                    data-modal-synonyms="prompt compression, token reduction">token optimization</span> becomes
+                valuable. The goal is not to make prompts artificially short, but to remove unnecessary text while
+                preserving the original <span class="vocab-words" data-modal-title="Intent (noun) நோக்கம் / உத்தேசம்"
+                    data-modal-meaning="– intention or purpose."
+                    data-modal-synonyms="purpose, aim, objective">intent</span>, context, <span class="vocab-words"
+                    data-modal-title="Constraints (noun) கட்டுப்பாடுகள் / வரம்புகள்"
+                    data-modal-meaning="– limitations or restrictions."
+                    data-modal-synonyms="limitations, restrictions, bounds">constraints</span>, and output expectations.
+            </p>
+
+            <p><strong>Why token optimization matters</strong><br>
+                A token is the unit of text consumed by an LLM. It may represent a word, part of a word, punctuation,
+                whitespace, or a fragment of code. Every prompt sent to a model consumes input tokens, and every
+                generated answer consumes output tokens. In production systems, token count directly affects cost, <span
+                    class="vocab-words" data-modal-title="Latency (noun) கால தாமதம்"
+                    data-modal-meaning="– the delay before a transfer of data begins following an instruction."
+                    data-modal-synonyms="delay, lag, pause">latency</span>, rate limits, and the maximum amount of
+                context that can fit into a request. OpenAI’s documentation also highlights that token counting helps
+                estimate cost, route requests based on size, and avoid context-limit failures before an API call is
+                made.</p>
+
+            <p>Token optimization is especially useful in repeated workflows such as customer support bots, <span
+                    class="vocab-words"
+                    data-modal-title="Retrieval-augmented generation (noun) மீட்டெடுப்பு சார்ந்த உருவாக்க முறை (RAG)"
+                    data-modal-meaning="– AI technique enhancing LLM prompts with fetched external data."
+                    data-modal-synonyms="RAG, search-augmented generation">retrieval-augmented generation</span>
+                systems, document summarizers, coding assistants, <span class="vocab-words"
+                    data-modal-title="Compliance (noun) இணக்கம் / விதிமுறை பின்பற்றல்"
+                    data-modal-meaning="– the action or fact of complying with a wish or command."
+                    data-modal-synonyms="adherence, conformity, observance">compliance</span> reviewers, and <span
+                    class="vocab-words" data-modal-title="Agentic (adjective) தன்னாட்சி திறன் கொண்ட"
+                    data-modal-meaning="– exhibiting autonomous agency or goal-directed behavior."
+                    data-modal-synonyms="autonomous, self-directing">agentic</span> applications. In these scenarios,
+                even a small reduction per request can produce meaningful savings when multiplied across thousands or
+                millions of calls. More importantly, a shorter and cleaner prompt often reduces <span
+                    class="vocab-words"
+                    data-modal-title="Cognitive noise (noun) மனக் குழப்ப சத்தம் / தேவையற்ற தகவல் சுமை"
+                    data-modal-meaning="– irrelevant details that distract language models or humans."
+                    data-modal-synonyms="distraction, irrelevance, clutter">cognitive noise</span> for the model, which
+                can improve response <span class="vocab-words" data-modal-title="Consistency (noun) சீரான தன்மை"
+                    data-modal-meaning="– conformity in the application of something; reliability."
+                    data-modal-synonyms="uniformity, stability, coherence">consistency</span>.</p>
+
+            <p><strong>Prompt optimization techniques</strong><br>
+                Prompt optimization should be handled carefully because <span class="vocab-words"
+                    data-modal-title="Aggressive (adjective) தீவிரமான / அக்ரசிவ்"
+                    data-modal-meaning="– pursuing a forcefulness or extreme approach."
+                    data-modal-synonyms="intense, forcefull, drastic">aggressive</span> compression can damage meaning.
+                Layered techniques should be used, starting with safe text cleanup and moving gradually towards <span
+                    class="vocab-words" data-modal-title="Semantic (adjective) பொருள் சார்ந்த"
+                    data-modal-meaning="– relating to meaning in language or logic."
+                    data-modal-synonyms="meaning-based, logical, conceptual">semantic</span> compression only when the
+                user allows it. The following techniques are useful building blocks for a Python-based framework.</p>
+
+            <p><strong>Remove filler phrases:</strong> Many prompts contain polite but unnecessary phrases such as
+                “Could you please,” “I would like you to,” or “It would be great if.” These phrases are harmless in
+                human communication, but they consume tokens without improving the model’s understanding. For example,
+                “Could you please summarise the following article in five bullet points?” can be reduced to “Summarise
+                the article in five bullet points.” The second version is shorter and equally clear.</p>
+
+            <p><strong>Consolidate repeated instructions:</strong> A common source of wasted tokens is repeated intent.
+                A prompt may say “be concise,” “keep the answer short,” and “avoid long explanations,” in three
+                different places. A good optimizer should recognise that these instructions express the same constraint
+                and retain only one clear version. The optimized instruction could simply be “Answer concisely.”</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/3187583512.jpg"
+                    alt="Repeated Instruction Consolidation Pipeline Diagram" />
+                <figcaption>Consolidating duplicate constraint phrases into a unified prompt instruction.</figcaption>
+            </figure>
+
+            <p><strong>Deduplicate context:</strong> Long prompts often repeat the same background information across
+                paragraphs. The optimizer can split the prompt into sentences or semantic <span class="vocab-words"
+                    data-modal-title="Chunks (noun) துண்டுகள் / தொகுதிகள்"
+                    data-modal-meaning="– compact blocks of text or data processed together."
+                    data-modal-synonyms="segments, blocks, fragments">chunks</span>, compare their similarity, and
+                remove near-duplicates. For example, “The customer is unhappy because the delivery was delayed” and “The
+                delayed delivery made the customer dissatisfied” carry the same core meaning. The framework should keep
+                the clearer sentence and remove the <span class="vocab-words"
+                    data-modal-title="Redundant (adjective) தேவையற்ற / மேலதிகமான"
+                    data-modal-meaning="– not or no longer needed or useful; superfluous."
+                    data-modal-synonyms="superfluous, extra, duplicate">redundant</span> one.</p>
+
+            <p><strong>Preserve protected sections:</strong> Not every part of a prompt should be compressed. Legal
+                clauses, safety rules, <span class="vocab-words" data-modal-title="Schema (noun) திட்ட அமைப்பு / வரைவு"
+                    data-modal-meaning="– structural representation of a plan, dataset, or output."
+                    data-modal-synonyms="structure, pattern, framework">schema</span> definitions, examples, API
+                contracts, and compliance instructions may need to remain unchanged. The framework should allow users to
+                mark protected sections so that optimization rules do not alter them. This approach is used by some open
+                source prompt optimization tools, where protected tags help safeguard critical prompt fragments.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/0X0Geu_gd1785386718171.jpg"
+                    alt="Protected Sections Schema Rules Diagram" />
+                <figcaption>Preserving critical compliance and schema tags during automated text compression.
+                </figcaption>
+            </figure>
+
+            <p><strong>Convert verbose instructions into compact structure:</strong> A paragraph of instructions can
+                sometimes be replaced by a compact list. For instance, “You should classify the ticket, identify
+                urgency, provide a short reason, and return the result in JSON format” can become: “Return JSON with:
+                category, urgency, reason.” Structured prompting reduces ambiguity and usually consumes fewer tokens
+                than <span class="vocab-words" data-modal-title="Verbose (adjective) வளவளப்பான / விரிவான"
+                    data-modal-meaning="– using or expressed in more words than are needed."
+                    data-modal-synonyms="wordy, lengthy, garrulous">verbose</span> prose.</p>
+
+            <p><strong>Use semantic summarisation for long context:</strong> When a prompt includes lengthy background
+                material, simple rule-based cleanup may not be enough. Semantic summarisation can condense the context
+                into essential facts. This technique is useful for conversation history, meeting notes, policy excerpts,
+                and document passages. The risk is that summarisation may <span class="vocab-words"
+                    data-modal-title="Omit (verb) விட்டுவிடுதல்"
+                    data-modal-meaning="– leave out or exclude someone or something."
+                    data-modal-synonyms="exclude, skip, drop">omit</span> details, so it should be used with a
+                similarity check or human review in high-stakes workflows.</p>
+
+            <p>Figure 2 shows how a practical open source framework can be designed as a <span class="vocab-words"
+                    data-modal-title="Modular (adjective) கூறுநிலை கொண்ட"
+                    data-modal-meaning="– employing or involving independent units or modules."
+                    data-modal-synonyms="segmented, compartmentalized, flexible">modular</span> Python package. Each
+                module should perform one responsibility, making the framework easier to test, extend, and integrate
+                with existing applications. The architecture may include a prompt <span class="vocab-words"
+                    data-modal-title="Parser (noun) பாகுபடுத்தி"
+                    data-modal-meaning="– software component that analyzes input text into structured components."
+                    data-modal-synonyms="analyzer, interpreter, decomposer">parser</span>, rule engine, semantic <span
+                    class="vocab-words" data-modal-title="Deduplicator (noun) நகல் நீக்கி"
+                    data-modal-meaning="– software module that removes duplicate data or text."
+                    data-modal-synonyms="duplicate remover, cleaner">deduplicator</span>, token counter, optimization
+                <span class="vocab-words" data-modal-title="Pipeline (noun) தரவு வரிசைப் பாதை"
+                    data-modal-meaning="– sequence of data-processing elements executing in order."
+                    data-modal-synonyms="workflow, sequence, chain">pipeline</span>, evaluation module, and command-line
+                interface.
+            </p>
+
+            <p><strong>An example of a Python implementation</strong><br>
+                The following simplified implementation demonstrates the core idea. It is not a complete production
+                framework, but it shows how a pipeline can remove filler phrases, normalise whitespace, deduplicate
+                sentences, and report token savings.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/Cd6gBznfb1785386779621.jpg"
+                    alt="Python Token Optimizer Pipeline Code Example" />
+                <figcaption>Python implementation snippet showing rule-based text cleaning and token saving reports.
+                </figcaption>
+            </figure>
+
+            <p><strong>Testing the optimizer with a sample prompt</strong><br>
+                Consider the following verbose prompt:</p>
+
+            <blockquote
+                style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1rem 0; font-style: italic; color: #334155;">
+                “Could you please carefully analyse the customer complaint below and make sure to identify the main
+                issue, urgency level, and recommended next action. I would like you to provide the response in JSON
+                format. Please make sure the response is concise and does not include unnecessary explanation.”
+            </blockquote>
+
+            <p>A safe optimised version could be:</p>
+
+            <blockquote
+                style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1rem; margin: 1rem 0; font-weight: 600; color: #15803d;">
+                “Analyze the customer complaint. Return concise JSON with: main_issue, urgency_level,
+                recommended_next_action.”
+            </blockquote>
+
+            <p>The optimized prompt removes polite phrasing, repeated conciseness instructions, and wordy transitions.
+                It still retains the task, domain context, output format, and required fields. This is the right
+                balance: the prompt is shorter, but the expected behaviour remains intact.</p>
+
+            <p><strong>Adding semantic deduplication</strong><br>
+                Exact sentence deduplication is useful, but real prompts often repeat ideas in different words. For this
+                reason, a mature framework should support semantic deduplication. One approach is to convert sentences
+                into <span class="vocab-words" data-modal-title="Embeddings (noun) உட்பொதிவுகள் / வெக்டர் வடிவங்கள்"
+                    data-modal-meaning="– vector representations of text capturing semantic meanings."
+                    data-modal-synonyms="vector representations, semantic vectors">embeddings</span> and calculate <span
+                    class="vocab-words" data-modal-title="Cosine similarity (noun) கோசைன் ஒத்தத்தன்மை"
+                    data-modal-meaning="– mathematical measure of similarity between two non-zero vectors."
+                    data-modal-synonyms="vector similarity, angular distance">cosine similarity</span>. If two sentences
+                are above a chosen similarity threshold, the optimizer keeps the shorter or clearer sentence. This
+                should be <span class="vocab-words" data-modal-title="Configurable (adjective) மாற்றியமைக்கக்கூடிய"
+                    data-modal-meaning="– able to be customized or configured to suit specific needs."
+                    data-modal-synonyms="customizable, adjustable, modifiable">configurable</span> because a threshold
+                that is too low may remove important <span class="vocab-words"
+                    data-modal-title="Nuance (noun) நுட்பமான வேறுபாடு"
+                    data-modal-meaning="– a subtle difference in or shade of meaning, expression, or sound."
+                    data-modal-synonyms="subtlety, fine distinction, shade">nuance</span>.</p>
+
+            <p><strong>Conceptual flow</strong><br>
+                Split prompts into sentences, generate embeddings, compare pairwise similarity, remove near-duplicates,
+                rebuild the prompt, and validate that the required intent markers are still present. In an open source
+                project, this component can be optional so that users may choose lightweight rule-based optimization or
+                embedding-based optimization depending on their accuracy and dependency requirements.</p>
+
+            <p><strong>Token monitoring during prompt execution</strong><br>
+                Token monitoring should be treated as a first-class feature. Before calling the model, the framework can
+                estimate input tokens locally. After the model responds, it can capture actual usage <span
+                    class="vocab-words" data-modal-title="Metadata (noun) தரவு பற்றிய தரவு"
+                    data-modal-meaning="– a set of data that describes and gives information about other data."
+                    data-modal-synonyms="descriptive data, header info">metadata</span> returned by the API. Together,
+                these values help calculate savings, detect abnormal prompts, enforce budget limits, and build
+                dashboards for product teams.</p>
+
+            <p>Here's an example of request and response token monitoring:</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/8O0OYx3QQ1785386860009.jpg"
+                    alt="Token Monitoring API Request Response Metadata" />
+                <figcaption>Pre-flight token estimation paired with post-execution API metadata tracking.</figcaption>
+            </figure>
+
+            <p>Local <span class="vocab-words" data-modal-title="Tokenizers (noun) டோக்கனாக்கிகள்"
+                    data-modal-meaning="– tools or libraries that split text into token units."
+                    data-modal-synonyms="text splitters, word encoders">tokenizers</span> such as <code>tiktoken</code>
+                are useful for fast estimation, especially for plain text. API-provided usage values are more <span
+                    class="vocab-words" data-modal-title="Authoritative (adjective) அதிகாரப்பூர்வமான / நம்பகமான"
+                    data-modal-meaning="– able to be trusted as being accurate or true."
+                    data-modal-synonyms="definitive, official, reliable">authoritative</span> because they include
+                model-specific formatting and execution details. A robust framework should store both values: the
+                estimate for preflight checks and the actual usage for billing, reporting, and continuous improvement.
+            </p>
+
+            <p><strong>Framework packaging and open source readiness</strong><br>
+                To make the framework useful to the community, the project should be packaged cleanly and documented
+                well. A recommended structure is:</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/PVflEl_dR1785386902618.jpg"
+                    alt="Python Project Directory Structure Diagram" />
+                <figcaption>Clean modular directory structure for open-source Python framework packaging.</figcaption>
+            </figure>
+
+            <p>The command-line interface can make the tool easy to use:</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/zEmwDf-_A1785386909701.jpg"
+                    alt="CLI Interface Command Execution Screenshot" />
+                <figcaption>Command-line interface (CLI) execution for prompt optimization and metrics reporting.
+                </figcaption>
+            </figure>
+
+            <p><strong>Validation: Ensuring the prompt still works</strong><br>
+                Token reduction is useful only if the optimized prompt preserves functionality. The framework should
+                therefore validate each optimized prompt using three checks. First, it should confirm that mandatory
+                intent phrases are still present. Second, it should compare the semantic similarity of the original and
+                optimized prompt. Third, it should optionally run both prompts against a test set and compare outputs
+                using quality metrics or human review. This creates an engineering discipline around prompt compression
+                rather than treating it as a blind text-shortening exercise.</p>
+
+            <p>Here are a few best practices:</p>
+            <ul>
+                <li>Start with safe optimization rules before enabling aggressive semantic compression.</li>
+                <li>Allow users to mark protected text that must never be changed.</li>
+                <li>Measure token count before and after optimization for every prompt.</li>
+                <li>Track actual API usage after execution, not just estimated tokens.</li>
+                <li>Maintain test prompts for each application so that optimization does not silently degrade output
+                    quality.</li>
+                <li>Expose configuration options such as compression level, similarity threshold, and model name.</li>
+                <li>Keep logs of original prompt, optimized prompt, token savings, and validation status for <span
+                        class="vocab-words" data-modal-title="Auditability (noun) தணிக்கை செய்யத்தக்க தன்மை"
+                        data-modal-meaning="– quality of allowing verification and record inspection."
+                        data-modal-synonyms="traceability, accountability, inspectability">auditability</span>.</li>
+            </ul>
+
+            <div class="pullquote-card">
+                “A good optimizer should not simply make text shorter; it should make prompts cleaner, more economical,
+                and easier for both humans and models to understand.”
+            </div>
+
+            <p>An open source token optimization framework for prompt development can bring discipline, repeatability,
+                and cost awareness to LLM application engineering. By combining rule-based cleanup, duplicate intent
+                removal, semantic deduplication, protected sections, token counting, and post-execution usage
+                monitoring, developers can reduce prompt size without losing meaning. The most important principle is
+                balance. A good optimizer should not simply make text shorter; it should make prompts cleaner, more
+                economical, and easier for both humans and models to understand.</p>
+        </div>
+
+        <!-- VOCABULARY DICTIONARY / GLOSSARY SECTION (80 WORDS) -->
+        <section class="vocab-glossary-section"
+            style="margin-top: 3rem; background: #f8fafc; padding: 2rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h2 style="font-family: 'Inter', sans-serif; color: #1e293b; margin-top: 0;">Comprehensive Vocabulary &
+                Technical Terms (80 Highlighted Words)</h2>
+            <div class="responsive-vocab-grid">
+                <ol start="1">
+                    <li><strong>Discipline:</strong> துறை / பயிற்சித் துறை (Field)</li>
+                    <li><strong>Ambiguity:</strong> தெளிவின்மை (Uncertainty)</li>
+                    <li><strong>Predictable:</strong> கணிக்கக்கூடிய (Foreseeable)</li>
+                    <li><strong>Token optimization:</strong> டோக்கன் உகப்பாக்கம் (Token reduction)</li>
+                    <li><strong>Intent:</strong> நோக்கம் (Purpose)</li>
+                    <li><strong>Constraints:</strong> கட்டுப்பாடுகள் (Limitations)</li>
+                    <li><strong>Latency:</strong> கால தாமதம் (Delay)</li>
+                    <li><strong>Retrieval-augmented generation:</strong> மீட்டெடுப்பு சார்ந்த உருவாக்க முறை (RAG)</li>
+                    <li><strong>Compliance:</strong> விதிமுறை பின்பற்றல் (Adherence)</li>
+                    <li><strong>Agentic:</strong> தன்னாட்சி திறன் கொண்ட (Autonomous)</li>
+                    <li><strong>Cognitive noise:</strong> மனக் குழப்ப சத்தம் (Distraction)</li>
+                    <li><strong>Consistency:</strong> சீரான தன்மை (Uniformity)</li>
+                    <li><strong>Aggressive:</strong> தீவிரமான (Intense)</li>
+                    <li><strong>Semantic:</strong> பொருள் சார்ந்த (Meaning-based)</li>
+                    <li><strong>Chunks:</strong> துண்டுகள் / தொகுதிகள் (Segments)</li>
+                    <li><strong>Redundant:</strong> தேவையற்ற (Superfluous)</li>
+                    <li><strong>Schema:</strong> திட்ட அமைப்பு (Structure)</li>
+                    <li><strong>Verbose:</strong> வளவளப்பான (Wordy)</li>
+                    <li><strong>Omit:</strong> விட்டுவிடுதல் (Exclude)</li>
+                    <li><strong>Modular:</strong> கூறுநிலை கொண்ட (Segmented)</li>
+                    <li><strong>Parser:</strong> பாகுபடுத்தி (Analyzer)</li>
+                    <li><strong>Deduplicator:</strong> நகல் நீக்கி (Cleaner)</li>
+                    <li><strong>Pipeline:</strong> தரவு வரிசைப் பாதை (Workflow)</li>
+                    <li><strong>Embeddings:</strong> வெக்டர் வடிவங்கள் (Vector representations)</li>
+                    <li><strong>Cosine similarity:</strong> கோசைன் ஒத்தத்தன்மை (Vector similarity)</li>
+                    <li><strong>Configurable:</strong> மாற்றியமைக்கக்கூடிய (Customizable)</li>
+                    <li><strong>Nuance:</strong> நுட்பமான வேறுபாடு (Subtlety)</li>
+                    <li><strong>Metadata:</strong> தரவு பற்றிய தரவு (Descriptive data)</li>
+                    <li><strong>Tokenizers:</strong> டோக்கனாக்கிகள் (Text splitters)</li>
+                    <li><strong>Authoritative:</strong> அதிகாரப்பூர்வமான (Definitive)</li>
+                    <li><strong>Auditability:</strong> தணிக்கை செய்யத்தக்க தன்மை (Traceability)</li>
+                    <li><strong>Prompts:</strong> தூண்டுதல்கள் / வினவல்கள் (Input queries)</li>
+                    <li><strong>Framework:</strong> சட்டக அமைப்பு (Structure)</li>
+                    <li><strong>Deduplication:</strong> நகல் நீக்கம் (Duplicate removal)</li>
+                    <li><strong>Summarisation:</strong> சுருக்கம் தருதல் (Condensing)</li>
+                    <li><strong>Threshold:</strong> வரம்பு நிலை (Limit point)</li>
+                    <li><strong>Validation:</strong> சரிபார்த்தல் (Verification)</li>
+                    <li><strong>Economical:</strong> சிக்கனமான (Cost-effective)</li>
+                    <li><strong>Punctuation:</strong> நிறுத்தற்குறிகள் (Symbol markers)</li>
+                    <li><strong>Fragment:</strong> சிறு துண்டு (Piece)</li>
+                </ol>
+                <ol start="41">
+                    <li><strong>Production:</strong> நேரடி இயங்கு சூழல் (Live system)</li>
+                    <li><strong>Estimates:</strong> அனுமானங்கள் (Calculations)</li>
+                    <li><strong>Workflows:</strong> பணிப்பாய்வுகள் (Processes)</li>
+                    <li><strong>Summarizers:</strong> சுருக்கிகள் (Compressors)</li>
+                    <li><strong>Assistants:</strong> உதவியாளர்கள் (Helpers)</li>
+                    <li><strong>Multiplied:</strong> பெருக்கப்படும் (Scaled)</li>
+                    <li><strong>Layered:</strong> அடுக்குமுறை (Tiered)</li>
+                    <li><strong>Compression:</strong> சுருக்கம் (Reduction)</li>
+                    <li><strong>Consolidate:</strong> ஒன்றிணைத்தல் (Unify)</li>
+                    <li><strong>Core meaning:</strong> முதன்மைப் பொருள் (Essential logic)</li>
+                    <li><strong>Safeguard:</strong> பாதுகாத்தல் (Protect)</li>
+                    <li><strong>Paragraph:</strong> பத்தி (Text block)</li>
+                    <li><strong>Structured:</strong> கட்டமைக்கப்பட்ட (Organized)</li>
+                    <li><strong>High-stakes:</strong> அதிக முக்கியத்துவம் வாய்ந்த (Critical)</li>
+                    <li><strong>Architecture:</strong> கட்டமைப்பு (Design)</li>
+                    <li><strong>Command-line:</strong> கட்டளைக் வரி (CLI)</li>
+                    <li><strong>Interface:</strong> இடைமுகம் (UI/CLI)</li>
+                    <li><strong>Normalise:</strong> சீரமைத்தல் (Standardize)</li>
+                    <li><strong>Transitions:</strong> மாறுதல் சொற்கள் (Connecting words)</li>
+                    <li><strong>Pairwise:</strong> ஜோடி ஒப்பீடு (Two-by-two)</li>
+                    <li><strong>Dependency:</strong> சார்ந்துள்ளவை (Prerequisites)</li>
+                    <li><strong>Preflight:</strong> முன்பரிசோதனை (Pre-execution)</li>
+                    <li><strong>Authoritative:</strong> நம்பகமான (Official)</li>
+                    <li><strong>Auditability:</strong> தணிக்கைத் திறன் (Trackability)</li>
+                    <li><strong>Repeatability:</strong> திரும்பச் செய்யக்கூடிய திறன் (Replicability)</li>
+                    <li><strong>Awareness:</strong> விழிப்புணர்வு (Mindfulness)</li>
+                    <li><strong>Combination:</strong> கலவை (Integration)</li>
+                    <li><strong>Implementation:</strong> நடைமுறைப்படுத்தல் (Deployment)</li>
+                    <li><strong>Evaluation:</strong> மதிப்பீடு (Assessment)</li>
+                    <li><strong>Metrics:</strong> அளவீடுகள் (Measurements)</li>
+                    <li><strong>Formatting:</strong> வடிவமைப்பு (Styling)</li>
+                    <li><strong>Execution:</strong> இயக்கம் (Operation)</li>
+                    <li><strong>Verification:</strong> உறுதிப்படுத்தல் (Confirmation)</li>
+                    <li><strong>Traceability:</strong> பின் தொடரும் திறன் (Trackability)</li>
+                    <li><strong>Robust:</strong> வலுவான (Sturdy)</li>
+                    <li><strong>Precision:</strong> துல்லியம் (Accuracy)</li>
+                    <li><strong>Integration:</strong> இணைத்தல் (Combining)</li>
+                    <li><strong>Parsing:</strong> பகுப்பாய்வு (Analyzing)</li>
+                    <li><strong>Refinement:</strong> செம்மைப்படுத்தல் (Improvement)</li>
+                    <li><strong>Benchmarking:</strong> ஒப்பீட்டுச் சோதனை (Standard testing)</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- FIGURE SECTION AT END FOR FULL CONTEXT -->
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/TOKEN-OPTIMIZATION-USING-PYTHON-FOR-PROMPT-DEVELOPMENT.jpg"
+                    alt="Article Image 1" />
+                <figcaption>Token Optimization Cover Graphic</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/3187583512.jpg"
+                    alt="Article Image 2" />
+                <figcaption>Instruction Consolidation Diagram</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/0X0Geu_gd1785386718171.jpg"
+                    alt="Article Image 3" />
+                <figcaption>Protected Sections Diagram</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/Cd6gBznfb1785386779621.jpg"
+                    alt="Article Image 4" />
+                <figcaption>Python Implementation Snippet</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/8O0OYx3QQ1785386860009.jpg"
+                    alt="Article Image 5" />
+                <figcaption>Token Usage Monitoring Metadata</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/PVflEl_dR1785386902618.jpg"
+                    alt="Article Image 6" />
+                <figcaption>Framework Packaging Structure</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hghhPA2AcGFsBC1mss/zEmwDf-_A1785386909701.jpg"
+                    alt="Article Image 7" />
+                <figcaption>CLI Execution Example</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <!-- Vocabulary Definition Modal Overlay -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📜</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <!-- Image HD Modal Overlay -->
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../assets/js/vocab-modal.js"></script>
+
+</body>
+
+</html>
