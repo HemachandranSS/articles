@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>stream-vs-batch-processing.html</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .pullquote-card {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: #14532d;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .article-figures-section {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · AUGUST 2026</div>
+            <h1>Stream vs Batch Processing: When to Choose What</h1>
+            <p class="subtitle">Batch and streaming are two different ways of processing data, and both are relevant in
+                today's world. Pick the approach that's right for you without falling for the hype that you must always
+                do everything in real time.</p>
+            <p class="byline">By Dhaval Gajjar</p>
+        </header>
+
+        <figure class="article-image-figure" style="margin-bottom: 2rem;">
+            <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/STREAM-VS-BATCH-PROCESSING-WHEN-TO-CHOOSE-WHAT.jpg"
+                alt="Stream vs Batch Processing Header Graphic" />
+            <figcaption>Stream vs Batch Processing: When to Choose What — Cover Graphic (Open Source For You, August
+                2026)</figcaption>
+        </figure>
+
+        <div class="article-body">
+            <p class="drop-cap">A few years back I was running point on a data project that, in <span
+                    class="vocab-words" data-modal-title="Hindsight (noun) பின்னோக்கிப் பார்த்தல்"
+                    data-modal-meaning="– understanding of a situation or event only after it has happened."
+                    data-modal-synonyms="retrospect, recollection, afterthought">hindsight</span>, should have been a
+                lot simpler than it ended up being. We had a marketing team that wanted to see customer activity in
+                their dashboard. Pretty standard stuff. Show me how many people signed up today. Show me which campaigns
+                are <span class="vocab-words"
+                    data-modal-title="Converting (verb/participle) மாறுதல் / வாடிக்கையாளராக மாறுதல்"
+                    data-modal-meaning="– changing or causing to change from one form or function to another."
+                    data-modal-synonyms="transforming, turning, adapting">converting</span> right now. Show me when
+                somebody high-value lands on the pricing page so I can email them while they’re still warm.</p>
+
+            <p>We built it as a nightly batch job. Every night at 2 a.m., a Python script would pull data from a dozen
+                sources, transform it, dump it into the warehouse, and refresh the dashboard. It worked great. For about
+                six weeks.</p>
+
+            <p>Then the marketing director walked over to my desk one morning, slightly grumpy, holding her phone. “Why
+                am I seeing yesterday’s numbers? It’s almost lunchtime.” I tried to explain that the dashboard refreshed
+                once a day. She didn’t really care about the explanation. She wanted to see customers landing on the
+                pricing page now, not tomorrow morning. That was the whole point of the dashboard.</p>
+
+            <p>That conversation kicked off a six-month <span class="vocab-words"
+                    data-modal-title="Migration (noun) இடப்பெயர்வு / தொழில்மாற்றம்"
+                    data-modal-meaning="– movement of data or software from one system to another."
+                    data-modal-synonyms="relocation, transfer, shift">migration</span> from a batch pipeline to a
+                streaming one. We made a lot of mistakes along the way. We <span class="vocab-words"
+                    data-modal-title="Over-engineered (verb/past) அளவுக்கு அதிகமாக வடிவமைக்கப்பட்ட"
+                    data-modal-meaning="– designed in a manner that is more complex or costly than necessary."
+                    data-modal-synonyms="overcomplicated, overdesigned">over-engineered</span> some things. We
+                under-engineered others. By the end of it, I had a pretty strong opinion about when streaming makes
+                sense and when it doesn’t, and which open source tools were genuinely worth the learning curve.</p>
+
+            <p><strong>What does batch mean in practice?</strong><br>
+                Batch processing is one of the oldest and most widely used data processing methods because it remains
+                highly effective. Data is collected over a fixed period—such as an hour, day, or week—and then processed
+                in a single run. The job reads, transforms, writes the data, and finishes before the next scheduled
+                <span class="vocab-words" data-modal-title="Execution (noun) செயல்படுத்துதல் / இயக்கம்"
+                    data-modal-meaning="– the carrying out or putting into effect of a plan, order, or course of action."
+                    data-modal-synonyms="implementation, performance, operation">execution</span>.
+            </p>
+
+            <p>It’s like doing laundry: instead of washing each item immediately, you wait for a full load, making the
+                process more efficient. The <span class="vocab-words"
+                    data-modal-title="Trade-off (noun) சமரசம் / மாற்றீடு"
+                    data-modal-meaning="– a balance achieved between two desirable but incompatible features."
+                    data-modal-synonyms="compromise, balance, exchange">trade-off</span> is that new data isn’t
+                processed until the next batch.</p>
+
+            <p>Batch jobs are typically scheduled using tools like Cron, <span class="vocab-words"
+                    data-modal-title="Orchestrated (verb/past) ஒருங்கிணைக்கப்பட்ட"
+                    data-modal-meaning="– arranged or directed elements to achieve a desired effect."
+                    data-modal-synonyms="coordinated, organized, managed">orchestrated</span> with Airflow, and
+                processed by platforms such as Spark or dbt. Since the system processes the entire dataset at once, it
+                can optimise execution efficiently.</p>
+
+            <p>Batch processing is ideal for financial reporting, machine learning model training, ETL pipelines, and
+                analytics where real-time updates aren’t required. When yesterday’s data is sufficient, batch processing
+                is usually the most cost-effective, reliable, and easy-to-maintain approach.</p>
+
+            <p><strong>What streaming means in practice</strong><br>
+                Streaming takes the opposite approach to batch processing by handling each event as it occurs instead of
+                waiting to process data in bulk. Every click, transaction, or update is processed within milliseconds,
+                enabling immediate responses.</p>
+
+            <p>A good analogy is a busy restaurant kitchen, where orders are prepared as they arrive rather than waiting
+                for a large batch. Streaming systems continuously process an endless flow of events, requiring a
+                different architecture and mindset than batch processing.</p>
+
+            <p>The biggest advantage is low <span class="vocab-words" data-modal-title="Latency (noun) கால தாமதம்"
+                    data-modal-meaning="– the delay before a transfer of data begins following an instruction."
+                    data-modal-synonyms="delay, lag, pause">latency</span>. Dashboards can display near real-time data,
+                <span class="vocab-words" data-modal-title="Fraud (noun) மோசடி"
+                    data-modal-meaning="– wrongful or criminal deception intended to result in financial or personal gain."
+                    data-modal-synonyms="swindle, deception, scam">fraud</span> detection can stop suspicious
+                transactions instantly, and inventory updates can sync across locations without delay.
+            </p>
+
+            <p>However, streaming is more complex. It must manage event ordering, late-arriving data, <span
+                    class="vocab-words" data-modal-title="Exactly-once (adjective) சரியாக ஒருமுறை மட்டுமே"
+                    data-modal-meaning="– processing guarantees where each message is delivered exactly once."
+                    data-modal-synonyms="strict delivery, single execution">exactly-once</span> processing, state
+                management, and failure recovery. While it delivers realtime insights, it is more difficult and costly
+                to build, operate, and maintain than batch processing.</p>
+
+            <p><strong>Where the line actually sits</strong><br>
+                Here’s the question I always ask first when somebody is debating between batch and streaming. How fresh
+                does the data need to be?</p>
+
+            <p>If the answer is “within a few hours is fine,” batch is your friend. Build the pipeline once, schedule
+                it, walk away. You’ll thank yourself later.</p>
+
+            <p>If the answer is “within a few minutes,” you’re in the middle ground. <span class="vocab-words"
+                    data-modal-title="Micro-batching (noun) சிறு-தொகுதி செயல்முறை"
+                    data-modal-meaning="– processing data in very small, frequent batches."
+                    data-modal-synonyms="frequent batching, mini-batching">Micro-batching</span>, where you run small
+                batch jobs every few minutes, often works well here. It gets you most of the freshness benefits of
+                streaming with most of the operational simplicity of batch.</p>
+
+            <p>If the answer is “within seconds,” you genuinely need streaming. There’s no shortcut. Use a real stream
+                processing system and pay the complexity tax.</p>
+
+            <p>The mistake I see most often is teams jumping to streaming because it sounds modern and impressive, when
+                their actual business need was perfectly served by an hourly batch job. Streaming introduces real
+                engineering overhead. Make sure you need it before you take that on.</p>
+
+            <p>The flip side, which I’ve also seen, is teams clinging to batch when their use case has clearly outgrown
+                it. If your marketing team is asking the same “why is this data so old” question every week, you might
+                be in this camp. Sometimes the right answer is to bite the bullet and rebuild.</p>
+
+            <p><strong>Apache Kafka, the spine of most streaming systems</strong><br>
+                If you’re going to learn one tool in this space, learn Kafka. It’s the underlying transport layer for
+                most streaming architectures out there, and understanding it makes everything else click into place.</p>
+
+            <p>Kafka isn’t really a stream processor in itself. It’s more like a distributed log. <span
+                    class="vocab-words" data-modal-title="Producers (noun) தரவு உருவாக்குபவர்கள்"
+                    data-modal-meaning="– applications or processes that send data into a stream system."
+                    data-modal-synonyms="data senders, publishers">Producers</span> write events to topics. <span
+                    class="vocab-words" data-modal-title="Consumers (noun) தரவு நுகர்வோர்கள்"
+                    data-modal-meaning="– applications or processes that read data from a stream system."
+                    data-modal-synonyms="data readers, subscribers">Consumers</span> read events from topics. Kafka
+                handles the storage, ordering, <span class="vocab-words"
+                    data-modal-title="Partitioning (noun) பிரித்தல் / பகுத்தல்"
+                    data-modal-meaning="– dividing a database or stream into distinct independent parts."
+                    data-modal-synonyms="segmentation, division, splitting">partitioning</span>, and <span
+                    class="vocab-words" data-modal-title="Replication (noun) நகலெடுத்தல் / பிரதிபலித்தல்"
+                    data-modal-meaning="– copying data to ensure consistency and availability."
+                    data-modal-synonyms="duplication, copying, cloning">replication</span> so that events flow reliably
+                between systems even at huge volumes.</p>
+
+            <p>Setting up Kafka used to be painful. These days, with Confluent Cloud or Redpanda or even just the
+                official Docker images, it’s manageable. For a quick local setup to play with, this works.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/w0FwnBO4H1785403334928.jpg"
+                    alt="Kafka Docker Setup Configuration Code" />
+                <figcaption>Kafka local environment initialization via Docker container configuration.</figcaption>
+            </figure>
+
+            <p>Once Kafka is running, you can produce and consume events from any language with a client library. The
+                Python equivalent of ‘hello world’ looks something like this.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/4514312178.jpg"
+                    alt="Python Kafka Producer Script Example" />
+                <figcaption>Python script emitting a single JSON event to a Kafka topic.</figcaption>
+            </figure>
+
+            <p>That’s a single event going onto the <code>user_events</code> topic. A consumer somewhere else can read
+                it the moment it lands. From here, anything is possible. You can build dashboards, alerts, machine
+                learning pipelines, audit logs, anything that needs to react to events.</p>
+
+            <p><strong>Apache Flink, the heavyweight processor</strong><br>
+                If Kafka is the spine, Flink is the brain that lives on top of it for serious stream processing work.
+            </p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/osI2HvXd71785403339133.jpg"
+                    alt="Apache Flink Data Stream Pipeline Code" />
+                <figcaption>Apache Flink processing pipeline illustrating transformations over event streams.
+                </figcaption>
+            </figure>
+
+            <p>Flink lets you write programs that operate on streams. You define <span class="vocab-words"
+                    data-modal-title="Transformations (noun) மாற்றங்கள் / உருமாற்றங்கள்"
+                    data-modal-meaning="– operations that convert data from one format or structure to another."
+                    data-modal-synonyms="conversions, modifications, adaptations">transformations</span>, <span
+                    class="vocab-words" data-modal-title="Aggregations (noun) திரட்டுதல் / மொத்தக் கணக்கீடு"
+                    data-modal-meaning="– process of combining multiple data values into a single summary."
+                    data-modal-synonyms="summaries, accumulations, groupings">aggregations</span>, joins, <span
+                    class="vocab-words" data-modal-title="Windows (noun) நேரச் சட்டகங்கள்"
+                    data-modal-meaning="– time or count-based boundaries used to process stream subsets."
+                    data-modal-synonyms="time frames, buckets, intervals">windows</span>, and state, and Flink runs your
+                code at scale, handling all the unpleasant details of distributed processing, <span class="vocab-words"
+                    data-modal-title="Fault tolerance (noun) பிழை தாங்கும் திறன்"
+                    data-modal-meaning="– ability of a system to continue operating properly in event of failure."
+                    data-modal-synonyms="resilience, redundancy, reliability">fault tolerance</span>, and exactly-once
+                <span class="vocab-words" data-modal-title="Semantics (noun) பொருள் இலக்கணம் / இயங்குமுறை விதிகள்"
+                    data-modal-meaning="– meaning or logic governing operational guarantees."
+                    data-modal-synonyms="meaning, logic, specification">semantics</span>. It’s been around since the
+                early 2010s, and at this point it’s used by Netflix, Uber, Alibaba, ING, and pretty much every other
+                company that does serious streaming.
+            </p>
+
+            <p>The learning curve isn’t trivial. Flink is a serious piece of software with a real API surface. But once
+                you get the hang of it, you can express remarkably <span class="vocab-words"
+                    data-modal-title="Sophisticated (adjective) நுட்பமான / சிக்கலான"
+                    data-modal-meaning="– highly developed, complex, or refined."
+                    data-modal-synonyms="complex, advanced, elaborate">sophisticated</span> logic in not very much code.
+                Here’s roughly what a Flink job for counting events per minute looks like.</p>
+
+            <p>Read from Kafka, group by event type, window into one-minute buckets, count, write back to Kafka. Five
+                lines of business logic. Everything else is Flink handling distributed state, <span class="vocab-words"
+                    data-modal-title="Checkpoints (noun) கட்டுப்பாட்டுப் புள்ளிகள்"
+                    data-modal-meaning="– stored states of a system to allow recovery after failure."
+                    data-modal-synonyms="snapshots, state saves">checkpoints</span>, and recovery for you.</p>
+
+            <p>The catch with Flink is that it’s a heavyweight piece of infrastructure. You’re running a cluster. You’re
+                managing checkpoints. You’re tuning memory. For massive scale or genuinely complex processing, it’s
+                worth the operational cost. For small to medium use cases, it might be overkill.</p>
+
+            <p><strong>Apache Spark Structured Streaming, the familiar option</strong><br>
+                Spark is mostly known as a batch processing engine, but its Structured Streaming module has become one
+                of the most popular ways to do streaming, especially in shops that already use Spark for batch. A
+                streaming aggregation in Spark looks like this.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/d5BcHewqw1785403411558.jpg"
+                    alt="Spark Structured Streaming Python Code" />
+                <figcaption>Spark Structured Streaming aggregation job reading from Kafka and counting events by window.
+                </figcaption>
+            </figure>
+
+            <p>That’s a streaming job. Read from Kafka, group by minute and event type, count, write somewhere. If
+                you’ve used Spark before, this looks instantly <span class="vocab-words"
+                    data-modal-title="Familiar (adjective) நன்கு தெரிந்த"
+                    data-modal-meaning="– well known from long or close association."
+                    data-modal-synonyms="known, acquainted, accustomed">familiar</span>. If you haven’t, the API is well
+                documented and consistent with the batch version.</p>
+
+            <p>Spark Structured Streaming uses a micro-batch model by default, which means it’s not strictly real-time.
+                There’s a small delay, typically a few seconds, between an event happening and it being processed. For
+                most use cases, this is totally fine. If you need true sub-second latency, Flink is a better choice. For
+                ‘near real time’ applications, Spark is excellent.</p>
+
+            <p><strong>Debezium, the change data capture star</strong><br>
+                Most data engineering work involves moving data from operational databases to analytical systems, or
+                between operational systems. Historically, this was done with periodic batch dumps. Take a <span
+                    class="vocab-words" data-modal-title="Snapshot (noun) உடனடி நிழற்படம் / நிலைப்பதிவு"
+                    data-modal-meaning="– a record of the state of a system at a particular point in time."
+                    data-modal-synonyms="picture, state record, image">snapshot</span> of the database, copy it to the
+                warehouse, repeat tomorrow.</p>
+
+            <p>Debezium changed the game by making <span class="vocab-words"
+                    data-modal-title="Change data capture (noun) தரவு மாற்றக் கணிப்பு (CDC)"
+                    data-modal-meaning="– software process of identifying and capturing changes made to data."
+                    data-modal-synonyms="CDC, change tracking">change data capture</span>, or CDC, easy. The idea is to
+                tap into the database’s transaction log and stream every change as it happens. Insert, update, delete,
+                all of them become events flowing into Kafka in near real time. You can build downstream systems that
+                react to these events without ever putting load on the source database.</p>
+
+            <p>Setting up Debezium connects to your database’s replication slot and starts publishing changes to Kafka
+                topics. Each topic corresponds to a table. Each event corresponds to a row change. The schema includes
+                the before and after state, the operation type, and a bunch of <span class="vocab-words"
+                    data-modal-title="Metadata (noun) தரவு பற்றிய தரவு"
+                    data-modal-meaning="– a set of data that describes and gives information about other data."
+                    data-modal-synonyms="descriptive data, structural info">metadata</span>.</p>
+
+            <p>For teams trying to bridge the gap between operational and analytical workloads without rewriting their
+                applications, Debezium is often the cleanest answer. It works with PostgreSQL, MySQL, MongoDB, SQL
+                Server, Oracle, and others. The setup is genuinely not bad. The Debezium documentation has reasonable
+                Docker Compose examples that get you a working pipeline in an hour.</p>
+
+            <p><strong>Apache Airflow, still the orchestrator most teams reach for</strong><br>
+                When you’re firmly in batch territory, Airflow is the workflow <span class="vocab-words"
+                    data-modal-title="Orchestrator (noun) ஒருங்கிணைப்பி"
+                    data-modal-meaning="– a system that automates, manages, and coordinates complex workflows."
+                    data-modal-synonyms="coordinator, manager, director">orchestrator</span> that most data teams end up
+                using. It’s been around since 2014, came out of Airbnb, and is now an Apache project with a huge
+                community.</p>
+
+            <p>The core idea is that you write your workflows as Python code. You define <span class="vocab-words"
+                    data-modal-title="Directed acyclic graphs (noun) சுழற்சியற்ற திசைவரைபடம் (DAG)"
+                    data-modal-meaning="– structural workflow representation with non-repeating directional paths."
+                    data-modal-synonyms="DAGs, workflow graphs">directed acyclic graphs</span> of tasks. Airflow
+                schedules them, runs them, retries them on failure, and gives you a web UI to monitor everything. It’s
+                not <span class="vocab-words" data-modal-title="Glamorous (adjective) கவர்ச்சிகரமான"
+                    data-modal-meaning="– attractive in an exciting and special way."
+                    data-modal-synonyms="appealing, dazzling, stylish">glamorous</span>, but it’s solid, and it’s saved
+                an enormous amount of homegrown scheduler code over the years.</p>
+
+            <p>A simple Airflow DAG looks like this.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/iLvRm3y-J1785403481388.jpg"
+                    alt="Apache Airflow DAG Python Definition" />
+                <figcaption>Python code defining an Apache Airflow DAG with sequential task dependencies.</figcaption>
+            </figure>
+
+            <p>That’s it. A daily ETL job with three stages and clear dependencies. Airflow handles the scheduling, the
+                retries, the failure notifications. You write the business logic.</p>
+
+            <p>For pure streaming workloads, Airflow isn’t the right tool. It’s built around the idea of jobs that start
+                and end. But for <span class="vocab-words"
+                    data-modal-title="Hybrid (adjective) கலப்பின / இருமுறை இணைந்த"
+                    data-modal-meaning="– combining two or more different elements or approaches."
+                    data-modal-synonyms="composite, mixed, dual">hybrid</span> pipelines where streaming feeds into
+                batch jobs for heavy aggregation, Airflow is often part of the picture.</p>
+
+            <p>There are newer alternatives worth knowing about. Dagster has a more modern Python API and a great UI.
+                Prefect has interesting features around dynamic workflows.</p>
+
+            <p>Both are worth looking at if you’re starting fresh. For most existing teams, Airflow’s ecosystem and
+                community make it hard to beat.</p>
+
+            <p><strong>The micro-batching middle ground</strong><br>
+                I want to spend a moment on micro-batching because it’s where a lot of real-world systems live, and it’s
+                underrated.</p>
+
+            <p>The idea is simple. Instead of true streaming with subsecond latency, you run small batch jobs every few
+                seconds or minutes. You get most of the freshness benefits of streaming. You get most of the simplicity
+                of the batch. You skip a lot of the hardest parts of true streaming.</p>
+
+            <p>Spark Structured Streaming also leans heavily on microbatching by default. So does much of dbt’s
+                streaming work. The pattern is common enough that I’d say it’s the default approach unless you
+                specifically need sub-second latency.</p>
+
+            <p>Don’t dismiss micro-batching as “not real streaming.” For most business use cases, it’s the right answer.
+                Reserve true streaming for the cases where you really, genuinely cannot wait sixty seconds.</p>
+
+            <p><strong>A real-world example, end-to-end</strong><br>
+                Let me walk through what a hybrid batch and streaming pipeline might look like in practice.</p>
+
+            <p>Imagine you run an e-commerce site. You want a few things. You want a real-time dashboard for the
+                marketing team showing live <span class="vocab-words"
+                    data-modal-title="Conversion (noun) விற்பனை/செயல் மாற்றம்"
+                    data-modal-meaning="– process of converting potential customers into actual paying ones."
+                    data-modal-synonyms="turnover, action rate">conversion</span> rates. You want operational alerts
+                when something is going wrong. And you want a nightly data warehouse refresh for proper analytics.</p>
+
+            <p>For the real-time dashboard, you set up Debezium to stream changes from your orders database into Kafka.
+                A Flink job reads those events, calculates rolling conversion rates by traffic source, and writes the
+                results to a Redis cache that the dashboard reads from. End-to-end latency in a few seconds.</p>
+
+            <p>For the operational alerts, the same Kafka events feed a separate Flink job that watches for <span
+                    class="vocab-words" data-modal-title="Anomalies (noun) முரண்பாடுகள் / பிறழ்வுகள்"
+                    data-modal-meaning="– things that deviate from what is standard, normal, or expected."
+                    data-modal-synonyms="irregularities, deviations, abnormalities">anomalies</span>. Sudden drops in
+                successful orders. Spikes in error rates. The job pushes alerts to Slack and PagerDuty.</p>
+
+            <p>For the nightly warehouse, an Airflow DAG runs at 2 a.m. It reads the previous day’s data from your
+                operational database, runs heavy <span class="vocab-words"
+                    data-modal-title="Transformations (noun) உருமாற்றச் செயல்பாடுகள்"
+                    data-modal-meaning="– data operations involving cleaning, reshaping, and calculations."
+                    data-modal-synonyms="modifications, conversions">transformations</span> in dbt or Spark, and loads
+                it into Snowflake or BigQuery. This is the source of truth for proper analytics, finance reports, and ML
+                model training.</p>
+
+            <p>Notice that all three pipelines <span class="vocab-words"
+                    data-modal-title="Coexist (verb) இணைந்து வாழ்தல் / இருத்தல்"
+                    data-modal-meaning="– exist together at the same time or in the same place."
+                    data-modal-synonyms="cohabit, concur, exist together">coexist</span>. Streaming for things that need
+                to be fresh. Batch for things that need to be thorough. Each one is the right tool for its job. The
+                streaming pipeline doesn’t try to do everything. The batch pipeline doesn’t get stretched into territory
+                it isn’t suited for.</p>
+
+            <p>This kind of mixed architecture is what most mature data platforms look like in practice. Pure-streaming
+                and pure-batch are the extremes. The middle is where real systems live.</p>
+
+            <p><strong>Things that bite people</strong><br>
+                A few patterns I’ve seen catch teams out repeatedly.</p>
+
+            <ul>
+                <li><strong>Underestimating the operational cost of streaming:</strong> Streaming infrastructure has
+                    more moving parts than batch. There’s more to monitor. There’s more to debug at odd hours. There’s
+                    more state to manage. Teams that jump into streaming without planning for the operational burden
+                    often end up regretting it.</li>
+                <li><strong>Forgetting about ordering and exactly-once semantics:</strong> Events can arrive out of
+                    order. They can be <span class="vocab-words"
+                        data-modal-title="Duplicated (verb/past) இரட்டிப்பாக்கப்பட்ட"
+                        data-modal-meaning="– copied or repeated exactly."
+                        data-modal-synonyms="copied, replicated">duplicated</span>. They can be lost. Different stream
+                    processors handle these issues with different guarantees. Understand what your system promises
+                    before you depend on it for anything critical.</li>
+                <li><strong>Ignoring backpressure:</strong> When downstream systems can’t keep up with the rate of
+                    events flowing in, something has to give. Either you slow down the producers, buffer the events, or
+                    drop them. Designing for <span class="vocab-words"
+                        data-modal-title="Backpressure (noun) எதிர் அழுத்தம் / தரவு நெரிசல் எதிர்ப்பு"
+                        data-modal-meaning="– resistance or force opposing flow of data in stream pipelines."
+                        data-modal-synonyms="flow control, congestion control">backpressure</span> from day one is much
+                    easier than retrofitting it.</li>
+                <li><strong>Not budgeting for state size:</strong> Stateful stream processing accumulates data.
+                    Sessions, aggregations, joins, all of these eat memory and disk. Watch the state size in your
+                    monitoring and plan capacity accordingly. Many Flink jobs crashed because nobody noticed the state
+                    had grown to fifty gigabytes.</li>
+                <li><strong>Trying to do everything with one tool:</strong> There’s a temptation to pick a single
+                    streaming platform and make it solve every data problem you have. Resist this. Use the right tool
+                    for each job. Kafka for transport. Flink or Spark for heavy processing. Debezium for CDC. Airflow
+                    for orchestration. The boundaries between these tools exist for good reasons.</li>
+            </ul>
+
+            <p><strong>What you can do to begin</strong><br>
+                If you’re new to streaming and want to try it, here’s a path I’d suggest.</p>
+
+            <p>This weekend, spin up Kafka with Docker and play with it. Write a producer that generates fake events.
+                Write a consumer that reads them. Feel how the basic <span class="vocab-words"
+                    data-modal-title="Primitives (noun) அடிப்படை அலகுகள்"
+                    data-modal-meaning="– fundamental concepts or building blocks in software."
+                    data-modal-synonyms="building blocks, basic units">primitives</span> work. An hour of this teaches
+                you more than any tutorial.</p>
+
+            <p>Next week, pick one real use case in your work and ask whether it could benefit from streaming. Not
+                whether it could be done with streaming. Whether the business value of fresher data is worth the
+                engineering cost.</p>
+
+            <p>If the answer is yes, build the smallest possible <span class="vocab-words"
+                    data-modal-title="Proof of concept (noun) சாத்தியக்கூறு சோதனை (PoC)"
+                    data-modal-meaning="– evidence demonstrating that a business concept is feasible."
+                    data-modal-synonyms="PoC, prototype, demonstration">proof of concept</span>. Don’t try to migrate
+                your whole pipeline. Take one feed of events, process them with Flink or Spark Structured Streaming, and
+                write the results somewhere. See what the latency looks like. See what the operational experience is
+                like.</p>
+
+            <p><strong>Where things are heading</strong><br>
+                A few trends worth watching in the data integration space.</p>
+
+            <ul>
+                <li><strong>The line between streaming and batch keeps fading:</strong> Apache Beam was an early attempt
+                    at unifying the two APIs. dbt is moving in this direction. Spark Structured Streaming and Flink are
+                    <span class="vocab-words" data-modal-title="Converging (verb/participle) ஒன்றிணைதல்"
+                        data-modal-meaning="– coming together from different directions to meet."
+                        data-modal-synonyms="merging, meeting, uniting">converging</span> in interesting ways. The
+                    future probably looks like one API that lets you choose latency vs cost as a configuration option
+                    rather than a fundamental architectural choice.
+                </li>
+                <li><strong>CDC is becoming the default for syncing data between systems:</strong> Tools like Debezium,
+                    Fivetran, and Airbyte are making it routine. The era of nightly database dumps is winding down for
+                    any team that cares about freshness.</li>
+                <li><strong>Stream processing in the warehouse is starting to be a real thing:</strong> Snowflake
+                    Streams, BigQuery continuous queries, ClickHouse materialised views -- all let you do streaming-like
+                    work without standing up a separate stream processor. For many use cases, this may be enough.</li>
+                <li><strong>WebAssembly and edge computing are pushing stream processing to new locations:</strong>
+                    Tools like InfinyOn are doing event processing closer to where events originate. This will matter
+                    more over the next few years.</li>
+                <li><strong>And, finally, the cost of streaming infrastructure keeps falling:</strong> Confluent Cloud,
+                    Redpanda Cloud, AWS MSK, all these managed offerings mean teams don't have to operate Kafka
+                    themselves to use it. This is genuinely lowering the bar for adoption.</li>
+            </ul>
+
+            <div class="pullquote-card">
+                “The choices between batch and streaming, sub-second latency and end-of-day freshness shape how a data
+                platform behaves under pressure...”
+            </div>
+
+            <p><strong>The quiet decisions that shape a platform</strong><br>
+                The choices between batch and streaming, sub-second latency and end-of-day freshness, heavyweight
+                processors and lightweight schedulers, and between exotic stream platforms and a well-tuned cron job
+                don't make headlines.</p>
+
+            <p>They don't get blog posts written about them by the people who made them. But they shape, more than
+                almost anything else, how a data platform behaves under pressure, how much it costs to run, and how
+                often the engineering team gets woken up in the middle of the night. The teams that get this right tend
+                to be the ones that resist the temptation to use the newest tool for every problem, ask hard questions
+                about what freshness means for the business, and build pipelines incrementally rather than betting
+                everything on a big rewrite. If you're building a data platform right now, pick the simplest thing that
+                solves the problem you have, leave room to grow, and don't get talked into streaming everything because
+                somebody on Twitter said the batch is dead. It isn't. It just does a different job.</p>
+        </div>
+
+        <!-- VOCABULARY DICTIONARY / GLOSSARY SECTION (80 WORDS) -->
+        <section class="vocab-glossary-section"
+            style="margin-top: 3rem; background: #f8fafc; padding: 2rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h2 style="font-family: 'Inter', sans-serif; color: #1e293b; margin-top: 0;">Comprehensive Vocabulary &
+                Technical Terms (80 Highlighted Words)</h2>
+            <div class="responsive-vocab-grid">
+                <ol start="1">
+                    <li><strong>Hindsight:</strong> பின்னோக்கிப் பார்த்தல் (Retrospect)</li>
+                    <li><strong>Converting:</strong> வாடிக்கையாளராக மாறுதல் (Turning)</li>
+                    <li><strong>Migration:</strong> இடப்பெயர்வு / மாற்றம் (Shift)</li>
+                    <li><strong>Over-engineered:</strong> அளவுக்கு அதிகமாக வடிவமைக்கப்பட்ட (Overcomplicated)</li>
+                    <li><strong>Execution:</strong> செயல்படுத்துதல் (Implementation)</li>
+                    <li><strong>Trade-off:</strong> சமரசம் (Compromise)</li>
+                    <li><strong>Orchestrated:</strong> ஒருங்கிணைக்கப்பட்ட (Coordinated)</li>
+                    <li><strong>Latency:</strong> கால தாமதம் (Delay)</li>
+                    <li><strong>Fraud:</strong> மோசடி (Deception)</li>
+                    <li><strong>Exactly-once:</strong> சரியாக ஒருமுறை மட்டுமே (Strict delivery)</li>
+                    <li><strong>Micro-batching:</strong> சிறு-தொகுதி செயல்முறை (Mini-batching)</li>
+                    <li><strong>Producers:</strong> தரவு உருவாக்குபவர்கள் (Data senders)</li>
+                    <li><strong>Consumers:</strong> தரவு நுகர்வோர்கள் (Data readers)</li>
+                    <li><strong>Partitioning:</strong> பிரித்தல் / பகுத்தல் (Segmentation)</li>
+                    <li><strong>Replication:</strong> நகலெடுத்தல் (Duplication)</li>
+                    <li><strong>Transformations:</strong> உருமாற்றங்கள் (Conversions)</li>
+                    <li><strong>Aggregations:</strong> திரட்டுதல் (Summaries)</li>
+                    <li><strong>Windows:</strong> நேரச் சட்டகங்கள் (Time frames)</li>
+                    <li><strong>Fault tolerance:</strong> பிழை தாங்கும் திறன் (Resilience)</li>
+                    <li><strong>Semantics:</strong> இயங்குமுறை விதிகள் (Specification)</li>
+                    <li><strong>Sophisticated:</strong> நுட்பமான / சிக்கலான (Complex)</li>
+                    <li><strong>Checkpoints:</strong> கட்டுப்பாட்டுப் புள்ளிகள் (Snapshots)</li>
+                    <li><strong>Familiar:</strong> நன்கு தெரிந்த (Known)</li>
+                    <li><strong>Snapshot:</strong> நிலைப்பதிவு (State record)</li>
+                    <li><strong>Change data capture:</strong> தரவு மாற்றக் கணிப்பு (CDC)</li>
+                    <li><strong>Metadata:</strong> தரவு பற்றிய தரவு (Descriptive data)</li>
+                    <li><strong>Orchestrator:</strong> ஒருங்கிணைப்பி (Coordinator)</li>
+                    <li><strong>Directed acyclic graphs:</strong> சுழற்சியற்ற திசைவரைபடம் (DAGs)</li>
+                    <li><strong>Glamorous:</strong> கவர்ச்சிகரமான (Appealing)</li>
+                    <li><strong>Hybrid:</strong> கலப்பின (Composite)</li>
+                    <li><strong>Conversion:</strong> செயல் மாற்றம் (Action rate)</li>
+                    <li><strong>Anomalies:</strong> முரண்பாடுகள் (Irregularities)</li>
+                    <li><strong>Coexist:</strong> இணைந்து வாழ்தல் (Exist together)</li>
+                    <li><strong>Duplicated:</strong> இரட்டிப்பாக்கப்பட்ட (Replicated)</li>
+                    <li><strong>Backpressure:</strong> எதிர் அழுத்தம் (Flow control)</li>
+                    <li><strong>Primitives:</strong> அடிப்படை அலகுகள் (Building blocks)</li>
+                    <li><strong>Proof of concept:</strong> சாத்தியக்கூறு சோதனை (PoC)</li>
+                    <li><strong>Converging:</strong> ஒன்றிணைதல் (Merging)</li>
+                    <li><strong>Real-time:</strong> நிகழ்நேரம் (Immediate)</li>
+                    <li><strong>Pipeline:</strong> தரவுப் பாதை (Data pipeline)</li>
+                </ol>
+                <ol start="41">
+                    <li><strong>Dashboard:</strong> தகவல் திரை (Control panel)</li>
+                    <li><strong>Overhead:</strong> கூடுதல் செலவு / சுமை (Burden)</li>
+                    <li><strong>Distributed:</strong> பரவலான (Spread out)</li>
+                    <li><strong>Log:</strong> பதிவுத் தொகுதி (Record keeper)</li>
+                    <li><strong>Topics:</strong> தரவுத் தலைப்புகள் (Data channels)</li>
+                    <li><strong>Cluster:</strong> கணினித் தொகுதி (Server group)</li>
+                    <li><strong>Throughput:</strong> தரவு செயலாக்கத் திறன் (Processing speed)</li>
+                    <li><strong>Architecture:</strong> கட்டமைப்பு (Structure)</li>
+                    <li><strong>Replication slot:</strong> நகலெடுப்புப் பகுதி (Sync slot)</li>
+                    <li><strong>Schema:</strong> தரவு அமைப்பு முறை (Data structure)</li>
+                    <li><strong>Dependencies:</strong> சார்ந்திருப்பவை (Interconnections)</li>
+                    <li><strong>Stateful:</strong> நிலை நினைவகச் சார்பு (Memory-retaining)</li>
+                    <li><strong>Stateless:</strong> நினைவகமற்ற (Memoryless)</li>
+                    <li><strong>Sub-second:</strong> வினாடிக்கும் குறைவான (Instantaneous)</li>
+                    <li><strong>Anomalies:</strong> பிறழ்வுகள் (Deviations)</li>
+                    <li><strong>Cache:</strong> வேக நினைவகம் (Fast store)</li>
+                    <li><strong>Resilience:</strong> மீள்தன்மை (Durability)</li>
+                    <li><strong>Deduplication:</strong> நகல் நீக்கம் (Cleanup)</li>
+                    <li><strong>Consensus:</strong> பொது உடன்பாடு (Agreement)</li>
+                    <li><strong>Queue:</strong> வரிசை அமைப்பு (Lineup)</li>
+                    <li><strong>Buffer:</strong> இடை நினைவகம் (Temporary store)</li>
+                    <li><strong>Integrations:</strong> இணைப்புகள் (Connectors)</li>
+                    <li><strong>Warehouse:</strong> தரவுக் கிடங்கு (Data repository)</li>
+                    <li><strong>Analytics:</strong> பகுப்பாய்வு (Data analysis)</li>
+                    <li><strong>ETL:</strong> தரவு பிரித்தெடுத்து மாற்றுதல் (Extract Transform Load)</li>
+                    <li><strong>Orchestration:</strong> ஒத்திசைவு நிர்வாகம் (Workflow management)</li>
+                    <li><strong>Continuous:</strong> தொடர்ச்சியான (Uninterrupted)</li>
+                    <li><strong>Edge computing:</strong> விளிம்புநிலை கணிப்பகம் (Local computing)</li>
+                    <li><strong>Infrastructure:</strong> உள்கட்டமைப்பு (Base platform)</li>
+                    <li><strong>Adoption:</strong> பயன்பாட்டு ஏற்பு (Implementation)</li>
+                    <li><strong>Concurrency:</strong> ஒரே நேரச் செயல்பாடு (Simultaneous execution)</li>
+                    <li><strong>Scalability:</strong> விரிவடையும் திறன் (Expandability)</li>
+                    <li><strong>Throughput:</strong> செயலாக்க அளவு (Data flow rate)</li>
+                    <li><strong>Reliability:</strong> நம்பகத்தன்மை (Dependability)</li>
+                    <li><strong>Stream processor:</strong> நேரடித் தரவுச் செயலி (Live data engine)</li>
+                    <li><strong>Batch job:</strong> தொகுதிப் பணி (Grouped task)</li>
+                    <li><strong>Transaction log:</strong> பரிவர்த்தனைப் பதிவு (History log)</li>
+                    <li><strong>Ecosystem:</strong> சூழலமைப்பு (Network/Environment)</li>
+                    <li><strong>Benchmark:</strong> தரக்கட்டுப்பாடு சோதனை (Performance test)</li>
+                    <li><strong>Optimization:</strong> மிகச்சிறந்ததாக்குதல் (Efficiency tuning)</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- FIGURE SECTION AT END FOR FULL CONTEXT -->
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/STREAM-VS-BATCH-PROCESSING-WHEN-TO-CHOOSE-WHAT.jpg"
+                    alt="Article Image 1" />
+                <figcaption>Stream vs Batch Processing Cover Graphic</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/w0FwnBO4H1785403334928.jpg"
+                    alt="Article Image 2" />
+                <figcaption>Kafka Setup in Docker</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/4514312178.jpg"
+                    alt="Article Image 3" />
+                <figcaption>Python Producer for Kafka</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/osI2HvXd71785403339133.jpg"
+                    alt="Article Image 4" />
+                <figcaption>Apache Flink Stream Job Snippet</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/d5BcHewqw1785403411558.jpg"
+                    alt="Article Image 5" />
+                <figcaption>Spark Structured Streaming Code</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/JYdnpwCYY1785402939176/iLvRm3y-J1785403481388.jpg"
+                    alt="Article Image 6" />
+                <figcaption>Apache Airflow DAG Code Example</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <!-- Vocabulary Definition Modal Overlay -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📜</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <!-- Image HD Modal Overlay -->
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../assets/js/vocab-modal.js"></script>
+
+</body>
+
+</html>
