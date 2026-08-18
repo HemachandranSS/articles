@@ -451,23 +451,47 @@ body {
     position: absolute;
     background: #1a1a1a;
     color: #fff;
-    padding: 6px 12px;
+    padding: 0;
     border-radius: 6px;
     font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
-    cursor: pointer;
+    cursor: default;
     z-index: 999;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: none;
     transform: translateX(-50%);
     pointer-events: auto;
+    overflow: hidden;
 }
 
 .selection-translate-tooltip.visible {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0;
     animation: fadeInTooltip 0.2s ease;
+}
+
+.tooltip-action-btn {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.tooltip-action-btn:hover {
+    background: #333;
+}
+
+.tooltip-action-btn.search-btn {
+    border-left: 1px solid #444;
 }
 
 .selection-translate-tooltip::after {
@@ -479,10 +503,6 @@ body {
     border-width: 5px;
     border-style: solid;
     border-color: #1a1a1a transparent transparent transparent;
-}
-
-.selection-translate-tooltip:hover {
-    background: #333;
 }
 
 @keyframes fadeInTooltip {

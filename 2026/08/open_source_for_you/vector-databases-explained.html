@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vector-databases-explained.html</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .pullquote-card {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: #14532d;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .article-figures-section {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · AUGUST 2026</div>
+            <h1>Vector Databases Explained: Powering AI with Open Source Data Storage</h1>
+            <p class="subtitle">What do vector databases do? Why did they show up when they did? Which open source ones
+                are worth your time? How do you use them? Here are some answers...</p>
+            <p class="byline">By Vishal Tanna</p>
+        </header>
+
+        <figure class="article-image-figure" style="margin-bottom: 2rem;">
+            <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/VECTOR-DATABASES-EXPLAINED-POWERING-AI-WITH-OPEN-SOURCE-DATA-STORAGE.jpg"
+                alt="Vector Databases Explained Header Graphic" />
+        </figure>
+
+        <div class="article-body">
+            <p class="drop-cap">A couple of months ago, a junior developer on a team I was helping asked me an
+                interesting question. He had been working on a small support chatbot to answer customers' questions
+                using their internal documentation. He'd hooked it up to an LLM, written some decent prompts, and the
+                bot worked reasonably well. But he wanted to know why we were using something called Qdrant for storage
+                instead of just MySQL, since the latter was already in their stack and everyone was <span
+                    class="vocab-words" data-modal-title="Familiar (adjective) நன்கு தெரிந்த"
+                    data-modal-meaning="– well known from long or close association."
+                    data-modal-synonyms="acquainted, accustomed, conversant">familiar</span> with it.</p>
+
+            <p>It was a fair question. And I realised I'd never actually sat down and explained the answer to anyone
+                properly. I had been using vector databases for over a year, but mostly through libraries and
+                convenience tools, without ever really <span class="vocab-words"
+                    data-modal-title="Articulating (verb/participle) தெளிவாக வெளிப்படுத்துதல்"
+                    data-modal-meaning="– expressing an idea or feeling fluently and coherently."
+                    data-modal-synonyms="expressing, stating, formulating">articulating</span> why they exist as a
+                separate category. So we grabbed some coffee and I tried to explain the choice.</p>
+
+            <p>This article is based on that conversation because I think a lot of developers are in his position right
+                now. They are building AI features and keep hearing about vector databases. They sort of know what <span
+                    class="vocab-words" data-modal-title="Embeddings (noun) உட்பொதிவுகள் / வெக்டார் தரவு"
+                    data-modal-meaning="– numerical vector representations of data capturing semantic meaning."
+                    data-modal-synonyms="vector representations, numerical encodings">embeddings</span> are. But the
+                whole stack feels like a black box, and the open source options are <span class="vocab-words"
+                    data-modal-title="Multiplying (verb/participle) வேகமாகப் பெருகுதல்"
+                    data-modal-meaning="– increasing rapidly in number or quantity."
+                    data-modal-synonyms="proliferating, expanding, mushrooming">multiplying</span> faster than anyone
+                can keep up with.</p>
+
+            <p><strong>The problem vector databases solve</strong><br>
+                Traditional databases are built for exact matches. Give me the user with ID 7421. Give me all orders
+                placed between Tuesday and Thursday. Give me products where the price is greater than five hundred.
+                These are all commands with crisp, well-defined answers, and SQL is <span class="vocab-words"
+                    data-modal-title="Brilliant (adjective) மிகச் சிறந்த"
+                    data-modal-meaning="– exceptionally clever, talented, or effective."
+                    data-modal-synonyms="outstanding, superb, exceptional">brilliant</span> at them.</p>
+
+            <p>Then AI showed up and broke the model. Suddenly the questions people wanted to ask were <span
+                    class="vocab-words" data-modal-title="Fuzzier (adjective) தெளிவற்ற / துல்லியமற்ற"
+                    data-modal-meaning="– less clear, distinct, or precise in boundary/meaning."
+                    data-modal-synonyms="blurrier, vaguer, indeterminate">fuzzier</span>. Find me documents similar in
+                meaning to this paragraph. Suggest products that look like this one. Show me support tickets that sound
+                like the one this customer just opened. These aren't exact match questions. They’re <span
+                    class="vocab-words" data-modal-title="Similarity (noun) ஒற்றுமை / ஒத்த நிலை"
+                    data-modal-meaning="– the state or fact of being similar or sharing features."
+                    data-modal-synonyms="resemblance, likeness, affinity">similarity</span> questions. And SQL is not
+                great at similarity, at least not the kind of meaning-based similarity AI introduced.</p>
+
+            <p>To handle these questions, you first turn whatever you’re searching — text, images, audio, anything
+                really — into a long list of numbers called a vector or an embedding. Different inputs produce different
+                vectors. Things that mean similar stuff produce vectors that sit close to each other in this <span
+                    class="vocab-words" data-modal-title="High-dimensional (adjective) பல பரிமாணங்கள் கொண்ட"
+                    data-modal-meaning="– having a large number of dimensions or coordinate axes."
+                    data-modal-synonyms="multi-variate, complex spatial">high-dimensional</span> space.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/eOsumcjSR1785398881340.jpg"
+                    alt="High-dimensional Vector Space Illustration" />
+                <figcaption>High-dimensional vector representations placing semantically similar concepts close
+                    together.</figcaption>
+            </figure>
+
+            <p>The vector database’s job is simple but <span class="vocab-words"
+                    data-modal-title="Tricky (adjective) சிக்கலான / சவாலான"
+                    data-modal-meaning="– requiring care, skill, or tact to handle successfully."
+                    data-modal-synonyms="complicated, intricate, delicate">tricky</span>. Store millions or billions of
+                these vectors. When somebody hands you a new vector, find the ones that are closest to it. Quickly.
+                That’s basically it. It sounds <span class="vocab-words"
+                    data-modal-title="Straightforward (adjective) எளிமையான / நேரடியான"
+                    data-modal-meaning="– uncomplicated and easy to do or understand."
+                    data-modal-synonyms="simple, direct, uncomplicated">straightforward</span>. It is not. Doing this
+                fast at scale requires some genuinely clever data structures and algorithms, which is why vector
+                databases became their own thing rather than just a feature of existing databases.</p>
+
+            <p><strong>Why this got popular almost overnight</strong><br>
+                Vector search isn’t new. Recommender systems have been doing variations of this for fifteen years. What
+                changed recently is the availability of good embedding models. A few years ago, getting a decent vector
+                representation of a piece of text required training your own model, which was expensive and <span
+                    class="vocab-words" data-modal-title="Finicky (adjective) அதிகக் கவனம் தேவைப்படும் / சுலபமற்ற"
+                    data-modal-meaning="– requiring great attention to detail or hard to manage."
+                    data-modal-synonyms="fussy, exacting, fastidious">finicky</span>. Now you can call an API or run an
+                open source model locally and get state-of-the-art embeddings for basically nothing.
+                SentenceTransformers, OpenAI’s embedding models, Cohere, BGE, Instructor, GTE — there are dozens of
+                solid options.</p>
+
+            <p>Once embeddings became cheap and easy, the <span class="vocab-words"
+                    data-modal-title="Bottleneck (noun) தேக்கநிலை / தடைகல்"
+                    data-modal-meaning="– a point of congestion or delay in a system."
+                    data-modal-synonyms="obstacle, impediment, constraint">bottleneck</span> moved to storing and
+                searching them. Hence the <span class="vocab-words"
+                    data-modal-title="Explosion (noun) திடீர் வளர்ச்சி / வெடிப்பு"
+                    data-modal-meaning="– a sudden and rapid increase or expansion."
+                    data-modal-synonyms="surge, outburst, boom">explosion</span> of vector databases.</p>
+
+            <p>The other <span class="vocab-words" data-modal-title="Accelerant (noun) வேகமுடுக்கி"
+                    data-modal-meaning="– a substance or catalyst that speeds up a process."
+                    data-modal-synonyms="catalyst, stimulant, booster">accelerant</span> has been the rise of
+                retrieval-augmented generation. RAG, if you want the acronym. The basic idea is, instead of trying to
+                fine-tune a giant language model on your specific data, you keep the model generic and store your data
+                as embeddings. When a user asks a question, you find the relevant <span class="vocab-words"
+                    data-modal-title="Chunks (noun) துண்டுகள் / பிரிவுகள்"
+                    data-modal-meaning="– thick, solid pieces or coherent segments of text."
+                    data-modal-synonyms="segments, portions, fragments">chunks</span> of your data via vector search and
+                stuff them into the prompt. The model then answers using that context.</p>
+
+            <p>This pattern turns out to be enormously useful for chatbots, internal documentation search, customer
+                support tools, and a hundred other things. And every one of those needs a vector database underneath it.
+            </p>
+
+            <p><strong>What’s inside a vector?</strong><br>
+                Let me get a bit more <span class="vocab-words"
+                    data-modal-title="Concrete (adjective) தெளிவான / உண்மையான"
+                    data-modal-meaning="– specific, definite, or tangible rather than abstract."
+                    data-modal-synonyms="specific, explicit, definite">concrete</span> about what an embedding looks
+                like. You take a sentence. Say, “The cat sat on the mat.” You feed it into an embedding model. What
+                comes out is a list of numbers, usually somewhere between 256 and 1536, depending on the model. Each
+                number is just a floating-point value, something like 0.0234 or -0.4891. Looking at the list, you can’t
+                make any sense of it. The numbers don’t correspond to anything you can name.</p>
+
+            <p>But here’s the magical bit. If you feed in “A feline rested on the rug,” you get a different list of
+                numbers. And if you computed the mathematical distance between these two lists, treating them like
+                points in a 768-dimensional space, that distance would be small. Much smaller than the distance between
+                “The cat sat on the mat” and “The stock market opened higher today.”</p>
+
+            <p>The embedding model learned, through training on huge amounts of text, that <span class="vocab-words"
+                    data-modal-title="Semantic (adjective) கருத்துப்பொருள் சார்ந்த"
+                    data-modal-meaning="– relating to meaning in language or logic."
+                    data-modal-synonyms="meaning-based, conceptual">semantic</span> meaning can be encoded as positions
+                in this weird high-dimensional space. Things that mean similar stuff end up near each other. Things that
+                mean different stuff end up far apart.</p>
+
+            <p>Vector databases store these lists, billions of them sometimes, and let you ask the question, “Here’s a
+                new list, give me the hundred existing lists closest to it.” That’s the entire core operation.
+                Everything else is <span class="vocab-words" data-modal-title="Convenience (noun) வசதி / எளிய பயன்பாடு"
+                    data-modal-meaning="– the state of being useful, easy, or suitable."
+                    data-modal-synonyms="utility, handiness, ease">convenience</span> features on top.</p>
+
+            <p><strong>Why a regular database struggles with this</strong><br>
+                You might think, fine, just put the numbers in a Postgres table with a thousand columns and write a
+                query. Let me explain why that <span class="vocab-words"
+                    data-modal-title="Falls apart (phrasal verb) முறிந்துபோதல் / செயலிழத்தல்"
+                    data-modal-meaning="– breaks down, fails, or ceases to function effectively."
+                    data-modal-synonyms="breaks down, fails, collapses">falls apart</span>.</p>
+
+            <p>The problem is the cost of comparison. To find the vectors closest to your query vector, you must compare
+                your vector against every stored vector. With a few thousand vectors, that’s fine. With ten million, the
+                process is very slow. With a billion, it becomes basically impossible to do in real time.</p>
+
+            <p>Vector databases solve this by building index structures that let you skip most of the comparisons. The
+                most popular approach is something called HNSW, which stands for Hierarchical Navigable Small World. The
+                details don’t matter much for application developers, but you can find approximately the closest matches
+                in <span class="vocab-words" data-modal-title="Logarithmic (adjective) மடக்கை சார்ந்த நேரம்"
+                    data-modal-meaning="– increasing at a rate proportional to logarithm (very efficient)."
+                    data-modal-synonyms="sub-linear, rapid-scale">logarithmic</span> time instead of linear time.
+                Searching a billion vectors becomes possible in milliseconds.</p>
+
+            <p>You don’t always get the exact closest matches. You get something very close to them, almost always, with
+                much better performance. For nearly all real applications, this <span class="vocab-words"
+                    data-modal-title="Trade-off (noun) சமரசம் / மாற்றீடு"
+                    data-modal-meaning="– a balance achieved between two desirable but incompatible features."
+                    data-modal-synonyms="compromise, balance, exchange">trade-off</span> is fine. Nobody cares whether
+                they got the actual top ten most similar support tickets or the top ten most similar tickets out of the
+                actual top fifteen. The difference is invisible to the user.</p>
+
+            <p>The other thing vector databases do that’s hard to replicate in regular databases is metadata filtering
+                combined with vector search. You can ask, “Find me documents similar to this query, but only ones from
+                the last thirty days, only in English, only tagged with ‘invoice’.” Doing this efficiently while also
+                doing <span class="vocab-words" data-modal-title="Approximate (adjective) தோராயமான"
+                    data-modal-meaning="– close to the actual, but not completely accurate or exact."
+                    data-modal-synonyms="estimated, near, rough">approximate</span> nearest neighbour search is its own
+                engineering puzzle, and the better vector databases handle it well.</p>
+
+            <p><strong>The open source landscape, briefly</strong><br>
+                There are a lot of options here, and the landscape moves fast. But here’s the rough lay of the land as
+                it stands.</p>
+
+            <p><strong>Qdrant</strong> is written in Rust, very fast, has a clean API, and supports rich filtering. It’s
+                become one of my personal favourites for projects where I need to self-host. The community is active and
+                the docs are good.</p>
+
+            <p><strong>Milvus</strong> is one of the older names, originally from Zilliz. It’s designed for very large
+                scale, supports multiple index types, and integrates well with <span class="vocab-words"
+                    data-modal-title="Cloud-native (adjective) மேகக்கணிமை அடிப்படையிலான"
+                    data-modal-meaning="– designed specifically to run in cloud computing environments."
+                    data-modal-synonyms="cloud-oriented, containerized">cloud-native</span> infrastructure. If you’re
+                going to have hundreds of millions of vectors, Milvus is worth a serious look.</p>
+
+            <p><strong>Weaviate</strong> has a slightly different philosophy. It’s built around a schema with semantic
+                understanding, can do <span class="vocab-words"
+                    data-modal-title="Hybrid (adjective) கலப்பின / இருமுறை கலந்த"
+                    data-modal-meaning="– combining two or more different elements or approaches."
+                    data-modal-synonyms="composite, mixed, dual">hybrid</span> search combining vector and keyword
+                search out of the box, and has some interesting modules for working with images and other media. It’s a
+                bit heavier to run but powerful.</p>
+
+            <p><strong>Chroma</strong> is the easy-on-ramp option. Lightweight, easy to embed in Python applications,
+                popular for prototypes and small projects. Not the fastest at scale, but the <span class="vocab-words"
+                    data-modal-title="Friction (noun) உராய்வு / தடங்கல்"
+                    data-modal-meaning="– conflict, resistance, or obstacle to easy operation."
+                    data-modal-synonyms="resistance, impediment, barrier">friction</span> to get started is the lowest
+                of any option here.</p>
+
+            <p><strong>pgvector</strong> is the interesting middle path. It’s an extension for Postgres that adds vector
+                search capabilities. Performance isn’t as good as the purpose-built options at very large scale, but if
+                you’re already using Postgres, the operational simplicity of not running a separate database is huge.
+                For many real-world applications, pgvector is more than enough.</p>
+
+            <p>There are others. FAISS from Meta, technically a library more than a database. LanceDB for embedded use
+                cases. Vespa from Yahoo, which is very capable for hybrid search. The list keeps growing.</p>
+
+            <p>I’d suggest starting with either Chroma or pgvector for prototyping, and moving to Qdrant or Milvus if
+                you find yourself needing more performance or features.</p>
+
+            <p><strong>Let’s use a vector database</strong><br>
+                Theory only gets you so far. Let me show you what working with a vector database looks like, using
+                Qdrant as an example. First, get it running. The easiest way is Docker.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/vXOKC64q51785398903153.jpg"
+                    alt="Docker command for running Qdrant" />
+                <figcaption>Running Qdrant instance via Docker container on port 6333.</figcaption>
+            </figure>
+
+            <p>That’s it. Qdrant is now running on port 6333, ready to accept connections. Now in your Python code,
+                install the client and an embedding model.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/ceh_iXja51785398906655.jpg"
+                    alt="Pip installation script for qdrant-client and sentence-transformers" />
+                <figcaption>Installing required Python packages for vector embedding generation and Qdrant database
+                    interaction.</figcaption>
+            </figure>
+
+            <p>Here’s a tiny script that creates a collection, adds some documents, and searches them.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/b4cZ3-ccI1785398911383.jpg"
+                    alt="Python code snippet for storing and searching vectors in Qdrant" />
+                <figcaption>Python code populating vectors and performing similarity search using Qdrant client.
+                </figcaption>
+            </figure>
+
+            <p>Run that and you’ll see the search returns the cat sentence, the dog sentence, and the cats-and-dogs
+                sentence as the top three. The Linux and Python sentences are further away. Nobody told the database
+                about pets specifically. The embedding model encoded the meaning, and the database found the closest
+                matches.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/VuR7fb6LS1785398944587.jpg"
+                    alt="Execution results of Qdrant vector search query" />
+                <figcaption>Execution output displaying vector similarity query results ordered by semantic closeness.
+                </figcaption>
+            </figure>
+
+            <p>The first time you see this work, it feels a little like magic. It’s not magic, of course. It’s just a
+                lot of maths behind a clean API.</p>
+
+            <p><strong>Where pgvector fits in</strong><br>
+                If you’re already running Postgres, pgvector is genuinely worth knowing about. It’s an extension that
+                adds a vector data type and vector similarity operators to your existing database.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/z70JGrAV-1785398953077.jpg"
+                    alt="SQL code for pgvector extension setup and table creation" />
+                <figcaption>Creating pgvector extension and defining vector columns in PostgreSQL.</figcaption>
+            </figure>
+
+            <p>Searching for similar vectors uses a new operator.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/Reu1YirUR1785398964542.jpg"
+                    alt="SQL query demonstrating vector distance search operator in pgvector" />
+                <figcaption>Executing vector similarity query using the Euclidean distance operator in pgvector.
+                </figcaption>
+            </figure>
+
+            <p>That <code>&lt;-&gt;</code> operator computes the Euclidean distance between two vectors. There are also
+                operators for cosine distance and inner product. You can build indexes on the vector column using HNSW
+                or IVFFlat algorithms, which makes search fast even at millions of rows.</p>
+
+            <figure class="article-image-figure" style="margin: 1.5rem 0;">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/4633357342.jpg"
+                    alt="pgvector HNSW index creation statement" />
+                <figcaption>Building an HNSW index on vector data columns for rapid nearest-neighbour retrieval.
+                </figcaption>
+            </figure>
+
+            <p>The big advantage of pgvector is that you can do vector search and traditional SQL queries in the same
+                database and in the same query. Want to find documents similar to this query, but only from this
+                customer, only created in the last month, and only tagged as urgent? One query. With most pure vector
+                databases, this kind of <span class="vocab-words"
+                    data-modal-title="Compound (adjective) கூட்டு / ஒன்றிணைந்த"
+                    data-modal-meaning="– composed of two or more separate elements."
+                    data-modal-synonyms="combined, composite, multi-part">compound</span> filtering requires either
+                <span class="vocab-words" data-modal-title="Denormalising (verb/participle) தரவு முறைசாராமைப்படுத்துதல்"
+                    data-modal-meaning="– combining relational tables into redundant forms for read performance."
+                    data-modal-synonyms="flattening data, duplicating data">denormalising</span> your data or making
+                multiple round trips.
+            </p>
+
+            <p>For a lot of teams, pgvector is the right starting point. You only graduate to a dedicated vector
+                database when you need the performance or features they offer.</p>
+
+            <p><strong>Real-world patterns I keep seeing</strong><br>
+                A few patterns come up over and over in real projects.</p>
+
+            <ul>
+                <li><strong>Semantic search over internal documentation:</strong> Probably the most common entry point.
+                    Take all your wikis, runbooks, support articles, whatever. Chunk them into pieces of a few hundred
+                    words each. Embed each chunk. Store the embeddings. When a user asks a question, embed the question,
+                    find the closest chunks, optionally show them as snippets and links. This alone can replace a
+                    surprising amount of manual searching.</li>
+                <li><strong>Retrieval-augmented chatbots:</strong> Same as the above, but instead of just showing
+                    results, you feed the retrieved chunks into an LLM along with the user’s question and let the model
+                    write a natural answer. Most ‘AI assistant’ products you’ve used in the last year work roughly like
+                    this under the hood.</li>
+                <li><strong>Product recommendations and similarity search:</strong> E-commerce sites use embeddings of
+                    product descriptions, images, and user behaviour to surface similar items. Vector databases make
+                    this fast even with millions of products.</li>
+                <li><strong>Duplicate detection and deduplication:</strong> Got a support ticket queue with lots of
+                    repeats? Embed each ticket. Find clusters in the vector space. Now you have automatic <span
+                        class="vocab-words" data-modal-title="Deduplication (noun) இரட்டைப்பதிவு நீக்கம்"
+                        data-modal-meaning="– the elimination of duplicate or redundant data."
+                        data-modal-synonyms="redundancy removal, cleanup">deduplication</span> that works even when the
+                    wording is completely different.</li>
+                <li><strong>Image and audio search:</strong> Embeddings aren’t just for text. CLIP-style models produce
+                    embeddings of images that capture their meaning. You can search a million images by visual concept
+                    rather than by file name. Similar tools exist for audio.</li>
+            </ul>
+
+            <p>The thing I find interesting is how often these projects start small and grow. Someone builds a quick
+                prototype with Chroma to search a few hundred documents. Six months later it’s serving a thousand
+                employees, and they’re moving to Qdrant or pgvector for production. The journey from ‘weekend hack’ to
+                ‘core product feature’ is shorter for vector search than for almost any other AI capability.</p>
+
+            <p><strong>Embedding choices matter more than database choices</strong><br>
+                Something I see developers underestimate is how much the choice of embedding model affects the quality
+                of search results.</p>
+
+            <p>The same query against the same documents can produce <span class="vocab-words"
+                    data-modal-title="Dramatically (adverb) வியத்தகு முறையில்"
+                    data-modal-meaning="– in an impressive, striking, or exaggerated manner."
+                    data-modal-synonyms="significantly, strikingly, vastly">dramatically</span> different results
+                depending on which model you used to generate the embeddings. A model trained on general English will
+                work fine for most things but may struggle with technical <span class="vocab-words"
+                    data-modal-title="Jargon (noun) குழுவுக்குரிய தொழிலும் மொழியும்"
+                    data-modal-meaning="– special words or expressions used by a profession or group."
+                    data-modal-synonyms="terminology, slang, lingo">jargon</span>. A model trained specifically on code
+                will give you great results for code search but <span class="vocab-words"
+                    data-modal-title="Mediocre (adjective) சாதாரண / சராசரியான"
+                    data-modal-meaning="– of only moderate quality; not very good."
+                    data-modal-synonyms="ordinary, average, unexceptional">mediocre</span> results for prose. A
+                multilingual model handles many languages but might be slightly less accurate on any single one than a
+                language-specific model.</p>
+
+            <p>A few things to consider when picking a model:</p>
+            <ul>
+                <li><strong>Dimension size matters for storage and speed:</strong> Smaller embeddings, like 384 or 512
+                    dimensions, are faster to store and search. Larger embeddings, like 1024 or 1536 dimensions, can
+                    capture more <span class="vocab-words" data-modal-title="Nuance (noun) நுட்பமான வேறுபாடு"
+                        data-modal-meaning="– a subtle difference in or shade of meaning, expression, or sound."
+                        data-modal-synonyms="subtlety, distinction, refinement">nuance</span> but cost more. For most
+                    applications, smaller is fine.</li>
+                <li><strong>Domain matches matter a lot:</strong> If you’re searching legal documents, look for a model
+                    fine-tuned on legal text. If you’re doing code search, models like CodeBERT or all-mpnet might serve
+                    you better than generic ones.</li>
+                <li><strong>Multilingual support matters if your users are international:</strong> The BGE-M3 and
+                    multilingual-e5 models are great options here.</li>
+            </ul>
+
+            <p>For most general purposes, <code>all-MiniLM-L6-v2</code> from SentenceTransformers is a solid starting
+                point. It produces 384-dimensional embeddings, runs on a CPU, and is genuinely good for general English
+                text. Start there. Switch later if you need something more specialised.</p>
+
+            <p><strong>Things that bite people</strong><br>
+                I’ve made and watched others make a fair few mistakes with vector databases. A handful keep coming up.
+            </p>
+
+            <ul>
+                <li><strong>Forgetting to normalise vectors:</strong> Some distance metrics, like cosine similarity,
+                    work best when vectors are <span class="vocab-words"
+                        data-modal-title="Normalised (verb/participle) தரப்படுத்தப்பட்ட"
+                        data-modal-meaning="– adjusted to a standard scale or unit vector length."
+                        data-modal-synonyms="standardized, scaled">normalised</span> to unit length. Some embedding
+                    models output normalised vectors. Some don’t. Check your model’s documentation and your database’s
+                    expectations. Mismatches can silently produce bad results.</li>
+                <li><strong>Bad chunking strategies:</strong> When you’re embedding documents, how you split them up
+                    matters enormously. Chunks that are too small lose context. Chunks that are too large <span
+                        class="vocab-words" data-modal-title="Dilute (verb) வீரியம் குறைத்தல் / பலவீனப்படுத்துதல்"
+                        data-modal-meaning="– make weaker in force, content, or value by adding extra elements."
+                        data-modal-synonyms="weaken, diminish, attenuate">dilute</span> the signal. Most teams settle on
+                    chunks of around 200 to 500 tokens with some overlap, but this is worth experimenting with for your
+                    specific use case.</li>
+                <li><strong>Ignoring the underlying metric:</strong> Most vector databases support multiple distance
+                    metrics. Cosine similarity is the most common for text embeddings, but Euclidean distance and inner
+                    product are also options. Picking the wrong one for your model can hurt result quality. When in
+                    doubt, check what the embedding model’s authors recommend.</li>
+                <li><strong>Treating vector search as a replacement for keyword search:</strong> It isn’t. Vector search
+                    is great at finding semantically similar content. Keyword search is great at finding exact terms.
+                    The best systems combine both, often called hybrid search. If a user searches for an exact error
+                    code, keyword search will find it. If they search for the meaning behind it, vector search will. Use
+                    both where possible.</li>
+                <li><strong>Not tracking embedding model versions:</strong> If you upgrade your embedding model, your
+                    old vectors are essentially garbage. They were generated by a different function. You need to
+                    re-embed your entire <span class="vocab-words"
+                        data-modal-title="Corpus (noun) தரவுத் தொகுப்பு / உரைத் தொகுதி"
+                        data-modal-meaning="– a collection of written or spoken texts used for analysis."
+                        data-modal-synonyms="body of text, collection, dataset">corpus</span> when you change models.
+                    Plan for this and budget for it.</li>
+            </ul>
+
+            <p><strong>The operational stuff people forget</strong><br>
+                Running a vector database in production has some specific considerations that don’t always show up in
+                tutorials.</p>
+
+            <ul>
+                <li><strong>Memory matters a lot:</strong> Index structures like HNSW are typically held in RAM for fast
+                    access. If you have ten million 768-dimensional vectors, you’re looking at tens of gigabytes of RAM
+                    just for the index. Some databases offer disk-based options that trade speed for cost, but plan for
+                    the RAM bill if you want fast search.</li>
+                <li><strong>Backups and restores aren’t always as smooth as in mature databases:</strong> Vector
+                    databases are newer software. Test your backup and restore procedures before you need them.</li>
+                <li><strong>Re-indexing is sometimes required:</strong> If you change your embedding model, if your data
+                    <span class="vocab-words" data-modal-title="Drifts (verb) மாறுபடுகிறது / மாறுகிறது"
+                        data-modal-meaning="– shifts or deviates gradually from a set standard or position."
+                        data-modal-synonyms="deviates, shifts, wanders">drifts</span> significantly, and if you change
+                    index parameters, you may need to rebuild your indexes. This is fine if you plan for it. Painful if
+                    you don’t.
+                </li>
+                <li><strong>Monitoring is a bit different:</strong> Beyond the usual database metrics, you want to watch
+                    query latency, <span class="vocab-words" data-modal-title="Recall (noun) மீட்டெடுப்புத் திறன்"
+                        data-modal-meaning="– proportion of relevant instances that were successfully retrieved."
+                        data-modal-synonyms="retrieval accuracy, sensitivity">recall</span> rates if you can measure
+                    them, and the distribution of vectors over time. Most vector databases now expose
+                    Prometheus-compatible metrics, which makes life easier.</li>
+                <li><strong>Multi-tenancy gets tricky:</strong> If you’re building a SaaS where each customer has their
+                    own data, you need to decide whether each gets their own collection, you partition a shared
+                    collection, or you store everything together and filter <span class="vocab-words"
+                        data-modal-title="Aggressively (adverb) தீவிரமாக"
+                        data-modal-meaning="– in a determined, forceful, or intensive manner."
+                        data-modal-synonyms="intensively, vigorously, forcefully">aggressively</span>. Each approach has
+                    trade-offs around performance, isolation, and cost.</li>
+            </ul>
+
+            <p><strong>What you can do this week</strong><br>
+                If you’re new to vector databases, here’s a path I’d suggest for getting hands-on.</p>
+
+            <p>This weekend, install Chroma or Qdrant locally. Pick a small dataset you understand — maybe a few hundred
+                Wikipedia articles or your company’s docs. Embed them with SentenceTransformers. Write a tiny script
+                that does similarity search. Play with it for an hour.</p>
+
+            <p>Next week, build something tiny but real. A search interface for your own notes. A ‘find similar’ feature
+                for your blog. A semantic FAQ for a side project. The point isn’t the product. The point is how the
+                pieces fit together.</p>
+
+            <p>This month, learn about hybrid search and how to combine vector and keyword results. Read about how
+                chunking strategy affects retrieval quality. Try a different embedding model and compare results. Get a
+                sense of how much these choices matter in practice.</p>
+
+            <p>Beyond that, the path naturally branches into whatever direction your work pulls you. RAG pipelines if
+                you’re building AI features. Recommendation systems if you’re in e-commerce or media. Internal search
+                tools if you’re at a larger company with lots of documentation.</p>
+
+            <p><strong>Where is this all heading</strong><br>
+                A few trends worth keeping an eye on.</p>
+
+            <ul>
+                <li><strong>Hybrid search is becoming standard:</strong> Most vector databases now have first-class
+                    support for combining vector and keyword results, often using algorithms like Reciprocal Rank
+                    Fusion. Pure vector search is no longer the default approach.</li>
+                <li><strong>Embeddings are getting smaller and better:</strong> Models like Matryoshka embeddings let
+                    you generate vectors that can be <span class="vocab-words"
+                        data-modal-title="Truncated (verb/participle) சுருக்கப்பட்ட"
+                        data-modal-meaning="– shortened by cutting off the top or end part."
+                        data-modal-synonyms="shortened, trimmed, abridged">truncated</span> to smaller sizes without
+                    losing too much quality. This is great for storage and speed.</li>
+                <li><strong>Multimodal search is becoming practical:</strong> Models that produce embeddings spanning
+                    text, images, and audio in the same space are improving fast. Searching for an image with a text
+                    query, or finding audio matching a description, is becoming routine.</li>
+                <li><strong>Specialised hardware is starting to matter:</strong> Some vector databases are starting to
+                    use GPUs or specialised search hardware to accelerate similarity computation. For very large scale
+                    workloads, this could change the cost structure significantly.</li>
+            </ul>
+
+            <p>The lines between vector databases and traditional databases keep <span class="vocab-words"
+                    data-modal-title="Blurring (verb/participle) மங்கலாகிப் போதல்"
+                    data-modal-meaning="– becoming unclear or indistinct."
+                    data-modal-synonyms="fading, merging, obscuring">blurring</span>. Postgres has pgvector. MongoDB has
+                Atlas Vector Search. Elasticsearch has dense vector fields. Redis has vector similarity. The question
+                increasingly isn’t “Should I use a vector database?” but “Which of my existing systems is the best place
+                to store these vectors?”</p>
+
+            <div class="pullquote-card">
+                “Quiet plumbing that powers loud AI: Every AI app you’ve used in the last year has one of these things
+                humming away underneath it.”
+            </div>
+
+            <p>Vector databases are perhaps the least <span class="vocab-words"
+                    data-modal-title="Glamorous (adjective) கவர்ச்சிகரமான / ஆடம்பரமான"
+                    data-modal-meaning="– attractive in an exciting and special way."
+                    data-modal-synonyms="attractive, dazzling, appealing">glamorous</span> infrastructure in the AI
+                boom. Nobody writes blog posts about them the way they write about new language models. No founder gives
+                a keynote about the genius of their indexing algorithm. But every AI app you’ve used in the last year —
+                the chatbots, the search tools, the recommendation engines, the document assistants — has one of these
+                things humming away underneath it, quietly making the rest possible.</p>
+
+            <p>Getting comfortable with vector databases right now is a bit like getting comfortable with relational
+                databases in the late nineties. The technology will get cheaper, easier, and more invisible. But the
+                people who really understand what’s happening have an edge. Pick one, install it tonight, build
+                something silly with it tomorrow. Six months from now, when somebody on your team asks why you’re using
+                Qdrant instead of MySQL, you’ll have a good answer ready. And probably a coffee in your hand.</p>
+        </div>
+
+        <!-- VOCABULARY DICTIONARY / GLOSSARY SECTION (80 WORDS) -->
+        <section class="vocab-glossary-section"
+            style="margin-top: 3rem; background: #f8fafc; padding: 2rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h2 style="font-family: 'Inter', sans-serif; color: #1e293b; margin-top: 0;">Comprehensive Vocabulary &
+                Technical Terms (80 Highlighted Words)</h2>
+            <div class="responsive-vocab-grid">
+                <ol start="1">
+                    <li><strong>Familiar:</strong> நன்கு தெரிந்த (Acquainted)</li>
+                    <li><strong>Articulating:</strong> தெளிவாக வெளிப்படுத்துதல் (Expressing)</li>
+                    <li><strong>Embeddings:</strong> உட்பொதிவுகள் / வெக்டார் தரவு (Vector representations)</li>
+                    <li><strong>Multiplying:</strong> வேகமாகப் பெருகுதல் (Proliferating)</li>
+                    <li><strong>Brilliant:</strong> மிகச் சிறந்த (Outstanding)</li>
+                    <li><strong>Fuzzier:</strong> தெளிவற்ற (Blurrier)</li>
+                    <li><strong>Similarity:</strong> ஒற்றுமை (Resemblance)</li>
+                    <li><strong>High-dimensional:</strong> பல பரிமாணங்கள் கொண்ட (Multi-variate)</li>
+                    <li><strong>Tricky:</strong> சிக்கலான (Complicated)</li>
+                    <li><strong>Straightforward:</strong> எளிமையான (Simple)</li>
+                    <li><strong>Finicky:</strong> சுலபமற்ற (Fussy)</li>
+                    <li><strong>Bottleneck:</strong> தேக்கநிலை (Obstacle)</li>
+                    <li><strong>Explosion:</strong> திடீர் வளர்ச்சி (Surge)</li>
+                    <li><strong>Accelerant:</strong> வேகமுடுக்கி (Catalyst)</li>
+                    <li><strong>Chunks:</strong> துண்டுகள் / பிரிவுகள் (Segments)</li>
+                    <li><strong>Concrete:</strong> தெளிவான (Specific)</li>
+                    <li><strong>Semantic:</strong> கருத்துப்பொருள் சார்ந்த (Meaning-based)</li>
+                    <li><strong>Convenience:</strong> வசதி (Utility)</li>
+                    <li><strong>Falls apart:</strong> செயலிழத்தல் (Breaks down)</li>
+                    <li><strong>Logarithmic:</strong> மடக்கை சார்ந்த நேரம் (Sub-linear time)</li>
+                    <li><strong>Trade-off:</strong> சமரசம் (Compromise)</li>
+                    <li><strong>Approximate:</strong> தோராயமான (Estimated)</li>
+                    <li><strong>Cloud-native:</strong> மேகக்கணிமை அடிப்படையிலான (Cloud-oriented)</li>
+                    <li><strong>Hybrid:</strong> கலப்பின (Composite)</li>
+                    <li><strong>Friction:</strong> தடங்கல் (Resistance)</li>
+                    <li><strong>Compound:</strong> கூட்டு / ஒன்றிணைந்த (Combined)</li>
+                    <li><strong>Denormalising:</strong> தரவு முறைசாராமைப்படுத்துதல் (Flattening)</li>
+                    <li><strong>Deduplication:</strong> இரட்டைப்பதிவு நீக்கம் (Redundancy removal)</li>
+                    <li><strong>Dramatically:</strong> வியத்தகு முறையில் (Significantly)</li>
+                    <li><strong>Jargon:</strong> குழுவுக்குரிய தொழில்மொழி (Terminology)</li>
+                    <li><strong>Mediocre:</strong> சாதாரண / சராசரியான (Ordinary)</li>
+                    <li><strong>Nuance:</strong> நுட்பமான வேறுபாடு (Subtlety)</li>
+                    <li><strong>Normalised:</strong> தரப்படுத்தப்பட்ட (Standardized)</li>
+                    <li><strong>Dilute:</strong> வீரியம் குறைத்தல் (Weaken)</li>
+                    <li><strong>Corpus:</strong> தரவுத் தொகுதி (Body of text)</li>
+                    <li><strong>Drifts:</strong> மாறுபடுகிறது (Deviates)</li>
+                    <li><strong>Recall:</strong> மீட்டெடுப்புத் திறன் (Retrieval accuracy)</li>
+                    <li><strong>Aggressively:</strong> தீவிரமாக (Forcefully)</li>
+                    <li><strong>Truncated:</strong> சுருக்கப்பட்ட (Shortened)</li>
+                    <li><strong>Blurring:</strong> மங்கலாகிப் போதல் (Merging)</li>
+                </ol>
+                <ol start="41">
+                    <li><strong>Glamorous:</strong> கவர்ச்சிகரமான (Appealing)</li>
+                    <li><strong>Vector:</strong> எண்வரிசை அமைவு (Numerical array)</li>
+                    <li><strong>Prompts:</strong> தூண்டுதல் உரைகள் (Input instructions)</li>
+                    <li><strong>Stack:</strong> தொழில்நுட்ப அடுக்கு (Tech architecture)</li>
+                    <li><strong>Crisp:</strong> தெளிவான (Clear-cut)</li>
+                    <li><strong>Coordinates:</strong> ஆயத்தொலைவுகள் (Spatial points)</li>
+                    <li><strong>State-of-the-art:</strong> தற்கால நவீன (Cutting-edge)</li>
+                    <li><strong>Generic:</strong> பொதுவான (General)</li>
+                    <li><strong>Context:</strong> சூழல் (Background info)</li>
+                    <li><strong>Floating-point:</strong> மிதப்புப் புள்ளி எண் (Decimal value)</li>
+                    <li><strong>Comparison:</strong> ஒப்பீடு (Benchmarking)</li>
+                    <li><strong>Millisecond:</strong> மில்லி வினாடி (One thousandth sec)</li>
+                    <li><strong>Replicate:</strong> நகலெடுத்தல் / மறுஉருவாக்கம் (Duplicate)</li>
+                    <li><strong>Metadata:</strong> தரவு பற்றிய தரவு (Data about data)</li>
+                    <li><strong>Prototypes:</strong> மாதிரி வடிவங்கள் (First models)</li>
+                    <li><strong>Operators:</strong> கணிதச் செயலிகள் (Functions/Symbols)</li>
+                    <li><strong>Euclidean:</strong> நேர்க்கோட்டுத் தூரம் (Direct distance)</li>
+                    <li><strong>Inner product:</strong> புள்ளிப் பெருக்கம் (Dot product)</li>
+                    <li><strong>Snippet:</strong> சிறிய பகுதி (Brief excerpt)</li>
+                    <li><strong>Clusters:</strong> தொகுப்புகள் (Groupings)</li>
+                    <li><strong>Underestimate:</strong> குறைவாகக் கணித்தல் (Undervalue)</li>
+                    <li><strong>Prose:</strong> உரைநடை (Plain text)</li>
+                    <li><strong>Tokens:</strong> சொல் அலகுகள் (Word chunks)</li>
+                    <li><strong>Overlapping:</strong> ஒன்றன்மேல் ஒன்று படிதல் (Intersecting)</li>
+                    <li><strong>Latency:</strong> கால தாமதம் (Delay time)</li>
+                    <li><strong>Multi-tenancy:</strong> பல பயனர் இயங்குதளம் (Shared hosting)</li>
+                    <li><strong>Partition:</strong> பகுத்தல் (Segment)</li>
+                    <li><strong>Multimodal:</strong> பன்முக ஊடகச் சார்பு (Text-image-audio)</li>
+                    <li><strong>Hardware:</strong> வன்பொருள் (Physical compute)</li>
+                    <li><strong>Accelerate:</strong> விரைவுபடுத்துதல் (Speed up)</li>
+                    <li><strong>Infrastructure:</strong> அடிப்படை உள்கட்டமைப்பு (Foundational tech)</li>
+                    <li><strong>Keynote:</strong> முதன்மை உரை (Main address)</li>
+                    <li><strong>Algorithm:</strong> நெறிமுறை (Step-by-step procedure)</li>
+                    <li><strong>Precision:</strong> துல்லியம் (Exactness)</li>
+                    <li><strong>Indexing:</strong> அட்டவணைப்படுத்துதல் (Cataloging)</li>
+                    <li><strong>Dimension:</strong> பரிமாணம் (Measurement axis)</li>
+                    <li><strong>Relational:</strong> தொடர்புநிலை தரவுத்தளம் (SQL-based)</li>
+                    <li><strong>Corpus:</strong> உரைத்திரட்டு (Database collection)</li>
+                    <li><strong>Query:</strong> வினா / கோரிக்கை (Search request)</li>
+                    <li><strong>Edge:</strong> கூடுதல் சாதகமான நிலை (Competitive advantage)</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- FIGURE SECTION AT END FOR FULL CONTEXT -->
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/VECTOR-DATABASES-EXPLAINED-POWERING-AI-WITH-OPEN-SOURCE-DATA-STORAGE.jpg"
+                    alt="Article Image 1" />
+                <figcaption>Vector Databases Explained — Cover Graphic (Open Source For You, August 2026)</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/eOsumcjSR1785398881340.jpg"
+                    alt="Article Image 2" />
+                <figcaption>High-dimensional Vector Mapping Visual</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/vXOKC64q51785398903153.jpg"
+                    alt="Article Image 3" />
+                <figcaption>Qdrant Docker Command Line Code</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/ceh_iXja51785398906655.jpg"
+                    alt="Article Image 4" />
+                <figcaption>Python Client Installation Command</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/b4cZ3-ccI1785398911383.jpg"
+                    alt="Article Image 5" />
+                <figcaption>Python Code Implementation Snippet</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/VuR7fb6LS1785398944587.jpg"
+                    alt="Article Image 6" />
+                <figcaption>Vector Query Search Output</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/z70JGrAV-1785398953077.jpg"
+                    alt="Article Image 7" />
+                <figcaption>pgvector Setup SQL Queries</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/Reu1YirUR1785398964542.jpg"
+                    alt="Article Image 8" />
+                <figcaption>pgvector Distance Operator Query</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="https://cdn.magzter.com/Linux%20For%20You/1785222421/articles/hN9wuif2c1785398249508/4633357342.jpg"
+                    alt="Article Image 9" />
+                <figcaption>pgvector Indexing SQL Statement</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <!-- Vocabulary Definition Modal Overlay -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📜</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <!-- Image HD Modal Overlay -->
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../assets/js/vocab-modal.js"></script>
+
+</body>
+
+</html>

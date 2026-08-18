@@ -214,10 +214,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /* ── Text Selection Translation (User Friendly) ── */
+    /* ── Text Selection Translation & Search (User Friendly) ── */
     const tooltip = document.createElement('div');
     tooltip.className = 'selection-translate-tooltip';
-    tooltip.innerHTML = '🌍 Translate to Tamil';
+
+    const translateBtn = document.createElement('button');
+    translateBtn.className = 'tooltip-action-btn translate-btn';
+    translateBtn.innerHTML = '🌍 Translate to Tamil';
+
+    const searchBtn = document.createElement('button');
+    searchBtn.className = 'tooltip-action-btn search-btn';
+    searchBtn.innerHTML = '🔍 Search Google';
+
+    tooltip.appendChild(translateBtn);
+    tooltip.appendChild(searchBtn);
     document.body.appendChild(tooltip);
 
     document.addEventListener('mouseup', function (e) {
@@ -247,12 +257,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    tooltip.addEventListener('click', function (e) {
+    translateBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         const text = tooltip.dataset.text;
         if (text) {
             window.open(`https://translate.google.com/?sl=en&tl=ta&text=${encodeURIComponent(text)}&op=translate`, '_blank', 'noopener');
+            tooltip.classList.remove('visible');
+            window.getSelection().removeAllRanges();
+        }
+    });
+
+    searchBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const text = tooltip.dataset.text;
+        if (text) {
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(text)}`, '_blank', 'noopener');
             tooltip.classList.remove('visible');
             window.getSelection().removeAllRanges();
         }
