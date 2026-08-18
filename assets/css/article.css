@@ -445,3 +445,129 @@ body {
     transform: scale(1.01);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }
+
+/* ── SELECTION TRANSLATE TOOLTIP ── */
+.selection-translate-tooltip {
+    position: absolute;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: none;
+    transform: translateX(-50%);
+    pointer-events: auto;
+}
+
+.selection-translate-tooltip.visible {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    animation: fadeInTooltip 0.2s ease;
+}
+
+.selection-translate-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #1a1a1a transparent transparent transparent;
+}
+
+.selection-translate-tooltip:hover {
+    background: #333;
+}
+
+@keyframes fadeInTooltip {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* ── WIDE MODAL FOR SIDE-BY-SIDE TRANSLATION ── */
+.modal-overlay.wide-modal {
+    padding: 2vh 2vw;
+}
+
+.modal-overlay.wide-modal .modal-box {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-overlay.wide-modal .modal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.translation-split-view {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    margin-bottom: 12px;
+    flex: 1;
+}
+
+.translation-split-view .split-pane {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #1e293b;
+    max-height: none;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.translation-split-view h4 {
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+    .modal-overlay.wide-modal {
+        padding: 0;
+    }
+
+    .modal-overlay.wide-modal .modal-box {
+        border-radius: 0;
+    }
+
+    .translation-split-view {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .translation-split-view .split-pane {
+        max-height: none;
+        height: 100%;
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+}

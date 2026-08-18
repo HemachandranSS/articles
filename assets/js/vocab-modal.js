@@ -81,6 +81,7 @@
             modalWord.textContent = word;
             modalTamil.textContent = 'Translating…';
             modalBody.innerHTML = '<p style="color:#888;font-family:Inter,sans-serif;font-size:.9rem;">Fetching definition…</p>';
+            modal.classList.remove('wide-modal');
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
@@ -137,13 +138,14 @@
                     target="_blank" rel="noopener" class="modal-link-btn">Search on Google ↗</a>`;
 
         modalBody.innerHTML = html;
+        modal.classList.remove('wide-modal');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
-    /* ── Close modal ── */
     function closeModal() {
         modal.classList.remove('active');
+        modal.classList.remove('wide-modal');
         document.body.style.overflow = '';
     }
 
@@ -209,6 +211,50 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && imageModal && imageModal.style.display === "flex") {
             closeImgModal();
+        }
+    });
+
+    /* ── Text Selection Translation (User Friendly) ── */
+    const tooltip = document.createElement('div');
+    tooltip.className = 'selection-translate-tooltip';
+    tooltip.innerHTML = '🌍 Translate to Tamil';
+    document.body.appendChild(tooltip);
+
+    document.addEventListener('mouseup', function (e) {
+        if (e.target.closest('.modal-box') || e.target.closest('.selection-translate-tooltip')) return;
+
+        setTimeout(() => {
+            const selection = window.getSelection();
+            const text = selection.toString().trim();
+
+            if (text.length > 0 && e.target.closest('.article-body')) {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+
+                tooltip.style.left = `${rect.left + (rect.width / 2)}px`;
+                tooltip.style.top = `${rect.top + window.scrollY - 38}px`;
+                tooltip.classList.add('visible');
+                tooltip.dataset.text = text;
+            } else {
+                tooltip.classList.remove('visible');
+            }
+        }, 10);
+    });
+
+    document.addEventListener('mousedown', function (e) {
+        if (!e.target.closest('.selection-translate-tooltip')) {
+            tooltip.classList.remove('visible');
+        }
+    });
+
+    tooltip.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const text = tooltip.dataset.text;
+        if (text) {
+            window.open(`https://translate.google.com/?sl=en&tl=ta&text=${encodeURIComponent(text)}&op=translate`, '_blank', 'noopener');
+            tooltip.classList.remove('visible');
+            window.getSelection().removeAllRanges();
         }
     });
 });

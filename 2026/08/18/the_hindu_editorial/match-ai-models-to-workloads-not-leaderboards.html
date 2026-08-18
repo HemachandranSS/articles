@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match Ai Models To Workloads Not Leaderboards</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .pullquote-card {
+            background-color: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: #0c4a6e;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .article-figures-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPINION · ARTIFICIAL INTELLIGENCE · TECHNOLOGY POLICY</div>
+            <h1>Match AI models to workloads, not leaderboards</h1>
+            <p class="subtitle">Cost, governance, data residency, IP protection, and operational complexity now matter
+                as much as benchmark scores</p>
+            <p class="byline">By Chandrajit Banerjee & Debjani Ghosh</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">The Artificial Intelligence (AI) industry has remained <span class="vocab-words"
+                    data-modal-title="Fixated (verb/participle) ஒரே விஷயத்தில் தீவிரமாக கவனம் செலுத்துதல்"
+                    data-modal-meaning="– single-mindedly focused or obsessed with something."
+                    data-modal-synonyms="obsessed, focused, engrossed">fixated</span> on model rankings. A new release
+                claims the top of some leaderboard almost every week. Until recently, most enterprises simply chose the
+                strongest available model and consumed it through managed APIs from the <span class="vocab-words"
+                    data-modal-title="Frontier (noun/adjective) அதிநவீன / முன்னணி எல்லை"
+                    data-modal-meaning="– the most advanced or cutting-edge level of development."
+                    data-modal-synonyms="cutting-edge, advanced, leading-edge">frontier</span> labs. That decision is no
+                longer straightforward.</p>
+
+            <p>What increasingly determines success is not which model scores highest, but which model — and which
+                deployment approach — is right for a particular workload. Cost, governance, data residency, IP
+                protection and operational complexity now sit alongside raw capability as <span class="vocab-words"
+                    data-modal-title="First-order (adjective) முதன்மையான / மிக முக்கியமான"
+                    data-modal-meaning="– of primary importance, fundamental, or basic."
+                    data-modal-synonyms="primary, principal, fundamental">first-order</span> considerations.</p>
+
+            <p><strong>The equation has changed</strong><br>
+                Open-weight models are the main reason that the choice has expanded. Unlike closed models delivered as a
+                remote service, open-weight models allow organisations to run the trained weights themselves, subject to
+                licence terms. Sensitive data can remain inside approved environments. Models can be <span
+                    class="vocab-words" data-modal-title="Fine-tuned (verb/participle) துல்லியமாக மாற்றி அமைத்தல்"
+                    data-modal-meaning="– adjusted precisely to suit a specific purpose or task."
+                    data-modal-synonyms="tailored, adjusted, customized">fine-tuned</span> on <span class="vocab-words"
+                    data-modal-title="Proprietary (adjective) தனியுரிம / காப்புரிமை பெற்ற"
+                    data-modal-meaning="– relating to an owner or ownership; privately owned."
+                    data-modal-synonyms="patented, private, exclusive">proprietary</span> knowledge without routinely
+                sending that knowledge to an external provider.</p>
+
+            <p>Enterprises gain greater <span class="vocab-words"
+                    data-modal-title="Portability (noun) எளிதில் மாற்றக்கூடிய தன்மை"
+                    data-modal-meaning="– the ability to be easily moved or transferred between environments."
+                    data-modal-synonyms="transferability, adaptability, mobility">portability</span>, reduce dependence
+                on any single vendor's road map and pricing, and often see substantially lower per-token costs — though
+                total cost of ownership still depends heavily on <span class="vocab-words"
+                    data-modal-title="Utilisation (noun) பயன்பாட்டு அளவு"
+                    data-modal-meaning="– the action of making practical and effective use of something."
+                    data-modal-synonyms="usage, employment, application">utilisation</span> and scale.</p>
+
+            <p>Open weights are not free. Downloading a model is the easy part. Operating it <span class="vocab-words"
+                    data-modal-title="Reliably (adverb) நம்பகத்தன்மையுடன்"
+                    data-modal-meaning="– in a consistently good, trustworthy, or dependable manner."
+                    data-modal-synonyms="dependably, consistently, securely">reliably</span> at enterprise scale
+                requires GPU infrastructure, <span class="vocab-words"
+                    data-modal-title="Inference (noun) முடிவெடுக்கும் தரவு வழங்கள் / கணிப்பு"
+                    data-modal-meaning="– the process of running data through a trained model to generate predictions/outputs."
+                    data-modal-synonyms="computation, deduction, execution">inference</span> serving, monitoring,
+                security, governance, upgrades and licensing. Greater control comes with greater responsibility. For
+                large organisations with deep engineering capacity, this trade-off can be worthwhile. For most mid-sized
+                and small enterprises, it is far more challenging.</p>
+
+            <p>The July 2026 Hugging Face security incident illustrated the point with unusual clarity. When an
+                AI-driven <span class="vocab-words" data-modal-title="Intrusion (noun) சட்டவிரோத ஊடுருவல்"
+                    data-modal-meaning="– an unwelcome or illegal entry or encroachment into a system."
+                    data-modal-synonyms="breach, invasion, trespass">intrusion</span> hit the company's infrastructure,
+                incident responders first turned to frontier models behind commercial APIs to analyse thousands of
+                attacker actions. The <span class="vocab-words"
+                    data-modal-title="Forensic (adjective) தடயவியல் சார்ந்த / ஆய்வு சார்ந்த"
+                    data-modal-meaning="– relating to the use of scientific methods to investigate crime or security incidents."
+                    data-modal-synonyms="investigative, diagnostic, analytical">forensic</span> work required feeding
+                real <span class="vocab-words" data-modal-title="Exploit (noun) தாக்குதல் வழிமுறை / பலவீனம்"
+                    data-modal-meaning="– software code or technique taking advantage of a security flaw."
+                    data-modal-synonyms="vulnerability code, attack vector">exploit</span> <span class="vocab-words"
+                    data-modal-title="Payloads (noun) தாக்குதல் தரவு / தரவுச் சுமை"
+                    data-modal-meaning="– the part of transmitted data or code that carries the malicious action."
+                    data-modal-synonyms="malicious data, execution code">payloads</span>, attack logs and
+                command-and-control <span class="vocab-words"
+                    data-modal-title="Artifacts (noun) ஆய்வு சான்றுகள் / எச்சங்கள்"
+                    data-modal-meaning="– objects or digital traces left behind during an incident."
+                    data-modal-synonyms="evidence, traces, remnants">artifacts</span> to the models, but the providers'
+                safety <span class="vocab-words" data-modal-title="Guardrails (noun) பாதுகாப்பு வரம்புகள்"
+                    data-modal-meaning="– safety measures and filters built into AI systems to prevent misuse."
+                    data-modal-synonyms="safety filters, restrictions, shields">guardrails</span> blocked the requests;
+                the systems could not distinguish an authorised responder from an attacker. Hugging Face completed the
+                analysis on a self-hosted open-weight model instead. Sensitive incident data stayed inside its
+                environment.</p>
+
+            <div class="pullquote-card">
+                “Cost, governance and data residency now matter as much as benchmark scores, if not more.”
+            </div>
+
+            <p>The lesson was not that closed models are inferior. It was that some workloads <span class="vocab-words"
+                    data-modal-title="Structurally (adverb) கட்டமைப்பு ரீதியாக"
+                    data-modal-meaning="– in a way that relates to the essential framework or construction."
+                    data-modal-synonyms="fundamentally, intrinsically, inherently">structurally</span> require a model
+                you control. Security forensics, malware analysis and any investigation that must examine genuine
+                attacker tooling cannot tolerate third-party guardrails that refuse the query or the risk of data
+                leaving the organisational <span class="vocab-words"
+                    data-modal-title="Perimeter (noun) பாதுகாப்பு எல்லை"
+                    data-modal-meaning="– the boundary protecting an internal network or system."
+                    data-modal-synonyms="boundary, border, barrier">perimeter</span>. Therefore, enterprises must
+                classify workloads by control requirements as <span class="vocab-words"
+                    data-modal-title="Rigorously (adverb) துல்லியமாக / கடுமையாக"
+                    data-modal-meaning="– extremely thoroughly and carefully."
+                    data-modal-synonyms="thoroughly, meticulously, strictly">rigorously</span> as by performance needs,
+                and ensure that a capable, <span class="vocab-words"
+                    data-modal-title="Vetted (verb/participle) சரிபார்க்கப்பட்ட"
+                    data-modal-meaning="– critically examined and approved for safety/authenticity."
+                    data-modal-synonyms="verified, checked, screened">vetted</span> open-weight model is already running
+                on infrastructure they govern before an incident occurs.</p>
+
+            <p>Very few organisations have only one AI workload. A bank analysing confidential customer data has
+                different requirements from a marketing team generating campaign content. A manufacturer <span
+                    class="vocab-words" data-modal-title="Embedding (verb/participle) உட்பொதித்தல் / அமைத்தல்"
+                    data-modal-meaning="– fixing firmly and deeply into a surrounding system or product."
+                    data-modal-synonyms="integrating, incorporating, inserting">embedding</span> AI in customer service
+                has different priorities from a cybersecurity team examining malware. Expecting one model and one
+                deployment strategy to fit every use case is increasingly unrealistic.</p>
+
+            <p><strong>The emerging third option</strong><br>
+                This is why managed inference platforms for open-weight models deserve more attention than another model
+                launch. These platforms host leading open-weight families on controlled infrastructure and expose them
+                through managed <span class="vocab-words" data-modal-title="Endpoints (noun) தொடர்பு எல்லை புள்ளிகள்"
+                    data-modal-meaning="– entry points or interfaces for accessing network services/APIs."
+                    data-modal-synonyms="interfaces, entry points, access nodes">endpoints</span>. Enterprises gain many
+                of the benefits of open weights — data residency, fine-tuning flexibility and often lower cost — without
+                having to build and operate the underlying GPU clusters and inference <span class="vocab-words"
+                    data-modal-title="Stack (noun) மென்பொருள் அடுக்கு"
+                    data-modal-meaning="– a set of software subsystem components needed to create a platform."
+                    data-modal-synonyms="framework, architecture, system layer">stack</span> themselves.</p>
+
+            <p>Sarvam's recent launch of Sarvam Inference, an India-hosted managed service unveiled at its Epoch 2026
+                conference, is one concrete example of the category taking shape. The platform currently serves Sarvam's
+                own 105-billion-parameter model alongside leading open-weight families such as GLM 5.2 and Gemma 4, all
+                running on domestic infrastructure. The significance is not any individual model. Enterprises could
+                already download many of them. The challenge was making them work reliably in production — handling
+                <span class="vocab-words" data-modal-title="Concurrency (noun) ஒரே நேரத்தில் நிகழும் செயல்பாடு"
+                    data-modal-meaning="– execution of multiple transactions or tasks simultaneously."
+                    data-modal-synonyms="simultaneousness, parallelism">concurrency</span>, <span class="vocab-words"
+                    data-modal-title="Latency (noun) காலதாமதம் / தாமத நேரம்"
+                    data-modal-meaning="– the delay before a transfer of data begins following an instruction."
+                    data-modal-synonyms="delay, lag, response time">latency</span>, security and continuous updates at
+                scale. Managed inference changes that equation. By offering production-grade endpoints under Indian data
+                residency, it is likely to <span class="vocab-words"
+                    data-modal-title="Democratise (verb) அனைவருக்கும் எளிதில் கிடைக்கச் செய்தல்"
+                    data-modal-meaning="– make something accessible to everyone."
+                    data-modal-synonyms="popularize, equalize access, open up">democratise</span> access for companies
+                that could never justify specialised AI operations teams while supporting the broader push for "<span
+                    class="vocab-words"
+                    data-modal-title="Token sovereignty (phrase) தரவு மற்றும் AI கணக்கீட்டு அதிகாரம்"
+                    data-modal-meaning="– national or organizational self-determination over AI data processing and compute."
+                    data-modal-synonyms="data autonomy, digital sovereignty">token sovereignty</span>."
+            </p>
+
+            <p>One <span class="vocab-words"
+                    data-modal-title="Caveat (noun) எச்சரிக்கை / கவனத்தில் கொள்ள வேண்டிய விஷயம்"
+                    data-modal-meaning="– a warning or proviso of specific conditions and limitations."
+                    data-modal-synonyms="warning, caution, proviso">caveat</span> remains important. Managed open-weight
+                platforms reintroduce vendor dependence — at the infrastructure layer rather than the model layer.
+                Enterprises should evaluate <span class="vocab-words"
+                    data-modal-title="Portability (noun) எளிதில் மாற்றக்கூடிய தன்மை"
+                    data-modal-meaning="– ability to move applications/data easily across platforms."
+                    data-modal-synonyms="interoperability, transferability">portability</span> guarantees, security
+                posture, pricing <span class="vocab-words" data-modal-title="Trajectory (noun) வளர்ச்சிப் பாதை"
+                    data-modal-meaning="– the path or trend followed by a process over time."
+                    data-modal-synonyms="course, path, trend">trajectory</span> and exit paths with the same rigour that
+                they apply to any frontier API contract.</p>
+
+            <p><strong>It is about deployment choice</strong><br>
+                The way forward is to match the workload, not the leaderboard. No single deployment model is right for
+                every organisation or every use case. Customer-facing tasks that demand frontier reasoning often fit
+                closed APIs. Regulated workloads with strict data-residency obligations frequently suit managed
+                open-weight platforms hosted in-country. Security forensics, malware analysis and IP-critical
+                fine-tuning usually belong on self-hosted deployments.</p>
+
+            <p>The discipline lies in making that call workload by workload rather than by corporate default. Companies
+                that invest in understanding the strengths, limitations and economics of each approach — and that
+                systematically match every workload to the option delivering the right balance of capability, control,
+                cost and governance — will extract far more value from AI than those still chasing the latest
+                leaderboard ranking. The competitive advantage will belong to those who treat deployment choice as a
+                core architectural decision, not a procurement <span class="vocab-words"
+                    data-modal-title="Afterthought (noun) பின்னாளில் யோசித்துச் செய்த செயல்"
+                    data-modal-meaning="– an item or degree of care included as a secondary consideration."
+                    data-modal-synonyms="late addition, secondary idea">afterthought</span>.</p>
+        </div>
+
+        <!-- VOCABULARY DICTIONARY / GLOSSARY SECTION (75 WORDS) -->
+        <section class="vocab-glossary-section"
+            style="margin-top: 3rem; background: #d5e6f7; padding: 2rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h2 style="font-family: 'Inter', sans-serif; color: #1e293b; margin-top: 0;">Comprehensive Vocabulary &
+                Terms (75 Highlighted Words)</h2>
+            <div class="responsive-vocab-grid">
+                <ol start="1">
+                    <li><strong>Fixated:</strong> தீவிர கவனம் செலுத்துதல் (Obsessed)</li>
+                    <li><strong>Frontier:</strong> அதிநவீன எல்லை (Cutting-edge)</li>
+                    <li><strong>First-order:</strong> முதன்மையான (Primary)</li>
+                    <li><strong>Fine-tuned:</strong> துல்லியமாக மாற்றியமைக்கப்பட்ட (Tailored)</li>
+                    <li><strong>Proprietary:</strong> தனியுரிம (Private/Patented)</li>
+                    <li><strong>Portability:</strong> எளிதில் மாற்றக்கூடிய தன்மை (Transferability)</li>
+                    <li><strong>Utilisation:</strong> பயன்பாட்டு அளவு (Usage)</li>
+                    <li><strong>Reliably:</strong> நம்பகத்தன்மையுடன் (Dependably)</li>
+                    <li><strong>Inference:</strong> கணிப்புத் திறன் (Computation/Execution)</li>
+                    <li><strong>Intrusion:</strong> சட்டவிரோத ஊடுருவல் (Breach)</li>
+                    <li><strong>Forensic:</strong> தடயவியல் சார்ந்த (Investigative)</li>
+                    <li><strong>Exploit:</strong> தாக்குதல் வழிமுறை (Attack vector)</li>
+                    <li><strong>Payloads:</strong> தாக்குதல் தரவு (Malicious code)</li>
+                    <li><strong>Artifacts:</strong> ஆய்வு எச்சங்கள் (Evidence/Traces)</li>
+                    <li><strong>Guardrails:</strong> பாதுகாப்பு வரம்புகள் (Safety filters)</li>
+                    <li><strong>Structurally:</strong> கட்டமைப்பு ரீதியாக (Fundamentally)</li>
+                    <li><strong>Perimeter:</strong> பாதுகாப்பு எல்லை (Boundary)</li>
+                    <li><strong>Rigorously:</strong> துல்லியமாக (Meticulously)</li>
+                    <li><strong>Vetted:</strong> சரிபார்க்கப்பட்ட (Verified)</li>
+                    <li><strong>Embedding:</strong> உட்பொதித்தல் (Integrating)</li>
+                    <li><strong>Endpoints:</strong> தொடர்பு எல்லை புள்ளிகள் (Interfaces)</li>
+                    <li><strong>Stack:</strong> மென்பொருள் அடுக்கு (Framework/Architecture)</li>
+                    <li><strong>Concurrency:</strong> ஒரே நேரச் செயல்பாடு (Parallelism)</li>
+                    <li><strong>Latency:</strong> தாமத நேரம் (Delay/Lag)</li>
+                    <li><strong>Democratise:</strong> அனைவருக்கும் எளிதாக்குதல் (Open up)</li>
+                </ol>
+                <ol start="26">
+                    <li><strong>Token sovereignty:</strong> தரவு/AI கணிப்பு அதிகாரம் (Digital autonomy)</li>
+                    <li><strong>Caveat:</strong> எச்சரிக்கை / நிபந்தனை (Warning/Caution)</li>
+                    <li><strong>Trajectory:</strong> வளர்ச்சிப் பாதை (Trend/Course)</li>
+                    <li><strong>Afterthought:</strong> பின்னாளில் யோசித்துச் செய்த செயல் (Late addition)</li>
+                    <li><strong>Governance:</strong> நிர்வாகக் கட்டுப்பாடு (Management/Control)</li>
+                    <li><strong>Residency:</strong> தரவு தங்கிவாழும் இடம் (Data localization)</li>
+                    <li><strong>Complexity:</strong> சிக்கல் தன்மை (Intricacy)</li>
+                    <li><strong>Deployment:</strong> செயல்பாட்டுக்குக் கொண்டுவருதல் (Implementation)</li>
+                    <li><strong>Considerations:</strong> கவனத்தில் கொள்ள வேண்டியவை (Factors)</li>
+                    <li><strong>Substantially:</strong> கணிசமாக (Considerably)</li>
+                    <li><strong>Infrastructure:</strong> அடிப்படை வசதி (Base setup)</li>
+                    <li><strong>Worthwhile:</strong> பயனுள்ள (Valuable/Beneficial)</li>
+                    <li><strong>Challenging:</strong> சவாலான (Difficult)</li>
+                    <li><strong>Illustrated:</strong> விளக்கியது (Demonstrated)</li>
+                    <li><strong>Distinguish:</strong> வேறுபடுத்திப் பார்த்தல் (Differentiate)</li>
+                    <li><strong>Inferior:</strong> தரம் குறைந்த (Lesser/Subpar)</li>
+                    <li><strong>Genuine:</strong> உண்மையான (Authentic)</li>
+                    <li><strong>Tolerate:</strong> சகித்துக்கொள்ளுதல் (Bear/Endure)</li>
+                    <li><strong>Unrealistic:</strong> நடைமுறைக்குச் சாத்தியமற்ற (Impractical)</li>
+                    <li><strong>Deserve:</strong> தகுதியுடையது (Warrant)</li>
+                    <li><strong>Underlying:</strong> அடிப்படையான (Fundamental)</li>
+                    <li><strong>Domestic:</strong> உள்நாட்டு (National/Local)</li>
+                    <li><strong>Significance:</strong> முக்கியத்துவம் (Importance)</li>
+                    <li><strong>Ecosystem:</strong> இயங்குதளம் (Network/System)</li>
+                    <li><strong>Regulated:</strong> முறைப்படுத்தப்பட்ட (Controlled)</li>
+                </ol>
+                <ol start="51">
+                    <li><strong>Obligations:</strong> கடமைகள் / தேவைகள் (Requirements)</li>
+                    <li><strong>Discipline:</strong> கட்டுப்பாடு / நெறிமுறை (Systematic practice)</li>
+                    <li><strong>Default:</strong> இயல்பான அமைப்பு (Standard setting)</li>
+                    <li><strong>Extract:</strong> வெளிக்கொணர்தல் (Derive/Draw out)</li>
+                    <li><strong>Architectural:</strong> கட்டமைப்பு சார்ந்த (Structural design)</li>
+                    <li><strong>Procurement:</strong> வாங்குதல் / கொள்முதல் (Acquisition)</li>
+                    <li><strong>Leaderboards:</strong> தரவரிசைப் பட்டியல்கள் (Rankings)</li>
+                    <li><strong>Enterprises:</strong> வணிக நிறுவனங்கள் (Businesses)</li>
+                    <li><strong>Capabilities:</strong> திறன்கள் (Abilities)</li>
+                    <li><strong>Parameters:</strong> மாறிகள் / அளவீடுகள் (Variables)</li>
+                    <li><strong>Consecutive:</strong> தொடர்ச்சியான (Sequential)</li>
+                    <li><strong>Evaluation:</strong> மதிப்பீடு (Assessment)</li>
+                    <li><strong>Benchmark:</strong> ஒப்பீட்டு அளவுக்கோல் (Standard)</li>
+                    <li><strong>Confidential:</strong> இரகசியமான (Secret/Private)</li>
+                    <li><strong>Priorities:</strong> முன்னுரிமைகள் (Preferences)</li>
+                    <li><strong>Concrete:</strong> உறுதியான / தெளிவான (Solid/Definite)</li>
+                    <li><strong>Sovereignty:</strong> இறையாண்மை / தன்னாட்சி (Autonomy)</li>
+                    <li><strong>Posture:</strong> பாதுகாப்பு நிலை (Security status)</li>
+                    <li><strong>Contract:</strong> ஒப்பந்தம் (Agreement)</li>
+                    <li><strong>Obligations:</strong> கட்டுப்பாடுகள் (Duties)</li>
+                    <li><strong>Systematically:</strong> முறைப்படி (Methodically)</li>
+                    <li><strong>Competitive:</strong> போட்டி சார்ந்த (Rivalrous)</li>
+                    <li><strong>Framework:</strong> கட்டமைப்பு (Structure)</li>
+                    <li><strong>Customized:</strong> தேவைகேற்ப அமைக்கப்பட்ட (Tailored)</li>
+                    <li><strong>Proviso:</strong> நிபந்தனை (Condition)</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- FIGURE SECTION AFTER ARTICLE -->
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="https://epaper.thehindu.com/ccidist-ws/th/th_chennai/issues/199872/OPS/GK3GDKED2.1.png?rev=2026-08-17T23:34:51+05:30&cropFromPage=true"
+                    alt="Match AI models to workloads, not leaderboards Graphic" />
+                <figcaption>Match AI models to workloads, not leaderboards — Article by Chandrajit Banerjee and Debjani
+                    Ghosh</figcaption>
+            </figure>
+
+
+            <figure class="article-image-figure">
+                <img src="images/match-ai-models-to-workloads-not-leaderboards.png"
+                    alt="Match AI models to workloads, not leaderboards Graphic" />
+                <figcaption>Match AI models to workloads, not leaderboards — Article by Chandrajit Banerjee and Debjani
+                    Ghosh</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <!-- Vocabulary Definition Modal Overlay -->
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📜</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <!-- Image HD Modal Overlay -->
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+
+</body>
+
+</html>
