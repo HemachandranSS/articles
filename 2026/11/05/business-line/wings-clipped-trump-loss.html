@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wings clipped</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .article-figures-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: zoom-in;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.11rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>Wings clipped</h1>
+            <p class="byline-desc">Trump’s loss may be good news for the world</p>
+            <p class="byline">Editorial Desk</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; Thursday, November 5, 2026</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">The American midterm results land as a body blow to the economic and strategic warfare
+                President Donald Trump waged at home and abroad. Having turned the contest into a referendum on himself,
+                he cannot credibly distance his persona from the defeat. Democrats seized the Senate and the House;
+                Republicans lost ground even in deep-red Texas, Kansas, Ohio, South Carolina, Iowa and Kentucky.</p>
+
+            <p>The final two years of this presidency risk being consumed by domestic trench warfare — Democratic
+                investigations into corruption, fights over judicial and executive nominees, and possible renewed
+                impeachment debate. For India and the wider world, the question is whether Congress will challenge
+                tariffs, Iran policy and nuclear brinkmanship that have roiled oil markets and trade talks.</p>
+
+            <p>Conservative voices abroad and allies in West Asia watch whether escalation ends or merely pauses. Israel’s
+                parallel political theatre is a sideshow next to Gulf supply routes that matter for Indian imports. New
+                Delhi hopes for breathing room in bilateral trade-negotiation leverage and lower energy-volatility
+                premiums — provided Democratic majorities use oversight powers constructively rather than as pure
+                partisan theatre.</p>
+
+            <p>Clipped wings in Washington do not automatically stabilise the global economy. They do reopen space for
+                diplomacy, multilateral bargaining and Indian trade policy to manoeuvre without riding every presidential
+                tweet into crisis.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>2026 U.S. Midterm Congressional Flip</strong> (காங்கிரஸ் கட்டுப்பாடு மாற்றம்)</li>
+                <li><strong>Tariffs and Iran Policy Oversight</strong> (சுங்கம் மற்றும் ஈரான் கொள்கை)</li>
+                <li><strong>West Asia Oil Supply Risk</strong> (மேற்கு ஆசியா எண்ணெய்)</li>
+                <li><strong>India–U.S. Trade Negotiations</strong> (இந்தியா–அமெரிக்க வர்த்தகப் பேச்சுவார்த்தை)</li>
+            </ol>
+        </div>
+
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/wings-clipped-trump-loss.png" alt="Wings clipped — Business Line editorial scan" />
+                <figcaption>THE HINDU BUSINESS LINE EDITORIAL: Wings clipped — Trump’s loss may be good news for the
+                    world. November 5, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+
+</html>

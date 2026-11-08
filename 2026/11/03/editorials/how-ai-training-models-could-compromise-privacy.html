@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How AI training models could compromise privacy</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .pullquote-card {
+            background-color: #fcf8f2;
+            border-left: 4px solid #d97706;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: #78350f;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .article-figures-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: zoom-in;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">SCIENCE &amp; TECH · DATA GOVERNANCE &amp; AI</div>
+            <h1>How AI training models could compromise privacy</h1>
+            <p class="subtitle">Credible studies have shown that querying an AI model with ‘anonymised’ data to extract
+                personal details that it had memorised during training can be used to identify individuals and build
+                their profiles</p>
+            <p class="byline">Tulika Avni Sinha</p>
+            <p class="article-meta">Senior Research Fellow (Data Governance, Privacy and AI), World Privacy Forum</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">The right to privacy is a constitutional right upheld by the Supreme Court in 2017.
+                However, the legal instruments currently in place to safeguard this right seem inadequate, especially
+                considering the technological revolution led by <span class="vocab-words"
+                    data-modal-title="Artificial Intelligence (AI) (noun) செயற்கை நுண்ணறிவு"
+                    data-modal-meaning="– computer systems that perform tasks requiring human-like learning, reasoning, or pattern recognition."
+                    data-modal-synonyms="machine learning systems, AI models">Artificial Intelligence (AI)</span> around
+                the world. While AI regulation is one of the most commonly discussed issues within governments today, the
+                recommendations have been broad, vague and have only led to further questions. AI has immense potential to
+                boost productivity and have positive effects on people’s lives; any indiscriminate regulatory or policy
+                measure risks inhibiting innovation and economic growth. However, there are lower hanging fruits;
+                specific gaps that can be filled to better safeguard people’s constitutional rights without permanently
+                losing out in the AI race.</p>
+
+            <p>The <span class="vocab-words"
+                    data-modal-title="Digital Personal Data Protection (DPDP) Act, 2023 (proper noun) டிஜிட்டல் தனிநபர் தரவு பாதுகாப்புச் சட்டம், 2023"
+                    data-modal-meaning="– India’s statute governing consent, processing, and rights over digital personal data."
+                    data-modal-synonyms="DPDP Act, data protection law">Digital Personal Data Protection (DPDP)
+                    Act</span> was passed in 2023, with the DPDP Rules being notified in November 2025. The implementation
+                is phased with some provisions on consent and safety becoming effective only in 2027. Prior to the DPDP
+                Act, the primary legal instrument to regulate the use and management of personal data was the <span
+                    class="vocab-words"
+                    data-modal-title="Information Technology (IT) Act, 2000 (proper noun) தகவல் தொழில்நுட்பச் சட்டம், 2000"
+                    data-modal-meaning="– foundational Indian legislation on electronic commerce, cybercrime, and early data-handling obligations."
+                    data-modal-synonyms="IT Act, IT Act 2000">Information Technology (IT) Act, 2000</span>. Together the
+                IT Act, 2000 and its 2011 Rules broadly regulated the export of “sensitive personal data” on the condition
+                that the recipient ensured a level of data protection required under Indian law, and that the transfer was
+                either necessary to perform a lawful contract or had been consented to by the data provider. An assertion
+                and claim were sufficient to record adequacy. The criminal penalty for unauthorised disclosure was capped
+                at three years’ imprisonment or a fine of ₹5 lakh. These penalties only applied to disclosure of sensitive
+                personal data that were listed in the Rules such as financial data, medical or health details, sexual
+                orientation, biometric information etc. The Rules did not apply to personal data such as names,
+                addresses, phone numbers, caste, religion, political affiliations, browsing history, social media
+                activity, online or offline behavioural patterns, institutional affiliations etc.</p>
+
+            <h2>Privacy coverage</h2>
+            <p>Viewed against the demands of the AI age, the DPDP framework leaves large volumes of personal information
+                under-protected. The Act does not apply to personal data that is publicly available, or to information
+                inferred from a user’s publicly available parameters on social media — names, gender, location,
+                organisation, images, videos, and the emotional states, mobility and behavioural tendencies that
+                algorithms can derive from them. India is the largest market for Facebook and Instagram; Meta, Amazon and
+                Google train AI systems on user-generated data at a scale few other countries can match. Public
+                accessibility should not be treated as permission for unrestricted commercial exploitation: when such
+                data are aggregated and modelled, seemingly harmless details can expose highly sensitive aspects of a
+                person’s life.</p>
+
+            <p>Unlike the IT Rules, the DPDP Act does not carve out a distinct category of sensitive personal data.
+                Passwords, health information and biometrics receive the same broad treatment as a city name or shopping
+                preferences — a regressive dilution of protections that earlier law accorded to categories capable of
+                direct privacy harm. Scraping publicly posted material for model training likewise falls outside the Act’s
+                coverage, even though the combined use of non-sensitive datapoints can disclose sensitive information when
+                analysed with other variables.</p>
+
+            <h2>Training AI on personal data</h2>
+            <p>The DPDP Act does not discuss how AI models are trained on personal data. Yet one of the most serious
+                emerging risks is <span class="vocab-words" data-modal-title="Memorisation (noun) நினைவகப்படுத்தல்"
+                    data-modal-meaning="– tendency of machine-learning models to retain and later reproduce examples from training datasets."
+                    data-modal-synonyms="training-data retention, model memorisation">memorisation</span>: models can
+                regurgitate information they absorbed during training. Personal data converted into an anonymised
+                training set may still be queried to retrieve details about identifiable individuals.</p>
+
+            <div class="pullquote-card">Credible studies have shown that querying an AI model with ‘anonymised’ data to
+                extract personal details that it had memorised during training can be used to identify individuals and
+                build their profiles.</div>
+
+            <p>Studies also indicate that sensitive attributes can be inferred from ordinary public information through
+                AI — emotional conditions, mobility, relationships and behavioural patterns. Indian users presently lack
+                an effective right to object to their data being used for AI training. Substantive consent obligations
+                under the DPDP framework are phased, with several provisions becoming enforceable only by May 2027; even
+                thereafter, publicly available personal data used for training may remain difficult to challenge. Meta
+                offers users in the European Union an opt-out from certain uses of their information in AI training;
+                Indian users enjoy no comparable mechanism.</p>
+
+            <p>The Act recognises a right to erasure, but chiefly for data for which the user gave consent, and it is
+                unclear whether the right extends to information inferred from such data. An exemption for processing for
+                research, archival or statistical purposes — with rules yet to be fully specified — creates ambiguity over
+                whether AI training to “improve services” can be classified as research and thereby escape obligations.
+                Erasing data from a trained model is technically distinct from deleting a database row; without clarity,
+                individuals may secure erasure on paper while a model continues to reproduce what it has learned.</p>
+
+            <h2>What can be done</h2>
+            <p>India need not respond with sweeping bans on AI training or indiscriminate curbs on data flows that would
+                undermine inclusion, efficiency and representation of the country’s diversity in model performance. Targeted
+                amendments and rules can close the gaps: extend DPDP protections to personal data used to train AI models,
+                including scraped public data and inferred attributes; provide a meaningful right to object to such
+                training; restore a sensitive personal data category with stricter processing requirements; strengthen
+                erasure by requiring fiduciaries to disclose other entities holding a person’s data where feasible; and
+                clarify whether AI training falls within the research exemption. Public concerns are documented; delay in
+                plugging these holes will leave constitutional privacy rights increasingly hollow as AI is embedded across
+                government, business and civil society.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Right to Privacy (Puttaswamy, 2017)</strong> (தனியுரிமை உரிமை)</li>
+                <li><strong>Digital Personal Data Protection (DPDP) Act, 2023</strong> (DPDP சட்டம்)</li>
+                <li><strong>DPDP Rules, 2025 (Phased Implementation)</strong> (DPDP விதிகள் – கட்டம் கட்டமான அமலாக்கம்)
+                </li>
+                <li><strong>Sensitive Personal Data (IT Rules, 2011)</strong> (உணர்திறன் மிக்க தனிப்பட்ட தரவு)</li>
+                <li><strong>Publicly Available and Inferred Personal Data</strong> (பொதுவில் கிடைக்கும் மற்றும்
+                    அனுமானிக்கப்பட்ட தரவு)</li>
+                <li><strong>AI Training Data Memorisation and Regurgitation</strong> (AI பயிற்சித் தரவு நினைவகப்படுத்தல்)
+                </li>
+                <li><strong>Re-identification from Anonymised Queries</strong> (அநாமதேய வினவலிலிருந்து
+                    மறு-அடையாளம் காணல்)</li>
+                <li><strong>Right to Object to AI Training</strong> (AI பயிற்சிக்கு எதிர்ப்பு உரிமை)</li>
+                <li><strong>Right to Erasure / Right to Be Forgotten</strong> (அழிப்பு உரிமை)</li>
+                <li><strong>Research, Archival and Statistical Exemption</strong> (ஆராய்ச்சி விலக்கு)</li>
+                <li><strong>Data Fiduciary Obligations</strong> (தரவுப் பொறுப்பாளர் கடமைகள்)</li>
+                <li><strong>Web Scraping for Generative AI</strong> (உருவாக்கும் AI-க்கான வலைச் சுரண்டல்)</li>
+                <li><strong>EU Meta AI Training Opt-Out</strong> (EU Meta AI பயிற்சி விலக்கு வசதி)</li>
+            </ol>
+        </div>
+
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/how-ai-training-models-could-compromise-privacy.png"
+                    alt="The Hindu lead article by Tulika Avni Sinha on AI training and privacy under the DPDP Act" />
+                <figcaption>LEAD — THE HINDU: How AI training models could compromise privacy. Tulika Avni Sinha, World
+                    Privacy Forum. November 3, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JUMBO HUSTLE</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .pullquote-card {
+            background-color: #fcf8f2;
+            border-left: 4px solid #d97706;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 1.125rem;
+            font-style: italic;
+            color: #78350f;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .article-figures-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: zoom-in;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+</style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <h1>JUMBO HUSTLE</h1>
+            <p class="subtitle">The unseemly haste with which five elephants from Assam were transported to temples in Tamil Nadu raises questions about animal transfer rules and whether the process is cheat-proof</p>
+            <p class="byline">Geetha Srimathi</p>
+            <p class="article-meta">With inputs from B. Kolappan and Deepa H. Ramakrishnan &nbsp;|&nbsp; November 8, 2026</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">Five elephants — Durga, Hiralal (7), Shiva (5), Rupsing (13) and Bijuli (5) — recently reached Tamil Nadu temples via Chennai-based Seva Trust: Meenakshi Amman (Madurai), Arunachaleswarar (Tiruvannamalai), Ramanathaswamy (Rameswaram), Vaitheeswaran and Kamakshi Amman (Kancheepuram). The transfers unfolded with unusual speed, prompting scrutiny under the Wildlife (Protection) Act (2022 amendment) and the Captive Elephant (Transfer or Transport) Rules, 2024, which allow religious transfers but bar commercial trade.</p>
+            <p>The Wildlife Institute of India noted that genetic profiles of the animals were not established beforehand, raising doubts whether they were captive-bred or taken from the wild. Arun Prasanna (People for Cattle in India) said Assam’s history of capturing elephants survives through “gifts” and donations because outright sale is illegal. Shravan Krishnan (Besant Memorial Animal Dispensary) argued temple elephants are tamed, not domesticated: “Keeping them in captivity for life is akin to breaking their spirit.”</p>
+            <div class="pullquote-card">The [temple] elephants are not domesticated, they are tamed. Keeping them in captivity for life is akin to breaking their spirit. — Shravan Krishnan</div>
+            <p>Activists and the HR&amp;CE Department face yawning enforcement gaps — from mahout training and <span class="vocab-words" data-modal-title="genetic profiling (noun phrase) மரபணு வரைபடம்" data-modal-meaning="– DNA-based identification to verify captive breeding and legal origin." data-modal-synonyms="DNA profiling, genetic fingerprinting">genetic profiling</span> to interstate paperwork — that allow humans to trade in <span class="vocab-words" data-modal-title="pachyderms (noun) தடிமம் கொண்ட விலங்குகள்" data-modal-meaning="– very large thick-skinned mammals, especially elephants." data-modal-synonyms="elephants, megaherbivores">pachyderms</span> under the guise of devotion.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Captive Elephant Transfer Rules 2024</strong> (ஆஊர்வாழ் யானை மாற்று விதிகள்)</li>
+                <li><strong>WII Genetic Profiling Gap</strong> (WII மரபணு ஆய்வு இடைவெளி)</li>
+                <li><strong>HR&amp;CE Temple Elephant Custody</strong> (இந்து சமய அறநிலையம்)</li>
+                <li><strong>Assam–Tamil Nadu Elephant Corridor</strong> (மாநிலங்களுக்கிடையே யானை மாற்றம்)</li>
+            </ol>
+        </div>
+
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/jumbo-hustle-elephants-temples-tamil-nadu.png"
+                    alt="JUMBO HUSTLE — newspaper scan" />
+                <figcaption>THE HINDU: JUMBO HUSTLE — Geetha Srimathi et al. November 8, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+
+</html>

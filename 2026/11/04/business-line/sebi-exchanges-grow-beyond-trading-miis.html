@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEBI’s proposal to let exchanges grow beyond trading</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem 1.5rem;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .article-figures-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-image-figure {
+            margin: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-image-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: zoom-in;
+        }
+
+        .article-image-figure figcaption {
+            padding: 0.85rem 1.1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">MARKETS · REGULATION</div>
+            <h1>SEBI’s proposal to let exchanges grow beyond trading</h1>
+            <p class="subtitle">MIIs are sitting on a wealth of data that can be monetised. But there are risks that need
+                to be averted.</p>
+            <p class="byline">P. Saravanan, A. Paul Williams</p>
+            <p class="article-meta">IIM Tiruchirappalli; Sernova Financial &nbsp;|&nbsp; November 4, 2026</p>
+        </header>
+
+        <div class="article-body">
+            <p class="drop-cap">SEBI’s consultation paper proposes letting exchanges and depositories undertake
+                related activities without case-by-case approval. Today, <span class="vocab-words"
+                    data-modal-title="MII (noun) சந்தை உள்கட்டமைப்பு நிறுவனம்"
+                    data-modal-meaning="– market infrastructure institution such as a stock exchange or depository."
+                    data-modal-synonyms="market infrastructure institution, exchange, depository">market infrastructure
+                    institutions (MIIs)</span> need permission for fund deployment beyond treasury investments. The reform
+                could unlock analytics and adjacent businesses built on trading and settlement data — if conflicts and
+                cyber risks are managed.</p>
+
+            <p>The automatic route would cover work related or incidental to core securities-market functions, and
+                activities similar to existing MII business conducted through entities regulated by RBI, IRDAI, IFSCA or
+                PFRDA. Investment would be capped at the lower of 5% of prior March net worth or regulatory minimum net
+                worth; post-investment net worth must stay at least 1.5× the prescribed floor.</p>
+
+            <p>MIIs hold rich data on order flow and settlement — commercially valuable but sensitive because MIIs also
+                regulate members. Selling analytics may clash with private data vendors who rely on the same raw feeds.
+                <span class="vocab-words" data-modal-title="ring-fencing (noun) வளைய அமைப்பு"
+                    data-modal-meaning="– legal or operational separation to limit risk spill-over between entities."
+                    data-modal-synonyms="firewall, segregation, structural separation">Ring-fencing</span> subsidiaries
+                and cyber rules for MII-owned firms need finalisation before scale-up.</p>
+
+            <p>Suggestions include defining “related or incidental” precisely; publishing half-yearly summaries of
+                non-core activities; offering commercial data products to all vendors on equal terms; and retaining
+                SEBI’s power to withdraw automatic approval if conditions break. Comments close November 12, 2026.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>SEBI MII Consultation Paper</strong> (SEBI ஆலோசனை ஆவணம்)</li>
+                <li><strong>5% Net Worth Investment Cap</strong> (நிகர மதிப்பு வரம்பு)</li>
+                <li><strong>Data Monetisation vs Regulatory Role</strong> (தரவு வணிகமயமாக்கம்)</li>
+                <li><strong>Multi-Regulator Subsidiary Route</strong> (பல ஒழுங்குநர் பாதை)</li>
+            </ol>
+        </div>
+
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/sebi-exchanges-grow-beyond-trading-miis.png"
+                    alt="SEBI’s proposal to let exchanges grow beyond trading — Business Line scan" />
+                <figcaption>THE HINDU BUSINESS LINE: SEBI’s proposal to let exchanges grow beyond trading. P. Saravanan
+                    and A. Paul Williams. November 4, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+
+</html>
