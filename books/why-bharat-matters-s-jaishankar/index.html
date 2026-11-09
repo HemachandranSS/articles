@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Why Bharat Matters — Book Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/css/book.css" />
+    <style>
+        :root { --bg: #f4f1eb; --card-bg: #fffef9; --border-light: #ece9e2; --shadow: 0 2px 18px rgba(0,0,0,.08); --radius: 10px; }
+        body { margin: 0; background: var(--bg); font-family: Inter, sans-serif; padding-bottom: 60px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+        .cat-label { font-size: .68rem; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #666; margin: 28px 0 10px 2px; display: flex; align-items: center; gap: 8px; }
+        .cat-label::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
+        .article-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+        .article-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border-light); display: flex; overflow: hidden; }
+        .card-accent-bar { width: 4px; background: #7b2d26; flex-shrink: 0; }
+        .card-body { padding: 14px 18px; flex: 1; }
+        .card-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 4px; }
+        .tag-book { font-size: .62rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: #f5e8e6; color: #7b2d26; }
+        .tag-ready { background: #e8f5ee; color: #0d3325; }
+        .tag-soon { background: #f0f0f0; color: #777; }
+        .card-title { font-family: Merriweather, Georgia, serif; font-size: .97rem; font-weight: 700; line-height: 1.35; }
+        .card-pending .card-title { color: #666; }
+        .card-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .card-button { display: inline-flex; padding: 7px 12px; border-radius: 999px; font-size: .7rem; font-weight: 700; text-decoration: none; border: 1px solid transparent; }
+        .card-button.article-link { background: #f5e8e6; color: #4a1a16; border-color: rgba(123,45,38,.2); }
+        .card-button.disabled { background: #eee; color: #999; pointer-events: none; }
+        .card-arrow { display: flex; align-items: center; padding: 0 16px; color: #ddd; }
+        .top-link { font-size: .85rem; margin-top: 16px; display: inline-block; color: #1a4d7a; }
+        .progress { font-size: .82rem; color: #555; margin: 12px 0 0; }
+    </style>
+</head>
+<body class="book-index-body">
+    <header class="masthead-books">
+        <div style="max-width:900px;margin:0 auto;padding:0 16px;">
+            <p style="font-size:.72rem;letter-spacing:2px;text-transform:uppercase;opacity:.9;margin:0 0 8px;">Books</p>
+            <h1>Why Bharat Matters</h1>
+            <p class="sub">S. Jaishankar — page-by-page reader</p>
+        </div>
+    </header>
+    <main class="content">
+        <a class="top-link" href="../index.html">← All books</a>
+        <p class="progress"><strong>19</strong> of 19 index sections · <strong>211</strong> reader pages — book complete.</p>
+
+        <p class="cat-label">Front matter</p>
+        <div class="article-list" id="front-matter"></div>
+
+        <p class="cat-label">Chapters</p>
+        <div class="article-list" id="chapters"></div>
+
+        <p class="cat-label">Back matter</p>
+        <div class="article-list" id="back-matter"></div>
+    </main>
+    <script>
+        const pages = {
+            "front-matter": [
+                { title: "Cover", slug: "cover", ready: true },
+                { title: "Half-Title Page", slug: "half-title", ready: true },
+                { title: "Title Page", slug: "title-page", ready: true },
+                { title: "Copyright Page", slug: "copyright", ready: true },
+                { title: "Contents", slug: "contents", ready: true },
+                { title: "List of Abbreviations", slug: "abbreviations-01", ready: true },
+                { title: "Preface", slug: "preface-01", ready: true },
+            ],
+            chapters: [
+                { title: "Chapter 1. Presenting a World View", slug: "chapter-01-presenting-a-world-view", ready: true },
+                { title: "Chapter 2. Foreign Policy and You", slug: "chapter-02-foreign-policy-and-you", ready: true },
+                { title: "Chapter 3. The State of the World", slug: "chapter-03-the-state-of-the-world", ready: true },
+                { title: "Chapter 4. Back to the Future", slug: "chapter-04-back-to-the-future", ready: true },
+                { title: "Chapter 5. A Transformational Decade", slug: "chapter-05-a-transformational-decade", ready: true },
+                { title: "Chapter 6. Making Friends, Influencing People", slug: "chapter-06-making-friends-influencing-people", ready: true },
+                { title: "Chapter 7. Quad: A Grouping Foretold", slug: "chapter-07-quad-grouping-foretold", ready: true },
+                { title: "Chapter 8. Dealing with China", slug: "chapter-08-dealing-with-china", ready: true },
+                { title: "Chapter 9. Re-Imagining Security", slug: "chapter-09-re-imagining-security", ready: true },
+                { title: "Chapter 10. The Roads Not Taken", slug: "chapter-10-the-roads-not-taken", ready: true },
+                { title: "Chapter 11. Why Bharat Matters", slug: "chapter-11-why-bharat-matters", ready: true },
+            ],
+            "back-matter": [
+                { title: "Acknowledgements", slug: "acknowledgements", ready: true },
+                { title: "Back Cover", slug: "back-cover", ready: true },
+            ],
+        };
+
+        function card(p) {
+            const pending = !p.ready;
+            const href = p.ready ? p.slug + ".html" : "pending.html";
+            return `<div class="article-card${pending ? " card-pending" : ""}">
+                <div class="card-accent-bar"></div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="tag-book ${p.ready ? "tag-ready" : "tag-soon"}">${p.ready ? "Ready" : "Awaiting scan"}</span>
+                    </div>
+                    <div class="card-title">${p.title}</div>
+                    <div class="card-actions">
+                        <a class="card-button article-link${pending ? " disabled" : ""}" href="${href}">Open page</a>
+                    </div>
+                </div>
+                <div class="card-arrow">›</div>
+            </div>`;
+        }
+
+        for (const [id, list] of Object.entries(pages)) {
+            document.getElementById(id).innerHTML = list.map(card).join("");
+        }
+    </script>
+</body>
+</html>

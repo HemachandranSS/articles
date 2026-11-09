@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cover — Why Bharat Matters</title>
+    <link rel="stylesheet" href="../../assets/css/article.css" />
+    <style>
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: #ececec;
+        }
+        .book-cover-only {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+        .book-cover-only .article-image-figure {
+            margin: 0;
+            max-width: min(100%, 520px);
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+        .book-cover-only .article-image-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            cursor: zoom-in;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+            border-radius: 2px;
+        }
+        .book-cover-skip {
+            position: fixed;
+            bottom: 12px;
+            right: 12px;
+            font-family: Inter, system-ui, sans-serif;
+            font-size: 0.8rem;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            opacity: 0.35;
+            transition: opacity 0.2s;
+        }
+        .book-cover-skip:hover { opacity: 1; }
+        .book-cover-skip a {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #fff;
+            color: #4a1a16;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        .book-cover-skip a:hover { background: #f5e8e6; }
+    </style>
+</head>
+<body>
+    <main class="book-cover-only">
+        <figure class="article-image-figure">
+            <img
+                src="images/cover.png"
+                alt="Cover — Why Bharat Matters by S. Jaishankar"
+                data-hd-src="images/cover.png"
+                data-caption="Front cover — Why Bharat Matters, S. Jaishankar"
+            />
+        </figure>
+    </main>
+
+    <nav class="book-cover-skip" aria-label="Page navigation">
+        <a href="index.html">Index</a>
+        <a href="half-title.html">Next →</a>
+    </nav>
+
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

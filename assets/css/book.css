@@ -1,0 +1,419 @@
+/* Book reader — Why Bharat Matters and future titles */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+    --book-paper: #f6f1e8;
+    --book-paper-edge: #e8dfd0;
+    --book-ink: #1c1410;
+    --book-muted: #5c4f46;
+    --book-accent: #7b2d26;
+    --book-accent-dark: #4a1a16;
+    --book-link: #1a4d7a;
+    --book-shadow: 0 12px 40px rgba(28, 20, 16, 0.12);
+}
+
+body.book-body {
+    font-family: 'Libre Baskerville', 'Merriweather', Georgia, serif;
+    background: linear-gradient(165deg, #ebe4d8 0%, #d9d0c2 45%, #cfc4b4 100%);
+    color: var(--book-ink);
+    min-height: 100vh;
+    margin: 0;
+    padding: 32px 16px 64px;
+    line-height: 1.75;
+}
+
+.book-shell {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.book-breadcrumb {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    margin-bottom: 16px;
+    color: var(--book-muted);
+}
+
+.book-breadcrumb a {
+    color: var(--book-link);
+    text-decoration: none;
+}
+
+.book-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Open “book” block */
+.book-spread {
+    background: var(--book-paper);
+    border: 1px solid var(--book-paper-edge);
+    border-radius: 4px 12px 12px 4px;
+    box-shadow: var(--book-shadow), inset 3px 0 8px rgba(74, 26, 22, 0.08);
+    overflow: hidden;
+    position: relative;
+}
+
+.book-spread::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 14px;
+    background: linear-gradient(90deg, var(--book-accent-dark), var(--book-accent));
+    opacity: 0.85;
+}
+
+.book-inner {
+    padding: 48px 56px 44px 52px;
+    margin-left: 8px;
+}
+
+@media (max-width: 600px) {
+    .book-inner {
+        padding: 36px 28px 32px 36px;
+    }
+}
+
+.book-meta-bar {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--book-accent);
+    margin-bottom: 8px;
+}
+
+.book-page-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--book-muted);
+    margin-bottom: 28px;
+}
+
+.book-contents-heading {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    margin: 0 0 36px;
+    color: var(--book-ink);
+}
+
+.book-toc {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.02rem;
+}
+
+.book-toc li {
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--book-paper-edge);
+}
+
+.book-toc li:last-child {
+    border-bottom: none;
+}
+
+.book-toc a {
+    color: var(--book-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.book-toc a:hover {
+    color: var(--book-accent);
+}
+
+.book-toc .toc-current {
+    font-weight: 700;
+    color: var(--book-ink);
+    text-decoration: none;
+}
+
+.book-toc .toc-pending {
+    color: var(--book-muted);
+    font-style: italic;
+}
+
+.book-toc .toc-pending small {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-style: normal;
+    margin-left: 8px;
+    color: #8a7a6e;
+}
+
+/* Body text pages (future chapters) */
+.book-prose {
+    font-size: 1.05rem;
+}
+
+.book-prose p {
+    margin-bottom: 1.25em;
+    text-align: justify;
+}
+
+.book-prose p.drop-cap::first-letter {
+    float: left;
+    font-size: 3.2rem;
+    line-height: 0.85;
+    padding-right: 10px;
+    padding-top: 4px;
+    font-weight: 700;
+    color: var(--book-accent);
+}
+
+.book-chapter-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--book-muted);
+    margin-bottom: 6px;
+}
+
+.book-chapter-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+    line-height: 1.25;
+}
+
+.book-figures-section {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--book-paper-edge);
+}
+
+.book-image-figure {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--book-paper-edge);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.book-image-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: zoom-in;
+}
+
+.book-image-figure figcaption {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: var(--book-muted);
+    padding: 12px 14px;
+    background: #faf7f2;
+    border-top: 1px solid var(--book-paper-edge);
+}
+
+.book-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+}
+
+.book-nav a,
+.book-nav span {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--book-paper-edge);
+    background: #fff;
+    text-decoration: none;
+    color: var(--book-link);
+}
+
+.book-nav span.disabled {
+    color: #aaa;
+    background: #f0ebe3;
+}
+
+.book-nav a:hover {
+    border-color: var(--book-accent);
+    color: var(--book-accent);
+}
+
+/* Index cards (book hub) */
+.book-index-body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg, #f4f1eb);
+    min-height: 100vh;
+    padding: 0 0 80px;
+}
+
+.book-index-body .masthead-books {
+    background: linear-gradient(135deg, #4a1a16 0%, #7b2d26 55%, #a64b3a 100%);
+    padding: 36px 24px 28px;
+    text-align: center;
+    color: #fff;
+}
+
+.book-index-body .masthead-books h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 1.85rem;
+    margin: 8px 0 6px;
+}
+
+.book-index-body .masthead-books .sub {
+    opacity: 0.85;
+    font-size: 0.9rem;
+}
+
+.book-card.book .card-accent-bar {
+    background: #7b2d26;
+}
+
+.tag-book {
+    background: #f5e8e6;
+    color: #7b2d26;
+}
+
+.card-pending .card-title {
+    color: #888;
+}
+
+.card-pending .card-button {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+/* Shared front-matter reader (used with article.css) */
+.article-header.book-header {
+    background: linear-gradient(135deg, #4a1a16 0%, #7b2d26 55%, #a64b3a 100%);
+}
+.book-front-page .article-body {
+    background: #fafafa;
+    font-family: 'Libre Baskerville', 'Merriweather', Georgia, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 28px;
+    padding-bottom: 36px;
+}
+.book-breadcrumb-inline {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    margin-bottom: 1.25rem;
+    color: #5c4f46;
+    width: 100%;
+    max-width: 480px;
+}
+.book-breadcrumb-inline a { color: #1a4d7a; text-decoration: none; }
+.book-breadcrumb-inline a:hover { text-decoration: underline; }
+.book-page-stage {
+    width: 100%;
+    max-width: 420px;
+    min-height: 560px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 12px 40px rgba(28, 20, 16, 0.1);
+    border-radius: 4px;
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+.book-page-stage.top-weight { justify-content: flex-start; padding-top: 22%; }
+.book-page-stage.centered { justify-content: center; }
+.book-page-stage.blank { justify-content: center; color: #cbd5e1; font-family: Inter, sans-serif; font-size: 0.8rem; }
+.book-title-stack h2 {
+    font-family: 'Playfair Display', 'Merriweather', Georgia, serif;
+    font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    margin: 0.1em 0;
+    color: #0f172a;
+}
+.book-title-stack .author-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    margin-top: 2rem;
+    color: #1e293b;
+}
+.book-publisher-mark {
+    margin-top: auto;
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+.book-publisher-mark .rupa-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #1e293b;
+    color: #fff;
+    font-family: Inter, sans-serif;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+.book-publisher-mark span {
+    font-family: Inter, sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: #475569;
+}
+.book-copyright-prose {
+    max-width: 420px;
+    width: 100%;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    text-align: center;
+    color: #334155;
+}
+.book-copyright-prose p { margin: 0 0 1.1em; }
+.book-page-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 480px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+}
+.book-page-nav a {
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: #f5e8e6;
+    color: #4a1a16;
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid rgba(123, 45, 38, 0.2);
+}
+.book-page-nav a:hover { background: #ead5d2; }
+.book-page-nav span.muted { padding: 9px 14px; color: #999; }
+.book-front-page .article-figures-section {
+    margin-top: 0;
+    padding: 0 44px 40px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.book-front-page .article-image-figure {
+    margin: 0 auto;
+    max-width: 420px;
+    width: 100%;
+}
+@media (max-width: 600px) {
+    .book-front-page .article-figures-section { padding: 0 18px 24px; }
+}

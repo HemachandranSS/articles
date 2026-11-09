@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Six people dead after gunman opens fire in Polish city; one held</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">INTERNATIONAL RELATIONS · EUROPE</div>
+            <h1>Six people dead after gunman opens fire in Polish city; one held</h1>
+            <p class="byline">Agence France-Presse</p>
+            <p class="article-meta">KRAKOW &nbsp;|&nbsp; November 8, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">Police said six people were killed and a dozen wounded after a Polish <span class="vocab-words" data-modal-title="suspect (noun) சந்தேக நபர்" data-modal-meaning="– alleged attacker now detained." data-modal-synonyms="accused, alleged gunman">suspect</span> drove onto Krakow’s Main Market Square and shot at random people Saturday before officers wounded and <span class="vocab-words" data-modal-title="apprehended (verb) கைது செய்தனர்" data-modal-meaning="– took into police custody." data-modal-synonyms="arrested, captured">apprehended</span> him.</p>
+            <p>Four women and two men died; about twelve others were injured. The man wore military <span class="vocab-words" data-modal-title="fatigues (noun) இராணுவ உடை" data-modal-meaning="– camouflage combat clothing." data-modal-synonyms="combat gear, battle dress">fatigues</span> and carried a long gun; officers found more firearms and a large quantity of <span class="vocab-words" data-modal-title="ammunition (noun) துப்பாக்கி குண்டுகள்" data-modal-meaning="– bullets and shells for firing." data-modal-synonyms="rounds, munitions">ammunition</span> in his car, spokeswoman Katarzyna Cislo said. Police did not disclose a <span class="vocab-words" data-modal-title="motive (noun) நோக்கம்" data-modal-meaning="– reason behind the attack, still unknown." data-modal-synonyms="intent, impetus">motive</span>.</p>
+            <p>Prime Minister Donald Tusk called it a tragic shooting, praising officers who risked their lives <span class="vocab-words" data-modal-title="in the line of duty (phrase) கடமைப் பாதையில்" data-modal-meaning="– while performing official police work." data-modal-synonyms="on duty, in service">in the line of duty</span>. President Karol Nawrocki expressed sympathy for <span class="vocab-words" data-modal-title="casualties (noun) பாதிப்புகள்" data-modal-meaning="– killed and wounded victims and families." data-modal-synonyms="victims, losses">casualties</span>—a rare mass-violence event in an EU NATO member amid wider European security anxieties.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Krakow Market Square Attack</strong> (கிராகோவ் தாக்குதல்)</li>
+                <li><strong>Random Mass Shooting</strong> (தொடர் துப்பாக்கிச் சூடு)</li>
+                <li><strong>Police Custody and Evidence</strong> (கைது மற்றும் ஆயுதம்)</li>
+                <li><strong>Polish Leadership Response</strong> (தலைவர் பதில்விளைவு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/krakow-shooting-six-dead-gunman-held.png" alt="Six people dead after gunman opens fire in Polish city; one held — scan" />
+                <figcaption>THE HINDU: Six people dead after gunman opens fire in Polish city; one held. AFP, Krakow. November 8, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blank verso — Why Bharat Matters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/css/article.css" />
+    <link rel="stylesheet" href="../../assets/css/book.css" />
+    <style>
+        .article-image-figure { margin: 0 auto; max-width: 420px; width: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper book-front-page">
+        <header class="article-header book-header">
+            <div class="magazine-tag">BOOK · FRONT MATTER</div>
+            <h1>Why Bharat Matters</h1>
+            <p class="byline-desc">Blank page (verso)</p>
+            <p class="byline">S. Jaishankar</p>
+        </header>
+        <div class="article-body">
+            <nav class="book-breadcrumb-inline">
+                <a href="../index.html">Books</a> ›
+                <a href="index.html">Why Bharat Matters</a> ›
+                <span>Verso</span>
+            </nav>
+            <div class="book-page-stage blank" aria-hidden="true"><p>Blank page</p></div>
+            <nav class="book-page-nav">
+                <a href="half-title.html">← Half-Title</a>
+                <a href="index.html">Book index</a>
+                <a href="title-page.html">Title Page →</a>
+            </nav>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/verso-half-title.png" alt="Blank verso scan" />
+                <figcaption>Source scan: Blank verso following half-title.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books — Reading Archive</title>
+    <meta name="description" content="Digitised books with page-by-page text and scans." />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/book.css" />
+    <style>
+        :root { --bg: #f4f1eb; --card-bg: #fffef9; --border-light: #ece9e2; --shadow: 0 2px 18px rgba(0,0,0,.08); --radius: 10px; }
+        body { margin: 0; background: var(--bg); font-family: Inter, sans-serif; padding-bottom: 60px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+        .cat-label { font-size: .68rem; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #666; margin: 28px 0 10px 2px; }
+        .article-list { display: flex; flex-direction: column; gap: 10px; }
+        .article-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border-light); display: flex; overflow: hidden; text-decoration: none; color: inherit; transition: transform .2s, box-shadow .2s; }
+        .article-card:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,.12); }
+        .card-accent-bar { width: 4px; background: #7b2d26; flex-shrink: 0; }
+        .card-body { padding: 14px 18px; flex: 1; }
+        .card-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 4px; }
+        .tag-book { font-size: .62rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: #f5e8e6; color: #7b2d26; }
+        .card-topic { font-size: .68rem; color: #666; }
+        .card-title { font-family: Merriweather, Georgia, serif; font-size: 1rem; font-weight: 700; line-height: 1.35; }
+        .card-author { font-size: .72rem; color: #666; font-style: italic; margin-top: 4px; }
+        .card-arrow { display: flex; align-items: center; padding: 0 16px; color: #ccc; }
+        .top-link { font-size: .85rem; margin-top: 16px; display: inline-block; color: #1a4d7a; }
+    </style>
+</head>
+<body class="book-index-body">
+    <header class="masthead-books">
+        <div class="masthead-inner" style="max-width:900px;margin:0 auto;">
+            <p style="font-size:.72rem;letter-spacing:2px;text-transform:uppercase;opacity:.9;margin:0 0 8px;">Archive</p>
+            <h1>Books</h1>
+            <p class="sub">Full books as readable pages — text, scans, and chapter index like daily articles.</p>
+        </div>
+    </header>
+    <main class="content">
+        <a class="top-link" href="../index.html">← News Archives home</a>
+        <p class="cat-label">Library</p>
+        <div class="article-list">
+            <a class="article-card book" href="why-bharat-matters-s-jaishankar/index.html">
+                <div class="card-accent-bar"></div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="tag-book">Diplomacy · India</span>
+                        <span class="card-topic">Foreign policy · Quad · China · 11 chapters</span>
+                    </div>
+                    <div class="card-title">Why Bharat Matters</div>
+                    <div class="card-author">By S. Jaishankar</div>
+                </div>
+                <span class="card-arrow">›</span>
+            </a>
+        </div>
+    </main>
+    <script src="../assets/js/index.js"></script>
+</body>
+</html>
