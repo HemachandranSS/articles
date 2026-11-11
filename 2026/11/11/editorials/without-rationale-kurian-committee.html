@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Without rationale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .article-deck { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">FEDERALISM · TAMIL NADU · CENTRE–STATE</div>
+            <h1>Without rationale</h1>
+            
+            <p class="article-meta">Editorial &nbsp;|&nbsp; November 11, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="article-deck">India&rsquo;s federal structure could have benefited from the Kurian Committee</p>
+            <p class="drop-cap">By abruptly disbanding the Justice Kurian Joseph Committee on Union-State Relations and handing over its task to the Tamil Nadu State Law Commission, the C. Joseph Vijay government appears to have succumbed to the political impulse to reverse earlier decisions rather than being guided by any compelling rationale or necessity. This gains credence from the very grounds cited. The committee executed its mandate with scholarly rigour, seen in Part I of its report that was submitted to the then M.K. Stalin government in February. Citing the Committee&rsquo;s basic character of being a &ldquo;non-statutory body&rdquo; is unconvincing, particularly when the Law Commission itself is established only through &ldquo;executive order&rdquo;. There is also no public evidence of State Law Commissions having examined or addressed issues concerning Union-State relations.</p>
+            <p>The mandate &ldquo;to suggest ways and means for the inter-State relations and Centre-State relations&rdquo;, constitutes only one part of the broader terms of reference of the State Law Commission, reconstituted in August. Given the commission&rsquo;s wider responsibilities, successive State governments had constituted high-level committees to examine conflicts involving Concurrent List subjects and recommend specific remedies. It is through such recommendations that Tamil Nadu enacted certain pieces of legislation to overcome limitations imposed by central laws, including the provision of horizontal reservation in professional course admissions for disadvantaged students. Therefore, the State&rsquo;s other argument of &ldquo;similarity or overlap&rdquo; in the &ldquo;nature and scope of the functions&rdquo; entrusted to the Committee and the Commission, does not withstand close scrutiny.</p>
+            <p>In September, Leader of the Opposition Udhayanidhi Stalin had flagged an attempt to &ldquo;paralyse&rdquo; the Committee&rsquo;s functioning. A fair assessment of the Committee&rsquo;s Part I Report reveals the breadth and depth of its dispassionate examination of issues, including State autonomy, delimitation, and the office of the Governor. Parties, barring the BJP, had largely welcomed the report. Interestingly, its contents are not even remotely at odds with the broad public ideological positioning of Mr. Vijay&rsquo;s Tamilaga Vettri Kazhagam on State rights. Besides, Prof. M. Naganathan, the Committee&rsquo;s only member with an overt political association, had already resigned. The government would do well to rethink and allow it to complete its work. This would strengthen the political endeavour towards evolving a more balanced federal governance structure, facilitating harmonious Centre-State relations.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Kurian Joseph Committee</strong> (மத்திய–மாநில உறவுகள் குழு)</li>
+                <li><strong>Concurrent List</strong> (பொதுப் பட்டியல்)</li>
+                <li><strong>Horizontal Reservation</strong> (கிடைமட்ட இடஒதுக்கீடு)</li>
+                <li><strong>State Law Commission</strong> (மாநில சட்ட ஆணையம்)</li>
+            </ol>
+
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/without-rationale-kurian-committee.png" alt="Without rationale — scan" />
+                <figcaption>THE HINDU: Without rationale. Editorial. November 11, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

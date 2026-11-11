@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Power play</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .article-deck { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">POWER · DISCOMS · REGULATION</div>
+            <h1>Power play</h1>
+            <p class="subtitle">Electricity consumers deserve choice in distribution</p>
+            <p class="byline">Editorial Desk</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 11, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">When the Haryana Electricity Regulatory Commission decided to grant a distribution licence to Eleven Power Private Ltd for Gurugram and Nuh in October, many felt it was a pivotal moment in India&rsquo;s energy sector. For the first time in the country outside Mumbai, a State regulator had granted a parallel distribution licence, potentially giving consumers a choice of electricity suppliers. Competition engenders innovation and better service.</p>
+            <p>The licence, however, was short-lived. Acting on a policy direction from the Haryana government under Section 108 of the <span class="vocab-words" data-modal-title="Electricity Act, 2003 (proper noun) மின்சாரச் சட்டம் 2003" data-modal-meaning="– central law enabling competition and parallel licensees in power distribution." data-modal-synonyms="Electricity Act">Electricity Act, 2003</span>, HERC recently stopped the process from proceeding further. The government&rsquo;s concerns are familiar, indeed hackneyed: a private player could cherry-pick lucrative industrial and commercial consumers, leaving the state discom saddled with less remunerative customers, existing infrastructure and long-term power-purchase commitments. While it is nobody&rsquo;s point that these concerns are not legitimate, hanging on to them indefinitely and thereby denying the consumers the choice they deserve, is difficult to accept.</p>
+            <p>The Electricity Act, 2003, sought to move the power sector towards a more competitive, market-oriented framework. It envisaged multiple suppliers, competition and greater consumer choice. Section 14, which explicitly permits two or more distribution licensees to operate in the same area, did not get into the Act by accident. Yet, save the two instances of Mumbai and Jharkhand (where rules have been framed), no State has moved ahead on this score. In Karnataka, Tata Power withdrew its application in June after political pushback. It is unfortunate that the move by HERC has been stopped in its tracks. One can — must — draw a parallel with the telecom industry. Why should electricity consumers be denied choice? In most parts of the country, consumers can choose between several mobile service providers. Competition has expanded access, driven innovation and given consumers alternatives.</p>
+            <p>The argument that parallel licensing could weaken incumbent discoms deserves attention, but it should not be used to protect them indefinitely from competition. Discoms have been the beneficiaries of public support, repeated financial restructuring, and government intervention for years. Mumbai has had multiple licensees with overlapping areas of operation and the experience, albeit after some initial hiccups, has been good. Nor does parallel licensing mean that every distributor can be allowed to operate without safeguards. Regulators can prescribe conditions to prevent cherry-picking, ensure universal service obligations, protect vulnerable consumers and deal with the sharing of existing network infrastructure and costs. The answer to the challenges of competition is sound regulation, not the absence of competition. The introduction of parallel distribution licensing, at least in select urban and industrial areas, must be tried out. It is time to give electricity consumers a choice.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Parallel Distribution Licence</strong> (இணை விநியோக உரிமம்)</li>
+                <li><strong>Section 108 Policy Direction</strong> (கொள்கை அறிவுறுத்தல்)</li>
+                <li><strong>Cherry-Picking Risk</strong> (தேர்வு வாடிக்கையாளர்கள்)</li>
+                <li><strong>Universal Service Obligations</strong> (அனைவருக்கும் சேவை கடமை)</li>
+            </ol>
+
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/power-play-electricity-consumer-choice.png" alt="Power play — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Power play. Editorial Desk. November 11, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
+

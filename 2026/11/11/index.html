@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Hindu — Article Index</title>
+    <meta content="Curated news articles and editorials from The Hindu, organised by date with interactive vocabulary."
+        name="description" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #666;
+            --accent: #1a6b3c;
+            --accent-dark: #0d3325;
+            --accent-light: #e8f5ee;
+            --accent-mid: #1a5c38;
+            --border: #ddd;
+            --border-light: #ece9e2;
+            --news-tag: #1a5276;
+            --news-tag-bg: #eaf0f7;
+            --editorial-tag: #6d4c0f;
+            --editorial-tag-bg: #fef3e2;
+            --radius: 10px;
+            --shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0 0 80px;
+            line-height: 1.7;
+        }
+
+        /* ── MASTHEAD ── */
+        .masthead {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 36px 24px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masthead::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .masthead-inner {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .masthead-kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a8f0c6;
+            margin-bottom: 10px;
+        }
+
+        .masthead h1 {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .masthead-sub {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 8px;
+        }
+
+        .masthead-divider {
+            width: 48px;
+            height: 3px;
+            background: #f9ca24;
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        /* ── CONTENT WRAPPER ── */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ── DATE SECTION ── */
+        .date-section {
+            margin-top: 40px;
+        }
+
+        .date-section:first-of-type {
+            margin-top: 36px;
+        }
+
+        .date-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .date-badge {
+            background: var(--accent-dark);
+            color: #f9ca24;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .date-badge .date-today {
+            color: #a8f0c6;
+            font-size: 0.62rem;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+
+        .date-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .date-count {
+            font-size: 0.72rem;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* ── CATEGORY LABEL ── */
+        .cat-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 10px 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        /* ── ARTICLE CARD ── */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        l .article-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+            transform: translateY(-2px);
+        }
+
+        .card-accent-bar {
+            width: 4px;
+            flex-shrink: 0;
+            background: var(--accent);
+        }
+
+        .article-card.editorial .card-accent-bar {
+            background: #c0882a;
+        }
+
+        .card-body {
+            padding: 14px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tag-news {
+            background: var(--news-tag-bg);
+            color: var(--news-tag);
+        }
+
+        .tag-editorial {
+            background: var(--editorial-tag-bg);
+            color: var(--editorial-tag);
+        }
+
+        .card-topic {
+            font-size: 0.68rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .article-card:hover .card-title {
+            color: var(--accent);
+        }
+
+        .card-author {
+            font-size: 0.72rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: var(--border);
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover .card-arrow {
+            color: var(--accent);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .card-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-button.article-link {
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border-color: rgba(26, 107, 60, 0.15);
+        }
+
+        .card-button.google-link {
+            background: #fff;
+            color: #1f1f1f;
+            border-color: #d9d9d9;
+        }
+
+        .card-button.google-link:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .empty-state span {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            text-align: center;
+            margin-top: 52px;
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .masthead h1 {
+                font-size: 1.4rem;
+            }
+
+            .card-title {
+                font-size: 0.9rem;
+            }
+
+            .card-body {
+                padding: 12px 14px;
+            }
+
+            .card-arrow {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ══ MASTHEAD ══ -->
+    <header class="masthead">
+        <div class="masthead-inner">
+            <p class="masthead-kicker">📰 Curated Reading</p>
+            <h1>The Hindu — Article Index</h1>
+            <p class="masthead-sub">News articles &amp; editorials with interactive vocabulary</p>
+            <div class="masthead-divider"></div>
+        </div>
+    </header>
+        <main class="content">
+
+        <section aria-labelledby="date-2026-11-11" class="date-section">
+            <div class="date-header">
+                <span class="date-badge" id="date-2026-11-11">November 11, 2026</span>
+                <span class="date-line"></span>
+            </div>
+
+            <p class="cat-label">News</p>
+            <div class="article-list">
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Pannun · Hague Convention · MEA · Civil Plea</span>
+                        </div>
+                        <div class="card-title">U.S. court permits suits on NSA Doval, RAW ex-chief Goel</div>
+                        <div class="card-author">Suhasini Haidar · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/us-court-suits-doval-goel-pannun.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=U.S.+court+permits+suits+on+NSA+Doval,+RAW+ex-chief+Goel+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Jared Kushner · Security Guarantees · NATO</span>
+                        </div>
+                        <div class="card-title">Russia, Ukraine begin talks mediated by U.S. to end war</div>
+                        <div class="card-author">Associated Press · ABU DHABI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/russia-ukraine-talks-abu-dhabi.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Russia,+Ukraine+begin+talks+mediated+by+U.S.+to+end+war+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Strait of Hormuz · Sanctions · Mohsen Rezaei</span>
+                        </div>
+                        <div class="card-title">Will hold off on Iran strikes; blockade to go on: Trump</div>
+                        <div class="card-author">Reuters · WASHINGTON/CAIRO/ABU DHABI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/trump-hold-off-iran-strikes-blockade.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Will+hold+off+on+Iran+strikes;+blockade+to+go+on:+Trump+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">DVAC · Agal Vilakku · Madras High Court</span>
+                        </div>
+                        <div class="card-title">Register FIR in library book 'scam' case, HC tells DVAC</div>
+                        <div class="card-author">The Hindu Bureau · MADURAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/library-book-scam-fir-dvac-hc.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Register+FIR+in+library+book+'scam'+case,+HC+tells+DVAC+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">TNPCB · Poovulagin Nanbargal · BMW Rules 2016</span>
+                        </div>
+                        <div class="card-title">Biomedical waste, expired medicines dumped along Adyar in Gerugambakkam</div>
+                        <div class="card-author">Geetha Srimathi · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/biomedical-waste-adyar-gerugambakkam.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Biomedical+waste,+expired+medicines+dumped+along+Adyar+in+Gerugambakkam+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">GCC · ICCC · AQI · Deepavali</span>
+                        </div>
+                        <div class="card-title">Corporation to monitor air quality in city; installs sensors at 93 places</div>
+                        <div class="card-author">Aloysius Xavier Lopez · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/chennai-air-quality-sensors-corporation.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Corporation+to+monitor+air+quality+in+city;+installs+sensors+at+93+places+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Perumal Murugan · AI Books · KGLIC · ISBN</span>
+                        </div>
+                        <div class="card-title">DVAC launches investigation into allegations of financial irregularities at libraries in T.N.</div>
+                        <div class="card-author">The Hindu Bureau · CHENNAI/COIMBATORE/TIRUCHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/dvac-library-irregularities-tamil-nadu.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=DVAC+launches+investigation+into+allegations+of+financial+irregularities+at+libraries+in+T.N.+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+
+            <p class="cat-label">Editorial</p>
+            <div class="article-list">
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Editorial</span>
+                            <span class="card-topic">OBC · Creamy Layer · Indra Sawhney · Rohith Nathan</span>
+                        </div>
+                        <div class="card-title">Caste and class</div>
+                        <div class="card-author">Editorial Desk</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/caste-and-class-creamy-layer.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Caste+and+class+creamy+layer+OBC+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Editorial</span>
+                            <span class="card-topic">Tamil Nadu · Federalism · Kurian Joseph Committee</span>
+                        </div>
+                        <div class="card-title">Without rationale</div>
+                        <div class="card-author">Editorial Desk</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/without-rationale-kurian-committee.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Without+rationale+Kurian+Committee+Tamil+Nadu+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+            <p class="cat-label">Op-Ed</p>
+            <div class="article-list">
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">FCRA · Civil Society · Dalit Christians · Transparency</span>
+                        </div>
+                        <div class="card-title">Transparency is essential to institutional credibility</div>
+                        <div class="card-author">Clement Arockiasamy</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/transparency-institutional-credibility-fcra.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Transparency+institutional+credibility+FCRA+Arockiasamy+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">Starlink · SpaceX · Telecom · National Security</span>
+                        </div>
+                        <div class="card-title">Strategic autonomy must guide India’s Starlink policy</div>
+                        <div class="card-author">Ashwin Prasad Rao</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/starlink-strategic-autonomy-india.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Strategic+autonomy+India+Starlink+policy+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">WWII · INA · Remembrance · Victoria Cross</span>
+                        </div>
+                        <div class="card-title">World Wars and India’s sacrifice</div>
+                        <div class="card-author">Priyanjali Malik</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/world-wars-india-sacrifice.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=World+Wars+India+sacrifice+Priyanjali+Malik+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">Kerala · Human Development · Federalism · Pluralism</span>
+                        </div>
+                        <div class="card-title">Keralam at 70: holding a mirror to India</div>
+                        <div class="card-author">Nissim Mannathukkaren</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/keralam-at-70-mirror-india.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Keralam+at+70+holding+mirror+India+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+            <p class="cat-label">Science</p>
+            <div class="article-list">
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Data Point</span>
+                            <span class="card-topic">PLFS · Women’s Labour · ICRIER · Wage Gap</span>
+                        </div>
+                        <div class="card-title">More women work but in informal and less secure jobs</div>
+                        <div class="card-author">Tanu M. Goyal et al.</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/women-work-informal-less-secure-jobs.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=More+women+work+informal+less+secure+jobs+PLFS+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+            <p class="cat-label">International Relations</p>
+            <div class="article-list">
+
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">U.S. · TECH · COUNTERINTELLIGENCE</span>
+                        </div>
+                        <div class="card-title">'FBI is looking at Jensen Huang's affair with alleged Chinese agent'</div>
+                        <div class="card-author">Associated Press · WASHINGTON</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/fbi-jensen-huang-affair-chinese-agent.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q='FBI+is+looking+at+Jensen+Huang's+affair+with+alleged+Chinese+agent'+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">BANGLADESH · JUSTICE</span>
+                        </div>
+                        <div class="card-title">Hasina will be executed if she returns: prosecutor</div>
+                        <div class="card-author">Agence France-Presse · DHAKA</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/hasina-executed-if-returns-prosecutor.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Hasina+will+be+executed+if+she+returns:+prosecutor+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">WEST ASIA · ISRAEL</span>
+                        </div>
+                        <div class="card-title">Israel's Parliament sworn in as Eisenkot tries to forge a govt.</div>
+                        <div class="card-author">Reuters · JERUSALEM</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/israel-parliament-sworn-eisenkot-coalition.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Israel's+Parliament+sworn+in+as+Eisenkot+tries+to+forge+a+govt.+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">YEMEN · SAUDI ARABIA</span>
+                        </div>
+                        <div class="card-title">Explosions heard in Riyadh; coalition says missile intercepted</div>
+                        <div class="card-author">Agence France-Presse · RIYADH</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/riyadh-explosions-houthi-missile-intercepted.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Explosions+heard+in+Riyadh;+coalition+says+missile+intercepted+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">U.K. · LITERATURE</span>
+                        </div>
+                        <div class="card-title">John Harrison's The End of Everything wins the 2026 Booker Prize for fiction</div>
+                        <div class="card-author">Associated Press · LONDON</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/booker-prize-2026-harrison-end-of-everything.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=John+Harrison's+The+End+of+Everything+wins+the+2026+Booker+Prize+for+fiction+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">ISRAEL · PALESTINE</span>
+                        </div>
+                        <div class="card-title">Israeli forces shoot dead teen in West Bank, say Palestinian officials</div>
+                        <div class="card-author">Agence France-Presse · RAMALLAH</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/israeli-forces-shoot-dead-teen-west-bank.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Israeli+forces+shoot+dead+teen+in+West+Bank,+say+Palestinian+officials+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">GCC · DEFENCE</span>
+                        </div>
+                        <div class="card-title">Gulf Arab states approve military command headquarters in Kuwait</div>
+                        <div class="card-author">Reuters · DUBAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/gcc-unified-military-command-kuwait.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Gulf+Arab+states+approve+military+command+headquarters+in+Kuwait+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">MYANMAR · CIVIL WAR</span>
+                        </div>
+                        <div class="card-title">Myanmar Army seizes resistance headquarters, 10 opposition bases</div>
+                        <div class="card-author">Associated Press · BANGKOK</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/myanmar-army-seizes-resistance-headquarters.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Myanmar+Army+seizes+resistance+headquarters,+10+opposition+bases+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">U.S. · IRAN</span>
+                        </div>
+                        <div class="card-title">Pentagon chief Hegseth calls move to impeach him a farce, sabotage</div>
+                        <div class="card-author">Reuters · WASHINGTON</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="editorials/hegseth-impeachment-iran-war-farce.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Pentagon+chief+Hegseth+calls+move+to+impeach+him+a+farce,+sabotage+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+
+            <p class="cat-label">Business News</p>
+            <div class="article-list">
+
+                <div class="article-card business-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Nifty 50 · AMFI · Mid-cap · SIP Flows</span>
+                        </div>
+                        <div class="card-title">MFs' Nifty 50 allocation falls to 21-year low in Q2</div>
+                        <div class="card-author">Akshata Gorde · MUMBAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/mfs-nifty-50-allocation-21-year-low.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=MFs'+Nifty+50+allocation+falls+to+21-year+low+in+Q2+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card business-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Delhi AQI · Pulmonology · OPD</span>
+                        </div>
+                        <div class="card-title">As air pollution rises, doctors ask people to leave Delhi temporarily</div>
+                        <div class="card-author">Ankita Upadhyay · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/delhi-air-pollution-doctors-leave-temporarily.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=As+air+pollution+rises,+doctors+ask+people+to+leave+Delhi+temporarily+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card business-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">E20 · Pralhad Joshi · Karnataka · Legal Metrology</span>
+                        </div>
+                        <div class="card-title">E20 petrol row: MNRE Minister Joshi faults Karnataka's sampling process</div>
+                        <div class="card-author">Our Bureau · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/e20-petrol-row-joshi-karnataka-sampling.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=E20+petrol+row:+MNRE+Minister+Joshi+faults+Karnataka's+sampling+process+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card business-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Blackstone · CCPS · Capital Adequacy · Anchorage</span>
+                        </div>
+                        <div class="card-title">Blackstone to acquire 16% stake in IIFL Finance</div>
+                        <div class="card-author">Our Bureau · MUMBAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/blackstone-iifl-finance-16-percent-stake.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Blackstone+to+acquire+16%+stake+in+IIFL+Finance+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card business-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">MEA · Mid-terms · Hormuz · Ukraine</span>
+                        </div>
+                        <div class="card-title">India-US ties enjoy bipartisan support, says MEA spokesperson</div>
+                        <div class="card-author">Our Bureau · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/india-us-ties-bipartisan-mea-spokesperson.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=India-US+ties+enjoy+bipartisan+support,+says+MEA+spokesperson+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card business-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Wood Mackenzie · SIB · LFP · CATL</span>
+                        </div>
+                        <div class="card-title">Sodium-ion batteries emerge as cheaper alternative to lithium-ion battery</div>
+                        <div class="card-author">Rishi Ranjan Kala · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/sodium-ion-batteries-lithium-alternative.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Sodium-ion+batteries+emerge+as+cheaper+alternative+to+lithium-ion+battery+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+
+            <p class="cat-label">Business Line</p>
+            <div class="article-list">
+
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">IBC · CIRP · UltraTech Nathdwara · Section 31(1)</span>
+                        </div>
+                        <div class="card-title">IBC rescue rests on 'clean slate'</div>
+                        <div class="card-author">MS Sahoo &amp; Rupesh Choudhary</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-line/ibc-rescue-clean-slate.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=IBC+rescue+rests+on+'clean+slate'+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">BL Editorial</span>
+                            <span class="card-topic">HERC · Eleven Power · Electricity Act 2003 · Parallel Licence</span>
+                        </div>
+                        <div class="card-title">Power play</div>
+                        <div class="card-author">Editorial Desk</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-line/power-play-electricity-consumer-choice.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Power+play+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">Nvidia · Export Controls · Remote Access · H200</span>
+                        </div>
+                        <div class="card-title">The Nvidia affair and its likely repercussions</div>
+                        <div class="card-author">Pravin Kaushal</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-line/nvidia-affair-repercussions.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=The+Nvidia+affair+and+its+likely+repercussions+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Capital Ideas</span>
+                            <span class="card-topic">Brent · OPEC+ · Russian Crude · Strategic Petroleum Reserves</span>
+                        </div>
+                        <div class="card-title">Crude oil: A breather for India</div>
+                        <div class="card-author">Richa Mishra</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-line/crude-oil-breather-india.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Crude+oil:+A+breather+for+India+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+                <div class="article-card editorial-news">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Op-Ed</span>
+                            <span class="card-topic">PUE · WUE · AI Racks · Liquid Cooling</span>
+                        </div>
+                        <div class="card-title">Data centre dynamics</div>
+                        <div class="card-author">Ravichandran Purushothaman</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-line/data-centre-dynamics-power-water.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Data+centre+dynamics+Business+Line">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- ══ FOOTER ══ -->
+    <footer class="site-footer">
+        <p>Articles sourced from <strong>The Hindu</strong> for vocabulary and reading practice.</p>
+    </footer>
+    <script src="../../../assets/js/index.js"></script>
+</body>
+
+</html>
