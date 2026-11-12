@@ -25,9 +25,10 @@
             <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Page 15</p>
         </header>
         <div class="article-body">
-
-            <p class="drop-cap">AMD has submitted patches to add <span class="vocab-words" data-modal-title="GDDR7 (noun) ஜிடிடிஆர்7" data-modal-meaning="– next-generation graphics DRAM type recognised in AMDGPU." data-modal-synonyms="graphics memory">GDDR7</span> as a recognised video-memory type in the open-source AMDGPU driver, preparing for future graphics hardware.</p>
-            <p>The series also introduces support for IH 8.0 (interrupt handler IP) and NBIF 7.10 (New Bus Interface), and prepares for Display Core Next 6 (DCN6) and GFX 13.0.x components.</p>
+            <p class="drop-cap">AMD has submitted new patches for its open source AMDGPU Linux kernel driver, including an update that adds <span class="vocab-words" data-modal-title="GDDR7 (noun) ஜிடிடிஆர்7" data-modal-meaning="– next-generation graphics DRAM type recognised in AMDGPU." data-modal-synonyms="graphics memory">GDDR7</span> as a recognised video-memory type. The change is part of a broader set of patches enabling new hardware IP blocks in the driver.</p>
+            <p>The GDDR7 patch specifically adds the &lsquo;GDDR7&rsquo; identifier as a video-memory name in AMDGPU. AMD&rsquo;s current RDNA 4 graphics cards use GDDR6, while GDDR7 is used by Nvidia&rsquo;s GeForce RTX 50-series desktop GPUs. The new driver change therefore provides an early software-side indication of AMD&rsquo;s preparation for graphics hardware using the newer memory technology.</p>
+            <p>Other patches in the same series introduce support for IH 8.0, the latest version of AMD&rsquo;s interrupt handler IP, and NBIF 7.10, a new version of the New Bus Interface. Several smaller changes also prepare the driver for upcoming hardware. These patches follow earlier AMDGPU work around Display Core Next 6 (DCN6) and other GFX 13.0.x components.</p>
+            <p>The changes are significant for AMD&rsquo;s open source Linux graphics stack because they are being prepared upstream before the associated hardware reaches the market. The latest patches establish the driver infrastructure needed to recognise and support the memory technology as future AMD graphics hardware comes along.</p>
 
             <h3>Key Terminologies</h3>
             <ol class="responsive-vocab-grid">

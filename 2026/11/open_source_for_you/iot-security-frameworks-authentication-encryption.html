@@ -34,20 +34,21 @@
         </header>
         <div class="article-body">
 
-            <p class="drop-cap">Internet of Things devices are everywhere: smart meters, factory sensors, cameras, door locks and wearables. Most are small, cheap and expected to run for years without anyone touching them. That combination makes them attractive targets. A single device with a default password or an unencrypted connection can give an attacker a way into an entire network.</p>
+            <p class="drop-cap">Internet of Things (IoT) devices are everywhere: smart meters, factory sensors, cameras, door locks and wearables. Most of them are small, cheap and expected to run for years without anyone touching them. That combination makes them attractive targets. A single device with a default password or an unencrypted connection can give an attacker a way into an entire network.</p>
 
-            <p>Two questions sit at the centre of IoT security. First, who is this device really talking to, and is it who it claims to be? That is <span class="vocab-words" data-modal-title="Authentication (noun) அங்கீகாரம்" data-modal-meaning="– proving a device or server is who it claims to be before trusting traffic." data-modal-synonyms="identity proof, mTLS">authentication</span>. Second, even if the right parties are talking, can anyone else read or change what they say? That is encryption and integrity protection. Writing your own cryptography is a bad idea, so teams reuse existing open-source code—public, reviewed and free—but incorrect setup can still make them unsafe.</p>
+            <p>Two questions sit at the heart of IoT security. First, who is this device really talking to, and is it who it claims to be? That is <span class="vocab-words" data-modal-title="Authentication (noun) அங்கீகாரம்" data-modal-meaning="– proving a device or server is who it claims to be before trusting traffic." data-modal-synonyms="identity proof, mTLS">authentication</span>. Second, even if the right parties are talking, can anyone else read or change what they say? That is encryption and integrity protection. A good design answers both, from the moment the device boots to the moment its data reaches the cloud. Writing your own cryptography is a famously bad idea, so teams usually reuse existing code. Open source frameworks are popular for this because their code is public, widely reviewed, free to use and not tied to one vendor. They still need correct setup, though, and a well-known library used badly is not safe.</p>
 
             <h2>Security foundations for IoT</h2>
-            <p>The NIST baseline for IoT devices lists six core capabilities: device identification, device configuration, data protection, logical access to interfaces, software update, and cybersecurity state awareness. Authentication and encryption map directly onto these mechanisms. Figure 1 uses a simple three-layer view—device, network, and cloud/edge—throughout the article.</p>
+            <p>A useful starting point is the NIST baseline for IoT devices, which lists six core capabilities a device should have: device identification, device configuration, data protection, logical access to interfaces, software update, and cybersecurity state awareness. Authentication and encryption sit mainly under the first, third and fourth of these. Table 1 shows how common security goals map to open source mechanisms.</p>
+            <p>Security works best in layers, so that a failure in one place does not expose everything. Figure 1 shows a simple three-layer view that we will use throughout this document.</p>
 
-            <h2>Table 1: Security goals and open-source mechanisms</h2>
+            <h2>Table 1: Security goals and the open source mechanisms that support them</h2>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Goal</th>
-                        <th>Meaning</th>
-                        <th>Open-source support</th>
+                        <th>Security goal</th>
+                        <th>What it means</th>
+                        <th>Typical open source mechanism</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,13 +64,13 @@
                     </tr>
                     <tr>
                         <td>Integrity</td>
-                        <td>Detect tampering</td>
+                        <td>Detect any tampering with data</td>
                         <td>Authenticated encryption, digital signatures</td>
                     </tr>
                     <tr>
                         <td>Trusted firmware</td>
                         <td>Run only approved code</td>
-                        <td>Signed images and secure boot (MCUBoot)</td>
+                        <td>Signed images and secure boot (MCUboot)</td>
                     </tr>
                     <tr>
                         <td>Key management</td>
@@ -79,19 +80,16 @@
                 </tbody>
             </table>
 
-            <h2>A layered view of IoT security</h2>
-            <ul>
-                <li><strong>Device layer</strong> — secure boot (MCUBoot), Mbed TLS / wolfSSL, key storage: prove identity; protect keys and firmware.</li>
-                <li><strong>Network layer</strong> — TLS 1.3 (TCP), DTLS 1.3 (UDP), MQTT / CoAP / LwM2M: encrypt and authenticate every connection.</li>
-                <li><strong>Cloud / edge layer</strong> — Mosquitto broker, EdgeX Foundry, PKI and secret store: authorise devices, store keys, process data.</li>
-            </ul>
+            <p><em>Figure 1:</em> A layered view of IoT security — Cloud / edge (Mosquitto broker, EdgeX Foundry, PKI and secret store: authorise devices, store keys, process data); Network (TLS 1.3 for TCP, DTLS 1.3 for UDP, MQTT / CoAP / LwM2M: encrypt and authenticate every connection); Device (secure boot with MCUboot, Mbed TLS / wolfSSL, key storage: prove identity, protect keys and firmware).</p>
 
             <h2>Device authentication</h2>
-            <p>Pre-shared keys (PSK) are simple but hard to manage at scale. Certificate-based authentication with <span class="vocab-words" data-modal-title="X.509 certificate (noun) எக்ஸ்.509 சான்றிதழ்" data-modal-meaning="– CA-signed digital identity used in TLS/mTLS for devices and servers." data-modal-synonyms="device cert, PKI identity">X.509</span> certificates and <span class="vocab-words" data-modal-title="Mutual TLS / mTLS (noun) பரஸ்பர டிஎல்எஸ்" data-modal-meaning="– both client and server present certificates and prove private-key ownership." data-modal-synonyms="two-way TLS, client certificates">mutual TLS (mTLS)</span> scales better. Libraries such as Mbed TLS and brokers such as Eclipse Mosquitto make this practical.</p>
+            <p>Authentication gives every device an identity that cannot easily be copied. The simplest method is a pre-shared key (PSK), where the device and server hold the same secret. It is light on memory and processing power, but if one device is cracked, its key is exposed, and managing thousands of shared secrets gets messy fast.</p>
+            <p>The stronger and more common approach is certificate-based authentication. Each device gets its own private key and an <span class="vocab-words" data-modal-title="X.509 certificate (noun) எக்ஸ்.509 சான்றிதழ்" data-modal-meaning="– CA-signed digital identity used in TLS/mTLS for devices and servers." data-modal-synonyms="device cert, PKI identity">X.509</span> certificate signed by a trusted certificate authority (CA). In <span class="vocab-words" data-modal-title="Mutual TLS / mTLS (noun) பரஸ்பர டிஎல்எஸ்" data-modal-meaning="– both client and server present certificates and prove private-key ownership." data-modal-synonyms="two-way TLS, client certificates">mutual TLS</span>, the server proves itself to the device and the device proves itself to the server, as sketched in Figure 2. Libraries such as Mbed TLS support this on very small devices. Table 2 compares the main options.</p>
+            <p>In practice, a message broker is the easiest place to enforce this. Eclipse Mosquitto, a popular open source MQTT broker, can be told to refuse any client that does not present a valid certificate. Listing 1 shows a short configuration that does exactly that.</p>
 
-            <p>Figure 2 summarises a simplified mutual TLS 1.3 handshake: ClientHello → ServerHello with server certificate and request for client certificate → device certificate plus proof of private key → Finished messages → encrypted MQTT/CoAP application data. Both sides then know who the other is, and further traffic stays encrypted.</p>
+            <p><em>Figure 2:</em> Simplified mutual TLS 1.3 handshake between an IoT device (client) and a broker (server): ClientHello (supported ciphers, key share) → ServerHello, server certificate, request for client certificate → Device certificate + proof of private key, Finished → Server Finished; session keys agreed → Encrypted application data (MQTT / CoAP). Both sides now know who the other is, and all further traffic is encrypted.</p>
 
-            <h3>Listing 1: Mosquitto requiring client certificates</h3>
+            <h3>Listing 1: Mosquitto configuration requiring client certificates</h3>
             <pre class="code-block">listener 8883
 cafile /etc/mosquitto/certs/ca.crt
 certfile /etc/mosquitto/certs/server.crt
@@ -99,49 +97,58 @@ keyfile /etc/mosquitto/certs/server.key
 require_certificate true
 use_identity_as_username true
 allow_anonymous false</pre>
+            <p>With these lines, the broker listens only on the encrypted port, rejects anonymous clients, and uses the name inside each device certificate as its username, so access rules can be written per device. The private key for each device should ideally live in a secure element or protected memory rather than in plain flash storage.</p>
 
-            <h2>Table 2: Common authentication methods</h2>
+            <h2>Table 2: Common authentication methods for IoT devices</h2>
             <table class="data-table">
                 <thead>
                     <tr>
                         <th>Method</th>
-                        <th>Idea</th>
-                        <th>Trade-off</th>
+                        <th>How it works</th>
+                        <th>Strength</th>
+                        <th>Weakness</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Pre-shared key</td>
-                        <td>Same secret on both sides</td>
-                        <td>Small/fast; hard to manage at scale</td>
+                        <td>Same secret stored on both sides</td>
+                        <td>Small and fast</td>
+                        <td>Hard to manage; one leak is costly</td>
                     </tr>
                     <tr>
                         <td>X.509 certificate</td>
-                        <td>CA-signed identity</td>
-                        <td>Strong unique identity; needs PKI</td>
+                        <td>CA-signed identity per device</td>
+                        <td>Strong, unique identity</td>
+                        <td>Needs PKI and revocation</td>
                     </tr>
                     <tr>
                         <td>Raw public key</td>
                         <td>Public key known in advance</td>
-                        <td>No CA; manual key distribution</td>
+                        <td>No CA needed; lightweight</td>
+                        <td>Manual key distribution</td>
                     </tr>
                     <tr>
                         <td>Token (JWT, OAuth)</td>
                         <td>Short-lived signed token</td>
-                        <td>Easy to expire; needs token service</td>
+                        <td>Easy to expire and revoke</td>
+                        <td>Needs a trusted token service</td>
                     </tr>
                     <tr>
                         <td>Hardware-backed key</td>
-                        <td>Private key in secure chip</td>
-                        <td>Cannot be copied; adds hardware cost</td>
+                        <td>Private key kept in a secure chip</td>
+                        <td>Key cannot be copied out</td>
+                        <td>Extra hardware cost</td>
                     </tr>
                 </tbody>
             </table>
 
             <h2>Data encryption</h2>
-            <p>Protect data in transit with TLS 1.3, DTLS 1.3 or OSCORE, and protect data at rest as well. Prefer authenticated encryption and never store secrets in plain text.</p>
+            <p>Encryption protects data in transit (moving across a network) and at rest (stored on a device or server). For data in transit, TLS 1.3 is the current standard for TCP connections, and it removed many older, weaker options. For devices that use UDP, such as those running CoAP, DTLS 1.3 offers the same protection and was designed with constrained devices in mind. Where messages pass through several hops, object-level protection such as OSCORE can keep them encrypted from device to final receiver.</p>
+            <p>Most modern protocols rely on authenticated encryption, which hides the data and detects tampering in a single step. Table 3 lists the main building blocks and where they fit.</p>
+            <p>For data at rest, the main rule is simple: never leave secrets in plain text. Keys and credentials belong in a protected store, such as the secret store included with EdgeX Foundry or the secure storage offered by the chip itself. Encrypting sensitive files on flash adds another layer if a device is stolen or its memory is read out.</p>
 
-            <h2>Table 3: Encryption building blocks</h2>
+            <h2>Table 3: Encryption building blocks used in open source IoT stacks</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -174,15 +181,17 @@ allow_anonymous false</pre>
                     <tr>
                         <td>Ascon</td>
                         <td>Lightweight authenticated encryption</td>
-                        <td>Very small devices (NIST selection, 2023)</td>
+                        <td>Very small devices (selected by NIST in 2023)</td>
                     </tr>
                 </tbody>
             </table>
 
             <h2>Open source frameworks compared</h2>
-            <p>Frameworks fall into cryptographic libraries (building blocks) and full platforms. Licence choice matters (Apache 2.0 vs GPL), and secure boot ties firmware trust to the rest of the stack.</p>
+            <p>The frameworks fall into two groups. Cryptographic libraries provide the building blocks, such as TLS, ciphers and certificates. Platforms and tools use those libraries to deliver complete features such as secure messaging, device management and secure updates. Table 4 compares four widely used libraries.</p>
+            <p>The licence matters more than it might seem. A permissive licence such as Apache 2.0 lets a company ship a product without opening its own code, while the GPL does not. Teams should check this early, before they build around a library.</p>
+            <p>Beyond libraries, several platforms bring everything together. Table 5 summarises five of them, and Figure 3 shows one of the most important protections, Secure Boot, which stops a device from running firmware that has not been properly signed.</p>
 
-            <h2>Table 4: Cryptographic and TLS libraries</h2>
+            <h2>Table 4: Open source cryptographic and TLS libraries</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -195,7 +204,7 @@ allow_anonymous false</pre>
                 <tbody>
                     <tr>
                         <td>Mbed TLS</td>
-                        <td>Apache-2.0 or GPL-2.0-or-later</td>
+                        <td>Apache-2.0 or GPL-2.0-or-later [4]</td>
                         <td>Small, readable code</td>
                         <td>Microcontrollers, Zephyr</td>
                     </tr>
@@ -207,7 +216,7 @@ allow_anonymous false</pre>
                     </tr>
                     <tr>
                         <td>OpenSSL</td>
-                        <td>Apache-2.0 (v3+)</td>
+                        <td>Apache-2.0 (version 3 onwards)</td>
                         <td>Feature-rich, widely tested</td>
                         <td>Gateways, Linux devices</td>
                     </tr>
@@ -220,7 +229,7 @@ allow_anonymous false</pre>
                 </tbody>
             </table>
 
-            <h2>Table 5: Platforms and tools</h2>
+            <h2>Table 5: Open source platforms and tools for IoT security</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -232,13 +241,13 @@ allow_anonymous false</pre>
                 <tbody>
                     <tr>
                         <td>Eclipse Mosquitto</td>
-                        <td>MQTT broker</td>
-                        <td>TLS, client certificates, ACLs</td>
+                        <td>MQTT message broker</td>
+                        <td>TLS, client certificates, access control lists</td>
                     </tr>
                     <tr>
                         <td>EdgeX Foundry</td>
                         <td>Edge computing platform</td>
-                        <td>Secret store and API gateway</td>
+                        <td>Secret store and API gateway for services</td>
                     </tr>
                     <tr>
                         <td>MCUBoot</td>
@@ -247,7 +256,7 @@ allow_anonymous false</pre>
                     </tr>
                     <tr>
                         <td>Zephyr RTOS</td>
-                        <td>Real-time OS</td>
+                        <td>Real-time operating system</td>
                         <td>Integrates TLS libraries and MCUBoot</td>
                     </tr>
                     <tr>
@@ -259,21 +268,23 @@ allow_anonymous false</pre>
             </table>
 
             <h2>Practical guidance</h2>
+            <p>Choosing a framework is only half the job. Most real-world breaches come from avoidable mistakes, not broken cryptography. A few habits help a great deal. Give every device its own unique credentials instead of one shared key baked into the firmware. Never switch off certificate checking just to make a test work and then forget to switch it back on. Keep the libraries updated, because TLS code is a frequent target for vulnerabilities. Finally, plan for firmware updates from day one, since a device that cannot be patched will eventually become a liability.</p>
+            <p>It also helps to match the tools to the device. A tiny sensor with a few hundred kilobytes of memory may pair Zephyr with Mbed TLS and MCUboot, while a Linux gateway can run OpenSSL and Mosquitto comfortably. Starting from the NIST capabilities and checking each one against the design is a good way to avoid gaps.</p>
+
+            <p><em>Figure 3:</em> Secure boot chain of trust, as used by bootloaders such as MCUboot — Boot ROM (immutable, trusted) → Bootloader (MCUboot) → Signature check → Application runs (valid) or Reject image / roll back (invalid). Public key is stored in the device; private signing key stays with the vendor. (Source: Original diagram by the authors, based on the MCUboot documentation.)</p>
+
+            <h2>Limitations and challenges</h2>
+            <p>Open source is not a magic fix. Constrained devices have little memory and power, so heavy cryptography can drain batteries or slow responses. Provisioning keys and certificates to thousands of devices securely, and revoking them when something goes wrong, is difficult and often underestimated. Physical attacks and side channels can leak keys from unprotected hardware. Looking ahead, future quantum computers may weaken today’s public-key algorithms, so long-lived devices should be built with the ability to upgrade their cryptography. Last, open source projects depend on maintainers, so it pays to choose actively supported ones.</p>
+            <p>Securing IoT devices comes down to knowing who is talking and keeping their conversation private. Open source frameworks make both achievable: libraries like Mbed TLS and OpenSSL supply TLS and DTLS, brokers like Mosquitto enforce certificate checks, and tools like MCUboot and EdgeX protect firmware and secrets. The best results come from combining them in layers, configuring them carefully and keeping them up to date. For a student or developer starting out, a good first project is a small device that connects to a Mosquitto broker using mutual TLS, because it covers identity, encryption and key handling in one go.</p>
+
+            <h3>References</h3>
             <ul>
-                <li>Give every device unique credentials.</li>
-                <li>Never switch off certificate checking.</li>
-                <li>Keep cryptographic libraries updated.</li>
-                <li>Plan for signed firmware updates from day one.</li>
+                <li>E. Rescorla, ‘The Transport Layer Security (TLS) Protocol Version 1.3’, RFC 8446, IETF, 2018, <a href="https://www.rfc-editor.org/rfc/rfc8446" target="_blank" rel="noopener">https://www.rfc-editor.org/rfc/rfc8446</a></li>
+                <li>E. Rescorla, H. Tschofenig and N. Modadugu, ‘The Datagram Transport Layer Security (DTLS) Protocol Version 1.3’, RFC 9147, IETF, 2022, <a href="https://www.rfc-editor.org/rfc/rfc9147" target="_blank" rel="noopener">https://www.rfc-editor.org/rfc/rfc9147</a></li>
+                <li>M. Fagan et al., ‘IoT Device Cybersecurity Capability Core Baseline’, NIST IR 8259A, 2020, <a href="https://csrc.nist.gov/pubs/ir/8259/a/final" target="_blank" rel="noopener">https://csrc.nist.gov/pubs/ir/8259/a/final</a></li>
+                <li>‘Mbed TLS’, TrustedFirmware.org project page, <a href="https://www.trustedfirmware.org/projects/mbed-tls/" target="_blank" rel="noopener">https://www.trustedfirmware.org/projects/mbed-tls/</a></li>
+                <li>‘EdgeX Foundry Documentation’, Linux Foundation, <a href="https://docs.edgexfoundry.org/" target="_blank" rel="noopener">https://docs.edgexfoundry.org/</a></li>
             </ul>
-            <p>A strong starter project is a device that connects to a Mosquitto broker with mutual TLS—using Mbed TLS or OpenSSL on the device side, Mosquitto for certificate checks, and MCUBoot / EdgeX for firmware and secret protection.</p>
-
-            <h2>Secure boot chain of trust</h2>
-            <p>Figure 3 shows the MCUBoot-style chain: immutable Boot ROM → bootloader (MCUBoot) → signature check with the device’s public key → application runs if valid, otherwise reject or roll back.</p>
-
-            <h2>Limitations</h2>
-            <p>Open source is not a magic fix. Constrained memory and power make cryptography expensive; key provisioning and revocation are operationally hard; physical attacks remain real; and post-quantum migration is coming. Still, public frameworks let teams identify devices and keep conversations private—if they are configured carefully.</p>
-
-            <p><strong>References include:</strong> IETF TLS 1.3 / DTLS 1.3 RFCs; NIST IR 8259A; Mbed TLS documentation; EdgeX Foundry documentation.</p>
 
             <h3>Key Terminologies</h3>
             <ol class="responsive-vocab-grid">

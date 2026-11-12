@@ -34,20 +34,23 @@
         </header>
         <div class="article-body">
 
-            <p class="drop-cap"><span class="vocab-words" data-modal-title="Open Horizon (noun) ஓபன் ஹொரைசன்" data-modal-meaning="– LF Edge open-source platform to deploy and manage containers and ML models on edge devices." data-modal-synonyms="edge workload manager, LF Edge Open Horizon">Open Horizon</span> is an open-source platform that deploys and manages containerised applications and machine learning models on edge devices. It began as IBM’s Edge Application Manager and was contributed to LF Edge (Linux Foundation). Edge computing moves processing to where data is produced—gateways, smart cameras, retail kiosks—but managing software on thousands of devices behind firewalls, without onsite administrators, is hard.</p>
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="Open Horizon (noun) ஓபன் ஹொரைசன்" data-modal-meaning="– LF Edge open-source platform to deploy and manage containers and ML models on edge devices." data-modal-synonyms="edge workload manager, LF Edge Open Horizon">Open Horizon</span> is an open source platform that deploys and manages containerised applications and machine learning models on thousands of edge devices automatically. A project of LF Edge, the Linux Foundation umbrella for edge computing, it began as IBM’s Edge Application Manager before IBM contributed the code to open source.</p>
 
-            <p>Open Horizon’s answer is a central management hub that stores services and rules, plus a small agent on each edge device that negotiates with the hub to download and maintain containers.</p>
+            <p>Edge computing moves processing from a distant cloud data centre to the place where data is produced: a factory gateway, a smart camera, a retail kiosk or a Raspberry Pi in a field. For the Internet of Things (IoT), this cuts latency, saves bandwidth and keeps sensitive data local. The hard part is not running one container on one device — it is keeping the right version of the right software running on 10,000 devices that sit behind firewalls, lose connectivity and have no onsite administrator.</p>
+
+            <p>Open Horizon solves that problem. A central management hub stores the services you publish and the rules for where they belong. A small agent on each edge device negotiates with the hub, downloads the containers it should run, starts them and keeps them healthy, even when the network drops.</p>
 
             <h2>Why Open Horizon?</h2>
-            <ol>
-                <li><strong>Scale</strong> — automate updates for thousands of gateways at once instead of days of manual work.</li>
-                <li><strong>Unreliable networks</strong> — the agent keeps services running offline and syncs when the link returns.</li>
-                <li><strong>Heterogeneous hardware</strong> — mixed fleets (x86, ARM, Kubernetes clusters) each pull the service variant that fits.</li>
-                <li><strong>No onsite staff</strong> — self-healing restarts failed containers or rolls back bad updates.</li>
-            </ol>
-            <p>Edge processing also cuts latency versus shipping all data to the cloud, can reduce bandwidth cost, and helps keep sensitive data local. Governance under LF Edge keeps the project vendor-neutral.</p>
+            <p>Open Horizon is worth choosing when you must run software on many edge devices that you cannot log into one by one. Managing an IoT fleet by hand, with SSH scripts or a cron job per device, breaks down quickly for four reasons.</p>
+            <ul>
+                <li><strong>Scale:</strong> Updating 5,000 gateways manually takes days and leaves some devices on old versions. Open Horizon pushes one change to every matching device automatically.</li>
+                <li><strong>Unreliable networks:</strong> Edge devices go offline. The Open Horizon agent works autonomously, keeps services running without the hub, and catches up when the link returns.</li>
+                <li><strong>Heterogeneous hardware:</strong> A fleet mixes x86 servers, ARM boards and Kubernetes clusters. Open Horizon publishes one service per architecture and lets each node pick the version that fits.</li>
+                <li><strong>No onsite staff:</strong> Devices in remote places need self-healing. The agent restarts failed containers and can roll back a bad update.</li>
+            </ul>
+            <p>Compared with sending every reading to the cloud, processing at the edge with Open Horizon lowers latency, cuts data transfer costs and keeps private data on the device. Compared with commercial edge platforms, it is free, vendor-neutral and governed openly under LF Edge, so there is no lock-in.</p>
 
-            <h2>Table 1: Key components</h2>
+            <h2>Key components of Open Horizon</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -60,44 +63,45 @@
                     <tr>
                         <td>Exchange</td>
                         <td>Management hub</td>
-                        <td>Stores users, orgs, nodes, services, policies, patterns; REST API on port 3090</td>
+                        <td>Stores users, organisations, nodes, services, policies and patterns; exposed as a REST API on port 3090</td>
                     </tr>
                     <tr>
                         <td>Agreement bot (agbot)</td>
                         <td>Management hub</td>
-                        <td>Finds nodes matching a deployment policy and proposes agreements</td>
+                        <td>Finds nodes that match a deployment policy and proposes agreements to them</td>
                     </tr>
                     <tr>
                         <td>Cloud Sync Service (CSS)</td>
                         <td>Management hub</td>
-                        <td>Distributes files and ML models to edge nodes (port 9443)</td>
+                        <td>Distributes files and machine learning models to edge nodes (port 9443)</td>
                     </tr>
                     <tr>
                         <td>Agent (anax)</td>
-                        <td>Each edge device/cluster</td>
+                        <td>Each edge device or cluster</td>
                         <td>Accepts agreements, pulls containers, runs and monitors them</td>
                     </tr>
                     <tr>
                         <td>hzn CLI</td>
-                        <td>Admin/developer machine</td>
-                        <td>Publish, register and monitor from the command line</td>
+                        <td>Any admin or developer machine</td>
+                        <td>Command-line tool for publishing, registering and monitoring</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3>Key features</h3>
+            <p>Open Horizon combines a central control plane with autonomous edge agents. Its key features are:</p>
             <ul>
-                <li><strong>Policy-based deployment</strong> — nodes advertise properties (e.g. <code>hasCamera=true</code>).</li>
-                <li><strong>Patterns</strong> — fixed service lists for simple fleets.</li>
-                <li><strong>Autonomous agents</strong> — negotiate, deploy and heal independently.</li>
-                <li><strong>Model management</strong> — update ML models separately from containers.</li>
-                <li><strong>Devices and clusters</strong> — Docker and Kubernetes (K3s, MicroK8s, OpenShift).</li>
-                <li><strong>Security</strong> — signed service definitions, encrypted agreements, secrets management.</li>
-                <li><strong>Rollback and agent upgrades</strong> — fall back service versions; node management policies upgrade agents.</li>
-                <li><strong>Zero-touch onboarding</strong> — FIDO Device Onboard (FDO) support.</li>
+                <li><strong>Policy-based deployment:</strong> Nodes advertise properties such as <em>hasCamera=true</em> or <em>location=factory-3</em>. Deployment policies state constraints, and the agbot matches them automatically, so a new device that meets the rules receives its workload without any manual step.</li>
+                <li><strong>Patterns:</strong> For simple fleets, a pattern names a fixed list of services that a node runs when registered with it.</li>
+                <li><strong>Autonomous agents:</strong> Each agent negotiates, deploys and heals its own workloads and keeps running when disconnected from the hub.</li>
+                <li><strong>Model management system:</strong> Machine learning models and configuration files are updated separately from the container that uses them, so you can retrain a model without rebuilding the service.</li>
+                <li><strong>Edge devices and edge clusters:</strong> The same hub manages Docker-based devices and Kubernetes clusters such as K3s, MicroK8s and Red Hat OpenShift.</li>
+                <li><strong>Security:</strong> Service definitions can be cryptographically signed, agreements are encrypted, multi-tenancy isolates organisations, and a secrets manager delivers credentials to services at run time.</li>
+                <li><strong>Rollback and agent upgrades:</strong> Services can fall back to a previous version if an update fails, and node management policies upgrade the agents themselves.</li>
+                <li><strong>Zero-touch onboarding:</strong> FIDO Device Onboard (FDO) support lets new devices register when first powered on.</li>
             </ul>
 
-            <h2>Table 2: Prerequisites</h2>
+            <h2>Prerequisites for Installing Open Horizon</h2>
+            <p>The simplest setup is the all-in-one install, which puts the management hub, an agent and the CLI on one machine. You need the following before you start:</p>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -107,113 +111,252 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>OS</td>
-                        <td>Ubuntu 24 on x86_64; agents also on ARM (Raspberry Pi)</td>
+                        <td>Operating system</td>
+                        <td>Ubuntu 24 on an x86_64 machine for the all-in-one hub; edge agents also run on ARM boards such as Raspberry Pi</td>
                     </tr>
                     <tr>
                         <td>Access</td>
-                        <td>root or sudo</td>
+                        <td>A root account or sudo rights</td>
                     </tr>
                     <tr>
-                        <td>Memory / disk</td>
-                        <td>≥ 4 GB RAM and 20 GB free (hub minimum)</td>
+                        <td>Memory and disk</td>
+                        <td>At least 4GB RAM and 20GB free disk is a practical minimum for the hub (suggested, not an official figure)</td>
                     </tr>
                     <tr>
                         <td>Container engine</td>
-                        <td>Docker (or Podman with <code>DOCKER_ENGINE=podman</code>)</td>
+                        <td>Docker (installed by the script if missing); Podman works if you set <em>DOCKER_ENGINE=podman</em></td>
                     </tr>
                     <tr>
                         <td>Tools</td>
-                        <td><code>curl</code>, <code>git</code>, <code>jq</code>, <code>make</code></td>
+                        <td><em>curl</em>, <em>git</em>, <em>jq</em> and <em>make</em></td>
                     </tr>
                     <tr>
                         <td>Network</td>
-                        <td>Internet access; fixed IP for the hub</td>
+                        <td>Internet access to download images, and a fixed IP address that edge devices can reach</td>
                     </tr>
                     <tr>
-                        <td>Hub ports</td>
+                        <td>Open ports on the hub</td>
                         <td>3090 (Exchange), 3111 (agbot), 9443 (CSS)</td>
                     </tr>
                     <tr>
-                        <td>Registry</td>
-                        <td>Docker Hub or other container registry account</td>
+                        <td>Accounts</td>
+                        <td>A Docker Hub (or other registry) account to push your own service images</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2>Installing Open Horizon</h2>
-            <p>Set the hub listen address first (<code>hostname -I</code> for your LAN IP):</p>
-            <pre class="code-block">export HZN_LISTEN_IP=192.168.1.50
-sudo apt update && sudo apt -y upgrade
-sudo apt install -y curl git jq make
-# optional for Java services:
-sudo apt install -y openjdk-21-jdk
-curl -fsSL https://get.docker.com | sh
+            <p>Decide on the hub’s network-facing IP address before installing. The script binds the hub to <em>HZN_LISTEN_IP</em>; if you skip this, only the hub machine can connect.</p>
+
+            <h2>Installing Java and setting up the environment</h2>
+            <p>Open Horizon itself does not need Java on the host. The agent and the <em>hzn</em> CLI are written in Go, and the Exchange, which runs on the Java Virtual Machine, ships inside its own container. Install a Java Development Kit (JDK) only if you plan to write your edge services in Java or Spring Boot.</p>
+
+            <h3>Step 1: Update the system and install base tools</h3>
+            <pre class="code-block">sudo apt update &amp;&amp; sudo apt -y upgrade
+sudo apt install -y curl git jq make</pre>
+
+            <h3>Step 2: Install Java (optional, for Java-based services)</h3>
+            <pre class="code-block">sudo apt install -y openjdk-21-jdk
+java -version
+echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' &gt;&gt; ~/.bashrc</pre>
+
+            <h3>Step 3: Install Docker and allow your user to run it</h3>
+            <pre class="code-block">curl -fsSL https://get.docker.com | sh
 sudo usermod -aG docker $USER
-newgrp docker</pre>
+newgrp docker
+docker run hello-world</pre>
 
-            <p>All-in-one hub + agent + CLI (as root):</p>
-            <pre class="code-block">sudo -E bash -c "curl -sSL https://raw.githubusercontent.com/open-horizon/devops/master/mgmt-hub/deploy-mgmt-hub.sh | bash"
-export HZN_ORG_ID=myorg
+            <h3>Step 4: Set the hub’s listen address</h3>
+            <p>Replace the example address with your machine’s LAN IP, which you can find with <code>hostname -I</code>.</p>
+            <pre class="code-block">export HZN_LISTEN_IP=192.168.1.50</pre>
+
+            <h2>Installing Open Horizon</h2>
+            <p>One script installs the whole all-in-one environment: the management hub services, the agent and the <em>hzn</em> CLI. Run it as <em>root</em> with your environment variables preserved:</p>
+            <pre class="code-block">sudo -E bash -c "curl -sSL https://raw.githubusercontent.com/open-horizon/devops/master/mgmt-hub/deploy-mgmt-hub.sh | bash"</pre>
+            <p>The script takes several minutes. It downloads the hub images, starts the Exchange, agbot, CSS, PostgreSQL and MongoDB containers, creates an organisation called <em>myorg</em> with an <em>admin</em> user, publishes the example services, installs the agent and registers the machine as node <em>node1</em>. It ends by printing two credentials that you must save:</p>
+            <pre class="code-block">export HZN_ORG_ID=myorg
 export HZN_EXCHANGE_USER_AUTH=admin:&lt;generated-password&gt;</pre>
-
+            <p>Useful script options are:</p>
             <table class="data-table">
                 <thead>
                     <tr><th>Flag</th><th>Effect</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>-A</code></td><td>Hub and CLI only (no local agent)</td></tr>
-                    <tr><td><code>-E</code></td><td>Skip example services/policies/patterns</td></tr>
-                    <tr><td><code>-S</code> / <code>-s</code></td><td>Stop / start hub services and agent</td></tr>
-                    <tr><td><code>-P</code></td><td>Purge volumes, images and uninstall agent</td></tr>
+                    <tr><td>-A</td><td>Install the hub and CLI only, without the local agent</td></tr>
+                    <tr><td>-E</td><td>Skip loading the example services, policies and patterns</td></tr>
+                    <tr><td>-S</td><td>Stop the hub services and agent</td></tr>
+                    <tr><td>-s</td><td>Start them again without reinstalling</td></tr>
+                    <tr><td>-P</td><td>Purge: delete volumes and images and uninstall the agent</td></tr>
                 </tbody>
             </table>
 
-            <p>On a separate device (e.g. Raspberry Pi), point the agent at the hub with <code>HZN_EXCHANGE_URL</code>, <code>HZN_FSS_CSSURL</code>, <code>HZN_AGBOT_URL</code>, device ID/token, then run <code>agent-install.sh</code>. Persist credentials in <code>~/.bashrc</code> and verify with <code>hzn version</code>, <code>hzn exchange status</code>, <code>hzn node list</code> and <code>docker ps</code>.</p>
+            <p><strong>Installing an agent on another device:</strong> On a separate edge device such as a Raspberry Pi, point the agent at your hub and run <em>agent-install.sh</em>:</p>
+            <pre class="code-block">export HZN_ORG_ID=myorg
+export HZN_EXCHANGE_USER_AUTH=admin:&lt;password&gt;
+export HZN_EXCHANGE_URL=http://192.168.1.50:3090/v1
+export HZN_FSS_CSSURL=http://192.168.1.50:9443/
+export HZN_AGBOT_URL=http://192.168.1.50:3111
+export HZN_DEVICE_ID=pi-node-01
+export HZN_DEVICE_TOKEN=&lt;any-random-string&gt;
+curl -sSL https://github.com/open-horizon/anax/releases/latest/download/agent-install.sh \
+| sudo -s -E bash -s -- -i css: -p IBM/pattern-ibm.helloworld -w '*' -T 120</pre>
+            <p>This installs the agent from the hub’s CSS and registers the device with the sample ‘hello-world’ pattern.</p>
 
-            <h2>Create your first service: temp-sensor</h2>
-            <p>A small service that prints a simulated temperature every five seconds.</p>
-            <pre class="code-block">hzn key create myorg student1@example.com
+            <h2>Setting up Open Horizon</h2>
+            <p>Set up means making your credentials permanent and confirming that the hub, the agent and the CLI can talk to each other.</p>
+
+            <h3>Step 1 – Save the credentials</h3>
+            <p>Add the two lines printed by the installer to <em>~/.bashrc</em> so every new terminal has them:</p>
+            <pre class="code-block">echo 'export HZN_ORG_ID=myorg' &gt;&gt; ~/.bashrc
+echo 'export HZN_EXCHANGE_USER_AUTH=admin:&lt;generated-password&gt;' &gt;&gt; ~/.bashrc
+source ~/.bashrc</pre>
+
+            <h3>Step 2 – Check the installation</h3>
+            <p>Each command below should return without errors.</p>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Command</th><th>Expected result</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><em>hzn version</em></td><td>Matching CLI and agent versions</td></tr>
+                    <tr><td><em>hzn exchange status</em></td><td>Exchange version and health details in JSON</td></tr>
+                    <tr><td><em>hzn exchange user list</em></td><td>The <em>admin</em> user of <em>myorg</em></td></tr>
+                    <tr><td><em>hzn node list</em></td><td>This node, with <em>configstate = configured</em></td></tr>
+                    <tr><td><em>hzn exchange service list IBM/*</em></td><td>The example services published by the installer</td></tr>
+                    <tr><td><em>docker ps</em></td><td>Running hub containers (exchange, agbot, css, postgres, mongo) and the ‘hello-world’ service</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Step 3 – Create your own user (optional)</h3>
+            <p>Working as an admin is fine for learning. In a team, create a named user and an organisation for each tenant:</p>
+            <pre class="code-block">hzn exchange user create -o myorg -A student1 &lt;password&gt; student1@example.com
+hzn exchange user list -o myorg student1</pre>
+            <p>If <code>hzn exchange status</code> fails, check that the hub containers are running with <code>docker ps</code> and that <code>HZN_EXCHANGE_URL</code> points to the correct IP address and port 3090.</p>
+
+            <h2>Create your first Open Horizon service</h2>
+            <p>An Open Horizon service is an ordinary Docker container plus a JSON service definition that tells the hub its name, version, architecture and image. This example builds <code>temp-sensor</code>, a small IoT service that reports a simulated temperature every 5 seconds.</p>
+
+            <h3>Step 1 — Prepare signing keys and registry login</h3>
+            <p>Services are signed so that agents can verify them.</p>
+            <pre class="code-block">hzn key create myorg student1@example.com    # creates
+# ~/.hzn/keys/service.private.key and service.public.pem
 export DOCKER_HUB_ID=&lt;your-docker-hub-id&gt;
 docker login
-mkdir ~/temp-sensor && cd ~/temp-sensor</pre>
+mkdir ~/temp-sensor &amp;&amp; cd ~/temp-sensor</pre>
 
-            <p><strong>service.sh</strong> (simulated sensor), Alpine Dockerfile, then:</p>
+            <h3>Step 2 — Write the application</h3>
+            <p>Save as <code>service.sh</code>:</p>
+            <pre class="code-block">#!/bin/sh
+# Simulated IoT temperature sensor
+while true; do
+  TEMP=$(awk -v r=$RANDOM 'BEGIN{printf "%.1f", 20 + (r % 100) / 10}')
+  echo "$(date -u +%FT%TZ) node=${HZN_DEVICE_ID} temperature=${TEMP}C"
+  sleep 5
+done</pre>
+            <p>The agent passes environment variables such as <code>HZN_DEVICE_ID</code> into every container, so the service can identify the device it runs on.</p>
+
+            <h3>Step 3 — Write the Dockerfile</h3>
+            <pre class="code-block">FROM alpine:3.20
+COPY service.sh /service.sh
+RUN chmod +x /service.sh
+CMD ["/service.sh"]</pre>
+
+            <h3>Step 4 — Build, test locally, and push the image</h3>
             <pre class="code-block">docker build -t $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0 .
-docker run --rm -e HZN_DEVICE_ID=test $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0
-docker push $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0
-# ARM: docker buildx build --platform linux/arm64 ...</pre>
+docker run --rm -e HZN_DEVICE_ID=test $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0   # Ctrl+C to stop
+docker push $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0</pre>
+            <p>For a Raspberry Pi, build a second image tagged <code>_arm64</code> with <code>docker buildx build --platform linux/arm64</code>.</p>
 
-            <p>Publish a <code>service.definition.json</code> (org <code>myorg</code>, url <code>temp-sensor</code>, version <code>1.0.0</code>, arch <code>amd64</code>), then:</p>
+            <h3>Step 5 — Write the service definition</h3>
+            <p>Save as <code>service.definition.json</code>, replacing <code>&lt;your-docker-hub-id&gt;</code>:</p>
+            <pre class="code-block">{
+  "org": "myorg",
+  "label": "temp-sensor for amd64",
+  "url": "temp-sensor",
+  "version": "1.0.0",
+  "arch": "amd64",
+  "public": true,
+  "sharable": "singleton",
+  "requiredServices": [],
+  "userInput": [],
+  "deployment": {
+    "services": {
+      "temp-sensor": {
+        "image": "&lt;your-docker-hub-id&gt;/temp-sensor_amd64:1.0.0",
+        "privileged": false
+      }
+    }
+  }
+}</pre>
+            <p>For larger projects, <code>hzn dev service</code> generates this folder structure, a Makefile and a horizon/directory of definitions automatically, and <code>hzn dev service start</code> runs the service in a local simulated agent before you publish it.</p>
+
+            <h2>Deploying the Open Horizon service</h2>
+            <p>Deployment has three parts: publish the service to the Exchange, publish a deployment policy that says which nodes should run it, and give the node matching properties. The agbot then does the rest.</p>
+
+            <p><strong>Publish the service:</strong> The CLI signs the definition with your key and stores it in the Exchange.</p>
             <pre class="code-block">hzn exchange service publish -f service.definition.json
 hzn exchange service list myorg/</pre>
 
-            <p>Add a deployment policy that constrains on <code>sensor == temperature</code>, a node policy advertising <code>sensor=temperature</code>, then:</p>
-            <pre class="code-block">hzn exchange deployment addpolicy -f deployment.policy.json temp-sensor-policy
-hzn unregister -f
-hzn register --policy node.policy.json
-watch hzn agreement list
-hzn service log -f temp-sensor
-# e.g. 2026-10-05T09:14:05Z node=node1 temperature=24.7C</pre>
+            <p><strong>Write the deployment policy:</strong> Save as <code>deployment.policy.json</code>. The constraint says ‘deploy to any node whose sensor property equals temperature’.</p>
+            <pre class="code-block">{
+  "label": "Temperature sensor deployment",
+  "service": {
+    "name": "temp-sensor",
+    "org": "myorg",
+    "arch": "*",
+    "serviceVersions": [ { "version": "1.0.0" } ]
+  },
+  "properties": [],
+  "constraints": [ "sensor == temperature" ]
+}</pre>
 
-            <h3>Useful day-to-day commands</h3>
+            <p><strong>Publish the deployment policy:</strong></p>
+            <pre class="code-block">hzn exchange deployment addpolicy -f deployment.policy.json temp-sensor-policy
+hzn exchange deployment listpolicy</pre>
+
+            <p><strong>Write the node policy:</strong> Save as <code>node.policy.json</code> on the edge device:</p>
+            <pre class="code-block">{
+  "properties": [ { "name": "sensor", "value": "temperature" } ],
+  "constraints": []
+}</pre>
+
+            <p><strong>Register the node with the policy:</strong> The all-in-one node is already running the sample ‘hello-world’ pattern, so unregister it first.</p>
+            <pre class="code-block">hzn unregister -f
+hzn register --policy node.policy.json</pre>
+
+            <p><strong>Wait for the agreement:</strong> Within about a minute, the agbot notices that the node’s properties satisfy the policy’s constraint, proposes an agreement, and the agent pulls and starts the container.</p>
+            <pre class="code-block">watch hzn agreement list</pre>
+            <p>The same policy now applies to every future node. Any new device registered with <code>sensor=temperature</code> receives <code>temp-sensor</code> automatically, with no further commands on the hub.</p>
+
+            <h2>Interaction with the service</h2>
+            <p>Once the service runs, you interact with it and with the fleet through the <code>hzn</code> CLI on the edge node and on the hub.</p>
+
+            <p><strong>View the service output:</strong> The agent forwards container logs, so you see the simulated readings:</p>
+            <pre class="code-block">hzn service log -f temp-sensor
+
+# 2026-10-05T09:14:05Z node=node1 temperature=24.7C
+# 2026-10-05T09:14:10Z node=node1 temperature=21.3C</pre>
+
+            <p>Common commands are:</p>
             <table class="data-table">
                 <thead>
                     <tr><th>Task</th><th>Command</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>Node state / policy</td><td><code>hzn node list</code>, <code>hzn policy list</code></td></tr>
-                    <tr><td>Agreements / services</td><td><code>hzn agreement list</code>, <code>hzn service list</code></td></tr>
-                    <tr><td>Agent events</td><td><code>hzn eventlog list</code></td></tr>
-                    <tr><td>Org nodes</td><td><code>hzn exchange node list</code></td></tr>
-                    <tr><td>Why policy matches</td><td><code>hzn deploycheck all -b myorg/temp-sensor-policy</code></td></tr>
-                    <tr><td>Leave hub</td><td><code>hzn unregister -f</code></td></tr>
+                    <tr><td>Show this node’s state and policy</td><td><code>hzn node list</code> and <code>hzn policy list</code></td></tr>
+                    <tr><td>See active agreements</td><td><code>hzn agreement list</code></td></tr>
+                    <tr><td>See running services</td><td><code>hzn service list</code> or <code>docker ps</code></td></tr>
+                    <tr><td>Read the agent’s event log</td><td><code>hzn eventlog list</code></td></tr>
+                    <tr><td>List all nodes in the organisation (hub)</td><td><code>hzn exchange node list</code></td></tr>
+                    <tr><td>Check why a policy does or does not match</td><td><code>hzn deploycheck all -b myorg/temp-sensor-policy</code></td></tr>
+                    <tr><td>Remove the workload and leave the hub</td><td><code>hzn unregister -f</code></td></tr>
                 </tbody>
             </table>
 
-            <h2>Updates and next steps</h2>
-            <p>Roll out version 1.0.1 by bumping <code>service.definition.json</code> and adding it to the policy’s <code>serviceVersions</code>. Changing node properties (e.g. removing a matching property with <code>hzn policy update</code>) lets the agbot stop the container on that node alone.</p>
-            <p>Open Horizon is built for thousands of unattended devices, open source under LF Edge. Natural next steps: add a Raspberry Pi as a second node, or use the Model Management System (MMS) to push ML models independently of containers.</p>
+            <p><strong>Update the service:</strong> To roll out version 1.0.1, build and push the new image, change <em>version</em> in <code>service.definition.json</code>, publish it, and add <code>{ "version": "1.0.1" }</code> to the policy’s <code>serviceVersions</code>. Every matching node upgrades itself. Listing the older version as well allows the agent to roll back if the new one fails.</p>
+            <p><strong>Change behaviour with properties:</strong> Removing the property with <code>hzn policy update</code> on a node makes the agbot cancel the agreement and stop the container on that node only. This is how a single device is taken out of a rollout without touching the others.</p>
+
+            <p>Open Horizon turns the hard problem of running IoT software on thousands of unattended devices into a declarative one: you publish a service and a policy once, and autonomous agents place, run, update and heal the workloads on every matching device. In this walkthrough, one script installed a complete management hub, agent and CLI on an Ubuntu machine. A simulated temperature-sensor container was then built, signed, published and deployed through a policy, and monitored with the <code>hzn</code> CLI.</p>
+            <p>Because it is open source and governed by LF Edge, Open Horizon offers enterprise-grade capabilities without vendor lock-in. These include policy-based placement, separate machine learning model delivery, edge-cluster support, signed services and zero-touch onboarding. Natural next steps are to add a Raspberry Pi as a second node, deliver a machine learning model through the Model Management System, and connect the sensor output to a message broker such as MQTT or Kafka for cloud analytics.</p>
 
             <h3>Key Terminologies</h3>
             <ol class="responsive-vocab-grid">

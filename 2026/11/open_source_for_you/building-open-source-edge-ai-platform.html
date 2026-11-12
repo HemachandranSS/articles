@@ -34,13 +34,15 @@
         </header>
         <div class="article-body">
 
-            <p class="drop-cap">A manufacturing client once showed a defect-detection system: a camera and a Jetson board that worked beautifully on one line. Scaling that to forty-two plants—and thousands of devices—is a different discipline. Building AI features and operating them are separate problems; at the edge the gap is wider because you cannot always reach the machine, and the machine is not always online. (This piece continues themes from an earlier OSFY article in September 2026.)</p>
+            <p class="drop-cap">A manufacturing client showed me a defect detection system in March this year. Camera over the line, a Jetson board running a vision model, bounding boxes drawn in real time. It worked beautifully.</p>
+            <p>Then they mentioned the plan was forty-two plants! That is where the conversation changes. One edge AI device is an engineering achievement. Four thousand is a different discipline, and little of what you learned building the first one is of use.</p>
+            <p>I wrote earlier (OSFY, September 2026) that building AI features and operating them are separate problems. At the edge the gap is wider, because you lose both things that make cloud operations tractable: you cannot reach the machine, and the machine is not always online.</p>
 
-            <h2>What changes at scale</h2>
+            <h2>What changes at scale is:</h2>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Concern</th>
                         <th>One device</th>
                         <th>A fleet</th>
                     </tr>
@@ -48,7 +50,7 @@
                 <tbody>
                     <tr>
                         <td>Deployment</td>
-                        <td>SSH and <code>docker run</code></td>
+                        <td>SSH and docker run</td>
                         <td>Declarative, pull-based, survives offline nodes</td>
                     </tr>
                     <tr>
@@ -69,22 +71,25 @@
                     <tr>
                         <td>Cost</td>
                         <td>Electricity</td>
-                        <td>Bandwidth—and it is not small</td>
+                        <td>Bandwidth, and it is not small</td>
                     </tr>
                 </tbody>
             </table>
+            <p>The third row is important. In a cloud service a broken deploy pages somebody in minutes. At the edge, a model that degraded because winter lighting changed at one plant keeps producing confident, wrong output until a floor supervisor eventually mentions it to IT.</p>
 
             <h2>The four tiers</h2>
-            <ol>
-                <li><strong>Tier 1 — Device runtime:</strong> inference engine, local buffering, health agent.</li>
-                <li><strong>Tier 2 — Node orchestration:</strong> K3s / KubeEdge, workload lifecycle, device discovery.</li>
-                <li><strong>Tier 3 — Fleet control:</strong> GitOps reconciliation, model registry, OTA pipeline.</li>
-                <li><strong>Tier 4 — Aggregation:</strong> telemetry store, retraining pipeline, dashboards.</li>
-            </ol>
-            <p>Figure 1’s dashed line is the whole article: everything below (tiers 1–2) must work when the link drops; everything above (tiers 3–4) must tolerate nodes vanishing for a day and returning with a backlog. Telemetry flows up; desired state flows down.</p>
+            <p>Most working edge platforms settle into the same shape, not by mandate but because the constraints push you there.</p>
+            <ul>
+                <li><strong>Tier 1 – Device runtime:</strong> Inference engine, local buffering, health agent</li>
+                <li><strong>Tier 2 – Node orchestration:</strong> K3s/KubeEdge, workload lifecycle, device discovery</li>
+                <li><strong>Tier 3 – Fleet control:</strong> GitOps reconciliation, model registry, OTA pipeline</li>
+                <li><strong>Tier 4 – Aggregation:</strong> Telemetry store, retraining pipeline, dashboards</li>
+            </ul>
+            <p>Decide which tier owns each capability. Trouble starts when inference logic creeps into tier 3, or fleet policy gets baked into a container shipping to tier 1.</p>
+            <p>The dashed line in Figure 1 is the whole article. Everything below it must keep working when the link drops. Everything above must tolerate nodes that vanish for a day and return with a backlog.</p>
 
             <h2>Tier 1: What runs on the box</h2>
-            <p>Pick a runtime by hardware, not preference:</p>
+            <p>Pick your runtime by hardware, not preference.</p>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -95,28 +100,36 @@
                 <tbody>
                     <tr>
                         <td>ONNX Runtime</td>
-                        <td>Mixed fleets; broad execution providers (CUDA, TensorRT, …)</td>
+                        <td>Mixed fleets. Broadest execution providers: CUDA, TensorRT, OpenVINO, NNAPI, CoreML</td>
                     </tr>
                     <tr>
                         <td>LiteRT</td>
-                        <td>Successor to TensorFlow Lite; mobile/embedded and on-device LMs</td>
+                        <td>Mobile and embedded. Successor to TensorFlow Lite, with LiteRT-LM for on-device language models</td>
                     </tr>
                     <tr>
                         <td>OpenVINO</td>
-                        <td>Intel CPU/GPU/NPU; ~2–3× with NNCF INT8</td>
+                        <td>Intel CPUs, GPUs, NPUs. NNCF INT8 routinely gives 2x to 3x speedup</td>
                     </tr>
                     <tr>
                         <td>TensorRT</td>
-                        <td>Fastest on NVIDIA Jetson; least portable</td>
+                        <td>NVIDIA Jetson. Fastest on NVIDIA silicon; least portable</td>
                     </tr>
                     <tr>
                         <td>llama.cpp</td>
-                        <td>On-device LLMs</td>
+                        <td>On-device LLMs on almost anything</td>
                     </tr>
                 </tbody>
             </table>
-            <p><span class="vocab-words" data-modal-title="Quantization / INT8 (noun) குவாண்டைசேஷன்" data-modal-meaning="– reducing weight precision to speed inference and shrink models on edge hardware." data-modal-synonyms="INT8, model compression">Quantization (INT8)</span> is essential for speed and size. Local buffering keeps inference alive offline and turns outages into backlogs instead of data holes.</p>
+            <p>If your fleet is genuinely heterogeneous, which most are after two refresh cycles, ONNX Runtime is the pragmatic default. You pay in footprint and buy the ability to ship one artefact to three hardware generations.</p>
+            <p><span class="vocab-words" data-modal-title="Quantization / INT8 (noun) குவாண்டைசேஷன்" data-modal-meaning="– reducing weight precision to speed inference and shrink models on edge hardware." data-modal-synonyms="INT8, model compression">Quantization</span> is not optional here. INT8 typically gives a two to threefold speedup at roughly a quarter the model size, with accuracy loss often within noise for detection work. Measure on your own data but expect to ship INT8.</p>
+            <p>Two things the device tier must do beyond inference, and both are forgotten in prototypes. Buffer locally, because when the uplink drops, results need somewhere to go, with a defined policy for what happens when the buffer fills. And report health unprompted, since pull-based monitoring does not work across NAT, cellular links, or devices that sleep.</p>
 
+            <h2>Tier 2: Orchestration without the cloud</h2>
+            <p>K3s is CNCF-conformant Kubernetes in one binary, running in 512MB to 1GB for a server node and around 256MB for an agent, with ARM and x86 parity. For most sites with a reasonable box, this is the answer.</p>
+            <p>KubeEdge splits into CloudCore beside your API server and EdgeCore on edge nodes, caching state in SQLite and running workloads autonomously when the link is down. It has more moving parts than K3s, which is worth it when offline autonomy is a hard requirement.</p>
+            <p>Akri, a CNCF Sandbox project, exposes leaf devices such as IP cameras as Kubernetes resources, handling their appearance and disappearance. If your workload is fundamentally cameras, it removes a lot of glue code.</p>
+            <p>These compose. A Fleet-managed K3s cluster at a regional aggregation point can host CloudCore for devices beneath it.</p>
+            <p><strong>On <span class="vocab-words" data-modal-title="GitOps (noun) கிட்ஆப்ஸ்" data-modal-meaning="– edge agents reconcile desired state from Git (Argo CD, Flux) rather than push-only SSH." data-modal-synonyms="Argo CD, Flux">GitOps</span>:</strong> Push-based deployment fails at the edge for the obvious reason. The pull model inverts it. Each site runs an agent that pulls desired state from Git when connectivity returns and reconciles itself. Rancher Fleet, Argo CD, and Flux all do this, and your source of truth stays a repository of plain manifests.</p>
             <pre class="code-block">defaultNamespace: edge-inference
 helm:
   chart: ./charts/vision-inference
@@ -134,18 +147,28 @@ targetCustomizations:
       matchLabels: { hardware: intel-nuc }
     helm:
       values: { inferenceRuntime: openvino }</pre>
-
-            <h2>Tier 2: Orchestration without the cloud</h2>
-            <p><strong>K3s</strong> is CNCF-conformant and often runs in about 512 MB–1 GB for server nodes. <strong>KubeEdge</strong> splits CloudCore (beside the API server) and EdgeCore (on the node) so workloads keep running when links die. <strong>Akri</strong> (CNCF Sandbox) exposes leaf devices such as IP cameras as Kubernetes resources. Prefer pull-based <span class="vocab-words" data-modal-title="GitOps (noun) கிட்ஆப்ஸ்" data-modal-meaning="– edge agents reconcile desired state from Git (Argo CD, Flux) rather than push-only SSH." data-modal-synonyms="Argo CD, Flux">GitOps</span> (Argo CD, Flux) so agents reconcile from Git even after offline periods.</p>
+            <p>One definition — hardware overrides by label. That pattern is most of what fleet management is.</p>
 
             <h2>Tier 3: Models are not container images</h2>
-            <p>Baking models into images inflates bandwidth and slows redeploys. Keep them separate:</p>
-            <pre class="code-block">registry.internal/edge-inference:1.8.2          # application — changes rarely
-models.internal/defect-detect/2026.09.3.onnx   # model — changes often</pre>
-            <p><strong>Staged rollout:</strong> canary (5 devices, 48 hours for hardware diversity) → pilot (1 site, 1 week with human validation) → ring 1 (10%) → ring 2 (50%) → full. Halt automatically on error budgets—edge models can behave differently under 2 p.m. vs 11 p.m. lighting.</p>
+            <p>This is the part teams get wrong most often. The instinct is to bake the model into the image. It works until about fifty devices, then fails for three reasons. Updates require a full rebuild and redeploy. A 400MB image pushed to four thousand devices over cellular is a bandwidth bill someone will query. And you lose the ability to roll back the model independently of application code, which is exactly the rollback you want at 2 am. Separate them.</p>
+            <pre class="code-block">registry.internal/edge-inference:1.8.2
+# application, changes rarely
+
+models.internal/defect-detect/2026.09.3.onnx
+# model, changes often</pre>
+            <p>The device caches the current and previous. Rollback becomes a config change completing in seconds with no network. Staged rollout is mandatory, not a refinement:</p>
+            <ol>
+                <li><strong>canary</strong> — 5 devices, 48 hours, chosen for hardware diversity</li>
+                <li><strong>pilot</strong> — 1 site, 1 week, human validating output</li>
+                <li><strong>ring 1</strong> — 10% of fleet</li>
+                <li><strong>ring 2</strong> — 50%</li>
+                <li><strong>full</strong> — remainder</li>
+            </ol>
+            <p>Design an automatic halt on an error budget at every stage. Those 48 hours matter more than they look, because edge failures are often environmental and need a full day-night cycle to surface. A model that behaves at 2 pm can fall apart under fluorescent light at 11 pm.</p>
+            <p>For base system OTA rather than workloads, Mender, RAUC and SWUpdate all use A/B partitions with automatic rollback on failed boot.</p>
 
             <h2>Tier 4: Seeing a fleet you cannot reach</h2>
-            <p>Full Prometheus scrapes over metered links are not viable. Aggregate locally, push to a collector, and sample:</p>
+            <p>Bandwidth shapes everything. Shipping full Prometheus scrapes from every device is not viable over metered links, so the pattern is local aggregation, push to a collector, and sample rather than complete.</p>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -157,56 +180,63 @@ models.internal/defect-detect/2026.09.3.onnx   # model — changes often</pre>
                 <tbody>
                     <tr>
                         <td>Heartbeat with model version</td>
-                        <td>1–5 min</td>
+                        <td>1 to 5 min</td>
                         <td>What is deployed is never quite what you think</td>
                     </tr>
                     <tr>
-                        <td>Inference latency p50 / p95</td>
+                        <td>Inference latency p50, p95</td>
                         <td>5 min, pre-aggregated</td>
                         <td>Hardware degradation shows here first</td>
                     </tr>
                     <tr>
                         <td>Input distribution summary</td>
                         <td>Hourly</td>
-                        <td>Drift detection—the most valuable edge signal</td>
+                        <td>Drift detection, the most valuable edge signal</td>
                     </tr>
                     <tr>
                         <td>Confidence distribution</td>
                         <td>Hourly</td>
-                        <td>A falling mean is early warning</td>
+                        <td>A falling mean is your early warning</td>
                     </tr>
                     <tr>
                         <td>Resource pressure</td>
                         <td>5 min</td>
-                        <td>Thermal throttling is otherwise invisible</td>
+                        <td>Thermal throttling is common and otherwise invisible</td>
                     </tr>
                     <tr>
                         <td>Full inference samples</td>
-                        <td>≤ 0.1%</td>
+                        <td>0.1% or lower</td>
                         <td>For the retraining set</td>
                     </tr>
                 </tbody>
             </table>
-            <p>OpenTelemetry for transport, plus a device collector with batching and retry, turns offline time into a backlog. <span class="vocab-words" data-modal-title="Input drift (noun) உள்ளீட்டு சறுக்கல்" data-modal-meaning="– production inputs diverge from training distribution without throwing errors." data-modal-synonyms="data drift, distribution shift">Input drift</span> is how edge AI dies: new lighting, camera angles, supplier colours. Summaries compared to the training distribution (e.g. with Evidently or NannyML at tier 4) catch it weeks before humans do.</p>
+            <p>OpenTelemetry handles transport, and a collector on the device with batching and retry turns an offline period into a backlog rather than a hole.</p>
+            <p><span class="vocab-words" data-modal-title="Input drift (noun) உள்ளீட்டு சறுக்கல்" data-modal-meaning="– production inputs diverge from training distribution without throwing errors." data-modal-synonyms="data drift, distribution shift">Input drift</span> is how edge AI dies. The model is trained on one plant in one season. Camera angles shift, lighting gets replaced, a supplier changes a component colour. None of this throws an error or moves a latency metric. A statistical summary of input features compared against the training distribution catches it weeks before a human does. Evidently, NannyML works well on aggregated summaries at tier 4.</p>
 
             <h2>Security</h2>
-            <p>The attacker may have physical access. Practical minimum: secure boot with signed images; per-device identity (SPIFFE/SPIRE short-lived credentials—not one key baked into four thousand images); Cosign-verified model artefacts before load; mutual TLS to the control plane; encrypted local storage for buffers. Easier to build in than retrofit.</p>
+            <p>The edge threat model differs in one way that matters: the attacker may have physical access.</p>
+            <p>The practical minimum is secure boot with signed images, device identity rather than shared secrets (SPIFFE and SPIRE give each device short-lived credentials, where a shared key baked into four thousand images is one stolen device away from a bad week), signed model artefacts verified with Cosign before load, mutual TLS to the control plane, and encrypted local storage for buffered data.</p>
+            <p>None of it is exotic. All of it is far easier to build in than to retrofit across a deployed fleet.</p>
 
             <h2>Cost is bandwidth</h2>
-            <p>Compute is already bought; the recurring bill is data movement. Model distribution is large and spiky—control it with <span class="vocab-words" data-modal-title="Delta updates (noun) டெல்டா புதுப்பிப்புகள்" data-modal-meaning="– ship binary diffs of models instead of full artefacts to cut fleet bandwidth." data-modal-synonyms="binary diff, incremental OTA">delta updates</span> (a 400 MB model × 4,000 devices = 1.6 TB; a diff is often ~1/10th). Telemetry is moderate if aggregated. Raw retraining frames are the trap—put sampling rate in tier-3 config with an egress alert.</p>
+            <p>You already bought the compute, so the recurring number is data movement. Model distribution is large and spiky but controllable through <span class="vocab-words" data-modal-title="Delta updates (noun) டெல்டா புதுப்பிப்புகள்" data-modal-meaning="– ship binary diffs of models instead of full artefacts to cut fleet bandwidth." data-modal-synonyms="binary diff, incremental OTA">delta updates</span>. Telemetry is moderate and constant, and controllable through aggregation. Raw data for retraining is the one that surprises people.</p>
+            <p>That last is the trap. Someone collects training data from production, nobody sets a sampling rate, and a thousand cameras start uploading frames. Put the rate in tier 3 config, adjustable without redeploy, with an alert on aggregate egress.</p>
+            <p>Delta updates are worth the engineering. A 400MB model to four thousand devices is 1.6TB. A binary diff against the cached previous version is frequently a tenth of that.</p>
 
             <h2>Build order</h2>
             <ul>
-                <li><strong>Weeks 1–3:</strong> one device under GitOps—nothing else changes.</li>
-                <li><strong>Weeks 4–6:</strong> separate model from image; registry, version selector, cache.</li>
-                <li><strong>Weeks 7–9:</strong> telemetry—heartbeat, latency, drift summaries, dashboard of model version per device.</li>
-                <li><strong>Weeks 10–12:</strong> staged rollout; deliberately ship a bad model to canary to test the halt.</li>
+                <li><strong>Weeks 1–3:</strong> One device under GitOps control. Nothing else changes.</li>
+                <li><strong>Weeks 4–6:</strong> Separate model from image. Registry, version selector, cache.</li>
+                <li><strong>Weeks 7–9:</strong> Telemetry. Heartbeat, latency, drift summaries, a dashboard showing deployed model version per device.</li>
+                <li><strong>Weeks 10–12:</strong> Staged rollout machinery. Test the halt by deliberately shipping a bad model to the canary.</li>
             </ul>
             <p>Teams that scale first and build the platform afterwards end up doing both at once, under pressure, with devices already in the field.</p>
 
             <h2>Where this leaves us</h2>
-            <p>The manufacturing client is at eleven plants rather than forty-two—slower than planned and the right call. A quarter spent on tiers 2–3 against a handful of devices made later rollout uneventful. What convinced them was not architecture diagrams: the first staged rollout halted at canary because confidence dropped on two of five devices at a plant with different overhead lighting. Across forty-two sites at once, defect reports would have taken weeks to connect to the deploy.</p>
-            <p>The hard problem stopped being the model a while ago. It is running a thousand copies in places you cannot reach, without losing track of what they run and whether it still works. Every component here is open source and most run on hardware you already own. Start with one device under GitOps. That is a weekend—and everything else builds on it.</p>
+            <p>The manufacturing client is at eleven plants rather than forty-two, which is slower than planned and the right call. They spent a quarter building tiers 2 and 3 against a handful of devices, and the rollout since has been uneventful.</p>
+            <p>What convinced them was not architecture. It was the first staged rollout halting automatically at canary because confidence dropped on two of five devices, both at a plant with different overhead lighting. Across forty-two sites simultaneously, it would have been weeks before anyone connected the defect reports to the deployment.</p>
+            <p>That is the case for the platform layer, and it is the same case I made in September. The hard problem stopped being the model a while ago. It is running a thousand copies of it in places you cannot reach, without losing track of what they run and whether it still works.</p>
+            <p>Every component here is open source and most run on hardware you already own. Start with one device under GitOps control. That is a weekend, and everything else builds on it.</p>
 
             <h3>Key Terminologies</h3>
             <ol class="responsive-vocab-grid">

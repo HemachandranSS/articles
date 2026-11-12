@@ -35,117 +35,134 @@
         </header>
         <div class="article-body">
 
-            <p class="drop-cap">Traditional “castle-and-moat” security is a poor fit for modern IoT. Sensors and actuators often sit in physically accessible places, run on minimal hardware, and sit outside the comfortable perimeter of enterprise networks—so a single compromised device can become a foothold into everything else.</p>
+            <p class="drop-cap">Traditional network security functioned like a fortress with a castle-and-moat perimeter. Once a device crossed the perimeter firewall or connected through a gateway, it enjoyed implicit trust across the internal network. This conventional security model falls flat in modern Internet of Things (IoT) deployments. Smart sensors, actuators, and connected appliances are routinely placed in physically accessible spots, run on minimal computing hardware, and transmit data across shared, open networks.</p>
 
-            <p><span class="vocab-words" data-modal-title="Zero Trust (noun) பூஜ்ய நம்பிக்கை" data-modal-meaning="– security model of ‘never trust, always verify’ for every access request (NIST SP 800-207)." data-modal-synonyms="never trust always verify, ZTA">Zero Trust</span> architecture follows “never trust, always verify,” aligned with <span class="vocab-words" data-modal-title="NIST SP 800-207 (noun) என்ஐஎஸ்டி எஸ்பி 800-207" data-modal-meaning="– US NIST guidance defining Zero Trust Architecture tenets and components." data-modal-synonyms="ZTA standard">NIST SP 800-207</span>. Core tenets include:</p>
+            <p>To overcome these vulnerabilities, the <span class="vocab-words" data-modal-title="Zero Trust (noun) பூஜ்ய நம்பிக்கை" data-modal-meaning="– security model of ‘never trust, always verify’ for every access request (NIST SP 800-207)." data-modal-synonyms="never trust always verify, ZTA">Zero Trust</span> architecture establishes a straightforward rule: never trust, always verify. Under the <span class="vocab-words" data-modal-title="NIST SP 800-207 (noun) என்ஐஎஸ்டி எஸ்பி 800-207" data-modal-meaning="– US NIST guidance defining Zero Trust Architecture tenets and components." data-modal-synonyms="ZTA standard">NIST SP 800-207</span> guidelines, network location alone never grants privilege. Every access request, even from an internal sensor, is treated as if it originates from an untrusted or even compromised network.</p>
+
+            <p>The key tenets defined in NIST SP 800-207 applicable to IoT are:</p>
             <ul>
-                <li><strong>Resource protection</strong> — treat all data sources, sensor feeds and services as resources.</li>
-                <li><strong>Per-session trust evaluation</strong> — access is not permanent; each request is evaluated with least-privilege permissions.</li>
-                <li><strong>Dynamic policy decisions</strong> — identity, device status and environment feed a Policy Decision Point (PDP) and Policy Enforcement Point (PEP).</li>
-                <li><strong>End-to-end encryption and authentication</strong> — secure communications regardless of network topology.</li>
+                <li><strong>Resource protection:</strong> All data sources, sensor feeds, and computing services are treated as resources [NIST SP 800-207, Section 2.1, Tenet 1].</li>
+                <li><strong>Per-session trust evaluation:</strong> Trust is never permanent; access to individual resources is evaluated on a per-session and per-request basis with least-privilege permissions [NIST SP 800-207, Section 2.1, Tenet 3].</li>
+                <li><strong>Dynamic policy decisions:</strong> Access is determined dynamically using identity, device status, and environmental conditions via a Policy Decision Point (PDP) and enforced at a Policy Enforcement Point (PEP) [NIST SP 800-207, Section 2.1, Tenet 4; Section 3].</li>
+                <li><strong>End-to-end encryption and authentication:</strong> All communications are secured, authenticated, and encrypted regardless of physical topology [NIST SP 800-207, Section 2.1, Tenet 2].</li>
             </ul>
+
+            <p>To facilitate reproducible Zero Trust experiments, the authors have developed and published the Zero Trust IoT library for <span class="vocab-words" data-modal-title="ns-3 (noun) என்எஸ்-3" data-modal-meaning="– discrete-event network simulator used for realistic protocol and attack experiments." data-modal-synonyms="network simulator 3">ns-3</span> (zero-trust-iot), which is officially available on the NS-3 App Store. The library provides plug-and-play C++ components for cryptographic authentication, runtime context drift re-scoring, and in-line packet filtering. It allows network developers and academic researchers to simulate and benchmark real-world Zero Trust defences without investing in expensive physical sensor testbeds.</p>
 
             <h2>Usage of ns-3 in IoT applications</h2>
-            <p>Physical IoT testbeds—microcontrollers, gateways, radios—are costly and hard to reproduce. The <span class="vocab-words" data-modal-title="ns-3 (noun) என்எஸ்-3" data-modal-meaning="– discrete-event network simulator used for realistic protocol and attack experiments." data-modal-synonyms="network simulator 3">ns-3</span> simulator offers a deterministic, flexible environment for IPv4/IPv6, TCP, 802.11 and attack scenarios such as IP spoofing or man-in-the-middle.</p>
-            <p>The authors released a <strong>Zero Trust IoT library for ns-3</strong> (<code>zero-trust-iot</code>) on the NS-3 App Store: plug-and-play C++ components for cryptographic authentication, runtime context-drift re-scoring and in-line packet filtering—so researchers can benchmark Zero Trust defences without expensive hardware.</p>
-
-            <h3>Setup requirements</h3>
+            <p>Network Simulator 3 (ns-3) is a widely adopted, discrete-event network simulation engine used extensively by researchers, academics, and industry engineers. In IoT research, procuring and deploying hundreds of physical microcontroller boards, gateways, and radio transceivers is costly and logistically cumbersome.</p>
+            <p>ns-3 solves this by providing:</p>
             <ul>
-                <li><strong>Simulator:</strong> ns-3 (tested with ns-3.45, ns-3.46, ns-3.47)</li>
-                <li><strong>Crypto:</strong> Crypto++ (cryptopp) for RSA certificate validation and AES</li>
-                <li><strong>Build:</strong> CMake and the ns3 wrapper (<code>./ns3</code>)</li>
+                <li>Realistic simulation of network protocol stacks (IPv4, IPv6, UDP, TCP, point-to-point, 802.11, etc).</li>
+                <li>Deterministic, repeatable experimentation to test network traffic, packet latency, routing behaviours, and protocol interactions under reproducible conditions.</li>
+                <li>A flexible testbed for evaluating security mechanisms and simulating attacks (such as IP spoofing, unauthorised access, and man-in-the-middle exploits) in controlled environments without taking real operational infrastructure at risk.</li>
+            </ul>
+            <p>The Zero Trust module for IoT (zero-trust-iot) extends ns-3 to enable researchers to model and observe how Zero Trust verification mechanisms function over standard network topologies.</p>
+
+            <h2>Setup needed to simulate a Zero Trust module for IoT</h2>
+            <p>To simulate Zero Trust IoT architectures, the module integrates directly with the ns-3 mainline source tree and relies on the Crypto++ (cryptopp) cryptographic library for cryptographic primitives (such as RSA certificate validation and AES encryption).</p>
+            <ul>
+                <li><strong>Simulator:</strong> ns-3 (Tested and verified with releases ns-3.45, ns-3.46, and ns-3.47)</li>
+                <li><strong>Crypto library:</strong> Crypto++ (cryptopp)</li>
+                <li><strong>Build system:</strong> CMake and ns3 wrapper (<code>./ns3</code>)</li>
             </ul>
 
-            <h2>Zero Trust library architecture</h2>
-            <p>Figure 1 maps the library to NIST SP 800-207 pillars:</p>
-            <ol>
-                <li><strong>Identity &amp; Auth</strong> — <code>IdentityRegistry</code> maps nodes to roles via SHA-256; <code>CertificateAuthority</code> issues Root CA / RSA key pairs and X.509-style validation; hash utilities produce hex digests.</li>
-                <li><strong>Policy (PDP)</strong> — <code>ZtPolicyEngine</code> (and cert-aware variants) with default-deny, micro-segmentation rules and ALLOW/DENY from roles plus trust scores.</li>
-                <li><strong>Continuous Trust</strong> — context-drift validation, dynamic trust scoring and adaptive penalties on spoofing or rate anomalies.</li>
-                <li><strong>Enforcement (PEP)</strong> — IPv4 TX hooks that drop unauthorised packets; policy-gated TLS-style handshake exchanging AES session keys; AES-128-CBC payload crypto.</li>
-            </ol>
-            <p>A cross-cutting <code>ZtLogger</code> records registrations, handshakes, policy evaluations and rejections for audit.</p>
-
-            <h3>Key modules</h3>
+            <h2>Modules of the library</h2>
+            <p>The library comprises ten coordinated C++ modules that work together to establish an enforceable trust boundary across every simulated IoT transaction as shown in Figure 1.</p>
             <ul>
-                <li><code>IdentityRegistry</code> — process-wide singleton registering <code>ns3::Node</code> instances with roles and hashes.</li>
-                <li><code>ComputeSha256</code> — Crypto++ wrapper for identity and policy integrity digests.</li>
-                <li><code>CertificateAuthority</code> / <code>ZtPolicyEngineWithCert</code> — simulated PKI with RSA key pairs and signed identity certificates (including expiry).</li>
-                <li><code>ZtPolicyEngine</code> — <code>Authorize()</code>, <code>AuthorizeWithCert()</code>, <code>EvaluateMicroSegmentation()</code>; defaults to DENY.</li>
-                <li><code>ContextAttributeStore</code> / <code>PeriodicRevalidator</code> — continuous re-authorisation from live behaviour.</li>
-                <li><code>ZtDynamicTrustScorer</code>, <code>ZtTlsHandshake</code>, <code>ZtIpv4Hook</code>, encryption helpers — session anomalies, gated handshakes, inline drops and AES-CBC payloads.</li>
+                <li><strong>Identity registry (IdentityRegistry):</strong> This acts as a process-wide singleton that registers each <em>ns3::Node</em> alongside its assigned role string and a SHA-256 identity hash derived through <em>ComputeSha256</em>, enabling subsequent authorisation queries via <em>GetRole</em> and <em>GetIdentityHash</em>.</li>
+                <li><strong>Hash utilities (ComputeSha256):</strong> Provides a standalone cryptographic utility wrapping Crypto++ SHA-256 to compute lowercase hexadecimal digests used for identity hashing, policy rule fingerprinting, and rule integrity protection.</li>
+                <li><strong>Certificate authority and certificate-based policy (CertificateAuthority, ZtPolicyEngineWithCert):</strong> This module simulates lightweight public key infrastructure by generating 1024-bit RSA key pairs, issuing signed identity certificates with node identifier, role, and expiration timestamps via <em>SignIdentity</em>, and validating those credentials using RSA-PSS and an explicit revocation list.</li>
+                <li><strong>Policy engine (ZtPolicyEngine):</strong> Serves as the central policy decision point (PDP) defined in NIST SP 800-207. It evaluates access through identity authorization (<em>Authorize</em>), certificate checking (<em>AuthorizeWithCert</em>), revocation enforcement, and role-based micro-segmentation (<em>EvaluateMicroSegmentation</em>). Decisions strictly default to DENY under the least privilege tenet. The engine tracks rule revisions via <em>GetPolicyVersion</em> and exposes a SHA-256 tamper-detection digest through <em>GetPolicyIntegrityHash</em>.</li>
+                <li><strong>Context drift validator (ContextAttributeStore, PeriodicRevalidator):</strong> Enforces continuous re-authorization by tracking contextual metrics: time of day, network congestion, and proximity, captured at onboarding. The <em>PeriodicRevalidator</em> regularly computes weighted drift and reduces node trust using exponential decay: <em>Trust = Trust × e^(-λ × drift)</em>, calling <em>ZtPolicyEngine::Revoke</em> whenever trust drops below a designated threshold.</li>
+                <li><strong>Dynamic trust scorer (ZtDynamicTrustScorer):</strong> Provides session-level anomaly detection between communication pairs. By tracking packet arrival rates across a sliding window through <em>OnPacketReceived</em>, it flags violations exceeding 1.5 times the baseline, penalises consecutive bursts exponentially, permits gradual recovery for compliant traffic, and blocks sessions once trust falls below 25.</li>
+                <li><strong>Encryption utilities (EncryptPayload, DecryptPayload, HexDecodeKey, HexToBytes):</strong> Wraps Crypto++ AES-CBC mode to encrypt data payloads with a randomly generated 16-byte initialisation vector prepended to the ciphertext, ensuring transport confidentiality.</li>
+                <li><strong>TLS handshake (ZtTlsHandshake):</strong> Coordinates a policy-gated mutual handshake between client and server nodes. Before generating symmetric session keys, it invokes an injected policy validation callback backed by <em>ZtPolicyEngine::Authorize</em>; once cleared, it generates and stores a shared AES key accessible via <em>GetSessionKey</em>.</li>
+                <li><strong>IPv4 enforcement hook (ZtIpv4Hook):</strong> Connects directly to an ns3::Node IPv4 stack to intercept outgoing transmission traces (Tx), translating abstract micro-segmentation decisions into real-time network-layer packet forwarding or dropping like an active policy enforcement point (PEP).</li>
+                <li><strong>Logger (ZtLogger):</strong> Offers a unified static logging interface featuring optional timestamping, standardising console diagnostics across certificate issuance, validation failures, revocations, and payload cryptographic operations.</li>
             </ul>
 
-            <h2>Table 1: Case studies in the library</h2>
+            <p>Table 1 outlines the three standalone case studies provided in the library, summarising their test topology, functions used, configured rules, and security enforcement outcomes.</p>
+            <p>Table 2 contrasts three attack simulations without Zero Trust against their mitigated counterparts using the developed library.</p>
+
+            <h2>Table 1: Case studies given in the library</h2>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Case study / script</th>
-                        <th>Key functions</th>
-                        <th>Zero Trust outcome</th>
+                        <th>Case study and script</th>
+                        <th>Key functions and parameters</th>
+                        <th>Zero Trust security outcome</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Context drift — <code>context-drift-test.cc</code></td>
-                        <td><code>StoreBaseline()</code>, <code>UpdateCurrentContext()</code>, <code>SetParameters()</code>, <code>Revalidate()</code>, <code>ZtPolicyEngine::Revoke()</code></td>
-                        <td>Weighted drift decays trust as <em>Trust = Trust × e^(−λ × drift)</em>; Nodes 3 and 4 revoked below trust 0.40</td>
+                        <td><strong>Context drift test</strong><br><code>context-drift-test.cc</code></td>
+                        <td><em>StoreBaseline()</em><br><em>UpdateCurrentContext()</em><br><em>SetParameters()</em><br><em>Revalidate()</em><br><em>ZtPolicyEngine::Revoke()</em></td>
+                        <td>Continuously calculates weighted drift and decays trust (<em>Trust = Trust × e^(-λ × drift)</em>). Automatically revokes Node 3 and Node 4 when trust falls below 0.40.</td>
                     </tr>
                     <tr>
-                        <td>Micro-segmentation — <code>micro-segmentation-test.cc</code></td>
-                        <td><code>RegisterNode()</code>, <code>AddRolePolicyRule()</code>, <code>EvaluateMicroSegmentation()</code>, <code>ComputeSha256()</code></td>
-                        <td>Policy fingerprint Ψ; allows normal streams; blocks excess streaming (&gt;5 packets); denies maintenance outside hours; unapproved actions DENY</td>
+                        <td><strong>Micro-segmentation test</strong><br><code>micro-segmentation-test.cc</code></td>
+                        <td><em>RegisterNode()</em><br><em>AddRolePolicyRule()</em><br><em>EvaluateMicroSegmentation()</em><br><em>ComputeSha256()</em></td>
+                        <td>Generates policy fingerprint Ψ. Grants normal streams, blocks excess streaming (&gt;5 packets), denies maintenance updates outside allowed hours, and defaults unapproved actions to DENY under least privilege.</td>
                     </tr>
                     <tr>
-                        <td>Dynamic trust scorer — <code>trust-scorer-test.cc</code></td>
-                        <td><code>OnPacketReceived()</code>, <code>IsSessionAllowed()</code>, <code>SendNormal()</code>, <code>SendBurst()</code></td>
-                        <td>Exponential penalties on rate violations; gradual recovery on compliant traffic; hard-block below cutoff score 25 (drop all packets)</td>
+                        <td><strong>Dynamic trust scorer test</strong><br><code>trust-scorer-test.cc</code></td>
+                        <td><em>OnPacketReceived()</em><br><em>IsSessionAllowed()</em><br><em>SendNormal()</em><br><em>SendBurst()</em></td>
+                        <td>Penalises trust exponentially during rate violations. Allows gradual score recovery during compliant traffic. Hard-blocks the session once trust drops below cutoff score 25, dropping all incoming packets.</td>
                     </tr>
                 </tbody>
             </table>
-
-            <p><code>PeriodicRevalidator</code> regularly computes weighted drift and calls revoke when thresholds trip. <code>ZtDynamicTrustScorer</code> flags sessions exceeding ~1.5× baseline rate via <code>OnPacketReceived</code>. Encryption utilities wrap Crypto++ AES-CBC with a random 16-byte IV. <code>ZtTlsHandshake</code> runs a policy-gated mutual handshake before exposing <code>GetSessionKey</code>. <code>ZtIpv4Hook</code> taps node TX traces to discard unauthorised egress.</p>
 
             <div class="release-box">
-                <strong>Release history.</strong> Available on the <a href="https://apps.nsnam.org/app/zero-trust-iot/" target="_blank" rel="noopener">NS-3 App Store</a>. Version 1.0.0 established Crypto++ primitives; version 2.0.0 for ns-3.47 expanded certificate authorities, dynamic trust scoring and context-drift validation. Licensed under <strong>GPLv2</strong>; contributions welcome via the project GitHub. Docs: <a href="https://the-ns3-programmer.github.io/zero-trust-iot-library/" target="_blank" rel="noopener">zero-trust-iot-library documentation</a>.
+                <strong>Release history and open source contributions</strong>
+                <p>The zero-trust-iot library has evolved across three key public releases on the NS-3 App Store. Version 1.0.0 established the foundational Zero Trust framework compatible with ns-3.45 using Crypto++ primitives. The latest Version 2.0.0 for ns-3.47 expands the suite with five advanced modules covering certificate authorities, dynamic trust scoring, and context drift validation. Distributed under the open source GPLv2 license, the maintainers actively invite community contributions, feedback, and new IoT attack-defence simulation models through its official GitHub repository and issue tracker.</p>
             </div>
 
-            <h2>Table 2: How the library mitigates attacks</h2>
+            <h2>Table 2: A simulation of how the developed library mitigates security attacks</h2>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Attack</th>
-                        <th>Vulnerable setup</th>
-                        <th>Zero Trust defence</th>
-                        <th>Outcome</th>
+                        <th>Attack category and scripts</th>
+                        <th>Vulnerable setup (without Zero Trust)</th>
+                        <th>Vulnerability exploited</th>
+                        <th>Zero Trust defence mechanism</th>
+                        <th>Security mitigation outcome</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Man-in-the-middle<br><code>mitm-attack.cc</code> / <code>mitm-mitigation.cc</code></td>
-                        <td>Sensor sends plaintext UDP (<code>TEMP:45.2</code>); attacker tampers to <code>TAMPERED:…</code> toward gateway</td>
-                        <td><code>SignIdentity</code>, <code>AuthorizeWithCert</code>, <code>StartHandshake</code>, <code>EncryptPayload</code> (AES-CBC + IV)</td>
-                        <td>Gateway validates session / decrypts; modified or unauthenticated packets fail and drop</td>
+                        <td><strong>Man-in-the-middle</strong><br><code>mitm-attack.cc</code> vs <code>mitm-mitigation.cc</code></td>
+                        <td>Sensor sends plaintext UDP packets <em>(TEMP:45.2)</em> to an on-path node on port 8080. Attacker alters payload to <em>TAMPERED: TEMP:45.2</em> and forwards it to gateway port 9090.</td>
+                        <td>Unencrypted transmission and absence of endpoint identity verification allow on-path payload tampering.</td>
+                        <td><em>CertificateAuthority::SignIdentity</em><br><em>ZtPolicyEngine::AuthorizeWithCert</em><br><em>ZtTlsHandshake::StartHandshake</em><br><em>EncryptPayload</em> (AES-CBC + random IV)</td>
+                        <td>Gateway validates session via HasSession and decrypts via DecryptPayload. Modified or unauthenticated packets cannot be decrypted and are immediately dropped.</td>
                     </tr>
                     <tr>
-                        <td>Identity spoofing<br><code>spoofing-attack.cc</code> / <code>spoofing-mitigation.cc</code></td>
-                        <td>Attacker connects as a “sensor” and pushes forged readings; gateway accepts without checks</td>
-                        <td><code>SecureSensorApp</code> / <code>SecureSink</code>, CA, role verification (<code>temp-sensor</code>)</td>
-                        <td>CA-signed cert required; attacker lacks private key → connection dropped</td>
+                        <td><strong>Identity spoofing</strong><br><code>spoofing-attack.cc</code> vs <code>spoofing-mitigation.cc</code></td>
+                        <td>Attacker connects directly to gateway TCP port 8080 posing as a valid sensor and pushes forged readings <em>(@$%!@ garbageDATA#)</em>. Gateway accepts and logs it.</td>
+                        <td>Gateway accepts any incoming TCP connection without validating node certificates or digital signatures.</td>
+                        <td><em>SecureSensorApp &amp; SecureSink</em><br><em>CertificateAuthority</em><br><em>ZtPolicyEngine</em> role verification (temp-sensor)</td>
+                        <td>Gateway mandates a valid CA-signed certificate before accepting connections. Attacker lacks a legitimate private key and signed certificate, causing immediate connection drop.</td>
                     </tr>
                     <tr>
-                        <td>Unauthorised access<br><code>unauthorized-access-*.cc</code></td>
-                        <td>Rogue client sends <code>DELETE ALL DATA</code> to open TCP sink</td>
-                        <td><code>AddAuthorized</code>, cert engine, revocation list, <code>LogCertRejected</code></td>
-                        <td>Policy fails; rejection logged; command never executes</td>
+                        <td><strong>Unauthorized access</strong><br><code>unauthorized-access-attack.cc</code> vs <code>unauthorized-access-mitigation.cc</code></td>
+                        <td>Rogue client connects to an open TCP sink on port 9090 and sends destructive commands like <em>DELETE ALL DATA</em>. Sink processes command without checks.</td>
+                        <td>Flat network perimeter with no role-based access control or authorisation checks on backend endpoints.</td>
+                        <td><em>ZtPolicyEngine::AddAuthorized</em><br><em>ZtPolicyEngineWithCert</em><br>Revocation list check<br><em>ZtLogger::LogCertRejected</em></td>
+                        <td>Sink enforces strict identity authorisation and active session checks. Unauthorised attacker fails policy validation, is logged as rejected, and command execution is prevented.</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2>Closing</h2>
-            <p>Implementing Zero Trust in IoT replaces outdated implicit trust with continuous verification. The <code>zero-trust-iot</code> library gives researchers a practical, NIST-aligned sandbox to evaluate cryptographic handshakes, micro-segmentation and trust scoring—delivering a standard-aligned security framework for next-generation IoT deployments without needing a full physical testbed.</p>
+            <p>Implementing Zero Trust in IoT networks replaces outdated implicit trust models with strict, continuous verification and least privilege access. Through ns-3 simulations, developers and researchers can easily evaluate how cryptographic handshakes, fine-grained micro-segmentation policies and runtime context monitoring safeguard vulnerable smart devices.</p>
+            <p>The ten integrated modules of the Zero Trust IoT library successfully counter critical threats including man-in-the-middle attacks, identity spoofing, and unauthorised access. By combining static policy checks with dynamic trust scoring and automated revocation, the library delivers a practical, standard-aligned security framework for next-generation Internet of Things deployments.</p>
 
-            <p><strong>References:</strong> Zero Trust IoT docs; NIST SP 800-207 (Rose et al., Aug 2020); NS-3 App Store listing for <code>zero-trust-iot</code>.</p>
+            <h3>References</h3>
+            <ul>
+                <li>Zero Trust IoT library documentation, <a href="https://the-ns3-programmer.github.io/zero-trust-iot-library/" target="_blank" rel="noopener">https://the-ns3-programmer.github.io/zero-trust-iot-library/</a></li>
+                <li>NIST SP 800-207 Standard (Zero Trust architecture), Scott Rose, Oliver Borchert, Stu Mitchell, Sean Connelly, National Institute of Standards and Technology Special Publication 800-207, August 2020, DOI: <a href="https://doi.org/10.6028/NIST.SP.800-207" target="_blank" rel="noopener">https://doi.org/10.6028/NIST.SP.800-207</a></li>
+                <li>NS-3 App Store - Zero Trust IoT: App listing, release history, and installation requirements for the Zero Trust module for IoT in ns-3, Available at: <a href="https://apps.nsnam.org/app/zero-trust-iot/" target="_blank" rel="noopener">https://apps.nsnam.org/app/zero-trust-iot/</a></li>
+            </ul>
 
             <h3>Key Terminologies</h3>
             <ol class="responsive-vocab-grid">
