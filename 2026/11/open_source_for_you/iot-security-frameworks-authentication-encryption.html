@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IoT Security Frameworks: Facilitating Device Authentication and Data Encryption</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        pre.code-block { background: #0f172a; color: #e2e8f0; padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; margin: 1rem 0; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.78rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>IoT Security Frameworks: Facilitating Device Authentication and Data Encryption</h1>
+            <p class="subtitle">Open source IoT security frameworks are great at identifying devices and keeping the conversation between them private. It helps that their code is public and free to use.</p>
+            <p class="byline">By Dr Geetali Saha and Kush Patel</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 60–63</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Internet of Things devices are everywhere: smart meters, factory sensors, cameras, door locks and wearables. Most are small, cheap and expected to run for years without anyone touching them. That combination makes them attractive targets. A single device with a default password or an unencrypted connection can give an attacker a way into an entire network.</p>
+
+            <p>Two questions sit at the centre of IoT security. First, who is this device really talking to, and is it who it claims to be? That is <span class="vocab-words" data-modal-title="Authentication (noun) அங்கீகாரம்" data-modal-meaning="– proving a device or server is who it claims to be before trusting traffic." data-modal-synonyms="identity proof, mTLS">authentication</span>. Second, even if the right parties are talking, can anyone else read or change what they say? That is encryption and integrity protection. Writing your own cryptography is a bad idea, so teams reuse existing open-source code—public, reviewed and free—but incorrect setup can still make them unsafe.</p>
+
+            <h2>Security foundations for IoT</h2>
+            <p>The NIST baseline for IoT devices lists six core capabilities: device identification, device configuration, data protection, logical access to interfaces, software update, and cybersecurity state awareness. Authentication and encryption map directly onto these mechanisms. Figure 1 uses a simple three-layer view—device, network, and cloud/edge—throughout the article.</p>
+
+            <h2>Table 1: Security goals and open-source mechanisms</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Meaning</th>
+                        <th>Open-source support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Authentication</td>
+                        <td>Prove who a device or server is</td>
+                        <td>X.509 certificates, pre-shared keys, mutual TLS</td>
+                    </tr>
+                    <tr>
+                        <td>Confidentiality</td>
+                        <td>Keep data unreadable to outsiders</td>
+                        <td>TLS 1.3, DTLS 1.3, AES-GCM</td>
+                    </tr>
+                    <tr>
+                        <td>Integrity</td>
+                        <td>Detect tampering</td>
+                        <td>Authenticated encryption, digital signatures</td>
+                    </tr>
+                    <tr>
+                        <td>Trusted firmware</td>
+                        <td>Run only approved code</td>
+                        <td>Signed images and secure boot (MCUBoot)</td>
+                    </tr>
+                    <tr>
+                        <td>Key management</td>
+                        <td>Store and rotate secrets safely</td>
+                        <td>Secret store in EdgeX, hardware key storage</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>A layered view of IoT security</h2>
+            <ul>
+                <li><strong>Device layer</strong> — secure boot (MCUBoot), Mbed TLS / wolfSSL, key storage: prove identity; protect keys and firmware.</li>
+                <li><strong>Network layer</strong> — TLS 1.3 (TCP), DTLS 1.3 (UDP), MQTT / CoAP / LwM2M: encrypt and authenticate every connection.</li>
+                <li><strong>Cloud / edge layer</strong> — Mosquitto broker, EdgeX Foundry, PKI and secret store: authorise devices, store keys, process data.</li>
+            </ul>
+
+            <h2>Device authentication</h2>
+            <p>Pre-shared keys (PSK) are simple but hard to manage at scale. Certificate-based authentication with <span class="vocab-words" data-modal-title="X.509 certificate (noun) எக்ஸ்.509 சான்றிதழ்" data-modal-meaning="– CA-signed digital identity used in TLS/mTLS for devices and servers." data-modal-synonyms="device cert, PKI identity">X.509</span> certificates and <span class="vocab-words" data-modal-title="Mutual TLS / mTLS (noun) பரஸ்பர டிஎல்எஸ்" data-modal-meaning="– both client and server present certificates and prove private-key ownership." data-modal-synonyms="two-way TLS, client certificates">mutual TLS (mTLS)</span> scales better. Libraries such as Mbed TLS and brokers such as Eclipse Mosquitto make this practical.</p>
+
+            <p>Figure 2 summarises a simplified mutual TLS 1.3 handshake: ClientHello → ServerHello with server certificate and request for client certificate → device certificate plus proof of private key → Finished messages → encrypted MQTT/CoAP application data. Both sides then know who the other is, and further traffic stays encrypted.</p>
+
+            <h3>Listing 1: Mosquitto requiring client certificates</h3>
+            <pre class="code-block">listener 8883
+cafile /etc/mosquitto/certs/ca.crt
+certfile /etc/mosquitto/certs/server.crt
+keyfile /etc/mosquitto/certs/server.key
+require_certificate true
+use_identity_as_username true
+allow_anonymous false</pre>
+
+            <h2>Table 2: Common authentication methods</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Idea</th>
+                        <th>Trade-off</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pre-shared key</td>
+                        <td>Same secret on both sides</td>
+                        <td>Small/fast; hard to manage at scale</td>
+                    </tr>
+                    <tr>
+                        <td>X.509 certificate</td>
+                        <td>CA-signed identity</td>
+                        <td>Strong unique identity; needs PKI</td>
+                    </tr>
+                    <tr>
+                        <td>Raw public key</td>
+                        <td>Public key known in advance</td>
+                        <td>No CA; manual key distribution</td>
+                    </tr>
+                    <tr>
+                        <td>Token (JWT, OAuth)</td>
+                        <td>Short-lived signed token</td>
+                        <td>Easy to expire; needs token service</td>
+                    </tr>
+                    <tr>
+                        <td>Hardware-backed key</td>
+                        <td>Private key in secure chip</td>
+                        <td>Cannot be copied; adds hardware cost</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Data encryption</h2>
+            <p>Protect data in transit with TLS 1.3, DTLS 1.3 or OSCORE, and protect data at rest as well. Prefer authenticated encryption and never store secrets in plain text.</p>
+
+            <h2>Table 3: Encryption building blocks</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Primitive</th>
+                        <th>Role</th>
+                        <th>Best suited for</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AES-GCM</td>
+                        <td>Authenticated encryption</td>
+                        <td>Chips with AES hardware acceleration</td>
+                    </tr>
+                    <tr>
+                        <td>ChaCha20-Poly1305</td>
+                        <td>Authenticated encryption</td>
+                        <td>Small CPUs without AES hardware</td>
+                    </tr>
+                    <tr>
+                        <td>ECDHE (P-256, X25519)</td>
+                        <td>Key agreement per session</td>
+                        <td>Forward secrecy on constrained devices</td>
+                    </tr>
+                    <tr>
+                        <td>ECDSA, Ed25519</td>
+                        <td>Digital signatures</td>
+                        <td>Certificates and firmware signing</td>
+                    </tr>
+                    <tr>
+                        <td>Ascon</td>
+                        <td>Lightweight authenticated encryption</td>
+                        <td>Very small devices (NIST selection, 2023)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Open source frameworks compared</h2>
+            <p>Frameworks fall into cryptographic libraries (building blocks) and full platforms. Licence choice matters (Apache 2.0 vs GPL), and secure boot ties firmware trust to the rest of the stack.</p>
+
+            <h2>Table 4: Cryptographic and TLS libraries</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Licence</th>
+                        <th>Strength</th>
+                        <th>Typical use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mbed TLS</td>
+                        <td>Apache-2.0 or GPL-2.0-or-later</td>
+                        <td>Small, readable code</td>
+                        <td>Microcontrollers, Zephyr</td>
+                    </tr>
+                    <tr>
+                        <td>wolfSSL</td>
+                        <td>GPLv3 or commercial</td>
+                        <td>Compact, many ports</td>
+                        <td>Embedded and RTOS devices</td>
+                    </tr>
+                    <tr>
+                        <td>OpenSSL</td>
+                        <td>Apache-2.0 (v3+)</td>
+                        <td>Feature-rich, widely tested</td>
+                        <td>Gateways, Linux devices</td>
+                    </tr>
+                    <tr>
+                        <td>libsodium</td>
+                        <td>ISC</td>
+                        <td>Simple, hard-to-misuse API</td>
+                        <td>Custom protocols, apps</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Table 5: Platforms and tools</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Framework</th>
+                        <th>Role</th>
+                        <th>Security features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Eclipse Mosquitto</td>
+                        <td>MQTT broker</td>
+                        <td>TLS, client certificates, ACLs</td>
+                    </tr>
+                    <tr>
+                        <td>EdgeX Foundry</td>
+                        <td>Edge computing platform</td>
+                        <td>Secret store and API gateway</td>
+                    </tr>
+                    <tr>
+                        <td>MCUBoot</td>
+                        <td>Secure bootloader</td>
+                        <td>Signed images, rollback protection, safe updates</td>
+                    </tr>
+                    <tr>
+                        <td>Zephyr RTOS</td>
+                        <td>Real-time OS</td>
+                        <td>Integrates TLS libraries and MCUBoot</td>
+                    </tr>
+                    <tr>
+                        <td>Eclipse Leshan</td>
+                        <td>LwM2M device management</td>
+                        <td>DTLS with PSK, raw public key or certificates</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Practical guidance</h2>
+            <ul>
+                <li>Give every device unique credentials.</li>
+                <li>Never switch off certificate checking.</li>
+                <li>Keep cryptographic libraries updated.</li>
+                <li>Plan for signed firmware updates from day one.</li>
+            </ul>
+            <p>A strong starter project is a device that connects to a Mosquitto broker with mutual TLS—using Mbed TLS or OpenSSL on the device side, Mosquitto for certificate checks, and MCUBoot / EdgeX for firmware and secret protection.</p>
+
+            <h2>Secure boot chain of trust</h2>
+            <p>Figure 3 shows the MCUBoot-style chain: immutable Boot ROM → bootloader (MCUBoot) → signature check with the device’s public key → application runs if valid, otherwise reject or roll back.</p>
+
+            <h2>Limitations</h2>
+            <p>Open source is not a magic fix. Constrained memory and power make cryptography expensive; key provisioning and revocation are operationally hard; physical attacks remain real; and post-quantum migration is coming. Still, public frameworks let teams identify devices and keep conversations private—if they are configured carefully.</p>
+
+            <p><strong>References include:</strong> IETF TLS 1.3 / DTLS 1.3 RFCs; NIST IR 8259A; Mbed TLS documentation; EdgeX Foundry documentation.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Mutual TLS (mTLS)</strong> (பரஸ்பர டிஎல்எஸ்)</li>
+                <li><strong>X.509 / PKI</strong> (சான்றிதழ் உள்கட்டமைப்பு)</li>
+                <li><strong>TLS 1.3 / DTLS 1.3</strong> (போக்குவரத்து பாதுகாப்பு)</li>
+                <li><strong>AES-GCM / ChaCha20-Poly1305</strong> (அங்கீகரிக்கப்பட்ட குறியாக்கம்)</li>
+                <li><strong>MCUBoot secure boot</strong> (பாதுகாப்பான துவக்கம்)</li>
+                <li><strong>Mosquitto / EdgeX</strong> (தரகர் / எட்ஜ் தளம்)</li>
+                <li><strong>Mbed TLS / wolfSSL</strong> (உட்பொதிந்த டிஎல்எஸ்)</li>
+                <li><strong>Ascon</strong> (இலகு என்கிரிப்ஷன்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-60.png" alt="OSFY Focus page 60 — IoT Security Frameworks" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 60.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-61.png" alt="OSFY Focus page 61 — authentication and mTLS" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 61.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-62.png" alt="OSFY Focus page 62 — encryption and open-source stacks" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 62.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-63.png" alt="OSFY Focus page 63 — MCUBoot and authors" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 63 — By Dr Geetali Saha and Kush Patel.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

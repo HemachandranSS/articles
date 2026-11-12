@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Open Source For You — FOSS Bytes · November 2026</title>
+    <meta content="FOSS Bytes from Open Source For You, November 2026 — curated open-source tech briefs with interactive vocabulary." name="description" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #666;
+            --accent: #1a6b3c;
+            --accent-dark: #0d3325;
+            --accent-light: #e8f5ee;
+            --accent-mid: #1a5c38;
+            --border: #ddd;
+            --border-light: #ece9e2;
+            --news-tag: #1a5276;
+            --news-tag-bg: #eaf0f7;
+            --editorial-tag: #6d4c0f;
+            --editorial-tag-bg: #fef3e2;
+            --radius: 10px;
+            --shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0 0 80px;
+            line-height: 1.7;
+        }
+
+        /* ── MASTHEAD ── */
+        .masthead {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 36px 24px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masthead::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .masthead-inner {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .masthead-kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a8f0c6;
+            margin-bottom: 10px;
+        }
+
+        .masthead h1 {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .masthead-sub {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 8px;
+        }
+
+        .masthead-divider {
+            width: 48px;
+            height: 3px;
+            background: #f9ca24;
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        /* ── CONTENT WRAPPER ── */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ── DATE SECTION ── */
+        .date-section {
+            margin-top: 40px;
+        }
+
+        .date-section:first-of-type {
+            margin-top: 36px;
+        }
+
+        .date-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .date-badge {
+            background: var(--accent-dark);
+            color: #f9ca24;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .date-badge .date-today {
+            color: #a8f0c6;
+            font-size: 0.62rem;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+
+        .date-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .date-count {
+            font-size: 0.72rem;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* ── CATEGORY LABEL ── */
+        .cat-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 10px 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        /* ── ARTICLE CARD ── */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        l .article-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+            transform: translateY(-2px);
+        }
+
+        .card-accent-bar {
+            width: 4px;
+            flex-shrink: 0;
+            background: var(--accent);
+        }
+
+        .article-card.editorial .card-accent-bar {
+            background: #c0882a;
+        }
+
+        .card-body {
+            padding: 14px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tag-news {
+            background: var(--news-tag-bg);
+            color: var(--news-tag);
+        }
+
+        .tag-editorial {
+            background: var(--editorial-tag-bg);
+            color: var(--editorial-tag);
+        }
+
+        .card-topic {
+            font-size: 0.68rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .article-card:hover .card-title {
+            color: var(--accent);
+        }
+
+        .card-author {
+            font-size: 0.72rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: var(--border);
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover .card-arrow {
+            color: var(--accent);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .card-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-button.article-link {
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border-color: rgba(26, 107, 60, 0.15);
+        }
+
+        .card-button.google-link {
+            background: #fff;
+            color: #1f1f1f;
+            border-color: #d9d9d9;
+        }
+
+        .card-button.google-link:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .empty-state span {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            text-align: center;
+            margin-top: 52px;
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .masthead h1 {
+                font-size: 1.4rem;
+            }
+
+            .card-title {
+                font-size: 0.9rem;
+            }
+
+            .card-body {
+                padding: 12px 14px;
+            }
+
+            .card-arrow {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <p class="masthead-kicker">📰 Curated Reading</p>
+            <h1>Open Source For You — FOSS Bytes</h1>
+            <p class="masthead-sub">November 2026 · interview &amp; FOSS Bytes with interactive vocabulary</p>
+            <div class="masthead-divider"></div>
+        </div>
+    </header>
+    <main class="content">
+        <section aria-labelledby="date-2026-11-osfy" class="date-section">
+            <div class="date-header">
+                <span class="date-badge" id="date-2026-11-osfy">
+                    November 2026
+                    <span class="date-today">· OSFY</span>
+                </span>
+                <span class="date-line"></span>
+            </div>
+            <p class="cat-label">Interview · For U &amp; Me</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Interview</span>
+                            <span class="card-topic">DevRel · AI · Open Source · Twilio · p.30–33</span>
+                        </div>
+                        <div class="card-title">“Syntax knowledge offers limited value today—cognitive flexibility matters far more”</div>
+                        <div class="card-author">Kaustav Das Modak · Interview by Niraj Sahay &amp; Jiya Jay Singh</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="syntax-knowledge-cognitive-flexibility-kaustav-das-modak.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Syntax+knowledge+offers+limited+value+today+cognitive+flexibility+Kaustav+Das+Modak+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-label">InSight · For U &amp; Me</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">InSight</span>
+                            <span class="card-topic">Quantum Computing · Physical AI · Robotics · p.34–39</span>
+                        </div>
+                        <div class="card-title">The Convergence of Quantum Computing and Physical AI</div>
+                        <div class="card-author">By Dr Magesh Kasthuri and Dr Anand Nayyar</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="convergence-quantum-computing-physical-ai.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=The+Convergence+of+Quantum+Computing+and+Physical+AI+Magesh+Kasthuri+Anand+Nayyar+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">InSight</span>
+                            <span class="card-topic">Quantum Computing · QCP Stack · Algorithms · Industry · p.40–44</span>
+                        </div>
+                        <div class="card-title">Quantum Computing Unlocked</div>
+                        <div class="card-author">By Dr Gopala Krishna Behara and Narumanchi Sree Keerthi</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="quantum-computing-unlocked.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Quantum+Computing+Unlocked+Gopala+Krishna+Behara+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-label">Focus</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">IoT · MQTT · CoAP · OPC UA · Open Standards · p.46–49</span>
+                        </div>
+                        <div class="card-title">Breaking the Silos: How Open Standards Enable IoT Interoperability</div>
+                        <div class="card-author">By Dr Mohit</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="breaking-silos-open-standards-iot-interoperability.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Breaking+the+Silos+How+Open+Standards+Enable+IoT+Interoperability+Dr+Mohit+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">Kubernetes · Edge · K3s · GitOps · Fleet · p.50–52</span>
+                        </div>
+                        <div class="card-title">Kubernetes at the Edge: From Cloud Native to Resource-Constrained Devices</div>
+                        <div class="card-author">By Dhaval Gajjar</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="kubernetes-at-the-edge.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Kubernetes+at+the+Edge+From+Cloud+Native+to+Resource-Constrained+Devices+Dhaval+Gajjar+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">Edge AI · LangChain · Gemma · PaliGemma · p.53–55</span>
+                        </div>
+                        <div class="card-title">Building Lightweight AI Agents for Edge Computing</div>
+                        <div class="card-author">Supriya Sirbi (talk) · Transcribed by Ananthu Ashok</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="building-lightweight-ai-agents-edge-computing.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Building+Lightweight+AI+Agents+for+Edge+Computing+LangChain+Gemma+Supriya+Sirbi+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">Zero Trust · IoT · ns-3 · NIST SP 800-207 · p.56–59</span>
+                        </div>
+                        <div class="card-title">Zero Trust Module for IoT</div>
+                        <div class="card-author">By Arun Santhosh R.A. and Dr T. Subbulakshmi</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="zero-trust-module-for-iot.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Zero+Trust+Module+for+IoT+ns-3+Arun+Santhosh+Subbulakshmi+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">IoT Security · mTLS · Encryption · MCUBoot · p.60–63</span>
+                        </div>
+                        <div class="card-title">IoT Security Frameworks: Facilitating Device Authentication and Data Encryption</div>
+                        <div class="card-author">By Dr Geetali Saha and Kush Patel</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="iot-security-frameworks-authentication-encryption.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=IoT+Security+Frameworks+Facilitating+Device+Authentication+and+Data+Encryption+Geetali+Saha+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">Open Horizon · Edge · IoT · LF Edge · p.64–68</span>
+                        </div>
+                        <div class="card-title">Open Horizon: Enabling Efficient Edge Computing for IoT</div>
+                        <div class="card-author">By Dr R. Anand</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="open-horizon-edge-computing-iot.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Open+Horizon+Enabling+Efficient+Edge+Computing+for+IoT+R+Anand+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">Edge AI · Fleet · GitOps · K3s · p.69–72</span>
+                        </div>
+                        <div class="card-title">Building an Open Source Edge AI Platform: From Device to Distributed Intelligence</div>
+                        <div class="card-author">By Vishal Tanna</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="building-open-source-edge-ai-platform.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Building+an+Open+Source+Edge+AI+Platform+From+Device+to+Distributed+Intelligence+Vishal+Tanna+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">ESP32-C3 · MicroPython · IoT Sensors · p.73–79</span>
+                        </div>
+                        <div class="card-title">Creating Cutting-Edge IoT Devices with the ESP32 C3 Super Mini Board</div>
+                        <div class="card-author">By Ankur Kumar</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="esp32-c3-super-mini-iot-devices.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Creating+Cutting-Edge+IoT+Devices+with+the+ESP32+C3+Super+Mini+Board+Ankur+Kumar+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Focus</span>
+                            <span class="card-topic">Supply Chain · Retail · Edge AI · Lakehouse · p.80–82</span>
+                        </div>
+                        <div class="card-title">Scaling Open Source IoT Across Supply Chains and Retail</div>
+                        <div class="card-author">By Bala Kalavala</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="scaling-open-source-iot-supply-chains-retail.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Scaling+Open+Source+IoT+Across+Supply+Chains+and+Retail+Bala+Kalavala+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-label">Developers · Overview</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Developers</span>
+                            <span class="card-topic">SAIF · AI Governance · Security · p.83–89</span>
+                        </div>
+                        <div class="card-title">Ensuring Secure and Responsible AI with SAIF</div>
+                        <div class="card-author">By Dr Magesh Kasthuri and Dr Anand Nayyar</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="ensuring-secure-responsible-ai-saif.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Ensuring+Secure+and+Responsible+AI+with+SAIF+Magesh+Kasthuri+Anand+Nayyar+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-label">Developers · Let’s Try</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Let’s Try</span>
+                            <span class="card-topic">Observability · Distributed Debugging · AI · p.90–92, 98</span>
+                        </div>
+                        <div class="card-title">Mastering Distributed System Debugging: A Guide for Modern Engineers</div>
+                        <div class="card-author">By Ajay Lotan Thakur</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="mastering-distributed-system-debugging.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Mastering+Distributed+System+Debugging+A+Guide+for+Modern+Engineers+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-label">Developers · InSight</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">InSight</span>
+                            <span class="card-topic">Quantum · Hadamard · Qiskit · Interference · p.93–98</span>
+                        </div>
+                        <div class="card-title">Quantum Computing: Hadamard and the Art of Cancellation</div>
+                        <div class="card-author">By Dr Deepu Benson</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="quantum-hadamard-art-of-cancellation.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Quantum+Computing+Hadamard+and+the+Art+of+Cancellation+Deepu+Benson+Open+Source+For+You">Google</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-label">FOSS Bytes (24 briefs)</p>
+            <div class="article-list">
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">AI Agents · Open Source · Gemini · p.07</span>
+                        </div>
+                        <div class="card-title">Google upgrades its agent development kit</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="google-adk-2-agent-development-kit.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Google+upgrades+its+agent+development+kit+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">AI Hardware · Ascend · Open Source · p.07</span>
+                        </div>
+                        <div class="card-title">DeepSeek releases software tools for Huawei chips</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="deepseek-huawei-ascend-tools.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=DeepSeek+releases+software+tools+for+Huawei+chips+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Dev Tools · Code Hosting · AI Agents · p.07</span>
+                        </div>
+                        <div class="card-title">SpaceX-owned Cursor launches GitHub alternative</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="cursor-origin-github-alternative.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=SpaceX-owned+Cursor+launches+GitHub+alternative+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Quantum Computing · CUDA-Q · Compilers · p.08</span>
+                        </div>
+                        <div class="card-title">memQ open sources distributed quantum compiler</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="memq-xdqc-quantum-compiler.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=memQ+open+sources+distributed+quantum+compiler+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Security · Bug Bounty · Open Source · p.08</span>
+                        </div>
+                        <div class="card-title">AI slop forces Google to suspend its vulnerability reward programme</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="google-oss-vrp-suspended-ai-slop.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=AI+slop+forces+Google+to+suspend+its+vulnerability+reward+programme+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Linux · Infrastructure · Digital Sovereignty · p.08, 10</span>
+                        </div>
+                        <div class="card-title">CERN pivoting 2,200 computers from Red Hat to Debian</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="cern-migrates-redhat-to-debian.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=CERN+pivoting+2,200+computers+from+Red+Hat+to+Debian+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">AI Agents · AWS · Open Source · p.10</span>
+                        </div>
+                        <div class="card-title">AWS releases Strands Harness</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="aws-strands-harness.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=AWS+releases+Strands+Harness+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Digital Sovereignty · Desktop Linux · Government · p.10</span>
+                        </div>
+                        <div class="card-title">Dutch ditch Windows for NixOS</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="dutch-ditch-windows-for-nixos.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Dutch+ditch+Windows+for+NixOS+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Security · LLMs · Open Source Maintainers · p.10, 11</span>
+                        </div>
+                        <div class="card-title">Anthropic debuts AI-powered security tool for open source code</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="anthropic-oss-scanner.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Anthropic+debuts+AI-powered+security+tool+for+open+source+code+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Security · Agentic AI · Fintech · p.11</span>
+                        </div>
+                        <div class="card-title">Visa open sources its AI cyber defence tool</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="visa-vulnerability-agentic-harness.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Visa+open+sources+its+AI+cyber+defence+tool+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">AI Safety · Runtime Security · DPUs · p.11</span>
+                        </div>
+                        <div class="card-title">Nvidia launches agent safety platform</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="nvidia-open-agent-safety-platform.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Nvidia+launches+agent+safety+platform+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Quantum Software · Algorithms · Apache 2.0 · p.11</span>
+                        </div>
+                        <div class="card-title">Fujitsu launches open source quantum application package</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="fujitsu-openqarp.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Fujitsu+launches+open+source+quantum+application+package+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Version Control · Git · Developer Tools · p.14</span>
+                        </div>
+                        <div class="card-title">Git 2.56 improves development workflows</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="git-2-56-workflows.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Git+2.56+improves+development+workflows+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Linux Kernel · AI Coding · Performance · p.14</span>
+                        </div>
+                        <div class="card-title">Linus Torvalds credits Claude Code for Linux kernel optimisation</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="linus-claude-code-kernel.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Linus+Torvalds+credits+Claude+Code+for+Linux+kernel+optimisation+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Open Hardware · ESP32 · Personal AI · p.14</span>
+                        </div>
+                        <div class="card-title">Meta launches Muse Gadgets for DIY hardware</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="meta-muse-gadgets.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Meta+launches+Muse+Gadgets+for+DIY+hardware+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Browsers · Mozilla · Web Platform · p.14, 15</span>
+                        </div>
+                        <div class="card-title">Firefox gets a new design</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="firefox-157-project-nova.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Firefox+gets+a+new+design+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Graphics · Linux Kernel · Memory Tech · p.15</span>
+                        </div>
+                        <div class="card-title">AMD adds patches to its AMDGPU Linux kernel driver</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="amd-gddr7-amdgpu-patches.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=AMD+adds+patches+to+its+AMDGPU+Linux+kernel+driver+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Open Hardware · Arduino · Edge AI · p.15, 16</span>
+                        </div>
+                        <div class="card-title">Nuvi turns UNO Q into AI desk companion</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="nuvi-uno-q-ai-desk-companion.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Nuvi+turns+UNO+Q+into+AI+desk+companion+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Robotics · Open Source · Reinforcement Learning · p.15</span>
+                        </div>
+                        <div class="card-title">RoboParty’s full-stack humanoid is called RP1</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="roboparty-rp1-humanoid.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=RoboParty’s+full-stack+humanoid+is+called+RP1+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Open Hardware · ESP32 · Sensing · p.16</span>
+                        </div>
+                        <div class="card-title">VolAnti uses sound analysis to identify drones</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="volanti-drone-sound-detection.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=VolAnti+uses+sound+analysis+to+identify+drones+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Robotics · ROS 2 · Open Hardware · p.16</span>
+                        </div>
+                        <div class="card-title">Seeed develops six-axis robotic arm</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="seeed-rebot-devarm.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Seeed+develops+six-axis+robotic+arm+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Edge AI · Raspberry Pi · Function Calling · p.16</span>
+                        </div>
+                        <div class="card-title">Cactus Compute’s Needle 2 LLM can run locally</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="cactus-needle-2-llm.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Cactus+Compute’s+Needle+2+LLM+can+run+locally+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Local AI · Inference · MoE · p.18</span>
+                        </div>
+                        <div class="card-title">Strata lets gaming PCs run AI model locally</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="strata-local-ai-gaming-pcs.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Strata+lets+gaming+PCs+run+AI+model+locally+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-card OSFY-Article">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">FOSS Bytes</span>
+                            <span class="card-topic">Open Weights · Multimodal · Reinforcement Learning · p.18</span>
+                        </div>
+                        <div class="card-title">Xiaomi releases MiMo-V2.6 AI models</div>
+                        <div class="card-author">Open Source For You · November 2026</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="xiaomi-mimo-v2-6.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Xiaomi+releases+MiMo-V2.6+AI+models+Open+Source+For+You+FOSS+Bytes">Google</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <p>Articles sourced from <strong>Open Source For You</strong> (FOSS Bytes) for vocabulary and reading practice.</p>
+    </footer>
+    <script src="../../../assets/js/index.js"></script>
+</body>
+</html>

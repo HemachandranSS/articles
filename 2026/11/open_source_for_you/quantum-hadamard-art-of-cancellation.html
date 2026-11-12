@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Computing: Hadamard and the Art of Cancellation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        pre.code-block { background: #0f172a; color: #e2e8f0; padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.8rem; line-height: 1.45; margin: 1rem 0; }
+        .math-box { background: #ecfeff; border: 1px solid #a5f3fc; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; font-family: ui-monospace, monospace; font-size: 0.9rem; line-height: 1.7; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · DEVELOPERS · INSIGHT · NOVEMBER 2026</div>
+            <h1>Quantum Computing: Hadamard and the Art of Cancellation</h1>
+            <p class="subtitle">In this sixth article in the series on quantum computing, we take a close look at the Hadamard operator, learn what a basis really is, and discover that the true engine of quantum computing is not parallelism but interference.</p>
+            <p class="byline">By Dr Deepu Benson</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 93–98</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">The October 2026 OSFY installment covered Bell states, CNOT and a first look at the Hadamard gate. This sixth piece digs into the <span class="vocab-words" data-modal-title="Hadamard operator (noun) ஹடமார்ட் இயக்கி" data-modal-meaning="– unitary H that maps |0⟩↔|+⟩ and |1⟩↔|−⟩; H² = I; central to creating and undoing superposition." data-modal-synonyms="H gate, Hadamard gate">Hadamard operator</span>, what a basis really is, quantum interference, and the no-cloning theorem—the art of cancellation rather than brute-force parallelism.</p>
+
+            <h2>What is a basis? A little linear algebra</h2>
+            <p>Giving directions across India from Nagpur illustrates the idea: any two non-parallel directions can span a plane—a <span class="vocab-words" data-modal-title="Basis (noun) அடிப்படை அமைப்பு" data-modal-meaning="– a linearly independent spanning set for a vector space; descriptions change with the basis, not necessarily the state." data-modal-synonyms="computational basis, orthonormal basis">basis</span>. A qubit lives in a two-dimensional complex space. The computational (Z) basis is |0⟩ = [1 0]ᵀ and |1⟩ = [0 1]ᵀ. These vectors are orthonormal: ⟨0|1⟩ = 0 and ⟨0|0⟩ = ⟨1|1⟩ = 1. Measuring in a basis {|bᵢ⟩} yields outcome i with probability |⟨bᵢ|ψ⟩|².</p>
+
+            <p>The Hadamard (X) basis is |+⟩ = (|0⟩+|1⟩)/√2 and |−⟩ = (|0⟩−|1⟩)/√2—eigenstates of Pauli-X, sitting on the Bloch sphere’s equator while |0⟩/|1⟩ sit on the poles. Changing basis only changes the description; applying a gate changes the state. Two qubits live in four dimensions; the Bell basis {Φ±, Ψ±} is one useful orthonormal set. Microwave readout of superconducting qubits typically measures only in the computational basis.</p>
+
+            <div class="math-box">
+                Computational (Z): |0⟩, |1⟩ &nbsp;|&nbsp; Hadamard (X): |+⟩, |−⟩<br>
+                Orthonormality: ⟨0|1⟩=0, ⟨+|−⟩=0<br>
+                Measurement: P(i) = |⟨bᵢ|ψ⟩|²
+            </div>
+
+            <h2>Measuring in a different basis</h2>
+            <p>To measure in the X basis on hardware that only measures Z, apply H first (which rotates X onto Z), then measure. Running a Bell circuit “backward” (CNOT then H) maps Bell states back to computational states.</p>
+            <pre class="code-block"># qiskit13.py — prepare |+⟩/|−⟩, measure in Z or X
+from qiskit import QuantumCircuit, transpile
+from qiskit_aer import AerSimulator
+sim = AerSimulator()
+for state in ["+", "-"]:
+    for basis in ["Z", "X"]:
+        qc = QuantumCircuit(1, 1)
+        qc.h(0)
+        if state == "-":
+            qc.z(0)
+        if basis == "X":
+            qc.h(0)
+        qc.measure(0, 0)
+        counts = sim.run(transpile(qc, sim), shots=1000).result().get_counts()
+        print(f"|{state}> measured in {basis} basis:", counts)
+# Typical: |+> in X → ~{'0': 1000}; |-> in X → ~{'1': 1000}; Z → ~50/50</pre>
+            <p>Challenge: modify the script to prepare |0⟩ and |1⟩ instead of |+⟩ and |−⟩.</p>
+
+            <h2>The Hadamard operator, up close</h2>
+            <div class="math-box">
+                H = (1/√2) [[1, 1], [1, −1]]<br>
+                H|0⟩=|+⟩, H|1⟩=|−⟩; H|+⟩=|0⟩, H|−⟩=|1⟩; H² = I<br>
+                H = (X+Z)/√2; HXH = Z; HZH = X<br>
+                H<sup>⊗n</sup>|0…0⟩ = 2<sup>−n/2</sup> Σₓ |x⟩
+            </div>
+            <p>H translates between Z and X bases. On the Bloch sphere it is a 180° rotation about the axis between x and z. Relative phase (the minus in |−⟩) becomes measurable after another H. Applying H to n qubits creates an equal superposition of all 2ⁿ computational states. Historical aside: Sylvester (1867) and Hadamard (1893) on Hadamard matrices.</p>
+
+            <h2>Interference: where amplitudes cancel</h2>
+            <p>Between two Hadamards a qubit carries amplitudes that can be negative and cancel—like the double-slit experiment (Young; electron versions later). The engine of quantum algorithms is <span class="vocab-words" data-modal-title="Interference (noun) குறுக்கீடு" data-modal-meaning="– constructive/destructive combination of amplitudes so wrong paths cancel and right ones reinforce." data-modal-synonyms="cancellation, constructive interference">interference</span>, not “trying all answers at once.”</p>
+            <pre class="code-block"># qiskit14.py — H–H with optional mid-circuit peek
+from qiskit import QuantumCircuit, transpile
+from qiskit_aer import AerSimulator
+sim = AerSimulator()
+for peek in [False, True]:
+    qc = QuantumCircuit(1, 2)
+    qc.h(0)
+    if peek:
+        qc.measure(0, 0)
+    qc.h(0)
+    qc.measure(0, 1)
+    counts = sim.run(transpile(qc, sim), shots=1000).result().get_counts()
+    print("Peeking:" if peek else "No peeking:", counts)
+# No peeking → {'00': 1000}; Peeking → ~equal mix of 00/01/10/11</pre>
+            <p>Measuring halfway collapses the state and kills interference—analogous to checking which slit the particle took. (Qiskit prints classical bit 0 on the right.)</p>
+
+            <h2>Myth busting: trying all answers at once</h2>
+            <p>Scott Aaronson and others stress: quantum speedups come from choreographing interference so wrong amplitudes cancel and right ones reinforce—not from classical parallelism over every input.</p>
+
+            <h2>How the hardware sees a Hadamard</h2>
+            <p>IBM Heron-class native sets include X, SX, RZ and CZ. H is not native; transpilation turns it into RZ(π/2)–SX–RZ(π/2) (plus a global phase). RZ is virtual (zero duration); SX on FakeMarrakesh qubit 0 is ~36 ns with error ~1.3×10⁻⁴.</p>
+            <pre class="code-block"># qiskit15.py
+from qiskit import QuantumCircuit, transpile
+from qiskit_ibm_runtime.fake_provider import FakeMarrakesh
+backend = FakeMarrakesh()
+qc = QuantumCircuit(1, 1)
+qc.h(0); qc.measure(0, 0)
+transpiled = transpile(qc, backend, initial_layout=[0])
+print(transpiled.draw())
+sx = backend.target["sx"][(0,)]
+print(f"{backend.name}, qubit 0: SX {sx.duration*1e9:.0f} ns, error {sx.error:.1e}")</pre>
+
+            <h2>A copying machine that refuses to copy</h2>
+            <p>The <span class="vocab-words" data-modal-title="No-cloning theorem (noun) நகல் இயலாமைத் தேற்றம்" data-modal-meaning="– no unitary can perfectly copy an arbitrary unknown quantum state (Wootters–Zurek, 1982)." data-modal-synonyms="no cloning, quantum copy ban">no-cloning theorem</span> (Wootters &amp; Zurek, 1982) says no device can perfectly copy an arbitrary unknown state. CNOT copies computational-basis bits but fails on general superpositions. That constraint—and phase kickback—set up Deutsch’s algorithm and the next steps in the series.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Hadamard gate H</strong> (ஹடமார்ட் வாயில்)</li>
+                <li><strong>Computational / X basis</strong> (கணக்கீட்டு / எக்ஸ் அடிப்படை)</li>
+                <li><strong>Orthonormality / inner product</strong> (செங்கோண அலகுத்தன்மை)</li>
+                <li><strong>Interference / cancellation</strong> (குறுக்கீடு / ரத்து)</li>
+                <li><strong>No-cloning theorem</strong> (நகல் இயலாமை)</li>
+                <li><strong>Transpile to SX / RZ</strong> (சொந்த வாயில்கள்)</li>
+                <li><strong>Bell basis</strong> (பெல் அடிப்படை)</li>
+                <li><strong>Phase kickback</strong> (கட்டப் பின்னூட்டம்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-93.png" alt="OSFY InSight page 93 — Hadamard and cancellation" />
+                <figcaption>OPEN SOURCE FOR YOU: Developers · InSight. November 2026, page 93.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-94.png" alt="OSFY page 94 — bases and Bloch sphere" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 94 — Figure 1.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-95.png" alt="OSFY page 95 — qiskit13 measurement bases" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 95 — Figure 2.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-96.png" alt="OSFY page 96 — Hadamard identities and qiskit14" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 96 — Figure 3.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-97.png" alt="OSFY page 97 — interference and hardware H" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 97 — Figure 4.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-98.png" alt="OSFY page 98 — FakeMarrakesh and no-cloning; debugging continuation" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 98 — Figure 5; By Dr Deepu Benson (quantum) / Ajay Lotan Thakur (debugging continuation).</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

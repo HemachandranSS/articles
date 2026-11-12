@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breaking the Silos: How Open Standards Enable IoT Interoperability</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.55rem 0.65rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.8rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Breaking the Silos: How Open Standards Enable IoT Interoperability</h1>
+            <p class="subtitle">To be truly interoperable on a large scale, IoT devices must communicate using open standards. Else, their utility will be restricted to small islands of connectivity.</p>
+            <p class="byline">By Dr Mohit</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 46–49</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">The Internet of Things was meant to let devices—smart meters, solar panels, factory machines, medical sensors—talk to each other. In practice, billions of devices today sit in <span class="vocab-words" data-modal-title="Silos / islands of connectivity (noun) தனிமைப்பட்ட இணைப்புத் தீவுகள்" data-modal-meaning="– isolated proprietary stacks where devices cannot usefully exchange data with other vendors’ systems." data-modal-synonyms="vendor lock-in, closed IoT islands">small islands of connectivity</span>, or silos, because vendors use proprietary radios, data formats and clouds. Scaling projects across those islands is costly and fragile.</p>
+
+            <p>Open standards such as <span class="vocab-words" data-modal-title="MQTT (noun) எம்க்யூடிடி" data-modal-meaning="– lightweight publish/subscribe messaging protocol widely used for IoT telemetry." data-modal-synonyms="Message Queuing Telemetry Transport">MQTT</span>, <span class="vocab-words" data-modal-title="CoAP (noun) கோஏபி" data-modal-meaning="– Constrained Application Protocol: HTTP-like messaging for tiny devices over UDP." data-modal-synonyms="Constrained Application Protocol">CoAP</span> and <span class="vocab-words" data-modal-title="OPC UA (noun) ஓபிசி யூஏ" data-modal-meaning="– Open Platform Communications Unified Architecture: industrial information model and protocol (IEC 62541)." data-modal-synonyms="IEC 62541, industrial OPC">OPC UA</span> give devices a shared language. They are free to use and easy to adopt with mature open-source tools.</p>
+
+            <h2>What interoperability means</h2>
+            <p>Interoperability is the ability of different systems to interact, exchange information and apply it appropriately. It is useful to think in four levels:</p>
+            <ol>
+                <li><strong>Technical</strong> — ability to connect (Wi-Fi, Bluetooth, Zigbee, LoRaWAN, Ethernet, and so on).</li>
+                <li><strong>Syntactic</strong> — ability to exchange messages with agreed formats and protocols (JSON, CBOR, MQTT, CoAP).</li>
+                <li><strong>Semantic</strong> — shared meaning of data (is “25” Celsius or Fahrenheit?).</li>
+                <li><strong>Organisational</strong> — safe sharing under mutual agreements, including security and access rules between companies.</li>
+            </ol>
+
+            <h2>How are open standards useful?</h2>
+            <p>IoT devices often fail to communicate for five recurring reasons:</p>
+            <ol>
+                <li><strong>Excessive radios and networks</strong> — Wi-Fi, Zigbee, Z-Wave, BLE, LoRaWAN, NB-IoT and others each move data differently.</li>
+                <li><strong>Many data formats</strong> — JSON, raw bytes or vendor-specific binary; even with JSON, field names often disagree.</li>
+                <li><strong>Closed vendor clouds</strong> — proprietary apps and clouds trap customers and make migration hard.</li>
+                <li><strong>Old industrial systems</strong> — machines 20–30 years old still speak Modbus or proprietary fieldbus.</li>
+                <li><strong>Small, low-power devices</strong> — sensors with limited RAM/CPU cannot run heavy server protocols.</li>
+            </ol>
+
+            <h2>The benefits of open standards</h2>
+            <p>An open standard is a technical rule book maintained by a neutral body (OASIS, IETF, IEC, and so on) that anyone can use without licence fees. Four benefits stand out:</p>
+            <ol>
+                <li><strong>A shared language</strong> — devices from different vendors can communicate.</li>
+                <li><strong>No lock-in</strong> — you can switch vendors without abandoning the standard.</li>
+                <li><strong>Available open-source tools</strong> — popular standards ship with mature codebases.</li>
+                <li><strong>A large community</strong> — security bugs are found and fixed quickly.</li>
+            </ol>
+            <p>Without open standards, every device–app pair needs its own custom glue. With a common open standard (MQTT / CoAP / OPC UA), each device and app connects once.</p>
+
+            <h2>Table 1: A comparison of three key open standards</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>MQTT</th>
+                        <th>CoAP</th>
+                        <th>OPC UA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Standard body</td>
+                        <td>OASIS (also ISO/IEC 20922)</td>
+                        <td>IETF (RFC 7252)</td>
+                        <td>OPC Foundation (IEC 62541)</td>
+                    </tr>
+                    <tr>
+                        <td>Model</td>
+                        <td>Publish/subscribe via broker</td>
+                        <td>Request/response, like HTTP</td>
+                        <td>Client/server and publish/subscribe</td>
+                    </tr>
+                    <tr>
+                        <td>Transport</td>
+                        <td>TCP</td>
+                        <td>UDP</td>
+                        <td>TCP, or MQTT/UDP for pub/sub</td>
+                    </tr>
+                    <tr>
+                        <td>Device size</td>
+                        <td>Small to large</td>
+                        <td>Very small</td>
+                        <td>Medium to large</td>
+                    </tr>
+                    <tr>
+                        <td>Data meaning</td>
+                        <td>Not defined</td>
+                        <td>Not defined</td>
+                        <td>Rich information model</td>
+                    </tr>
+                    <tr>
+                        <td>Best for</td>
+                        <td>Telemetry, cloud messaging</td>
+                        <td>Battery sensors, mesh networks</td>
+                        <td>Factories, machines</td>
+                    </tr>
+                    <tr>
+                        <td>Open source tools</td>
+                        <td>Mosquitto, Paho, EMQX</td>
+                        <td>libcoap, Californium, aiocoap</td>
+                        <td>open62541, Milo, asyncua</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>MQTT: The common messenger</h2>
+            <p>Message Queuing Telemetry Transport (MQTT) is a lightweight messaging protocol developed in 1999 to track pipelines over slow satellite links. Version 3.1.1 is an OASIS standard and ISO/IEC 20922; MQTT 5.0 is the current major version.</p>
+            <p>It uses a publish/subscribe model via a central <span class="vocab-words" data-modal-title="Broker (noun) தரகர் / செய்தி இடைத்தரகர்" data-modal-meaning="– central MQTT server that receives published messages and forwards them to topic subscribers." data-modal-synonyms="MQTT server, message broker">broker</span>. Sensors publish to a topic (for example, <code>farm/field1/soil-moisture</code>); apps subscribe; the broker delivers to all subscribers. The smallest message header is just 2 bytes, over TCP.</p>
+            <p><strong>Quality of Service:</strong></p>
+            <ul>
+                <li><strong>QoS 0 (at most once)</strong> — quick; message may be lost.</li>
+                <li><strong>QoS 1 (at least once)</strong> — delivered, but may arrive twice.</li>
+                <li><strong>QoS 2 (exactly once)</strong> — safest but slowest.</li>
+            </ul>
+            <p>Popular open-source brokers include Eclipse Mosquitto, EMQX and VerneMQ; Eclipse Paho provides clients for C, Python, Java, JavaScript and more.</p>
+
+            <h2>CoAP: The web for tiny devices</h2>
+            <p>Constrained Application Protocol (CoAP) is an IETF standard protocol for very light devices on weak networks. It is similar to HTTP, but smaller: resources live at URLs such as <code>coap://sensor1/temperature</code>, with GET, POST, PUT and DELETE. It runs over UDP (non-blocking) rather than TCP, with a 4-byte fixed header, and supports an <em>Observe</em> option for subscriptions.</p>
+            <p>Open-source implementations include libcoap (C), Eclipse Californium (Java) and aiocoap (Python). CoAP is also built into embedded OSes such as Zephyr, RIOT and Contiki-NG.</p>
+
+            <h2>OPC UA: The language of the factory</h2>
+            <p>Open Platform Communications Unified Architecture is managed by the OPC Foundation and published as IEC 62541. It is widely used in factories and industrial automation.</p>
+            <p>MQTT and CoAP mainly solve the syntactic level—they carry messages but do not define meaning. OPC UA also addresses the semantic level through an <span class="vocab-words" data-modal-title="Information model (noun) தகவல் மாதிரி" data-modal-meaning="– structured description of a machine’s identity, values, units and relationships that clients can browse." data-modal-synonyms="semantic model, companion specification">information model</span>: each machine describes what it is, which values it exposes, their units and how they relate (for example, a pump’s speed, pressure and temperature). A new client can browse a machine without reading a vendor handbook. Industry groups publish companion specifications for robots, machine tools, packaging lines and more.</p>
+            <p>OPC UA supports encryption, signing and certificate-based authentication. Recent versions add publish/subscribe that can run on top of MQTT. Open-source implementations include open62541 (C), Eclipse Milo (Java) and Python’s asyncua.</p>
+            <p>These three standards are complementary, not competitors. Use each where it fits best and connect them through an edge gateway—as in Figure 2. The gateway can read CoAP, OPC UA or even old Modbus, normalise the data and publish to an MQTT broker so apps subscribe to topics and never see the original device protocol. Open-source tools such as Node-RED and EdgeX Foundry make such gateways practical.</p>
+
+            <h2>Other open standards</h2>
+            <ul>
+                <li><strong>LwM2M (Lightweight M2M)</strong> — from OMA SpecWorks on top of CoAP; remote device administration (settings, firmware, health).</li>
+                <li><strong>SenML (Sensor Measurement Lists)</strong> — RFC 8428; simple JSON/CBOR sensor readings with names and units so “25 Cel” means the same everywhere.</li>
+                <li><strong>Matter</strong> — Connectivity Standards Alliance (2022); lets smart-home devices from Apple, Google, Amazon, Samsung and others interoperate; open reference code.</li>
+                <li><strong>AMQP</strong> — OASIS/ISO reliable business messaging; often used from IoT gateway into enterprise systems.</li>
+            </ul>
+
+            <h2>Closing</h2>
+            <p>Devices that can work together are key to IoT. Closed systems produce islands. Open standards are the bridges that unite them. MQTT provides a lightweight way to transport data; CoAP brings the web to the smallest devices; OPC UA adds meaning and security for industrial machines. Together with gateways and common data models, they form a solid open stack—free and easy to adopt with Mosquitto, Paho, libcoap, open62541 and related tools. The message for students, startups and industry is clear: communicate using open standards, and your IoT system will be able to speak with the world.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>IoT interoperability levels</strong> (தொழில்நுட்ப / தொடரியல் / பொருண்மை / நிறுவனம்)</li>
+                <li><strong>MQTT broker &amp; QoS</strong> (எம்க்யூடிடி தரகர் &amp; சேவைத் தரம்)</li>
+                <li><strong>CoAP / Observe</strong> (கோஏபி / கவனிப்பு)</li>
+                <li><strong>OPC UA information model</strong> (ஓபிசி யூஏ தகவல் மாதிரி)</li>
+                <li><strong>Edge gateway</strong> (எட்ஜ் நுழைவாயில்)</li>
+                <li><strong>LwM2M / SenML / Matter</strong> (கூடுதல் திறந்த தரநிலைகள்)</li>
+                <li><strong>Vendor lock-in</strong> (விற்பனையாளர் பூட்டு)</li>
+                <li><strong>Mosquitto / open62541</strong> (திறந்த மூல கருவிகள்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-46.png" alt="OSFY Focus page 46 — Breaking the Silos" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 46.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-47.png" alt="OSFY Focus page 47 — open standards vs custom links" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 47 — Figure 1: open standard vs custom links.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-48.png" alt="OSFY Focus page 48 — MQTT CoAP OPC UA comparison" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 48 — Table 1 and Figure 2 (edge gateway).</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-49.png" alt="OSFY Focus page 49 — OPC UA and other standards" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 49 — By Dr Mohit.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

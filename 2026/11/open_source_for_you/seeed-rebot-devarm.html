@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seeed develops six-axis robotic arm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOSS BYTES · NOVEMBER 2026</div>
+            <h1>Seeed develops six-axis robotic arm</h1>
+            <p class="byline">FOSS Bytes</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Page 16</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Seeed Studio released <span class="vocab-words" data-modal-title="reBot-DevArm (noun) ரீபாட் டெவ்ஆர்ம்" data-modal-meaning="– open-source six-axis desktop robotic arm for development." data-modal-synonyms="dev robotic arm">reBot-DevArm</span>, an open-source six-axis robotic arm for desktop development, with six revolute joints and a seventh motor for a parallel gripper.</p>
+            <p>The B601-DM version uses Damiao actuators at 24 V (reach up to 767 mm, 1.5 kg payload); B601-RS uses RobStride actuators at 48 V (reach up to 754 mm, 2.5 kg payload). Software integrates with ROS and ROS 2, MoveIt, Pinocchio, MuJoCo and NVIDIA Isaac Sim, and can work with Hugging Face LeRobot and GR00T N1.7. Hardware is under CERN-OHL-W-2.0; software under Apache-2.0.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>reBot-DevArm</strong> (ரீபாட் டெவ்ஆர்ம்)</li>
+                <li><strong>CERN-OHL-W-2.0</strong> (செர்ன் ஓபன் ஹார்ட்வேர்)</li>
+                <li><strong>MoveIt / MuJoCo</strong> (மூவ்இட் / முஜோகோ)</li>
+                <li><strong>LeRobot / GR00T</strong> (லீரோபாட் / க்ரூட்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-16.png" alt="OSFY FOSS Bytes — November 2026, page 16" />
+                <figcaption>OPEN SOURCE FOR YOU: FOSS Bytes. November 2026, page 16. Scan related to “Seeed develops six-axis robotic arm”.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

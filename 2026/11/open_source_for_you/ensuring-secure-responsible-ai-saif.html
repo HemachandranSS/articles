@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ensuring Secure and Responsible AI with SAIF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.75rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.4rem 0.45rem; text-align: center; vertical-align: middle; }
+        .data-table th:first-child, .data-table td:first-child { text-align: left; }
+        .data-table th { background: #ecfeff; color: #0e7490; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.02em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.7rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · DEVELOPERS · OVERVIEW · NOVEMBER 2026</div>
+            <h1>Ensuring Secure and Responsible AI with SAIF</h1>
+            <p class="subtitle">The Secure AI Framework (SAIF) gives organisations a practical foundation for building secure and governable AI systems.</p>
+            <p class="byline">By Dr Magesh Kasthuri and Dr Anand Nayyar</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 83–89</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Artificial intelligence automates operations, supports customer engagement, improves engineering productivity, detects cyber threats, personalises services and generates business insights at scale. That value comes with risks traditional IT governance was not built for: malicious prompts, data leakage through outputs, poisoned training data, and autonomous agents that act unexpectedly when controls are weak.</p>
+
+            <p>The <span class="vocab-words" data-modal-title="SAIF / Secure AI Framework (noun) பாதுகாப்பான ஏஐ கட்டமைப்பு" data-modal-meaning="– Google-introduced conceptual framework for securing AI by default across the lifecycle; platform-agnostic." data-modal-synonyms="Secure AI Framework, AI security governance">Secure AI Framework (SAIF)</span>, introduced by Google, argues that AI should be secure by default, resilient by design and governed throughout its lifecycle. It is not tied to one stack or cloud; it is a security and governance lens across data, models, platforms and operations.</p>
+
+            <h2>Why SAIF matters for AI governance</h2>
+            <p>AI governance is the discipline of directing and controlling how AI is developed and used. Without it, initiatives fragment—one team ships a chatbot while another builds a predictive model with no shared risk language. SAIF moves organisations from informal experimentation to disciplined delivery by creating a common vocabulary (prompt injection, data leakage, model misuse), embedding security into every lifecycle stage, and clarifying decision rights.</p>
+
+            <h2>How SAIF builds process</h2>
+            <p>A SAIF-based intake starts with use-case assessment involving business sponsors, AI heads, security officers, CIOs and legal/compliance. IDC research highlights data control and identity management as pillars for securing generative AI. Figure 2’s business framework tiers this as: (1) use-case assessment across those roles; (2) control requirements—identity &amp; access, data classification, model evaluation, human oversight, secure logging, output filtering, red-team testing, incident escalation; (3) ongoing monitor → update → reassess loops.</p>
+
+            <h2>Core building blocks of SAIF</h2>
+            <p>Figure 3 groups six pillars around responsible AI governance:</p>
+            <ol>
+                <li><strong>Expand strong security foundations</strong> to the AI ecosystem—network, data protection, least privilege, encryption and audit logging for training data, weights and prompt templates.</li>
+                <li><strong>Extend detection and response</strong> to AI threats—unusual prompt patterns, abnormal model responses, alongside classic SIEM/SOAR signals.</li>
+                <li><strong>Automate defenses</strong>—prompt filtering, DLP, behaviour monitoring; scanners that inspect generated code for insecure patterns or vulnerable dependencies.</li>
+                <li><strong>Harmonise platform-level controls</strong> across commercial APIs, open-source models and multi-cloud estates via unified inventory and risk controls.</li>
+                <li><strong>Adapt controls and faster feedback loops</strong>—models are not static; insurance-summary omissions may need human validation or retraining.</li>
+                <li><strong>Contextualise AI risk within business processes</strong>—a low-risk internal classifier differs from credit decisions or medical triage.</li>
+            </ol>
+
+            <h2>Practical operating model</h2>
+            <p>Adoption begins with executive sponsorship and ends with measurable control assurance. CEO sets tone; CTO/AI head own technical architecture; CIO integration; CISO threat model and security; CFO funding and risk; Chief Strategy Officer alignment with transformation. Intake includes risk classification, data review, model approval, red-team testing, production monitoring and periodic audit—intensity scaled to risk.</p>
+
+            <h2>RASCI matrix (summary)</h2>
+            <p>Page 87’s matrix assigns Accountable / Responsible / Supportive / Consulted / Informed across CEO, CTO, CIO, strategy, security, CFO and AI head for activities from defining AI vision and SAIF mandate through policies, use-case risk classification, high-risk approvals, secure architecture, model lifecycle, data protection, threat modelling &amp; red team, monitoring, value/cost tracking, board reporting and continuous improvement. Security typically owns control baselines and threat response; AI head owns use-case assessment and model lifecycle; CEO remains accountable for vision and high-risk approvals.</p>
+
+            <h2>How SAIF works with popular AI solutions</h2>
+            <p>SAIF is a control framework, not a product architecture. It maps onto Vertex AI, Azure AI / Azure OpenAI, Bedrock, SageMaker, OpenAI enterprise APIs, Anthropic Claude, watsonx, Databricks Mosaic AI, Snowflake Cortex, Hugging Face Enterprise Hub, Nvidia AI Enterprise and more. For GenAI and RAG it asks: what data enters, who accesses models, how outputs are controlled, how risk is monitored, who is accountable—including document-level authorisation on vector stores. For traditional MLOps (SageMaker, Databricks) it aligns with secure pipelines, lineage, feature-store governance, training-data validation and container scanning.</p>
+            <p>Agents and copilots need constrained permissions, tool-level authorisation, approval workflows, transaction limits and human-in-the-loop checkpoints. SAIF harmonises platform-native controls with zero trust, GRC and responsible-AI expectations—CSPM, API gateways, SIEM/SOAR, confidential computing and incident response extend into the AI environment.</p>
+
+            <h2>Future trends</h2>
+            <ul>
+                <li><strong>Agentic workflows</strong> — agent identity, tool permissions, memory, sandboxed execution, runtime guardrails and full action audit trails.</li>
+                <li><strong>AI supply-chain security</strong> — provenance, dataset lineage, signed artefacts, AI-BOM, secure registries, third-party assurance; watermarking and synthetic-data governance; federated / confidential AI where data cannot centralise.</li>
+                <li><strong>Regulation &amp; standards</strong> — EU AI Act, NIST AI RMF, ISO/IEC 42001 &amp; 23894, OWASP Top 10 for LLMs, MITRE ATLAS, sector rules—pushing risk classification, explainability, testing evidence and human oversight toward continuous assurance, automated evidence, red-team automation and AI-native SOC dashboards. Longer term, post-quantum crypto may affect model IP and data pipelines.</li>
+            </ul>
+
+            <h2>Best practices at scale</h2>
+            <ul>
+                <li>Stand up an AI governance board spanning tech, security, legal, privacy, compliance, risk, data science, finance, procurement and business.</li>
+                <li>Build a complete AI inventory—ML, genAI, copilots, embedded features, third-party services, OSS models, vector DBs, prompts, agents, datasets, feature stores, APIs, endpoints—classified by sensitivity, autonomy, impact and regulatory exposure.</li>
+                <li>Embed SAIF into MLOps/LLMOps: registries, version control, secure CI/CD, red-team gates; encrypt and ACL vector databases; wire into SIEM/SOAR.</li>
+                <li>Scale in phases—from pilot controls to reusable guardrail services—tracking coverage, audit readiness and user trust.</li>
+            </ul>
+            <p>SAIF’s value reaches beyond cybersecurity into executive accountability and regulatory readiness. Treat it as a living governance model that evolves with the technology—not a one-time checklist.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>SAIF</strong> (பாதுகாப்பான ஏஐ கட்டமைப்பு)</li>
+                <li><strong>AI governance</strong> (ஏஐ ஆளுமை)</li>
+                <li><strong>Prompt injection / data leakage</strong> (ப்ராம்ட் தாக்குதல் / தரவு கசிவு)</li>
+                <li><strong>Red-team testing</strong> (சிவப்புக் குழு சோதனை)</li>
+                <li><strong>RASCI / RACI</strong> (பொறுப்பு அணி)</li>
+                <li><strong>LLMOps / MLOps</strong> (மாடல் செயல்பாட்டுக் குழாய்)</li>
+                <li><strong>AI bill of materials</strong> (ஏஐ பொருள் பட்டியல்)</li>
+                <li><strong>Human-in-the-loop</strong> (மனித மேற்பார்வை)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-83.png" alt="OSFY Developers Overview page 83 — SAIF" />
+                <figcaption>OPEN SOURCE FOR YOU: Developers · Overview. November 2026, page 83.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-84.png" alt="OSFY page 84 — SAIF governance prototype" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 84 — Figure 1.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-85.png" alt="OSFY page 85 — SAIF business framework" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 85 — Figure 2.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-86.png" alt="OSFY page 86 — SAIF building blocks" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 86 — Figure 3.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-87.png" alt="OSFY page 87 — RASCI matrix" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 87 — RASCI matrix.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-88.png" alt="OSFY page 88 — future trends and best practices" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 88.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-89.png" alt="OSFY page 89 — conclusion and authors" />
+                <figcaption>OPEN SOURCE FOR YOU: November 2026, page 89 — By Dr Magesh Kasthuri and Dr Anand Nayyar.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

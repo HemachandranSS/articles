@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating Cutting-Edge IoT Devices with the ESP32 C3 Super Mini Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        pre.code-block { background: #0f172a; color: #e2e8f0; padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.8rem; line-height: 1.45; margin: 1rem 0; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.78rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Creating Cutting-Edge IoT Devices with the ESP32 C3 Super Mini Board</h1>
+            <p class="subtitle">The ESP32 C3 Super Mini board is a smaller but powerful alternative to the Raspberry Pi Pico boards. The MicroPython code in this hands-on guide (and its sensor interfacing) also works on the Pi Pico. Everything was tested on an Ubuntu LTS laptop with Docker installed.</p>
+            <p class="byline">By Ankur Kumar</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 73–79</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">The <span class="vocab-words" data-modal-title="ESP32-C3 Super Mini (noun) இஎஸ்பி32-சி3 சூப்பர் மினி" data-modal-meaning="– thumb-sized RISC-V Wi-Fi/BLE board with USB-C, suited to MicroPython IoT projects." data-modal-synonyms="C3 mini, LOLIN C3 Mini">ESP32-C3 Super Mini</span> is thumb-sized—less than half a Pi Pico—yet packs Wi-Fi, Bluetooth LE and enough I/O for serious sensor work. Pair it with MicroPython (Thonny, pyboard, mpremote) and you can prototype IoT gadgets quickly on Ubuntu with Docker for flashing and serial tools.</p>
+
+            <h2>Board snapshot</h2>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Feature</th><th>Detail</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>CPU</td><td>32-bit RISC-V single-core, up to 160 MHz</td></tr>
+                    <tr><td>Memory</td><td>4 MB Flash, 400 KB SRAM</td></tr>
+                    <tr><td>Radio</td><td>2.4 GHz Wi-Fi (802.11 b/g/n), Bluetooth 5.0 LE (incl. mesh)</td></tr>
+                    <tr><td>Power</td><td>5 V via USB Type-C, or ~3.3–6 V external</td></tr>
+                    <tr><td>I/O</td><td>16-pin board; 11 accessible GPIOs; 2× 12-bit SAR ADC (up to 6 ch); 6 PWM; 3 SPI; I2C; I2S; 2 UART</td></tr>
+                    <tr><td>Onboard</td><td>Power LED, Boot/Reset buttons, blue status LED (GPIO 8 on C3)</td></tr>
+                </tbody>
+            </table>
+            <p>Figure 2’s pin map (in the scan) colour-codes digital, power, ADC, SPI, GND and UART. Left side includes MISO/MOSI/SS (GPIO5–7), SDA/SCL (GPIO8–9), GPIO10, RX/TX (GPIO20–21). Right side: 5V, GND, 3V3, GPIO4–0 (with ADC channels).</p>
+
+            <h2>Flashing MicroPython</h2>
+            <p>Plug the board via USB-C. Beginners can use <strong>Thonny</strong>: Interpreter → MicroPython (ESP32), port such as <code>/dev/ttyACM0</code>, then “Install or update MicroPython” (family ESP32-C3, variant Wemos C3 mini). For automation, use <strong>esptool</strong>—optionally in Docker so you need no host write access beyond the device node.</p>
+            <pre class="code-block"># Dockerfile_Esptool (python:3.14-alpine + esptool)
+docker build . -f Dockerfile_Esptool -t esptool
+
+# Download latest LOLIN_C3_MINI / ESP32 GENERIC C3 firmware from micropython.org
+# Then erase and write (adjust port if needed):
+docker run --rm -v /tmp/ESP32_GENERIC_C3_Latest.bin:/tmp/ESP32_GENERIC_C3_Latest.bin \
+  --device=/dev/ttyACM0:/dev/ttyACM0 esptool erase-flash
+docker run --rm -v /tmp/ESP32_GENERIC_C3_Latest.bin:/tmp/ESP32_GENERIC_C3_Latest.bin \
+  --device=/dev/ttyACM0:/dev/ttyACM0 esptool write-flash 0 /tmp/ESP32_GENERIC_C3_Latest.bin</pre>
+
+            <h2>Onboard LED and internal temperature</h2>
+            <p>Quick LED toggle via pyboard-in-Docker, then a fuller script (<code>bleditemps.py</code>) that flashes GPIO 8 and estimates die temperature from the internal ADC (Vbe ≈ 0.706 V at 27 °C, slope ≈ −1.721 mV/°C):</p>
+            <pre class="code-block">docker run --device=/dev/ttyACM0:/dev/ttyACM0 pyboard -c \
+  'from machine import Pin;from time import sleep;p=Pin(8, Pin.OUT, value=1);p.toggle();sleep(3);p.toggle()'
+
+docker run --rm -v ${PWD}/bleditemps.py:/etc/rpipico/bleditemps.py:ro \
+  --device=/dev/ttyACM0:/dev/ttyACM0 pyboard bleditemps.py</pre>
+
+            <h2>External LEDs: electronic dice (<code>chaseleds.py</code>)</h2>
+            <p>Wire five 10 mm LEDs (red, yellow, green, blue, white) anodes to GPIO 0–4 and cathodes to GND on a mini breadboard (Figure 4). The script chases LEDs forward/back, randomises them, then settles like a dice roll (1–5 single colours; 6 = all on). Helpers such as <code>rledon()</code> / <code>yledon()</code> … drive one LED at a time; <code>randice()</code> uses <code>randint(1, 6)</code>. Full listing is in the page-76–77 scans.</p>
+
+            <h2>PIR motion switch (<code>pirmtnsnsr.py</code>)</h2>
+            <p>Mini PIR: VIN→3V3, GND→GND, signal→GPIO 4 (pull-down on ESP32-C3). RGB feedback on GPIO 0/1/3. Instead of busy-polling, an <span class="vocab-words" data-modal-title="IRQ (noun) இடைமுறிவு கோரிக்கை" data-modal-meaning="– MicroPython Pin interrupt that runs a handler on rising/falling edges." data-modal-synonyms="interrupt, Pin.irq">IRQ</span> on rising edge runs <code>mtnhdlr</code>: red for <code>dly</code> seconds, brief blue, then green when idle.</p>
+            <pre class="code-block">pirs.irq(trigger=Pin.IRQ_RISING, handler=mtnhdlr)
+# idle loop: green when no motion</pre>
+
+            <h2>IR obstacle sensor (<code>obstklesnsr.py</code>)</h2>
+            <p>Module with IR TX/RX and comparator; green LED on detection. Code uses <code>Signal</code> for active-low logic on the sensor pin (GPIO 5) and RGB LEDs: red when obstacle present, green otherwise (Figure 6).</p>
+
+            <h2>Air quality: DHT11, MQ-2 / MQ-135, TM1637</h2>
+            <p>MQ-2 covers LPG/smoke/flammables; MQ-135 ammonia/CO₂-class contaminants. Heaters need 5 V and warm-up time. Pair with DHT11 for temp/humidity and a TM1637 4-digit display (library: mcauser/micropython-tm1637). The demo (<code>tempnumgss.py</code>, Figure 7) reads DHT + MQ2 AO, shows temp/humidity on the display, estimates chip temp, and maps thresholds to RGB: green ≤30 °C, blue 30–35 °C, red &gt;35 °C.</p>
+
+            <h2>Closing</h2>
+            <p>The Super Mini is compact, affordable and MicroPython-friendly—an ideal companion to the Raspberry Pi ecosystem for edge IoT. Start with Thonny or Dockerised esptool, blink the onboard LED, then grow into chase LEDs, PIR, IR and air-quality stacks. Full source appears in the magazine scans (pages 73–79).</p>
+
+            <p><strong>References:</strong> Esptool docs; MicroPython ESP32 quickref; micropython-tm1637 on GitHub.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>ESP32-C3 / RISC-V</strong> (இஎஸ்பி32-சி3 / ரிஸ்க்-வி)</li>
+                <li><strong>MicroPython / Thonny</strong> (மைக்ரோபைத்தான் / தானி)</li>
+                <li><strong>esptool / Docker flash</strong> (ஃபிளாஷ் கருவி)</li>
+                <li><strong>GPIO / ADC / Signal</strong> (பின் / அனலாக் / சிக்னல்)</li>
+                <li><strong>PIR / IRQ</strong> (இயக்க உணர்வி / இடைமுறிவு)</li>
+                <li><strong>MQ-2 / MQ-135</strong> (வாயு உணர்விகள்)</li>
+                <li><strong>DHT11 / TM1637</strong> (வெப்பம்-ஈரம் / காட்சி)</li>
+                <li><strong>pyboard / mpremote</strong> (சீரியல் கருவிகள்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-73.png" alt="OSFY Focus page 73 — ESP32 C3 Super Mini" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 73 — Figure 1 board photo.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-74.png" alt="OSFY Focus page 74 — pinout and Thonny flash" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 74 — Figures 2–3.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-75.png" alt="OSFY Focus page 75 — Docker esptool and bleditemps" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 75.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-76.png" alt="OSFY Focus page 76 — chaseleds.py" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 76.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-77.png" alt="OSFY Focus page 77 — LED dice and PIR" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 77 — Figure 4.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-78.png" alt="OSFY Focus page 78 — PIR, IR obstacle, gas sensors" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 78 — Figures 5–6.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-79.png" alt="OSFY Focus page 79 — air quality monitor" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 79 — Figure 7; By Ankur Kumar.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scaling Open Source IoT Across Supply Chains and Retail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.82rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.5rem 0.55rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.76rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Scaling Open Source IoT Across Supply Chains and Retail</h1>
+            <p class="subtitle">A field guide to the AI-native tool stack, the discipline that outlasts it, and the AI-quantum wave behind it.</p>
+            <p class="byline">By Bala Kalavala</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 80–82</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Enterprise digital transformation often miscasts IoT as a hardware problem. Legacy proprietary stacks trap telemetry in vendor silos and lock-in. CXOs should treat IoT as a <span class="vocab-words" data-modal-title="Enterprise data fabric (noun) நிறுவனத் தரவுத் துணி" data-modal-meaning="– unifying physical events with ERP and analytics as one coherent data layer." data-modal-synonyms="data fabric, operational data layer">core enterprise data fabric</span>: open-source software that joins physical events to ERP engines. Pushing processing to the edge lets retail and supply-chain teams turn raw telemetry into bottom-line impact.</p>
+
+            <h2>The ERP-to-edge data bridge</h2>
+            <p>The primary gap is time lag between warehouse-floor reality and transactional records in platforms such as SAP or Oracle. An open-source edge architecture filters and analyses telemetry at the physical boundary so ERP sees curated business events—not raw sensor noise.</p>
+
+            <h2>The edge is also the AI layer</h2>
+            <p>Every layer of this stack is infrastructure for applied AI. <span class="vocab-words" data-modal-title="WasmEdge (noun) வாஸ்ம் எட்ஜ்" data-modal-meaning="– lightweight WebAssembly runtime for running portable inference/logic on gateways." data-modal-synonyms="Wasmtime, WebAssembly edge">WasmEdge</span> and <span class="vocab-words" data-modal-title="ONNX Runtime (noun) ஓஎன்என்எக்ஸ் ரன்டைம்" data-modal-meaning="– portable ML inference engine for anomaly detection and forecasting on edge devices." data-modal-synonyms="ONNX, edge inference">ONNX Runtime</span> run anomaly-detection or forecasting models on retail gateways and refrigerated transport units. Cloud-only inference is too late for real-time loss prevention or cold-chain intervention; edge inference acts in place. Telemetry such as shrink events and temperature breaches lands in <span class="vocab-words" data-modal-title="Apache Iceberg (noun) அப்பாச்சி ஐஸ்பர்க்" data-modal-meaning="– open table format with ACID and time-travel for lakehouse telemetry." data-modal-synonyms="open lakehouse, Delta Lake">Apache Iceberg</span> tables to train the next generation of models—without another round of vendor lock-in or “cloud tax.”</p>
+
+            <h2>High-value scenarios: retail, CPG, supply chain</h2>
+            <p>Bridging the architectural gap moves operations from reactive crisis management to proactive automated workflows. Figure 1 (Edge-to-ERP) shows the flow:</p>
+            <ol>
+                <li><strong>Physical edge &amp; local inference</strong> — shelves / RFID gates → WasmEdge / ONNX → shrink / loss detection.</li>
+                <li><strong>Real-time event streaming spine</strong> — EMQX → Apache Kafka / NATS.</li>
+                <li><strong>Core enterprise integration</strong> — Apache Flink (CEP), open lakehouse (Iceberg / S3), ERP (SAP / Oracle SCM).</li>
+                <li><strong>Business outcomes</strong> — dynamic reorder alerts, automated cold-chain audits, real-time on-shelf availability.</li>
+            </ol>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Business problem</th>
+                        <th>Open source solution</th>
+                        <th>ERP value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPG &amp; cold chain</td>
+                        <td>Billions in shrinkage from refrigeration failures; legacy loggers only record after the fact</td>
+                        <td>Constrained sensors + EMQX/Mosquitto + local LSTM-style micro-inference for real-time anomaly flags</td>
+                        <td>Flink correlates location with SAP SCM; halt shipments, alert hubs, recalculate stock—waste cuts of up to ~35%</td>
+                    </tr>
+                    <tr>
+                        <td>Omnichannel retail</td>
+                        <td>“Phantom inventory”—ERP shows stock that is misplaced or stolen</td>
+                        <td>Smart shelves / RFID with Wasm runtimes; edge microservices reconcile shelf vs POS every minute</td>
+                        <td>Validated movements → Kafka → WMS; associates get replenishment tasks only for high-margin gaps</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Open source enterprise stack: value mapping</h2>
+            <p>Deploying open source across the IoT value chain cuts recurring licence overhead and protects against platform lock-in. A selection matrix:</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Architecture layer</th>
+                        <th>Open source technology</th>
+                        <th>Strategic value</th>
+                        <th>Primary use cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Edge containerisation</td>
+                        <td>WasmEdge / Wasmtime</td>
+                        <td>Lightweight, cross-platform runtime</td>
+                        <td>Inventory &amp; sensor logic on retail gateways</td>
+                    </tr>
+                    <tr>
+                        <td>Edge messaging broker</td>
+                        <td>EMQX / Eclipse Mosquitto</td>
+                        <td>Many concurrent low-bandwidth MQTT clients</td>
+                        <td>Fleet vehicles &amp; warehouse telemetry</td>
+                    </tr>
+                    <tr>
+                        <td>Stream processing</td>
+                        <td>Apache Flink</td>
+                        <td>Stateful CEP at scale</td>
+                        <td>Cold-chain readings ↔ ERP orders</td>
+                    </tr>
+                    <tr>
+                        <td>Event backbone</td>
+                        <td>Apache Kafka / NATS</td>
+                        <td>Central messaging spine</td>
+                        <td>Decouple sensors from ERP/CRM</td>
+                    </tr>
+                    <tr>
+                        <td>Open table format</td>
+                        <td>Apache Iceberg / Delta Lake</td>
+                        <td>ACID + time-travel on cheap storage</td>
+                        <td>Years of supply-chain telemetry for audit &amp; AI</td>
+                    </tr>
+                    <tr>
+                        <td>Federated analytics</td>
+                        <td>Trino / Apache Spark</td>
+                        <td>SQL on the lakehouse without proprietary ETL</td>
+                        <td>Cross IoT, supplier &amp; financial analytics</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Architectural principles for C-suite leaders</h2>
+            <ul>
+                <li><strong>Own your data standards</strong> — Parquet and Iceberg keep telemetry portable and AI-ready.</li>
+                <li><strong>Decouple edge from cloud</strong> — buffer locally so operations continue through disconnects.</li>
+                <li><strong>Focus on event-driven ERP actions</strong> — emit business events such as <code>ShipmentDelayed</code> into ERP workflows, not just raw readings.</li>
+            </ul>
+
+            <p><strong>References:</strong> Gartner Hype Cycle for Supply Chain Execution; LF Edge reports; Apache Iceberg documentation.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>ERP-to-edge bridge</strong> (இஆர்பி-எட்ஜ் பாலம்)</li>
+                <li><strong>WasmEdge / ONNX Runtime</strong> (எட்ஜ் அனுமானம்)</li>
+                <li><strong>EMQX / Mosquitto</strong> (எம்க்யூடிடி தரகர்)</li>
+                <li><strong>Apache Kafka / NATS</strong> (நிகழ்வு முதுகெலும்பு)</li>
+                <li><strong>Apache Flink CEP</strong> (சிக்கலான நிகழ்வு செயலாக்கம்)</li>
+                <li><strong>Apache Iceberg lakehouse</strong> (திறந்த ஏரி வீடு)</li>
+                <li><strong>Phantom inventory</strong> (போலி சரக்கு)</li>
+                <li><strong>Cold-chain micro-inference</strong> (குளிர்ச் சங்கிலி அனுமானம்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-80.png" alt="OSFY Focus page 80 — Scaling Open Source IoT" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 80.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-81.png" alt="OSFY Focus page 81 — Edge-to-ERP architecture" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 81 — Figure 1 and industry scenarios.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-82.png" alt="OSFY Focus page 82 — enterprise stack value mapping" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 82 — By Bala Kalavala.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

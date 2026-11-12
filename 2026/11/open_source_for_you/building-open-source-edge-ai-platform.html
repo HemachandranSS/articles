@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building an Open Source Edge AI Platform: From Device to Distributed Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        pre.code-block { background: #0f172a; color: #e2e8f0; padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.82rem; line-height: 1.45; margin: 1rem 0; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.78rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Building an Open Source Edge AI Platform: From Device to Distributed Intelligence</h1>
+            <p class="subtitle">Scaling edge AI devices comes with a host of challenges. The job must be done correctly and with caution.</p>
+            <p class="byline">By Vishal Tanna</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 69–72</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">A manufacturing client once showed a defect-detection system: a camera and a Jetson board that worked beautifully on one line. Scaling that to forty-two plants—and thousands of devices—is a different discipline. Building AI features and operating them are separate problems; at the edge the gap is wider because you cannot always reach the machine, and the machine is not always online. (This piece continues themes from an earlier OSFY article in September 2026.)</p>
+
+            <h2>What changes at scale</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>One device</th>
+                        <th>A fleet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>SSH and <code>docker run</code></td>
+                        <td>Declarative, pull-based, survives offline nodes</td>
+                    </tr>
+                    <tr>
+                        <td>Model update</td>
+                        <td>Copy a file</td>
+                        <td>Versioned artefact, staged rollout, rollback path</td>
+                    </tr>
+                    <tr>
+                        <td>Failure</td>
+                        <td>You notice</td>
+                        <td>Nobody notices for three weeks</td>
+                    </tr>
+                    <tr>
+                        <td>Hardware</td>
+                        <td>Identical</td>
+                        <td>Three generations, two vendors, mixed accelerators</td>
+                    </tr>
+                    <tr>
+                        <td>Cost</td>
+                        <td>Electricity</td>
+                        <td>Bandwidth—and it is not small</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>The four tiers</h2>
+            <ol>
+                <li><strong>Tier 1 — Device runtime:</strong> inference engine, local buffering, health agent.</li>
+                <li><strong>Tier 2 — Node orchestration:</strong> K3s / KubeEdge, workload lifecycle, device discovery.</li>
+                <li><strong>Tier 3 — Fleet control:</strong> GitOps reconciliation, model registry, OTA pipeline.</li>
+                <li><strong>Tier 4 — Aggregation:</strong> telemetry store, retraining pipeline, dashboards.</li>
+            </ol>
+            <p>Figure 1’s dashed line is the whole article: everything below (tiers 1–2) must work when the link drops; everything above (tiers 3–4) must tolerate nodes vanishing for a day and returning with a backlog. Telemetry flows up; desired state flows down.</p>
+
+            <h2>Tier 1: What runs on the box</h2>
+            <p>Pick a runtime by hardware, not preference:</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Runtime</th>
+                        <th>Best fit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ONNX Runtime</td>
+                        <td>Mixed fleets; broad execution providers (CUDA, TensorRT, …)</td>
+                    </tr>
+                    <tr>
+                        <td>LiteRT</td>
+                        <td>Successor to TensorFlow Lite; mobile/embedded and on-device LMs</td>
+                    </tr>
+                    <tr>
+                        <td>OpenVINO</td>
+                        <td>Intel CPU/GPU/NPU; ~2–3× with NNCF INT8</td>
+                    </tr>
+                    <tr>
+                        <td>TensorRT</td>
+                        <td>Fastest on NVIDIA Jetson; least portable</td>
+                    </tr>
+                    <tr>
+                        <td>llama.cpp</td>
+                        <td>On-device LLMs</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><span class="vocab-words" data-modal-title="Quantization / INT8 (noun) குவாண்டைசேஷன்" data-modal-meaning="– reducing weight precision to speed inference and shrink models on edge hardware." data-modal-synonyms="INT8, model compression">Quantization (INT8)</span> is essential for speed and size. Local buffering keeps inference alive offline and turns outages into backlogs instead of data holes.</p>
+
+            <pre class="code-block">defaultNamespace: edge-inference
+helm:
+  chart: ./charts/vision-inference
+  values:
+    modelVersion: "2026.09.3"
+    inferenceRuntime: onnxruntime
+targetCustomizations:
+  - name: jetson-sites
+    clusterSelector:
+      matchLabels: { hardware: jetson-orin }
+    helm:
+      values: { inferenceRuntime: tensorrt }
+  - name: intel-sites
+    clusterSelector:
+      matchLabels: { hardware: intel-nuc }
+    helm:
+      values: { inferenceRuntime: openvino }</pre>
+
+            <h2>Tier 2: Orchestration without the cloud</h2>
+            <p><strong>K3s</strong> is CNCF-conformant and often runs in about 512 MB–1 GB for server nodes. <strong>KubeEdge</strong> splits CloudCore (beside the API server) and EdgeCore (on the node) so workloads keep running when links die. <strong>Akri</strong> (CNCF Sandbox) exposes leaf devices such as IP cameras as Kubernetes resources. Prefer pull-based <span class="vocab-words" data-modal-title="GitOps (noun) கிட்ஆப்ஸ்" data-modal-meaning="– edge agents reconcile desired state from Git (Argo CD, Flux) rather than push-only SSH." data-modal-synonyms="Argo CD, Flux">GitOps</span> (Argo CD, Flux) so agents reconcile from Git even after offline periods.</p>
+
+            <h2>Tier 3: Models are not container images</h2>
+            <p>Baking models into images inflates bandwidth and slows redeploys. Keep them separate:</p>
+            <pre class="code-block">registry.internal/edge-inference:1.8.2          # application — changes rarely
+models.internal/defect-detect/2026.09.3.onnx   # model — changes often</pre>
+            <p><strong>Staged rollout:</strong> canary (5 devices, 48 hours for hardware diversity) → pilot (1 site, 1 week with human validation) → ring 1 (10%) → ring 2 (50%) → full. Halt automatically on error budgets—edge models can behave differently under 2 p.m. vs 11 p.m. lighting.</p>
+
+            <h2>Tier 4: Seeing a fleet you cannot reach</h2>
+            <p>Full Prometheus scrapes over metered links are not viable. Aggregate locally, push to a collector, and sample:</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Signal</th>
+                        <th>Frequency</th>
+                        <th>Why</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Heartbeat with model version</td>
+                        <td>1–5 min</td>
+                        <td>What is deployed is never quite what you think</td>
+                    </tr>
+                    <tr>
+                        <td>Inference latency p50 / p95</td>
+                        <td>5 min, pre-aggregated</td>
+                        <td>Hardware degradation shows here first</td>
+                    </tr>
+                    <tr>
+                        <td>Input distribution summary</td>
+                        <td>Hourly</td>
+                        <td>Drift detection—the most valuable edge signal</td>
+                    </tr>
+                    <tr>
+                        <td>Confidence distribution</td>
+                        <td>Hourly</td>
+                        <td>A falling mean is early warning</td>
+                    </tr>
+                    <tr>
+                        <td>Resource pressure</td>
+                        <td>5 min</td>
+                        <td>Thermal throttling is otherwise invisible</td>
+                    </tr>
+                    <tr>
+                        <td>Full inference samples</td>
+                        <td>≤ 0.1%</td>
+                        <td>For the retraining set</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>OpenTelemetry for transport, plus a device collector with batching and retry, turns offline time into a backlog. <span class="vocab-words" data-modal-title="Input drift (noun) உள்ளீட்டு சறுக்கல்" data-modal-meaning="– production inputs diverge from training distribution without throwing errors." data-modal-synonyms="data drift, distribution shift">Input drift</span> is how edge AI dies: new lighting, camera angles, supplier colours. Summaries compared to the training distribution (e.g. with Evidently or NannyML at tier 4) catch it weeks before humans do.</p>
+
+            <h2>Security</h2>
+            <p>The attacker may have physical access. Practical minimum: secure boot with signed images; per-device identity (SPIFFE/SPIRE short-lived credentials—not one key baked into four thousand images); Cosign-verified model artefacts before load; mutual TLS to the control plane; encrypted local storage for buffers. Easier to build in than retrofit.</p>
+
+            <h2>Cost is bandwidth</h2>
+            <p>Compute is already bought; the recurring bill is data movement. Model distribution is large and spiky—control it with <span class="vocab-words" data-modal-title="Delta updates (noun) டெல்டா புதுப்பிப்புகள்" data-modal-meaning="– ship binary diffs of models instead of full artefacts to cut fleet bandwidth." data-modal-synonyms="binary diff, incremental OTA">delta updates</span> (a 400 MB model × 4,000 devices = 1.6 TB; a diff is often ~1/10th). Telemetry is moderate if aggregated. Raw retraining frames are the trap—put sampling rate in tier-3 config with an egress alert.</p>
+
+            <h2>Build order</h2>
+            <ul>
+                <li><strong>Weeks 1–3:</strong> one device under GitOps—nothing else changes.</li>
+                <li><strong>Weeks 4–6:</strong> separate model from image; registry, version selector, cache.</li>
+                <li><strong>Weeks 7–9:</strong> telemetry—heartbeat, latency, drift summaries, dashboard of model version per device.</li>
+                <li><strong>Weeks 10–12:</strong> staged rollout; deliberately ship a bad model to canary to test the halt.</li>
+            </ul>
+            <p>Teams that scale first and build the platform afterwards end up doing both at once, under pressure, with devices already in the field.</p>
+
+            <h2>Where this leaves us</h2>
+            <p>The manufacturing client is at eleven plants rather than forty-two—slower than planned and the right call. A quarter spent on tiers 2–3 against a handful of devices made later rollout uneventful. What convinced them was not architecture diagrams: the first staged rollout halted at canary because confidence dropped on two of five devices at a plant with different overhead lighting. Across forty-two sites at once, defect reports would have taken weeks to connect to the deploy.</p>
+            <p>The hard problem stopped being the model a while ago. It is running a thousand copies in places you cannot reach, without losing track of what they run and whether it still works. Every component here is open source and most run on hardware you already own. Start with one device under GitOps. That is a weekend—and everything else builds on it.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Four-tier edge AI platform</strong> (நான்கு அடுக்கு எட்ஜ் ஏஐ)</li>
+                <li><strong>Intermittent connectivity boundary</strong> (இடைவிடா இணைப்பு எல்லை)</li>
+                <li><strong>ONNX / OpenVINO / TensorRT</strong> (உயர்வு நேர இயந்திரங்கள்)</li>
+                <li><strong>K3s / KubeEdge / Akri</strong> (எட்ஜ் ஆர்க்கெஸ்ட்ரேஷன்)</li>
+                <li><strong>GitOps staged rollout</strong> (நிலைப்படுத்தப்பட்ட வெளியீடு)</li>
+                <li><strong>Input drift</strong> (உள்ளீட்டு சறுக்கல்)</li>
+                <li><strong>SPIFFE / Cosign</strong> (சாதன அடையாளம் / கையொப்பம்)</li>
+                <li><strong>Delta model updates</strong> (டெல்டா மாடல் புதுப்பிப்பு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-69.png" alt="OSFY Focus page 69 — Building an Open Source Edge AI Platform" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 69.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-70.png" alt="OSFY Focus page 70 — four tiers diagram" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 70 — Figure 1: four tiers and connectivity boundary.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-71.png" alt="OSFY Focus page 71 — runtimes, orchestration, models" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 71.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-72.png" alt="OSFY Focus page 72 — telemetry, security, build order" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 72 — By Vishal Tanna.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

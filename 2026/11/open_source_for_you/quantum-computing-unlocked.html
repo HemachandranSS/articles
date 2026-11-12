@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Computing Unlocked</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.6rem 0.7rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #f0fdf4; color: #14532d; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        .fact-box { background: #f8fafc; border-left: 4px solid #16a34a; padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .fact-box ul { margin: 0.5rem 0 0 1.1rem; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.8rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · INSIGHT · FOR U &amp; ME · NOVEMBER 2026</div>
+            <h1>Quantum Computing Unlocked</h1>
+            <p class="subtitle">Quantum computing is poised to revolutionise industries by finding solutions to challenges once deemed intractable.</p>
+            <p class="byline">By Dr Gopala Krishna Behara and Narumanchi Sree Keerthi</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 40–44</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="Quantum computing (noun) குவாண்டம் கணினியியல்" data-modal-meaning="– computing that uses qubits, superposition and entanglement to tackle certain intractable classical problems." data-modal-synonyms="QC, quantum processing">Quantum computing</span> has moved beyond academic exploration into early commercial deployment, with active pilots across finance, healthcare, logistics and cybersecurity. Enterprises are running proof-of-concepts for portfolio optimisation, molecular simulation and quantum-safe encryption to prepare for the arrival of cryptographically relevant quantum compute.</p>
+
+            <p>According to McKinsey’s 2026 Quantum Technology Monitor, more than 300 global companies—including Airbus, JPMorgan Chase, Boehringer Ingelheim and Liberty Mutual—are now actively collaborating with quantum technology vendors, and the technology could unlock as much as US$ 2.7 trillion in economic value across industries by 2035.</p>
+
+            <h2>Classical computing vs quantum computing</h2>
+            <p>Conventional silicon-based computers consist of millions of transistors that switch between ‘on’ and ‘off’, corresponding to the two possible values of bits—0 and 1. Processing relies on basic logic gates acting on individual bits or pairs of bits. Each bit’s state can be measured and distinguished without disturbing the system.</p>
+            <p>Quantum computers, by contrast, employ <span class="vocab-words" data-modal-title="Qubit (noun) குவிபிட்" data-modal-meaning="– quantum bit that can occupy a superposition of 0 and 1; n qubits can carry amplitudes over 2ⁿ states." data-modal-synonyms="quantum bit">quantum bits or qubits</span> that can occupy a superposition of both 0 and 1 at the same time. A two-qubit device can represent four states simultaneously; an n-qubit register can carry amplitudes over up to 2ⁿ unique states in parallel. Qubits can also become <span class="vocab-words" data-modal-title="Entanglement (noun) குவாண்டம் இணைப்பு" data-modal-meaning="– correlation where the state of one qubit is intrinsically linked to another." data-modal-synonyms="quantum correlation">entangled</span>, which means the state of one qubit is intrinsically linked to the state of another—a defining feature of quantum mechanics. This inherent parallelism allows quantum machines to tackle specific classes of complex problems far beyond the reach of classical architectures.</p>
+
+            <h3>Characteristics of a quantum computing platform (QCP)</h3>
+            <ul>
+                <li><strong>Low-level programming:</strong> Built on quantum logical gates (Pauli, Hadamard, CCNot, and so on) executed in quantum processing units (QPUs).</li>
+                <li><strong>Heterogeneous:</strong> Technical specifications of quantum computing platforms are heterogeneous with respect to both software and hardware in QPUs.</li>
+                <li><strong>Remote software development and deployment:</strong> Vendors provide frameworks so developers can leverage QPUs accessed remotely over the cloud.</li>
+            </ul>
+
+            <div class="fact-box">
+                <strong>Some quantum facts</strong>
+                <ul>
+                    <li>Following NIST’s official <span class="vocab-words" data-modal-title="PQC (noun) பிந்தைய குவாண்டம் குறியாக்கம்" data-modal-meaning="– post-quantum cryptography standards meant to resist attacks from future quantum computers." data-modal-synonyms="post-quantum crypto, ML-KEM">PQC</span> standards (e.g., ML-KEM, ML-DSA, SLH-DSA), enterprises are migrating to protect legacy data against future quantum-enabled decryption.</li>
+                    <li>Logical-qubit milestones include Microsoft/Quantinuum’s 12 logical qubits (March 2026), IBM’s 4,158-qubit Kookaburra system, and Google’s exponential error suppression via surface-code scaling.</li>
+                    <li>The US government acquired equity worth about US$ 2 billion in nine quantum firms; D-Wave acquired Quantum Computing Inc. for US$ 550 million; Google/Nvidia backed QuEra’s US$ 230+ million round.</li>
+                    <li>Quantum Computing-as-a-Service (QCaaS) captured a large share of access by removing the need for costly on-prem hardware; AWS Braket, Google Quantum AI, IBM Quantum Network and Microsoft Azure Quantum expanded pay-as-you-go access.</li>
+                    <li>Healthcare/pharma is projected among the highest-CAGR verticals through the mid-2030s for drug discovery and related workloads.</li>
+                </ul>
+            </div>
+
+            <h2>Table 1: Classical computing vs quantum computing</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Classical computing</th>
+                        <th>Quantum computing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Governing physical law</td>
+                        <td>Electromagnetism / classical electrodynamics</td>
+                        <td>Quantum mechanics / quantum electrodynamics</td>
+                    </tr>
+                    <tr>
+                        <td>Primary scaling principle</td>
+                        <td>Moore’s Law</td>
+                        <td>Harnesses sub-atomic states for memory and processing</td>
+                    </tr>
+                    <tr>
+                        <td>Fundamental information unit</td>
+                        <td>Digital bits 0, 1</td>
+                        <td>Qubits in superposition of 0 and 1</td>
+                    </tr>
+                    <tr>
+                        <td>Operational state model</td>
+                        <td>Deterministic</td>
+                        <td>Stochastic</td>
+                    </tr>
+                    <tr>
+                        <td>State capacity</td>
+                        <td>n bits: 2ⁿ sequences, one used at a time</td>
+                        <td>n qubits: 2ⁿ sequences available in parallel (amplitudes)</td>
+                    </tr>
+                    <tr>
+                        <td>Processing paradigm</td>
+                        <td>Sequential computing</td>
+                        <td>Intrinsically parallel quantum operations</td>
+                    </tr>
+                    <tr>
+                        <td>Relative throughput (illustrative)</td>
+                        <td>64-bit classical speeds in gigaflops</td>
+                        <td>Small qubit registers often compared (loosely) to multi-teraflop classical machines for certain workloads</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Quantum algorithms and software portability</h2>
+            <p>Programmers use quantum algorithms to define computing tasks, gain speed on suitable problem classes, and coordinate with other tasks on quantum computing platforms. QC platforms are still evolving with proprietary standards, APIs and tools, so portability remains a practical concern for enterprise teams.</p>
+
+            <h2>QCP architecture: seven layers</h2>
+            <p>A useful end-to-end reference stack progresses from the physical qubit to the business application:</p>
+            <ol>
+                <li><strong>QPU and physical qubits</strong> — physical quantum information in gates and interactions (superconducting, spin, and other solid-state modalities).</li>
+                <li><strong>Cryogenic environment and interconnect</strong> — millikelvin infrastructure, shielding, wiring and low-noise amplification.</li>
+                <li><strong>Control and readout electronics</strong> — AWGs/DACs, ADCs, RF and microwave generation; often FPGA / RFSoC based.</li>
+                <li><strong>Quantum–classical interface / control highway</strong> — signal routing, filtering, attenuation/amplification, multiplexing, thermalisation and precision timing.</li>
+                <li><strong>Classical control and quantum orchestration</strong> — job scheduling, calibration, experiment management, error mitigation and real-time feedback.</li>
+                <li><strong>Quantum software, compiler and runtime</strong> — SDKs such as Qiskit, Cirq, Q#, PennyLane and CUDA-Q; compilation, transpilation, qubit mapping and scheduling.</li>
+                <li><strong>Application and business layer</strong> — optimisation, simulation, chemistry, finance, materials, cybersecurity and hybrid classical–quantum workflows.</li>
+            </ol>
+            <p>Layers 1–2 operate in the cryogenic/quantum domain; layers 3–7 are largely classical/room-temperature. Control and programming flow downward; measurement and feedback flow upward.</p>
+
+            <h3>Main application areas</h3>
+            <ul>
+                <li><strong>Optimisation</strong> — supply-chain, scheduling, portfolio and route optimisation</li>
+                <li><strong>Chemistry</strong> — molecular simulation, drug discovery and catalyst design</li>
+                <li><strong>Materials</strong> — battery and superconducting materials simulation</li>
+                <li><strong>Finance</strong> — portfolio optimisation, risk analysis and pricing</li>
+                <li><strong>Cybersecurity</strong> — cryptographic research and security analysis</li>
+            </ul>
+
+            <h2>Algorithms in quantum computing</h2>
+            <p>A quantum algorithm is a step-by-step procedure that exploits superposition, entanglement and interference. Table 2 summarises algorithms that matter most in 2026.</p>
+
+            <h2>Table 2: Leading quantum algorithms</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>What it does</th>
+                        <th>Speedup / type</th>
+                        <th>Typical use case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shor’s algorithm</td>
+                        <td>Factors large integers; solves discrete logarithms in polynomial time</td>
+                        <td>Exponential</td>
+                        <td>Breaking RSA/ECC; driver of PQC migration</td>
+                    </tr>
+                    <tr>
+                        <td>Grover’s algorithm</td>
+                        <td>Searches an unsorted database of N items</td>
+                        <td>Quadratic (√N)</td>
+                        <td>Unstructured search; brute-force cryptanalysis of symmetric keys</td>
+                    </tr>
+                    <tr>
+                        <td>Quantum Fourier Transform (QFT)</td>
+                        <td>Quantum analogue of the DFT as quantum gates</td>
+                        <td>Exponential for certain uses</td>
+                        <td>Subroutine in Shor’s and phase estimation</td>
+                    </tr>
+                    <tr>
+                        <td>Variational Quantum Eigensolver (VQE)</td>
+                        <td>Hybrid estimate of ground-state energy</td>
+                        <td>NISQ-friendly; problem-dependent</td>
+                        <td>Molecular simulation; drug and materials design</td>
+                    </tr>
+                    <tr>
+                        <td>QAOA</td>
+                        <td>Hybrid approximation for combinatorial optimisation</td>
+                        <td>Heuristic on specific structures</td>
+                        <td>Portfolio, routing, scheduling, max-cut</td>
+                    </tr>
+                    <tr>
+                        <td>HHL algorithm</td>
+                        <td>Solves linear systems via quantum amplitudes</td>
+                        <td>Exponential under sparsity/conditioning assumptions</td>
+                        <td>Quantum ML and linear algebra subroutines</td>
+                    </tr>
+                    <tr>
+                        <td>Quantum Phase Estimation (QPE)</td>
+                        <td>Estimates eigenvalue/phase of a unitary</td>
+                        <td>Exponential precision scaling</td>
+                        <td>Shor’s, chemistry simulation, VQE refinement</td>
+                    </tr>
+                    <tr>
+                        <td>Quantum annealing</td>
+                        <td>Adiabatic evolution toward lowest-energy state</td>
+                        <td>Heuristic; no proven general speedup</td>
+                        <td>Combinatorial optimisation on annealers (e.g. D-Wave)</td>
+                    </tr>
+                    <tr>
+                        <td>Quantum ML (QSVM, QNN)</td>
+                        <td>Quantum feature-space variants of SVMs/NNs</td>
+                        <td>Problem-dependent</td>
+                        <td>Classification, anomaly detection, high-dimensional data</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>The current quantum landscape</h2>
+            <p><strong>IBM</strong> unveiled the 1,121-qubit Condor processor (Dec 2023); IBM Quantum Experience is used by enterprises including JPMorgan Chase, Daimler, Honda, Samsung and Barclays. <strong>Google</strong> unveiled Willow (Dec 2024), a 105-qubit superconducting chip demonstrating exponential error suppression, aiming for a useful error-corrected computer by 2029. <strong>Microsoft</strong> announced Majorana 1, a QPU powered by topological qubits, with Azure Quantum providing multi-hardware access. <strong>D-Wave</strong> developed the Advantage2 processor (4,400+ qubits, 2025) for cybersecurity and logistics-style workloads. <strong>Rigetti</strong> launched a 36-qubit multi-chip processor for hybrid workflows. <strong>Intel</strong> has announced chips such as Tangle Lake and Tunnel Falls. <strong>AWS</strong> introduced its Ocelot chip (Feb 2025) around ‘cat qubits’ and continues to operate Braket as a multi-vendor cloud service.</p>
+            <p><strong>Nvidia</strong> launched the Accelerated Quantum Research Center (NVAQC) in Boston (March 2025) to pair quantum research with AI supercomputers. <strong>IonQ</strong> builds trapped-ion systems. <strong>Alibaba</strong> has offered experimental superconducting quantum cloud access. <strong>Quantinuum</strong> (Cambridge Quantum + Honeywell Quantum Solutions) builds high-fidelity trapped-ion systems (H-series and Helios) and filed for a US IPO in January 2026. <strong>QuEra</strong>, spun out of Harvard and MIT, uses neutral atoms in optical tweezer arrays and is noted for high logical-qubit counts on Aquila. Other vendors include Xanadu, Pasqal, Riverlane, Honeywell International and Huawei.</p>
+
+            <h2>Table 3: Industry usage of quantum computing</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Industry</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Healthcare and pharma</td>
+                        <td>Drug discovery and design; molecular dynamics; candidate compounds and novel materials; therapy optimisation; time-to-market</td>
+                    </tr>
+                    <tr>
+                        <td>Financial services</td>
+                        <td>Trading strategies; portfolio optimisation; asset pricing and risk analysis; detecting market instabilities</td>
+                    </tr>
+                    <tr>
+                        <td>Transportation</td>
+                        <td>Self-driving research; air traffic management; request management; faster goods delivery</td>
+                    </tr>
+                    <tr>
+                        <td>Energy</td>
+                        <td>Network design; energy distribution; oil-well optimisation</td>
+                    </tr>
+                    <tr>
+                        <td>Governments</td>
+                        <td>Quantum-safe encryption; national security and defence; cryptography and cybersecurity; secure communications; supply-chain resilience and logistics planning</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>The challenges</h2>
+            <p><strong>Lack of proven software advantage:</strong> Only a few algorithms (VQE, QAOA, Grover, Shor) demonstrate clear speedups; most real-world problems still lack demonstrated quantum advantage on hardware.</p>
+            <p><strong>Hybrid orchestration complexity:</strong> Integrating quantum subroutines into classical workflows needs robust middleware and new programming paradigms.</p>
+            <p><strong>Technological / error-correction overhead:</strong> Even with 2025–2026 breakthroughs, encoding one logical qubit can require dozens to hundreds of physical qubits.</p>
+            <p><strong>Benchmarking and standardisation gap:</strong> Lack of industry-wide metrics hampers objective comparison of hardware and software.</p>
+            <p><strong>Vendor lock-in:</strong> Proprietary SDKs and cloud APIs still lack unified standards.</p>
+            <p><strong>Energy and infrastructure costs at scale:</strong> Cryogenics, control electronics and specialised facilities drive high energy and capital cost.</p>
+            <p><strong>Talent and collaboration:</strong> Demand for quantum-literate engineers outstrips supply; academia–industry collaboration remains essential.</p>
+            <p><strong>Cryogenic infrastructure:</strong> Maintaining temperatures close to absolute zero remains a major engineering hurdle.</p>
+            <p><strong>Accelerating PQC migration:</strong> Enterprises face a shrinking window to inventory cryptographic assets and modernise protocols before government compliance deadlines in the early 2030s.</p>
+
+            <h2>Outlook</h2>
+            <p>Modern enterprises are exploring cloud-based quantum computing to enhance productivity, anticipating that quantum combined with AI and machine learning will deliver greater agility. Teams are increasingly exploring error-mitigation techniques and hybrid quantum–classical frameworks that marry classical systems with emerging quantum processors—building post-quantum readiness without waiting for a fully fault-tolerant machine.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Qubit / superposition</strong> (குவிபிட் / மேற்பொருத்துதல்)</li>
+                <li><strong>QCP stack</strong> (குவாண்டம் கணினி தள அடுக்கு)</li>
+                <li><strong>PQC (ML-KEM, ML-DSA)</strong> (பிந்தைய குவாண்டம் குறியாக்கம்)</li>
+                <li><strong>QAOA / VQE</strong> (கலப்பு குவாண்டம் வழிமுறைகள்)</li>
+                <li><strong>QCaaS</strong> (குவாண்டம் கணினி சேவை)</li>
+                <li><strong>Logical qubit</strong> (தருக்க குவிபிட்)</li>
+                <li><strong>Surface-code error correction</strong> (மேற்பரப்பு குறியீடு பிழைத்திருத்தம்)</li>
+                <li><strong>Hybrid classical–quantum workflow</strong> (கலப்பு வேலைப்பாய்வு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-40.png" alt="OSFY InSight page 40 — Quantum Computing Unlocked" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 40.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-41.png" alt="OSFY InSight page 41 — classical vs quantum table" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 41.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-42.png" alt="OSFY InSight page 42 — QCP architecture stack" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 42 — QCP architecture reference stack.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-43.png" alt="OSFY InSight page 43 — leading quantum algorithms" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 43.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-44.png" alt="OSFY InSight page 44 — industry usage and challenges" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 44 — By Dr Gopala Krishna Behara and Narumanchi Sree Keerthi.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

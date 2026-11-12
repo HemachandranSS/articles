@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kubernetes at the Edge: From Cloud Native to Resource-Constrained Devices</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        pre.code-block { background: #0f172a; color: #e2e8f0; padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; margin: 1rem 0; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Kubernetes at the Edge: From Cloud Native to Resource-Constrained Devices</h1>
+            <p class="subtitle">The interesting thing about Kubernetes at the edge is that it reflects a broader change in how we think about infrastructure.</p>
+            <p class="byline">By Dhaval Gajjar</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 50–52</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">A friend who runs operations for a mid-sized retail chain had a familiar problem. Two years ago, each store had a small server in a back room running point-of-sale software, inventory sync and analytics. The setup had grown organically over a decade and was a nightmare to update—physical store visits or fragile VPN scripts for every software push.</p>
+
+            <p>He asked whether Kubernetes could help. Stock Kubernetes would have eaten half the available memory on a store server just running itself. Then we found <span class="vocab-words" data-modal-title="k3s (noun) கே3எஸ்" data-modal-meaning="– lightweight certified Kubernetes distribution from Rancher/SUSE suited to small edge nodes." data-modal-synonyms="lightweight Kubernetes, edge K8s">k3s</span>. Over a few months it rolled out to forty stores. Deployments that once took a week shrank to about twenty minutes. This article is about that messy, resource-constrained, we-have-no-staff-at-this-site version of Kubernetes.</p>
+
+            <h2>Why edge is a different animal</h2>
+            <p>Running Kubernetes in a data centre is not the same as running it at the edge. Four factors dominate:</p>
+            <ol>
+                <li><strong>Hardware is smaller.</strong> A typical edge node might be an industrial PC with four cores and eight GB of RAM—or less. Stock Kubernetes will not behave well if you simply drop it there.</li>
+                <li><strong>Networks are unreliable.</strong> Sites have patchy connectivity or cellular links that drop. The orchestrator must tolerate periods when the central control plane is unreachable, and local workloads must keep running.</li>
+                <li><strong>Sites are physically dispersed.</strong> With twenty to five thousand sites, manual SSH into each is impossible. <span class="vocab-words" data-modal-title="Fleet management (noun) குழு மேலாண்மை" data-modal-meaning="– centrally managing many distant clusters with policy, GitOps and rollouts." data-modal-synonyms="multi-cluster ops, cluster fleet">Fleet management</span> becomes critical.</li>
+                <li><strong>Staffing is thin.</strong> There are no engineers at a petrol pump or similar site. If something breaks at 2 a.m., it must self-heal—or wait until morning.</li>
+            </ol>
+
+            <h2>The lightweight distributions, briefly</h2>
+            <p>Standard Kubernetes is too heavy for devices such as a Raspberry Pi. Common edge-friendly options:</p>
+            <ul>
+                <li><strong>K3s</strong> — certified distribution from Rancher (now SUSE); binary under ~70 MB; replaces etcd with SQLite by default; often under ~0.5 GB RAM.</li>
+                <li><strong>MicroK8s</strong> — Canonical’s snap-based install on Ubuntu.</li>
+                <li><strong>KubeEdge</strong> — extends Kubernetes with a cloud control plane and a lightweight EdgeCore agent on the device.</li>
+                <li><strong>k0s</strong> — single-binary distribution close to upstream Kubernetes.</li>
+            </ul>
+            <p>Rule of thumb: use K3s for self-contained clusters at each site; use KubeEdge when you want one logical cluster spanning cloud and edge.</p>
+
+            <h2>Getting K3s running on a small device</h2>
+            <pre class="code-block">curl -sfL https://get.k3s.io | sh -
+sudo k3s kubectl get nodes
+sudo k3s kubectl get pods -A</pre>
+            <p>Add a worker:</p>
+            <pre class="code-block">curl -sfL https://get.k3s.io | K3S_URL=https://main-server:6443 K3S_TOKEN=mynodetoken sh -</pre>
+
+            <h2>Designing for intermittent connectivity</h2>
+            <ul>
+                <li><strong>Local autonomy</strong> — each site runs its own cluster (classic K3s pattern).</li>
+                <li><strong>Hybrid control plane</strong> — cloud control plane with local state caching (KubeEdge pattern).</li>
+                <li><strong>GitOps-driven sync</strong> — Flux or Argo CD pull config from Git so a site can keep running on the last known good state if Git is unreachable.</li>
+            </ul>
+
+            <h2>Workload patterns that fit the edge</h2>
+            <p><strong>Good for the edge:</strong> latency-sensitive processing (industrial control, real-time analytics); bandwidth-sensitive filtering (shrink 1 GB/hr of raw data to ~10 MB of signal); resilience-critical services that must run offline (petrol pumps, hospital admissions); compliance and data residency where data cannot leave the site.</p>
+            <p><strong>Better in the cloud:</strong> analytics dashboards, model training, long-term storage.</p>
+
+            <h2>Fleet management, the real daily problem</h2>
+            <p><strong>Rancher</strong> is a heavyweight choice for managing many K3s clusters—UI, policy and access control. <strong>Fleet</strong> (from Rancher) targets GitOps across many clusters, grouping them by labels. <strong>Argo CD</strong> scales via ApplicationSets that template deployments across clusters. <strong>Akri</strong> exposes IoT devices as Kubernetes resources pods can discover—useful when workloads and physical devices share a site.</p>
+            <p>For the retail chain, Rancher plus Argo CD worked well: ops got a central dashboard; developers worked with Git. Opening a new store became a two-hour provisioning job instead of a week.</p>
+
+            <h2>Storage, networking, and the things that bite</h2>
+            <p>Storage is weirder at the edge. In the cloud you have managed block and object storage; at the edge you have local disk—often slow, small and unreliable. Plan for what happens when an SD card dies.</p>
+            <p>Networking means NAT, firewalls and sites unreachable from outside. <span class="vocab-words" data-modal-title="WireGuard (noun) வயர்கார்டு" data-modal-meaning="– modern lightweight VPN; Tailscale builds easier key management on top of it." data-modal-synonyms="VPN tunnel, Tailscale">WireGuard</span> is popular and light; Tailscale builds easier key management on top of it.</p>
+            <p>Resource contention is real—edge devices often run more than Kubernetes workloads. Set requests and limits carefully; use node labels and taints to control placement. Updates are a project at scale: staged rollouts and a canary site first, not a fleet-wide bang.</p>
+
+            <h2>Security at the edge is different</h2>
+            <p>Physical access is a real threat. Encrypt disks; use secure boot when hardware allows; assume local credentials can be extracted and limit what they grant. Authenticate and encrypt every connection—zero trust applies even more strongly. Sign images and enforce them with admission controllers so compromise of one site does not cascade. Secrets are tricky when Vault may be unreachable: cache carefully or use device HSMs.</p>
+
+            <h2>A real-world example, condensed</h2>
+            <p>After migration, each store had an Intel NUC with 8 GB of RAM running K3s and five workloads: point-of-sale backend, inventory sync agent, customer display service, a tiny Prometheus instance, and a log forwarder to the central platform.</p>
+            <p>All configuration lived in Git. Argo CD on each cluster pulled every two minutes; deployments were pull requests; developers never touched a store directly. The cloud side ran Rancher across forty clusters, Loki for logs and Grafana Cloud for fleet dashboards. Connectivity used WireGuard; secrets came from Vault with local caching. A new store’s NUC was imaged with a prebuilt K3s installer including identity and GitOps config—plug in, and within about fifteen minutes the cluster was syncing from Git with no on-site DevOps.</p>
+
+            <h2>Where this is heading</h2>
+            <ul>
+                <li><strong>eBPF</strong> — Cilium works well as a CNI on constrained devices.</li>
+                <li><strong>WebAssembly</strong> — smaller than containers, faster startup; projects like SpinKube bring WASM into Kubernetes.</li>
+                <li><strong>AI at the edge</strong> — ML inference close to data sources is becoming routine.</li>
+                <li><strong>Fleet tooling</strong> — Rancher Prime, Portainer Edge and peers compete on managing thousands of distant clusters.</li>
+            </ul>
+
+            <h2>The quiet revolution of orchestration everywhere</h2>
+            <p>Not long ago, modern operations lived in the cloud and everything else was legacy. Edge computing changes that story. The same tools, patterns and deployment workflows now reach petrol pumps, retail stores, factory floors and hospital wards. For teams that already know Kubernetes, the unlock is large: open-source tools, a manageable learning curve, and a simpler way to run software across many locations. If any workload still needs a physical visit to update, take this seriously. Start small—one site, install K3s, deploy one workload. The pattern scales from there.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>K3s / MicroK8s / KubeEdge / k0s</strong> (இலகு எட்ஜ் கே8எஸ்)</li>
+                <li><strong>Fleet management</strong> (குழு மேலாண்மை)</li>
+                <li><strong>GitOps (Flux / Argo CD)</strong> (கிட்ஆப்ஸ்)</li>
+                <li><strong>WireGuard / Tailscale</strong> (எட்ஜ் விபிஎன்)</li>
+                <li><strong>Akri</strong> (ஐஓடி சாதன கண்டுபிடிப்பு)</li>
+                <li><strong>Zero trust at the edge</strong> (பூஜ்ய நம்பிக்கை)</li>
+                <li><strong>eBPF / Cilium</strong> (இபிஎஃபிஎப் / சிலியம்)</li>
+                <li><strong>WASM / SpinKube</strong> (வெப்அசெம்பிளி எட்ஜ்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-50.png" alt="OSFY Focus page 50 — Kubernetes at the Edge" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 50.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-51.png" alt="OSFY Focus page 51 — K3s and edge patterns" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 51.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-52.png" alt="OSFY Focus page 52 — fleet, security, outlook" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 52 — By Dhaval Gajjar.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

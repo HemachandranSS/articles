@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CERN pivoting 2,200 computers from Red Hat to Debian</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOSS BYTES · NOVEMBER 2026</div>
+            <h1>CERN pivoting 2,200 computers from Red Hat to Debian</h1>
+            <p class="byline">FOSS Bytes</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Page 08, 10</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">At MiniDebConf Winterthur 2026 in Switzerland, CERN engineers Federico Vaga and Nikos Tsipinakis detailed plans to migrate <span class="vocab-words" data-modal-title="Fleet migration (noun) கணினிக் குழு இடம்பெயர்வு" data-modal-meaning="– moving a large installed base of machines to a new OS." data-modal-synonyms="OS migration">2,200 computers</span>&mdash;particle accelerator control systems and embedded machines&mdash;from Red Hat Enterprise Linux to <span class="vocab-words" data-modal-title="Debian 13 Trixie (noun) டெபியன் ட்ரிக்ஸி" data-modal-meaning="– Debian stable release codenamed Trixie." data-modal-synonyms="Debian stable">Debian 13 (&ldquo;Trixie&rdquo;)</span> by year-end.</p>
+            <p>The primary trigger was RHEL&rsquo;s tightening of compiler <span class="vocab-words" data-modal-title="Microarchitecture baseline (noun) மைக்ரோஆர்கிடெக்சர் அடிப்படை" data-modal-meaning="– minimum CPU instruction set a distribution&amp;rsquo;s packages target." data-modal-synonyms="CPU baseline">microarchitecture baselines</span>, which would have rendered older hardware&mdash;Intel Core 2 Duo and Ivy Bridge chips, about 47% of the fleet&mdash;obsolete. Staying on RHEL would have cost CERN roughly US$ 6.58 million in hardware replacements.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Debian 13 Trixie</strong> (டெபியன் ட்ரிக்ஸி)</li>
+                <li><strong>RHEL microarchitecture baseline</strong> (ஆர்ஹெச்இஎல் மைக்ரோஆர்கிடெக்சர்)</li>
+                <li><strong>Ivy Bridge</strong> (ஐவி பிரிட்ஜ்)</li>
+                <li><strong>Accelerator controls</strong> (முடுக்கியியல் கட்டுப்பாடு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-08.png" alt="OSFY FOSS Bytes — November 2026, page 08" />
+                <figcaption>OPEN SOURCE FOR YOU: FOSS Bytes. November 2026, page 08. Scan related to “CERN pivoting 2,200 computers from Red Hat to Debian”.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-10.png" alt="OSFY FOSS Bytes — November 2026, page 10" />
+                <figcaption>OPEN SOURCE FOR YOU: FOSS Bytes. November 2026, page 10. Scan related to “CERN pivoting 2,200 computers from Red Hat to Debian”.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

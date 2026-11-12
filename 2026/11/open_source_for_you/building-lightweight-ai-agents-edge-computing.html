@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building Lightweight AI Agents for Edge Computing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .callout { background: #fdf2f8; border-left: 4px solid #db2777; padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Building Lightweight AI Agents for Edge Computing</h1>
+            <p class="subtitle">Lightweight AI models are making it possible to run intelligent applications directly on local devices. LangChain, Gemma and PaliGemma simplify AI agent development for edge computing while reducing reliance on cloud infrastructure.</p>
+            <p class="byline">Based on a talk by Supriya Sirbi · Transcribed by Ananthu Ashok</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 53–55</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Artificial intelligence is increasingly moving beyond cloud-based environments and onto local devices. That shift creates a growing need for lightweight language models that can respond intelligently without constant internet access. Running AI at the edge lets applications operate in remote locations, improves privacy and reduces dependence on cloud infrastructure—making it suitable for many real-world scenarios.</p>
+
+            <p>One of the key enablers is Google’s <span class="vocab-words" data-modal-title="Gemma (noun) ஜெம்மா" data-modal-meaning="– Google’s family of open-source language models sized for modest local hardware." data-modal-synonyms="Gemma 2B, open LLM">Gemma</span> family of open-source models. Designed with smaller parameter counts, they can run on relatively modest hardware while still supporting tasks such as image captioning, summarisation and reasoning. Paired with frameworks such as <span class="vocab-words" data-modal-title="LangChain (noun) லாங்சேன்" data-modal-meaning="– open-source framework for building AI agents and orchestrating LLM workflows." data-modal-synonyms="agent framework, LLM orchestration">LangChain</span>, developers can build intelligent agents that run entirely on local systems.</p>
+
+            <h2>Why lightweight models matter for edge AI</h2>
+            <p>Running a model on edge devices forces trade-offs between inference performance and hardware limits. While large language models may use tens or hundreds of billions of parameters, Gemma models are designed to function with roughly 2–3 billion parameters—enough for systems with about 16 GB of RAM or even less.</p>
+            <p>Edge AI matters most when connectivity is missing. In remote forests or mountains, models can keep processing locally and generating responses offline. With limited compute, lightweight and fine-tuned models fit specialised use cases better than large general-purpose models. Although they may introduce slightly higher inference times than powerful cloud-hosted systems, they offer local execution, improved privacy and independence from the network.</p>
+
+            <h2>What is LangChain?</h2>
+            <p>LangChain is an open-source framework for building AI agents, orchestrating workflows and experimenting with agent architectures. One of its biggest advantages is a standardised model interface: different LLMs expose different APIs, but LangChain provides a common layer so developers can switch between GPT, Gemma and others without rewriting the application. It also supports data compression within agent workflows and offers observability, debugging and monitoring.</p>
+
+            <h2>Why use LangChain?</h2>
+            <p>The same standardised interface works across multiple LLMs (Gemini, ChatGPT, Claude, Gemma and more). It simplifies agent orchestration and supplies tools for debugging and monitoring—useful when you are iterating on edge pipelines rather than one-off prompts.</p>
+
+            <h2>Understanding the LangChain ecosystem</h2>
+            <ul>
+                <li><strong>LangChain</strong> — entry point for straightforward agents (image recognition, reasoning, conversational flows) without heavy orchestration.</li>
+                <li><strong>LangGraph</strong> — for sophisticated apps that need multiple agents to coordinate tasks and advanced workflows.</li>
+                <li><strong>Deep Agents</strong> — lower-level control when hardware optimisation matters.</li>
+                <li><strong>LangSmith</strong> — observability: monitoring, debugging and visualisation of deployed agent workflows.</li>
+            </ul>
+
+            <h2>Building an edge AI agent with Gemma</h2>
+            <p>A practical pipeline looks like this: the user uploads an image → convert to RGB → <span class="vocab-words" data-modal-title="PaliGemma (noun) பாலிஜெம்மா" data-modal-meaning="– ~3B vision-language model used here for local image captioning." data-modal-synonyms="vision-language model, VLM">PaliGemma</span> (≈3B vision-language model) generates a caption → a LangChain agent invokes tools → Gemma 2B summarises from the caption → the output is a structured response with both caption and summary.</p>
+
+            <h2>Application workflow</h2>
+            <p>Together the models occupy roughly 7–8 GB of storage, so the full application can run on a laptop with about 16 GB of RAM. A <span class="vocab-words" data-modal-title="Gradio (noun) க்ரேடியோ" data-modal-meaning="– Python library for quickly building web UIs for ML demos." data-modal-synonyms="ML demo UI">Gradio</span> web interface lets users upload images and receive captions plus summaries. LangChain manages communication between both models as one agent pipeline.</p>
+
+            <h2>Rapid prototyping with Google Colab</h2>
+            <p>Google Colab is convenient for experiments: pick an accelerator such as an NVIDIA T4, install Transformers, LangChain and PyTorch, and download models from Hugging Face (authentication required).</p>
+
+            <h2>Loading lightweight Gemma models</h2>
+            <p>PaliGemma 3B handles image captioning locally. Gemma 2B is loaded via a Hugging Face text-generation pipeline with a repetition penalty. The summarisation model occupies roughly 4.9 GB and is used with prompt templates and LangChain’s LLMChain to produce structured summaries from PaliGemma captions; outputs are cleaned before display.</p>
+
+            <h2>Integrating LangChain with Gemma</h2>
+            <p>LangChain organises capabilities into reusable tools the agent can invoke:</p>
+            <ul>
+                <li><strong>Tool 1 — captioning:</strong> convert the upload to RGB and pass it to PaliGemma.</li>
+                <li><strong>Tool 2 — summarisation:</strong> take the caption (not the raw image) and produce a short summary with Gemma 2B.</li>
+            </ul>
+            <p>The LangChain agent is the central orchestrator, initialised with the language model plus both tools, then returns a structured response containing the caption and summary. The modular design makes it easy to swap or add models in the same workflow.</p>
+
+            <div class="callout">
+                <strong>Balancing performance and resource constraints.</strong> Edge computing trades cloud speed for privacy and offline use. Techniques such as <span class="vocab-words" data-modal-title="Quantization (noun) குவாண்டைசேஷன்" data-modal-meaning="– reducing model weight precision (e.g. 4-bit) to shrink size and memory use." data-modal-synonyms="4-bit, model compression">quantization</span> (for example, shrinking a ~10 GB model to ~4 GB with 4-bit weights) and model distillation help fit more capable behaviour onto limited hardware.
+            </div>
+
+            <h2>Creating the user interface with Gradio</h2>
+            <p>Gradio provides the front end. Despite combining multiple models, the complete interface can be implemented in fewer than 100 lines of code. The same stack demonstrated in Colab also runs locally in VS Code on systems with about 16 GB of RAM.</p>
+
+            <h2>Hardware optimisation and LangSmith</h2>
+            <p>LangChain can steer CPU/GPU and memory use for constrained deployments. LangSmith adds observability across the whole application—workflow execution, reasoning traces and agent interactions—so developers can debug and improve transparency while building.</p>
+
+            <h2>Choosing the right open source models</h2>
+            <p>Different open-source models suit different tasks. In this demonstration, Gemma 2B is chosen for summarisation and PaliGemma for image captioning. Developers can experiment with reverse workflows—generating images from summaries, or checking whether an uploaded image matches accompanying documents. Matching model strengths to the task remains central to efficient edge AI applications.</p>
+
+            <p><em>This article is based on the talk “Using LangChain and Gemma models to develop faster AI agents on edge” by Supriya Sirbi, Software Architect, Aptiv, at AI DevCon India 2026. It has been transcribed by Ananthu Ashok, journalist, EFY Group.</em></p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Edge AI</strong> (எட்ஜ் செயற்கை நுண்ணறிவு)</li>
+                <li><strong>Gemma / PaliGemma</strong> (ஜெம்மா / பாலிஜெம்மா)</li>
+                <li><strong>LangChain / LangGraph / LangSmith</strong> (லாங்சேன் சூழல்)</li>
+                <li><strong>Vision-language model</strong> (பார்வை-மொழி மாடல்)</li>
+                <li><strong>Gradio</strong> (க்ரேடியோ இடைமுகம்)</li>
+                <li><strong>Quantization</strong> (குவாண்டைசேஷன்)</li>
+                <li><strong>LLMChain / agent tools</strong> (ஏஜென்ட் கருவிகள்)</li>
+                <li><strong>Hugging Face Transformers</strong> (ஹக்கிங் ஃபேஸ்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-53.png" alt="OSFY Focus page 53 — Building Lightweight AI Agents" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 53 — Supriya Sirbi at AI DevCon India.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-54.png" alt="OSFY Focus page 54 — LangChain and Gemma edge agent" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 54.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-55.png" alt="OSFY Focus page 55 — Gradio, LangSmith, model choice" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 55 — Talk by Supriya Sirbi; transcribed by Ananthu Ashok.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zero Trust Module for IoT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        .release-box { background: #fdf2f8; border-left: 4px solid #db2777; padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        code { font-size: 0.88em; background: #f1f5f9; padding: 0.1em 0.35em; border-radius: 3px; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.78rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Zero Trust Module for IoT</h1>
+            <p class="subtitle">It’s critical to build Zero Trust into IoT networks and replace outdated trust models. ns-3 simulations help safeguard vulnerable smart devices.</p>
+            <p class="byline">By Arun Santhosh R.A. and Dr T. Subbulakshmi</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 56–59</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Traditional “castle-and-moat” security is a poor fit for modern IoT. Sensors and actuators often sit in physically accessible places, run on minimal hardware, and sit outside the comfortable perimeter of enterprise networks—so a single compromised device can become a foothold into everything else.</p>
+
+            <p><span class="vocab-words" data-modal-title="Zero Trust (noun) பூஜ்ய நம்பிக்கை" data-modal-meaning="– security model of ‘never trust, always verify’ for every access request (NIST SP 800-207)." data-modal-synonyms="never trust always verify, ZTA">Zero Trust</span> architecture follows “never trust, always verify,” aligned with <span class="vocab-words" data-modal-title="NIST SP 800-207 (noun) என்ஐஎஸ்டி எஸ்பி 800-207" data-modal-meaning="– US NIST guidance defining Zero Trust Architecture tenets and components." data-modal-synonyms="ZTA standard">NIST SP 800-207</span>. Core tenets include:</p>
+            <ul>
+                <li><strong>Resource protection</strong> — treat all data sources, sensor feeds and services as resources.</li>
+                <li><strong>Per-session trust evaluation</strong> — access is not permanent; each request is evaluated with least-privilege permissions.</li>
+                <li><strong>Dynamic policy decisions</strong> — identity, device status and environment feed a Policy Decision Point (PDP) and Policy Enforcement Point (PEP).</li>
+                <li><strong>End-to-end encryption and authentication</strong> — secure communications regardless of network topology.</li>
+            </ul>
+
+            <h2>Usage of ns-3 in IoT applications</h2>
+            <p>Physical IoT testbeds—microcontrollers, gateways, radios—are costly and hard to reproduce. The <span class="vocab-words" data-modal-title="ns-3 (noun) என்எஸ்-3" data-modal-meaning="– discrete-event network simulator used for realistic protocol and attack experiments." data-modal-synonyms="network simulator 3">ns-3</span> simulator offers a deterministic, flexible environment for IPv4/IPv6, TCP, 802.11 and attack scenarios such as IP spoofing or man-in-the-middle.</p>
+            <p>The authors released a <strong>Zero Trust IoT library for ns-3</strong> (<code>zero-trust-iot</code>) on the NS-3 App Store: plug-and-play C++ components for cryptographic authentication, runtime context-drift re-scoring and in-line packet filtering—so researchers can benchmark Zero Trust defences without expensive hardware.</p>
+
+            <h3>Setup requirements</h3>
+            <ul>
+                <li><strong>Simulator:</strong> ns-3 (tested with ns-3.45, ns-3.46, ns-3.47)</li>
+                <li><strong>Crypto:</strong> Crypto++ (cryptopp) for RSA certificate validation and AES</li>
+                <li><strong>Build:</strong> CMake and the ns3 wrapper (<code>./ns3</code>)</li>
+            </ul>
+
+            <h2>Zero Trust library architecture</h2>
+            <p>Figure 1 maps the library to NIST SP 800-207 pillars:</p>
+            <ol>
+                <li><strong>Identity &amp; Auth</strong> — <code>IdentityRegistry</code> maps nodes to roles via SHA-256; <code>CertificateAuthority</code> issues Root CA / RSA key pairs and X.509-style validation; hash utilities produce hex digests.</li>
+                <li><strong>Policy (PDP)</strong> — <code>ZtPolicyEngine</code> (and cert-aware variants) with default-deny, micro-segmentation rules and ALLOW/DENY from roles plus trust scores.</li>
+                <li><strong>Continuous Trust</strong> — context-drift validation, dynamic trust scoring and adaptive penalties on spoofing or rate anomalies.</li>
+                <li><strong>Enforcement (PEP)</strong> — IPv4 TX hooks that drop unauthorised packets; policy-gated TLS-style handshake exchanging AES session keys; AES-128-CBC payload crypto.</li>
+            </ol>
+            <p>A cross-cutting <code>ZtLogger</code> records registrations, handshakes, policy evaluations and rejections for audit.</p>
+
+            <h3>Key modules</h3>
+            <ul>
+                <li><code>IdentityRegistry</code> — process-wide singleton registering <code>ns3::Node</code> instances with roles and hashes.</li>
+                <li><code>ComputeSha256</code> — Crypto++ wrapper for identity and policy integrity digests.</li>
+                <li><code>CertificateAuthority</code> / <code>ZtPolicyEngineWithCert</code> — simulated PKI with RSA key pairs and signed identity certificates (including expiry).</li>
+                <li><code>ZtPolicyEngine</code> — <code>Authorize()</code>, <code>AuthorizeWithCert()</code>, <code>EvaluateMicroSegmentation()</code>; defaults to DENY.</li>
+                <li><code>ContextAttributeStore</code> / <code>PeriodicRevalidator</code> — continuous re-authorisation from live behaviour.</li>
+                <li><code>ZtDynamicTrustScorer</code>, <code>ZtTlsHandshake</code>, <code>ZtIpv4Hook</code>, encryption helpers — session anomalies, gated handshakes, inline drops and AES-CBC payloads.</li>
+            </ul>
+
+            <h2>Table 1: Case studies in the library</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Case study / script</th>
+                        <th>Key functions</th>
+                        <th>Zero Trust outcome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Context drift — <code>context-drift-test.cc</code></td>
+                        <td><code>StoreBaseline()</code>, <code>UpdateCurrentContext()</code>, <code>SetParameters()</code>, <code>Revalidate()</code>, <code>ZtPolicyEngine::Revoke()</code></td>
+                        <td>Weighted drift decays trust as <em>Trust = Trust × e^(−λ × drift)</em>; Nodes 3 and 4 revoked below trust 0.40</td>
+                    </tr>
+                    <tr>
+                        <td>Micro-segmentation — <code>micro-segmentation-test.cc</code></td>
+                        <td><code>RegisterNode()</code>, <code>AddRolePolicyRule()</code>, <code>EvaluateMicroSegmentation()</code>, <code>ComputeSha256()</code></td>
+                        <td>Policy fingerprint Ψ; allows normal streams; blocks excess streaming (&gt;5 packets); denies maintenance outside hours; unapproved actions DENY</td>
+                    </tr>
+                    <tr>
+                        <td>Dynamic trust scorer — <code>trust-scorer-test.cc</code></td>
+                        <td><code>OnPacketReceived()</code>, <code>IsSessionAllowed()</code>, <code>SendNormal()</code>, <code>SendBurst()</code></td>
+                        <td>Exponential penalties on rate violations; gradual recovery on compliant traffic; hard-block below cutoff score 25 (drop all packets)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><code>PeriodicRevalidator</code> regularly computes weighted drift and calls revoke when thresholds trip. <code>ZtDynamicTrustScorer</code> flags sessions exceeding ~1.5× baseline rate via <code>OnPacketReceived</code>. Encryption utilities wrap Crypto++ AES-CBC with a random 16-byte IV. <code>ZtTlsHandshake</code> runs a policy-gated mutual handshake before exposing <code>GetSessionKey</code>. <code>ZtIpv4Hook</code> taps node TX traces to discard unauthorised egress.</p>
+
+            <div class="release-box">
+                <strong>Release history.</strong> Available on the <a href="https://apps.nsnam.org/app/zero-trust-iot/" target="_blank" rel="noopener">NS-3 App Store</a>. Version 1.0.0 established Crypto++ primitives; version 2.0.0 for ns-3.47 expanded certificate authorities, dynamic trust scoring and context-drift validation. Licensed under <strong>GPLv2</strong>; contributions welcome via the project GitHub. Docs: <a href="https://the-ns3-programmer.github.io/zero-trust-iot-library/" target="_blank" rel="noopener">zero-trust-iot-library documentation</a>.
+            </div>
+
+            <h2>Table 2: How the library mitigates attacks</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Attack</th>
+                        <th>Vulnerable setup</th>
+                        <th>Zero Trust defence</th>
+                        <th>Outcome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Man-in-the-middle<br><code>mitm-attack.cc</code> / <code>mitm-mitigation.cc</code></td>
+                        <td>Sensor sends plaintext UDP (<code>TEMP:45.2</code>); attacker tampers to <code>TAMPERED:…</code> toward gateway</td>
+                        <td><code>SignIdentity</code>, <code>AuthorizeWithCert</code>, <code>StartHandshake</code>, <code>EncryptPayload</code> (AES-CBC + IV)</td>
+                        <td>Gateway validates session / decrypts; modified or unauthenticated packets fail and drop</td>
+                    </tr>
+                    <tr>
+                        <td>Identity spoofing<br><code>spoofing-attack.cc</code> / <code>spoofing-mitigation.cc</code></td>
+                        <td>Attacker connects as a “sensor” and pushes forged readings; gateway accepts without checks</td>
+                        <td><code>SecureSensorApp</code> / <code>SecureSink</code>, CA, role verification (<code>temp-sensor</code>)</td>
+                        <td>CA-signed cert required; attacker lacks private key → connection dropped</td>
+                    </tr>
+                    <tr>
+                        <td>Unauthorised access<br><code>unauthorized-access-*.cc</code></td>
+                        <td>Rogue client sends <code>DELETE ALL DATA</code> to open TCP sink</td>
+                        <td><code>AddAuthorized</code>, cert engine, revocation list, <code>LogCertRejected</code></td>
+                        <td>Policy fails; rejection logged; command never executes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Closing</h2>
+            <p>Implementing Zero Trust in IoT replaces outdated implicit trust with continuous verification. The <code>zero-trust-iot</code> library gives researchers a practical, NIST-aligned sandbox to evaluate cryptographic handshakes, micro-segmentation and trust scoring—delivering a standard-aligned security framework for next-generation IoT deployments without needing a full physical testbed.</p>
+
+            <p><strong>References:</strong> Zero Trust IoT docs; NIST SP 800-207 (Rose et al., Aug 2020); NS-3 App Store listing for <code>zero-trust-iot</code>.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Zero Trust / NIST SP 800-207</strong> (பூஜ்ய நம்பிக்கை)</li>
+                <li><strong>PDP / PEP</strong> (கொள்கை முடிவு / அமலாக்கப் புள்ளி)</li>
+                <li><strong>ns-3 / zero-trust-iot</strong> (என்எஸ்-3 நூலகம்)</li>
+                <li><strong>Micro-segmentation</strong> (நுண் பிரிவு)</li>
+                <li><strong>Context drift</strong> (சூழல் சறுக்கல்)</li>
+                <li><strong>Dynamic trust score</strong> (இயங்கு நம்பிக்கை மதிப்பெண்)</li>
+                <li><strong>AES-CBC / RSA certificates</strong> (குறியாக்கம் / சான்றிதழ்)</li>
+                <li><strong>Default-deny</strong> (இயல்பு மறுப்பு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-56.png" alt="OSFY Focus page 56 — Zero Trust Module for IoT" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 56.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-57.png" alt="OSFY Focus page 57 — Zero Trust IoT architecture diagram" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 57 — architecture aligned to NIST SP 800-207.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-58.png" alt="OSFY Focus page 58 — case studies and modules" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 58.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-59.png" alt="OSFY Focus page 59 — attack mitigation table and authors" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 59 — By Arun Santhosh R.A. and Dr T. Subbulakshmi.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

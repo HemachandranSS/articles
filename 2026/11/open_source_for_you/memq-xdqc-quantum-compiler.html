@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>memQ open sources distributed quantum compiler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOSS BYTES · NOVEMBER 2026</div>
+            <h1>memQ open sources distributed quantum compiler</h1>
+            <p class="byline">FOSS Bytes</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Page 08</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">memQ has open-sourced its <span class="vocab-words" data-modal-title="xDQC (noun) விநியோக குவாண்டம் கம்பைலர்" data-modal-meaning="– compiler that spreads quantum apps across multiple QPUs." data-modal-synonyms="distributed quantum compiler">Extensible Distributed Quantum Compiler (xDQC)</span>, built on Nvidia&rsquo;s open-source <span class="vocab-words" data-modal-title="CUDA-Q (noun) கூடா-க்யூ" data-modal-meaning="– Nvidia&amp;rsquo;s open-source platform for hybrid quantum-classical computing." data-modal-synonyms="quantum SDK">CUDA-Q</span> platform.</p>
+            <p>The compiler helps quantum applications run across multiple <span class="vocab-words" data-modal-title="QPU (noun) குவாண்டம் செயலி" data-modal-meaning="– hardware that executes quantum circuits." data-modal-synonyms="quantum processor">quantum processing units (QPUs)</span> rather than a single processor. It automatically handles qubit allocation, schedules operations across processors, and coordinates entanglement resources. As an extensible framework adaptable to different hardware configurations, it aims to make distributed quantum compilation more accessible for researchers building next-generation quantum infrastructure.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>xDQC</strong> (விநியோக குவாண்டம் கம்பைலர்)</li>
+                <li><strong>CUDA-Q</strong> (கூடா-க்யூ)</li>
+                <li><strong>QPU</strong> (குவாண்டம் செயலி)</li>
+                <li><strong>Entanglement resources</strong> (இணைப்பு வளங்கள்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-08.png" alt="OSFY FOSS Bytes — November 2026, page 08" />
+                <figcaption>OPEN SOURCE FOR YOU: FOSS Bytes. November 2026, page 08. Scan related to “memQ open sources distributed quantum compiler”.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

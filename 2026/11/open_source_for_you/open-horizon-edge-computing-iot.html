@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open Horizon: Enabling Efficient Edge Computing for IoT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+        .data-table th { background: #fdf2f8; color: #9d174d; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .data-table tr:nth-child(even) td { background: #fafafa; }
+        pre.code-block { background: #0f172a; color: #e2e8f0; padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.82rem; line-height: 1.45; margin: 1rem 0; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.78rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · FOCUS · NOVEMBER 2026</div>
+            <h1>Open Horizon: Enabling Efficient Edge Computing for IoT</h1>
+            <p class="subtitle">Discover why Open Horizon is so useful for IoT edge computing, check its features, learn how to install it, and build, deploy and interact with your first Open Horizon service.</p>
+            <p class="byline">By Dr R. Anand</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 64–68</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="Open Horizon (noun) ஓபன் ஹொரைசன்" data-modal-meaning="– LF Edge open-source platform to deploy and manage containers and ML models on edge devices." data-modal-synonyms="edge workload manager, LF Edge Open Horizon">Open Horizon</span> is an open-source platform that deploys and manages containerised applications and machine learning models on edge devices. It began as IBM’s Edge Application Manager and was contributed to LF Edge (Linux Foundation). Edge computing moves processing to where data is produced—gateways, smart cameras, retail kiosks—but managing software on thousands of devices behind firewalls, without onsite administrators, is hard.</p>
+
+            <p>Open Horizon’s answer is a central management hub that stores services and rules, plus a small agent on each edge device that negotiates with the hub to download and maintain containers.</p>
+
+            <h2>Why Open Horizon?</h2>
+            <ol>
+                <li><strong>Scale</strong> — automate updates for thousands of gateways at once instead of days of manual work.</li>
+                <li><strong>Unreliable networks</strong> — the agent keeps services running offline and syncs when the link returns.</li>
+                <li><strong>Heterogeneous hardware</strong> — mixed fleets (x86, ARM, Kubernetes clusters) each pull the service variant that fits.</li>
+                <li><strong>No onsite staff</strong> — self-healing restarts failed containers or rolls back bad updates.</li>
+            </ol>
+            <p>Edge processing also cuts latency versus shipping all data to the cloud, can reduce bandwidth cost, and helps keep sensitive data local. Governance under LF Edge keeps the project vendor-neutral.</p>
+
+            <h2>Table 1: Key components</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Where it runs</th>
+                        <th>What it does</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Exchange</td>
+                        <td>Management hub</td>
+                        <td>Stores users, orgs, nodes, services, policies, patterns; REST API on port 3090</td>
+                    </tr>
+                    <tr>
+                        <td>Agreement bot (agbot)</td>
+                        <td>Management hub</td>
+                        <td>Finds nodes matching a deployment policy and proposes agreements</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Sync Service (CSS)</td>
+                        <td>Management hub</td>
+                        <td>Distributes files and ML models to edge nodes (port 9443)</td>
+                    </tr>
+                    <tr>
+                        <td>Agent (anax)</td>
+                        <td>Each edge device/cluster</td>
+                        <td>Accepts agreements, pulls containers, runs and monitors them</td>
+                    </tr>
+                    <tr>
+                        <td>hzn CLI</td>
+                        <td>Admin/developer machine</td>
+                        <td>Publish, register and monitor from the command line</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Key features</h3>
+            <ul>
+                <li><strong>Policy-based deployment</strong> — nodes advertise properties (e.g. <code>hasCamera=true</code>).</li>
+                <li><strong>Patterns</strong> — fixed service lists for simple fleets.</li>
+                <li><strong>Autonomous agents</strong> — negotiate, deploy and heal independently.</li>
+                <li><strong>Model management</strong> — update ML models separately from containers.</li>
+                <li><strong>Devices and clusters</strong> — Docker and Kubernetes (K3s, MicroK8s, OpenShift).</li>
+                <li><strong>Security</strong> — signed service definitions, encrypted agreements, secrets management.</li>
+                <li><strong>Rollback and agent upgrades</strong> — fall back service versions; node management policies upgrade agents.</li>
+                <li><strong>Zero-touch onboarding</strong> — FIDO Device Onboard (FDO) support.</li>
+            </ul>
+
+            <h2>Table 2: Prerequisites</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Requirement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>OS</td>
+                        <td>Ubuntu 24 on x86_64; agents also on ARM (Raspberry Pi)</td>
+                    </tr>
+                    <tr>
+                        <td>Access</td>
+                        <td>root or sudo</td>
+                    </tr>
+                    <tr>
+                        <td>Memory / disk</td>
+                        <td>≥ 4 GB RAM and 20 GB free (hub minimum)</td>
+                    </tr>
+                    <tr>
+                        <td>Container engine</td>
+                        <td>Docker (or Podman with <code>DOCKER_ENGINE=podman</code>)</td>
+                    </tr>
+                    <tr>
+                        <td>Tools</td>
+                        <td><code>curl</code>, <code>git</code>, <code>jq</code>, <code>make</code></td>
+                    </tr>
+                    <tr>
+                        <td>Network</td>
+                        <td>Internet access; fixed IP for the hub</td>
+                    </tr>
+                    <tr>
+                        <td>Hub ports</td>
+                        <td>3090 (Exchange), 3111 (agbot), 9443 (CSS)</td>
+                    </tr>
+                    <tr>
+                        <td>Registry</td>
+                        <td>Docker Hub or other container registry account</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Installing Open Horizon</h2>
+            <p>Set the hub listen address first (<code>hostname -I</code> for your LAN IP):</p>
+            <pre class="code-block">export HZN_LISTEN_IP=192.168.1.50
+sudo apt update && sudo apt -y upgrade
+sudo apt install -y curl git jq make
+# optional for Java services:
+sudo apt install -y openjdk-21-jdk
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+newgrp docker</pre>
+
+            <p>All-in-one hub + agent + CLI (as root):</p>
+            <pre class="code-block">sudo -E bash -c "curl -sSL https://raw.githubusercontent.com/open-horizon/devops/master/mgmt-hub/deploy-mgmt-hub.sh | bash"
+export HZN_ORG_ID=myorg
+export HZN_EXCHANGE_USER_AUTH=admin:&lt;generated-password&gt;</pre>
+
+            <table class="data-table">
+                <thead>
+                    <tr><th>Flag</th><th>Effect</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>-A</code></td><td>Hub and CLI only (no local agent)</td></tr>
+                    <tr><td><code>-E</code></td><td>Skip example services/policies/patterns</td></tr>
+                    <tr><td><code>-S</code> / <code>-s</code></td><td>Stop / start hub services and agent</td></tr>
+                    <tr><td><code>-P</code></td><td>Purge volumes, images and uninstall agent</td></tr>
+                </tbody>
+            </table>
+
+            <p>On a separate device (e.g. Raspberry Pi), point the agent at the hub with <code>HZN_EXCHANGE_URL</code>, <code>HZN_FSS_CSSURL</code>, <code>HZN_AGBOT_URL</code>, device ID/token, then run <code>agent-install.sh</code>. Persist credentials in <code>~/.bashrc</code> and verify with <code>hzn version</code>, <code>hzn exchange status</code>, <code>hzn node list</code> and <code>docker ps</code>.</p>
+
+            <h2>Create your first service: temp-sensor</h2>
+            <p>A small service that prints a simulated temperature every five seconds.</p>
+            <pre class="code-block">hzn key create myorg student1@example.com
+export DOCKER_HUB_ID=&lt;your-docker-hub-id&gt;
+docker login
+mkdir ~/temp-sensor && cd ~/temp-sensor</pre>
+
+            <p><strong>service.sh</strong> (simulated sensor), Alpine Dockerfile, then:</p>
+            <pre class="code-block">docker build -t $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0 .
+docker run --rm -e HZN_DEVICE_ID=test $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0
+docker push $DOCKER_HUB_ID/temp-sensor_amd64:1.0.0
+# ARM: docker buildx build --platform linux/arm64 ...</pre>
+
+            <p>Publish a <code>service.definition.json</code> (org <code>myorg</code>, url <code>temp-sensor</code>, version <code>1.0.0</code>, arch <code>amd64</code>), then:</p>
+            <pre class="code-block">hzn exchange service publish -f service.definition.json
+hzn exchange service list myorg/</pre>
+
+            <p>Add a deployment policy that constrains on <code>sensor == temperature</code>, a node policy advertising <code>sensor=temperature</code>, then:</p>
+            <pre class="code-block">hzn exchange deployment addpolicy -f deployment.policy.json temp-sensor-policy
+hzn unregister -f
+hzn register --policy node.policy.json
+watch hzn agreement list
+hzn service log -f temp-sensor
+# e.g. 2026-10-05T09:14:05Z node=node1 temperature=24.7C</pre>
+
+            <h3>Useful day-to-day commands</h3>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Task</th><th>Command</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Node state / policy</td><td><code>hzn node list</code>, <code>hzn policy list</code></td></tr>
+                    <tr><td>Agreements / services</td><td><code>hzn agreement list</code>, <code>hzn service list</code></td></tr>
+                    <tr><td>Agent events</td><td><code>hzn eventlog list</code></td></tr>
+                    <tr><td>Org nodes</td><td><code>hzn exchange node list</code></td></tr>
+                    <tr><td>Why policy matches</td><td><code>hzn deploycheck all -b myorg/temp-sensor-policy</code></td></tr>
+                    <tr><td>Leave hub</td><td><code>hzn unregister -f</code></td></tr>
+                </tbody>
+            </table>
+
+            <h2>Updates and next steps</h2>
+            <p>Roll out version 1.0.1 by bumping <code>service.definition.json</code> and adding it to the policy’s <code>serviceVersions</code>. Changing node properties (e.g. removing a matching property with <code>hzn policy update</code>) lets the agbot stop the container on that node alone.</p>
+            <p>Open Horizon is built for thousands of unattended devices, open source under LF Edge. Natural next steps: add a Raspberry Pi as a second node, or use the Model Management System (MMS) to push ML models independently of containers.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Open Horizon / LF Edge</strong> (ஓபன் ஹொரைசன்)</li>
+                <li><strong>Exchange / agbot / CSS</strong> (மேலாண்மை ஹப் கூறுகள்)</li>
+                <li><strong>anax agent</strong> (எட்ஜ் முகவர்)</li>
+                <li><strong>hzn CLI</strong> (ஹொரைசன் கட்டளை வரி)</li>
+                <li><strong>Deployment policy</strong> (பயன்படுத்தல் கொள்கை)</li>
+                <li><strong>Agreement</strong> (ஒப்பந்தம்)</li>
+                <li><strong>FDO zero-touch onboard</strong> (தொடுதல் இல்லா பதிவு)</li>
+                <li><strong>Model Management System</strong> (மாடல் மேலாண்மை)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-64.png" alt="OSFY Focus page 64 — Open Horizon" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 64.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-65.png" alt="OSFY Focus page 65 — components and prerequisites" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 65.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-66.png" alt="OSFY Focus page 66 — installing Open Horizon" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 66.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-67.png" alt="OSFY Focus page 67 — first service tutorial" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 67.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-68.png" alt="OSFY Focus page 68 — deploy, interact, conclude" />
+                <figcaption>OPEN SOURCE FOR YOU: Focus. November 2026, page 68 — By Dr R. Anand.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

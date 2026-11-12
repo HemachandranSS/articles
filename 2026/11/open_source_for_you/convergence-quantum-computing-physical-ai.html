@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Convergence of Quantum Computing and Physical AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .use-case-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.92rem; }
+        .use-case-table th, .use-case-table td { border: 1px solid #e2e8f0; padding: 0.65rem 0.75rem; text-align: left; vertical-align: top; }
+        .use-case-table th { background: #f0fdf4; color: #14532d; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .use-case-table tr:nth-child(even) td { background: #fafafa; }
+        @media (max-width: 600px) {
+            .responsive-vocab-grid { grid-template-columns: 1fr; }
+            .use-case-table { font-size: 0.82rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OPEN SOURCE FOR YOU · INSIGHT · FOR U &amp; ME · NOVEMBER 2026</div>
+            <h1>The Convergence of Quantum Computing and Physical AI</h1>
+            <p class="subtitle">Industry can benefit immensely with quantum computing and Physical AI working together. That’s what the tech is working towards.</p>
+            <p class="byline">By Dr Magesh Kasthuri and Dr Anand Nayyar</p>
+            <p class="article-meta">Open Source For You &nbsp;|&nbsp; November 2026 &nbsp;|&nbsp; Pages 34–39</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Picture a <span class="vocab-words" data-modal-title="Mobile manipulator (noun) நகரும் கையடக்க ரோபோ" data-modal-meaning="– a mobile robot base with an arm that can pick, place and navigate in warehouses or factories." data-modal-synonyms="warehouse robot, mobile arm">mobile manipulator</span> working the night shift in a parts warehouse. The scenario is imagined, but every piece of it is ordinary. The robot must pull forty items from scattered shelves, hand a few to a packing cell, and reach its charger before the battery dips below a safe margin. Halfway through, a pallet appears in an aisle that was clear five minutes earlier. The robot must notice it, pin down where it sits, find a new path without clipping a shelf upright, and keep its arm from swinging a heavy tote into anything as it turns.</p>
+
+            <p>Two different problems hide in that moment. One is fast and physical: keep the wheels and joints doing the right thing over the next few milliseconds. The other is <span class="vocab-words" data-modal-title="Combinatorial (adjective) சேர்மான / ஒழுங்கமைவு" data-modal-meaning="– involving choosing among discrete orderings, assignments or configurations." data-modal-synonyms="discrete optimisation, scheduling-like">combinatorial</span>: with the aisle blocked, which order of picks, which route and which charging window now make sense? That second kind is where people start wondering whether a quantum computer could help. It might, for some slices of the problem, under conditions worth spelling out carefully.</p>
+
+            <h2>Two fields that grew up apart</h2>
+            <p><span class="vocab-words" data-modal-title="Physical AI (noun) இயற்பியல் ஏஐ" data-modal-meaning="– machine-learning systems that perceive and act in the physical world—arms, legged robots, drones, vehicles." data-modal-synonyms="embodied AI, robotics AI">Physical AI</span> is a loose label for machine learning systems that perceive and act in the physical world: robot arms, legged machines, drones and autonomous vehicles. Much of its recent progress has come from classical computing, including large multimodal robot policies and world models trained partly on simulated or synthetic data. Quantum computing, meanwhile, has spent years on a more basic question: how to build processors whose fragile quantum states survive long enough to compute anything useful.</p>
+            <p>The two communities meet mainly at optimisation. Robots constantly face choices about ordering, assignment and configuration, and optimisation happens to be one of the areas where quantum algorithms are studied most actively. That overlap is real, but it is narrower than what the headlines tend to suggest.</p>
+
+            <h2>What a quantum processor actually does</h2>
+            <p>A <span class="vocab-words" data-modal-title="QPU (noun) குவாண்டம் செயலி" data-modal-meaning="– quantum processing unit: a co-processor that runs quantum circuits; it does not replace the CPU or GPU." data-modal-synonyms="quantum co-processor, quantum chip">quantum processing unit, or QPU</span>, is a co-processor. It does not replace the CPU or GPU. A classical computer prepares the problem, sends a carefully designed sequence of operations to the QPU, and reads back measurement results. Those operations act on qubits, and three ideas explain why that matters.</p>
+            <p><strong>Superposition</strong> means a qubit’s state is described by amplitudes over 0 and 1 rather than by one definite value, and a register of many qubits carries amplitudes over an enormous number of bit strings at once. That sounds like parallel search, and it is often described that way, but the description misleads. A measurement returns a single bit string, sampled according to those amplitudes. A quantum computer does not try every answer and politely hand back the best one.</p>
+            <p>The useful part comes from <strong>interference</strong>. Amplitudes behave somewhat like waves: they can add up or cancel out. A well-designed algorithm arranges its operations so that routes towards poor answers tend to cancel while routes towards good answers reinforce, raising the odds of measuring something worthwhile. <strong>Entanglement</strong> links qubits so their joint state cannot be described one qubit at a time, giving algorithms correlations ordinary bits cannot reproduce directly. None of this guarantees a speedup. Advantage depends on a problem’s structure and an algorithm that exploits it; there is no universal speedup.</p>
+
+            <h2>Physical qubits, logical qubits and the machine room</h2>
+            <p>The qubits on a chip are physical qubits, and they are noisy: heat, stray fields and imperfect control pulses all corrupt their states. Error correction spreads one logical qubit across many physical ones and repeatedly checks for errors without destroying the encoded information. The catch is that adding qubits only helps when each is good enough. Below a certain error threshold, larger codes protect information better; above it they make things worse.</p>
+            <p>In a paper published in <em>Nature</em> in December 2024, Google Quantum AI and collaborators reported superconducting quantum memories operating below that threshold, with logical errors falling as the code grew. That is a meaningful step for reliability. It is not a demonstration of general fault-tolerant computing, and it says nothing about robotics performance.</p>
+            <p>Practical infrastructure also shapes what a QPU can offer a robot. Superconducting processors sit inside <span class="vocab-words" data-modal-title="Dilution refrigerator (noun) நீர்த்தல் குளிர்சாதனம்" data-modal-meaning="– cryogenic system that cools superconducting QPUs close to absolute zero." data-modal-synonyms="cryostat, quantum fridge">dilution refrigerators</span> close to absolute zero, wrapped in racks of classical control electronics, and most users reach them over a network through cloud services and job queues. That arrangement suits offline studies and batch planning far better than anything that must answer within a control cycle.</p>
+
+            <h2>Three ways to attack an optimisation problem</h2>
+            <p>When people talk about quantum optimisation, they usually mean one of three quite different things, and blurring them causes a good deal of confusion.</p>
+            <p><strong>Gate-based machines</strong> run circuits of programmable quantum logic operations. Their best-known optimisation method, the <span class="vocab-words" data-modal-title="QAOA (noun) குவாண்டம் தோராய மேம்படுத்தல் வழிமுறை" data-modal-meaning="– Quantum Approximate Optimization Algorithm: a hybrid loop alternating cost and mixer layers with a classical optimizer." data-modal-synonyms="hybrid quantum optimiser">Quantum Approximate Optimization Algorithm (QAOA)</span>, alternates a layer that encodes the cost function with a layer that mixes candidate solutions, while a classical optimizer tunes the settings between runs. It is a hybrid loop by design, and noisy hardware limits how deep, and therefore how capable, its circuits can be.</p>
+            <p><strong>Quantum annealers</strong> take another route. These specialised devices start in an easy-to-prepare state and gradually reshape an energy landscape so the system ideally settles into a low-energy configuration matching a good solution. They can hold many qubits, but each connects to only a few neighbours, so densely connected problems must be embedded by chaining several physical qubits into one variable. That overhead eats capacity quickly.</p>
+            <p>Then there are <strong>quantum-inspired classical methods</strong>: algorithms that borrow ideas from physics, such as annealing-style heuristics and tensor-network techniques, but run on conventional processors. They are often the toughest competition. Any serious claim of quantum benefit must beat them, not merely a naive baseline.</p>
+
+            <h2>How embodied systems think with their bodies</h2>
+            <p>An embodied system lives inside a feedback loop. It senses through cameras, lidar, joint encoders and force sensors, estimates its own state and the world’s, plans what to do, and acts through motors. Then it senses again, because the world never quite matches the plan. For a robot that balances or manipulates objects, the lowest layer of this loop may run hundreds or thousands of times per second, with slower planning layers stacked above it.</p>
+
+            <h2>Geometry versus dynamics</h2>
+            <p>Two kinds of physics run through that loop. The first is spatial geometry: where things are, how shapes overlap, whether choosing joint angles that place a gripper at a target pose is largely geometric (inverse kinematics). The second is dynamics: how forces produce motion over time—friction, contact, torque limits, battery budgets and momentum. Most hard decisions mix discrete and continuous choices. Quantum methods fit discrete parts most naturally, which is why promising research tends to carve a combinatorial slice out of a larger physical problem rather than handing the whole thing to a QPU.</p>
+
+            <h2>Turning a motion problem into something a QPU can read</h2>
+            <p>Both QAOA and annealers usually take problems written as a <span class="vocab-words" data-modal-title="QUBO (noun) இரும மேம்படுத்தல் மாதிரி" data-modal-meaning="– Quadratic Unconstrained Binary Optimization; mathematically equivalent to the Ising model." data-modal-synonyms="Ising encoding, binary quadratic form">QUBO</span> (quadratic unconstrained binary optimization), which is mathematically equivalent to the Ising model from physics. Every decision becomes a sum over single variables and pairs of variables. Continuous quantities such as a joint angle must be chopped into bins. That is workable for a carefully chosen subproblem; a robot’s full continuous dynamics, with contact, friction and time-varying loads, does not shrink into a compact QUBO.</p>
+            <p>Constraints are the awkward part. A QUBO cannot naively say that each slot holds exactly one task or that a joint must never pass its limit, so restrictions are added to the objective as penalty terms. Set the penalty weight too low and the solver cheerfully returns cheap answers that break the rules. Set it too high and the penalties swamp the landscape, and real cost differences shrink by comparison. Limited present-day hardware struggles to separate good solutions from mediocre ones. Finer discretisation makes the model more faithful but demands more qubits and couplings.</p>
+            <p>Recent research shows both the appeal and the limits. A 2025 <em>Scientific Reports</em> paper proposes a quantum formulation of robot posture and inverse kinematics—best read as an example of formulation, not evidence of practical speedup. Novara, Boggio and Volpe go further, proposing to cast polynomial nonlinear model predictive control as a QUBO, and state plainly that any benefit depends on an efficient quantum computer.</p>
+
+            <h2>Autonomous control: predictions, deadlines and fallbacks</h2>
+            <p><span class="vocab-words" data-modal-title="Model predictive control (MPC) (noun) மாதிரி முன்கணிப்பு கட்டுப்பாடு" data-modal-meaning="– control method that predicts a short horizon, optimises inputs, applies the first, then re-solves." data-modal-synonyms="receding-horizon control">Model predictive control, or MPC</span>, is a natural place to ask where quantum optimisation could fit. At each step, the controller uses a model to predict how the system will evolve over a short horizon, solves for the best sequence of inputs, applies only the first one, then measures the new state and solves again. That re-solving runs against a hard deadline. If an MPC solve for a fast-moving drone takes longer than the control period, the answer arrives after the moment it was meant for.</p>
+            <p>Today’s QPU access involves queues, network round trips, repeated sampling and classical post-processing, which makes it a poor fit for the innermost loop. A sensible arrangement keeps the fast loop local and classical, and treats any quantum solver as an optional advisor on slower timescales: re-sequencing a route, reshuffling a task list or refreshing a library of candidate motions. Its proposals pass a classical feasibility check; if a quantum result arrives late, breaks a constraint or loses to a classical answer, the system uses the classical one. Safety monitors, emergency stops and certified limits stay classical throughout.</p>
+
+            <h2>Trends worth watching</h2>
+            <p><strong>Error correction</strong> is becoming the main yardstick for hardware progress, shifting attention from how many qubits a chip holds towards how long logical information survives and how many physical qubits each logical one costs. Robotics workloads would need deep, reliable circuits, so this is the measure to follow.</p>
+            <p><strong>Hybrid workflows</strong> are the norm rather than the exception. QAOA already leans on a classical optimizer, and practical pipelines decompose a large problem classically, send a bounded subproblem to a QPU, and stitch the results back together. Much of the interesting engineering lives in that decomposition step.</p>
+            <p>On the robotics side, <strong>embodied models and simulation</strong> are moving quickly. NVIDIA, for example, describes world foundation models, synthetic-data pipelines and multimodal robot policies trained on a mix of real and synthetic experience. These create digital-twin environments where alternative plans, including those from experimental solvers, can be compared safely before they touch hardware.</p>
+            <p><strong>Benchmarking</strong> is maturing as well. Reviews of quantum optimisation emphasise application-level comparisons against strong classical methods, judged on solution quality, time to solution and overall cost, rather than raw qubit counts.</p>
+
+            <h2>Use cases: tested, studied and imagined</h2>
+            <table class="use-case-table">
+                <thead>
+                    <tr>
+                        <th>Use case</th>
+                        <th>Status</th>
+                        <th>What the evidence supports</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sequencing robot paths in an automotive work cell (BMW sealant application)</td>
+                        <td>Tested on a real industrial problem</td>
+                        <td>Hybrid quantum and classical methods compared; a classical genetic-algorithm pipeline performed best, and annealer mapping overhead blocked industrial scale</td>
+                    </tr>
+                    <tr>
+                        <td>Robot arm posture (inverse kinematics)</td>
+                        <td>Research proposal</td>
+                        <td>Quantum formulation proposed; no hardware or practical speedup claimed</td>
+                    </tr>
+                    <tr>
+                        <td>Nonlinear MPC recast as a QUBO</td>
+                        <td>Research proposal</td>
+                        <td>Benefit explicitly conditional on an efficient quantum computer</td>
+                    </tr>
+                    <tr>
+                        <td>Warehouse fleet routing, task assignment and charging schedules</td>
+                        <td>Illustrative candidate</td>
+                        <td>Combinatorial structure suits QUBO encoding; no deployment demonstrated</td>
+                    </tr>
+                    <tr>
+                        <td>Drone or inspection mission allocation</td>
+                        <td>Potential</td>
+                        <td>Slow mission-level assignment only; flight control and collision avoidance remain local and classical</td>
+                    </tr>
+                    <tr>
+                        <td>Offline motion libraries and digital-twin plan comparison</td>
+                        <td>Proposed pattern</td>
+                        <td>Candidates from any solver validated in simulation before use</td>
+                    </tr>
+                    <tr>
+                        <td>Materials for batteries or grippers</td>
+                        <td>Prospective, longer term</td>
+                        <td>Indirect route; quantum simulation of chemistry might someday inform hardware design</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>The BMW study deserves a closer look because it is the most concrete. Schuetz and colleagues took a genuine planning problem—ordering the paths a robot follows when applying sealant to a vehicle body—and tackled it with nature-inspired and hybrid quantum algorithms. The strongest results came from a classical random-key genetic algorithm, and AWS’s account notes that the overhead of mapping the problem onto an annealer kept the quantum approach from reaching industrially relevant sizes. That is no mark against the study. It is the kind of honest benchmark the field needs, and a reminder never to count classical gains as quantum ones.</p>
+            <p>Two clarifications keep the picture clean. Quantum sensing, which uses quantum effects to build extremely precise sensors, is a separate field; it may matter to robots in its own right but is not evidence that quantum processors are entering robot control. And the idea of training robot world models on quantum hardware remains speculative, without support in the work reviewed here.</p>
+
+            <h2>Back to the night-shift robot</h2>
+            <p>Return to the warehouse robot and its surprise pallet. Its wheels, joints and safety stops will keep running on fast, local classical computers, and nothing in the current evidence puts a QPU inside that loop. The plausible role is slower and humbler: a planning service that periodically hands a bounded scheduling problem (which picks, which aisles, which charging slot) to a strong classical solver and, where worth testing, to a quantum or quantum-inspired one, then checks every proposal against the robot’s real limits and tries it in simulation before anything moves.</p>
+            <p>Whether that quantum branch earns its place will come down to measurable things: logical error rates that keep falling, encodings that do not drown in penalty terms, and benchmarks that beat good classical solvers on real problems. Teams can start without betting on it by framing planning problems cleanly, building honest classical baselines and keeping safety where it already works. If quantum hardware matures, those habits make it easy to plug in. If not, they will still have produced better robots.</p>
+
+            <h2>Cost implications</h2>
+            <p>The economic case for quantum-assisted Physical AI must be evaluated at the complete workflow level, not through QPU execution time or qubit count alone. Quantum processing adds an experimental planning branch; it does not eliminate classical perception, control, simulation or safety infrastructure.</p>
+            <p><strong>Infrastructure and access:</strong> Cloud QPU access avoids purchasing specialised hardware but introduces provider-dependent task, sampling, execution or reservation charges. Owning superconducting hardware would also require cryogenics, control electronics, calibration and specialist maintenance—not a practical starting point for most robotics teams.</p>
+            <p><strong>Formulation and integration:</strong> Substantial engineering cost arises before execution: selecting bounded subproblems, constructing QUBOs, tuning penalties and validating discretisation. Annealer embedding can multiply physical-qubit requirements; gate-based implementations incur compilation and routing overhead.</p>
+            <p><strong>Sampling and hybrid optimisation:</strong> QAOA requires repeated circuit measurements and classical parameter updates. Noise, statistical uncertainty and error-mitigation procedures increase execution demand. Budget estimates must include unsuccessful trials, parameter sweeps, feasibility repair and validation—not merely the final successful run.</p>
+            <p><strong>Latency and operational value:</strong> Queueing, network transfers and processing delays can invalidate otherwise useful plans. Measure cost per feasible, deadline-compliant solution alongside solution quality. A classical fallback must remain available so quantum expenditure is initially incremental rather than a replacement cost.</p>
+            <p><strong>Investment and benchmarking:</strong> Begin with capped experiments on slower scheduling or offline planning workloads. Compare against tuned classical and quantum-inspired solvers under equivalent constraints. Scale investment only when repeatable improvements in throughput, energy consumption or planning quality exceed integration and operating costs.</p>
+
+            <h2>Risks and mitigations</h2>
+            <p>Quantum-assisted Physical AI combines uncertain optimisation outputs with systems capable of physical harm. Risk controls must preserve the architectural boundary: quantum proposals remain advisory; actuation and safety remain local and classical.</p>
+            <p><strong>Encoding and constraint risk:</strong> Discretisation, unsuitable penalty weights and annealer embedding can distort the original problem. A low-energy solution may still violate collision, torque, battery or joint limits. Mitigate with static messaging of constraints, independent classical feasibility checks and conservative margins.</p>
+            <p><strong>Hardware and statistical uncertainty:</strong> Noise, limited connectivity and calibration drift vary across devices and days. Characterise performance across repeated runs; do not confuse error mitigation with fault tolerance.</p>
+            <p><strong>Deadline and availability risk:</strong> Remote execution, queueing and communication failures can leave a plan late or missing. Bound retries and execution budgets. Maintain a continuously available classical planner so quantum-service failure does not interrupt feedback control, emergency stopping or certified limits.</p>
+            <p><strong>Model and physical-safety risk:</strong> Mathematical plans can fail under uncertain payloads or friction. Validate candidates in simulation before hardware testing; use staged hardware trials and runtime monitoring.</p>
+            <p><strong>Security and evidence risk:</strong> Cloud submissions may expose operational constraints. Minimise submitted information, encrypt transfers and audit solver interfaces. Benchmark against strong classical baselines and avoid unsupported claims of computational advantage.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Physical AI</strong> (இயற்பியல் ஏஐ)</li>
+                <li><strong>QPU</strong> (குவாண்டம் செயலி)</li>
+                <li><strong>QAOA</strong> (குவாண்டம் தோராய மேம்படுத்தல் வழிமுறை)</li>
+                <li><strong>QUBO / Ising</strong> (இரும மேம்படுத்தல் மாதிரி)</li>
+                <li><strong>Model predictive control</strong> (மாதிரி முன்கணிப்பு கட்டுப்பாடு)</li>
+                <li><strong>Logical qubit</strong> (தருக்க குவிபிட்)</li>
+                <li><strong>Dilution refrigerator</strong> (நீர்த்தல் குளிர்சாதனம்)</li>
+                <li><strong>Hybrid quantum–classical workflow</strong> (கலப்பு வேலைப்பாய்வு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/page-34.png" alt="OSFY InSight page 34 — Quantum Computing and Physical AI" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 34.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-35.png" alt="OSFY InSight page 35 — Quantum Computing and Physical AI" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 35.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-36.png" alt="OSFY InSight page 36 — workflow figures" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 36 — conceptual workflows (not deployed quantum advantage).</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-37.png" alt="OSFY InSight page 37 — use cases table" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 37.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-38.png" alt="OSFY InSight page 38 — costs and risks" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 38.</figcaption>
+            </figure>
+            <figure class="article-image-figure">
+                <img src="images/page-39.png" alt="OSFY InSight page 39 — references and authors" />
+                <figcaption>OPEN SOURCE FOR YOU: InSight | For U &amp; Me. November 2026, page 39 — Dr Magesh Kasthuri &amp; Dr Anand Nayyar.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
