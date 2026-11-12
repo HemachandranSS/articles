@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air India's losses narrow in H1 by ₹2,000 crore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">BUSINESS NEWS · AVIATION · AIR INDIA</div>
+            <h1>Air India&rsquo;s losses narrow in H1 by ₹2,000 crore</h1>
+            <p class="byline">Jagriti Chandra</p>
+            <p class="article-meta">NEW DELHI &nbsp;|&nbsp; November 12, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Singapore Airlines&rsquo; share of losses from Air India (AI) declined to S$361.7 million (about ₹2,720 crore) in the first half of FY27, down from S$429.5 million (₹3,229 crore) in the corresponding period last year, marking a reduction of S$67.8 million (about ₹510 crore).</p>
+            <p>Based on Singapore Airlines&rsquo; 25.1% stake in Air India, the figures imply the Tata Group-owned airline&rsquo;s total losses fell to an estimated S$1.44 billion (₹10,837 crore) from S$1.71 billion (₹12,850 crore) a year earlier &mdash; a narrowing of roughly ₹2,000 crore.</p>
+            <div class="pullquote-card">AI, along with AI Express, reported a consolidated net loss of ₹22,238 crore last financial year.</div>
+            <h2>Some relief</h2>
+            <p>The moderation in losses offers some relief to Air India&rsquo;s financial backers, even as Singapore Airlines reported a 43.9% dip in its own first-half net profit to S$134 million (about ₹1,008 crore), amid a sharp increase in jet fuel costs. Air India, along with its subsidiary Air India Express, reported a consolidated net loss of ₹22,238 crore in FY26, more than double the ₹10,859 crore loss recorded in the previous financial year.</p>
+            <p>Singapore Airlines said it and Tata Sons recognise &ldquo;that a transformation of this scale will take time,&rdquo; and continue to work on structural cost efficiencies and synergies between Air India and Air India Express. Cost rationalisation emerged as a key priority under AI&rsquo;s new CEO and MD, Tewolde Gebremariam, who said on November 3 that the airline was reviewing unit costs and had set up a multi-functional cost-savings team.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Singapore Airlines Stake</strong> (சிங்கப்பூர் ஏர்லைன்ஸ் பங்கு)</li>
+                <li><strong>H1 Loss Narrowing</strong> (இழப்பு குறைவு)</li>
+                <li><strong>Turnaround Synergies</strong> (மாற்றுத் திறன் ஒத்திசைவு)</li>
+                <li><strong>Unit Cost Review</strong> (அலகுச் செலவு மதிப்பாய்வு)</li>
+            </ol>
+
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/air-india-losses-narrow-h1.png" alt="Air India's losses narrow in H1 by ₹2,000 crore — scan" />
+                <figcaption>THE HINDU: Air India's losses narrow in H1 by ₹2,000 crore. Jagriti Chandra, NEW DELHI. November 12, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
+

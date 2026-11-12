@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visions of the future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .article-deck { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">EDITORIAL · BOOKER · ARTIFICIAL INTELLIGENCE</div>
+            <h1>Visions of the future</h1>
+            <p class="article-meta">Editorial &nbsp;|&nbsp; November 12, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="article-deck">This year&rsquo;s Booker Prize betrays an anxiety about AI&rsquo;s place in society</p>
+            <p class="drop-cap">A defining feature of the world today is that knowledge is proliferating and societies are struggling to agree on what is happening. AI models have significantly catalysed this devolution, allowing bad actors to flood spaces ranging from the research literature to public airwaves with questionable information, and drawing the attention of governments worldwide to the security implications of such a potent technology. The Booker Prize for M. John Harrison&rsquo;s <em>The End of Everything</em>, a novel about a sense-defying alien invasion and the unsettling prospect of un-understandability it confronts humans with, effectively acknowledges the centrality of the AI question both through the book&rsquo;s substance and the judges&rsquo; choice. A consequence of rampant AI use has been an assault on people&rsquo;s attention span as well as the ability to make sense of new claims, so much so that reliable, verifiable meaning has become a premium entity. The novel, on the other hand, attempts to diagnose a post-meaning world in which people are only left to look inward. The Prize is also a long-overdue victory for the merits of science fiction, a genre that Harrison helped shape from the late 1960s. That said, the novel itself is far from being its best example, including because Harrison&rsquo;s diagnosis lets technology and the practice of power off the hook for their failures.</p>
+            <p>One of the judges said she had also sought a book &ldquo;only a human being could write&rdquo;, but defending a novel for its ability to thumb its nose at the machines is unfair to the literary enterprise and betrays a wider public anxiety about AI, especially over the lack of consensus about its proper place in society. OpenAI has been aggravating these deliberations among mathematicians by using its machines to make headway, in record time, on problems that have been unsolved for decades but without also contributing to mathematical education and research. <span class="vocab-words" data-modal-title="Anthropic (proper noun) ஆந்த்ரோபிக்" data-modal-meaning="– U.S. AI firm behind Claude, proposing a $1.4 trillion IPO valuation." data-modal-synonyms="Claude AI company">Anthropic</span>, known for its Claude AI model, has announced its IPO with a surprising proposed valuation of $1.4 trillion. Since much of this is pegged on speculative future demand for AI services, the same absence of consensus leaves room for investors to imagine an enormous market and invest to help the company realise them, thus narrowing the space for society to deliberate on all competing visions of the future. And while <em>The End of Everything</em>, with its philosophy of pragmatic absurdism, offers poor guidance on how to keep that space open, doing so ultimately remains one of the most important unfinished tasks before the world today.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Post-meaning World</strong> (பொருள் மறைந்த உலகம்)</li>
+                <li><strong>Science Fiction Recognition</strong> (அறிவியல் புனைவு அங்கீகாரம்)</li>
+                <li><strong>Anthropic IPO Valuation</strong> (ஐபிஓ மதிப்பீடு)</li>
+                <li><strong>Pragmatic Absurdism</strong> (நடைமுறை அபத்தவாதம்)</li>
+            </ol>
+
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/visions-of-the-future-booker-ai.png" alt="Visions of the future — scan" />
+                <figcaption>THE HINDU: Visions of the future. Editorial. November 12, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
+

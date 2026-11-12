@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Another bank goes bust</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">BANKING · RISK · LATIN AMERICA</div>
+            <h1>Another bank goes bust</h1>
+            <p class="subtitle">Ueno Bank&rsquo;s collapse: Dilution of risk management</p>
+            <p class="byline-desc">Adjunct Professor, Institute of Insurance and Risk Management (IIRM), Hyderabad. Views expressed are personal.</p>
+            <p class="byline">K Srinivasa Rao</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 12, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap"><span class="vocab-words" data-modal-title="Ueno Bank (proper noun) உயேனோ வங்கி" data-modal-meaning="– Paraguay digital lender that collapsed after a liquidity crisis in November." data-modal-synonyms="Ueno">Ueno Bank</span>, one of Paraguay&rsquo;s fastest-growing digital lenders, faced a sudden insolvency crisis in November, driven by emerging risk factors that culminated in a liquidity crisis and triggered a run on the bank. This prompted the Banco Central del Paraguay (BCP) to intervene to protect stakeholder interests by taking over its administration.</p>
+            <p>On November 3, BCP unanimously stripped management of control and placed the bank into resolution. The intervention abruptly froze mobile apps, cards, and bank balances, locking millions of retail depositors and pensioners out of their daily funds and disrupting the banking needs of three million Ueno Bank customers.</p>
+            <h2>How the bank fell</h2>
+            <p>Ueno Bank pursued hyper-growth through aggressive consumer lending and digital credit &mdash; scaling digital micro-loans, app-based unsecured credit lines, and commercial merchant advances. Regulators uncovered widespread related-party lending without proper collateral or arm&rsquo;s-length risk assessments. A multipronged expansion of assets and liabilities in less than three years outpaced the bank&rsquo;s internal risk management infrastructure.</p>
+            <p>While Ueno funded its balance sheet through zero-cost retail transactional balances and wholesale term placements, its assets were locked into low-liquidity tech infrastructure, complex long-term bonds, and an impaired retail loan book, causing huge ALM mismatches. Mounting loan defaults eroded the capital buffer. While Paraguayan regulations require a minimum capital solvency ratio of 12%, Ueno&rsquo;s CAR plummeted to about 5.56% &mdash; less than half the statutory requirement. Prosecutors launched criminal inquiries into fraud and breach of trust.</p>
+            <h2>Lessons learnt</h2>
+            <p>The crisis is a classic case of diluted rigour in the risk management framework, driven by irrational growth ambitions. Regulations provide a one-size-fits-all framework for financial stability, but the risk inherent in the balance sheet is self-made. Any risk appetite to grow beyond the bank&rsquo;s ability to manage risk could be devastating, exposing innocent depositors to hardship and breaching institutional trust. No regulator can assess incipient balance-sheet risk better than the bank itself.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Capital Adequacy Ratio</strong> (மூலதனப் போதுமான தன்மை)</li>
+                <li><strong>ALM Mismatch</strong> (சொத்து-பொறுப்பு முரண்பாடு)</li>
+                <li><strong>Related-Party Lending</strong> (தொடர்புடைய தரப்பு கடன்)</li>
+                <li><strong>Bank Resolution / Run</strong> (வங்கித் தலையீடு)</li>
+            </ol>
+
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/another-bank-goes-bust-ueno.png" alt="Another bank goes bust — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Another bank goes bust. K Srinivasa Rao. November 12, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
+

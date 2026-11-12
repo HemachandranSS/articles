@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weak pulse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">AGRICULTURE · PULSES · TRADE</div>
+            <h1>Weak pulse</h1>
+            <p class="subtitle">Policy fixes on tur dal need to strike a balance</p>
+            <p class="byline">Editorial Desk</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 12, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">In September 2026, there was a collective sigh of relief that El Ni&ntilde;o had not impacted the area sown under kharif crops. However, it is now apparent that erratic rainfall has hurt yields for crops such as tur. It has been estimated that the tur output this kharif could be as low as 20&ndash;25 lakh tonnes, less than half of the domestic consumption requirement of 40&ndash;45 lakh tonnes.</p>
+            <p>Unlike paddy, maize or gram where kharif setbacks can be made up in the post-monsoon or rabi seasons, <span class="vocab-words" data-modal-title="Tur / pigeon pea (noun) துவரை பருப்பு" data-modal-meaning="– exclusively kharif pulse; India faces a large supply shortfall this year." data-modal-synonyms="tur dal, arhar">tur</span> is an exclusively kharif crop. Once the kharif harvest is exhausted in February or so, India will be entirely dependent on tur imports until December 2027. Tur output has charted an erratic path for five years &mdash; peaking at over 43 lakh tonnes in 2021-22 and plunging to 33&ndash;36 lakh tonnes in the next three years.</p>
+            <p>In March 2026, an agreement with Myanmar for import of tur along with other pulses was extended by five years. Duty-free and quota-free tur imports have been extended until March 2027. Talks are on to diversify origins beyond Myanmar and Africa to Australia. However, all of these are essentially short-term fixes.</p>
+            <p>The challenges are threefold. One, just two States, Maharashtra and Karnataka, account for nearly 70% of domestic tur output while the pulse is consumed nationwide. Two, tur requires a 160&ndash;180-day crop cycle in rainfed regions, impairing farmers&rsquo; ability to diversify income. Three, though the Centre has steadily raised the MSP for tur, public procurement via NAFED and the National Cooperative Consumers Federation has fallen short of targets; buffer stock releases and duty-free imports often depress post-harvest realisations.</p>
+            <p>Allowing duty-free imports and releasing buffer stocks when prices rise protect consumers, but farmers need visibility on trade policy and realisations. Striking that policy balance is critical to achieving self-sufficiency in tur.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Tur Output Shortfall</strong> (துவரை உற்பத்தி பற்றாக்குறை)</li>
+                <li><strong>Duty-Free Imports</strong> (சுங்கவரி இல்லா இறக்குமதி)</li>
+                <li><strong>NAFED Procurement</strong> (பொது கொள்முதல்)</li>
+                <li><strong>Geographic Concentration</strong> (புவியியல் குவிப்பு)</li>
+            </ol>
+
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/weak-pulse-tur-dal-policy.png" alt="Weak pulse — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Weak pulse. Editorial Desk. November 12, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
+
