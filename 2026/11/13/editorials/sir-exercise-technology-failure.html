@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The SIR exercise is also a technology failure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .article-deck { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        .qa-q { font-weight: 700; margin-top: 1.25rem; }
+        .qa-a { margin-bottom: 0.85rem; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OP-ED · ELECTIONS · TECHNOLOGY</div>
+            <h1>The SIR exercise is also a technology failure</h1>
+            <p class="article-meta">Priya Seetharaman &nbsp;|&nbsp; November 13, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Public debate on the <span class="vocab-words" data-modal-title="SIR (acronym) (சிறப்பு தீவிர திருத்தம்)" data-modal-meaning="– 2025–26 intensive revision of India’s electoral rolls." data-modal-synonyms="electoral roll revision, SIR">Special Intensive Revision (SIR)</span> of India&rsquo;s electoral rolls (2025-26) has focused on law and politics. Less noticed is a technology failure: the centralised digital platform used for the exercise lacked the piloting, iteration and published specifications that mark successful Indian digital public infrastructure such as IRCTC, UPI and Aadhaar.</p>
+            <h2>Age and name discrepancies</h2>
+            <p>Voters were flagged for &ldquo;logical discrepancies&rdquo; by <span class="vocab-words" data-modal-title="ERONet (proper noun) (ஈஆர்ஓநெட்)" data-modal-meaning="– ECI digital platform used by electoral registration officers." data-modal-synonyms="electoral roll software">ERONet</span> using rigid filters — such as parent-child age gaps — that lack context sensitivity when ages on Indian rolls are often approximate. An analysis by <em>The Hindu</em> found family-size checks in Delhi flagged Muslim electors at a higher rate. Matching names across scripts (for example, Bengali rolls digitised into English) compounded errors.</p>
+            <h2>Overarching power</h2>
+            <p>Software changed frequently while SIR was under way. Booth Level Officers faced shifting protocols and new features without documentation or a change-freeze window. Options were often explained via informal videos or WhatsApp rather than updated manuals. When code changes but manuals do not, the software becomes the rulebook — and digital workflows sometimes demanded details (such as grandparent information on Form 6) beyond statutory requirements.</p>
+            <div class="pullquote-card">When code changes but the user manuals have not yet been updated, the software becomes the rulebook</div>
+            <h2>Questions of timing</h2>
+            <p>Deadlines followed the electoral calendar, not system readiness. In West Bengal, over half-a-crore names were marked &ldquo;under adjudication&rdquo; in the final roll. Invoking Lawrence Lessig&rsquo;s insight that code is law, the author warns that rules written into software decided outcomes the statutes did not — putting voting rights at risk.</p>
+            <p class="byline" style="margin-top:1.5rem;"><em>Priya Seetharaman</em> — Professor, Management Information Systems Group, Indian Institute of Management Calcutta. Views are personal.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Special Intensive Revision (SIR)</strong> (சிறப்பு தீவிர திருத்தம்)</li>
+                <li><strong>ERONet / BLO</strong> (ஈஆர்ஓநெட் / வாக்குச்சாவடி அதிகாரி)</li>
+                <li><strong>Logical discrepancy flags</strong> (தர்க்க முரண்பாட்டுக் கொடிகள்)</li>
+                <li><strong>Code is law</strong> (குறியீடே சட்டம்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/sir-exercise-technology-failure.png" alt="The SIR exercise is also a technology failure — scan" />
+                <figcaption>THE HINDU: The SIR exercise is also a technology failure. Priya Seetharaman. November 13, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

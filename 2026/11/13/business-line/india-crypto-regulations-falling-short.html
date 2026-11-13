@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Are India’s crypto regulations falling short?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">BUSINESS LINE · POINT BLANK · CRYPTO</div>
+            <h1>Are India’s crypto regulations falling short?</h1>
+            <p class="subtitle">Trading on crypto platforms has shifted to futures and options which are not subject to punitive tax</p>
+            <p class="byline">Lokeshwarri SK</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 13, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">After the 2020–21 crypto boom that took Bitcoin from about $5,178 to $64,400, India still lacks a full regulatory framework that gives investors clear recourse. The 2022 Budget&rsquo;s 30% tax on gains and 1% TDS initially cut platform turnover by about 70%, but activity has migrated to <span class="vocab-words" data-modal-title="Crypto derivatives (noun) (கிரிப்டோ வழிப்பொருட்கள்)" data-modal-meaning="– futures and options on cryptocurrencies often treated as business income." data-modal-synonyms="crypto F&amp;O">crypto derivatives</span> — futures and options — which traders treat as business income to sidestep the punitive tax and TDS.</p>
+            <div class="pullquote-card">There is a high risk of misuse of these platforms to buy cryptos for nefarious cross-border payments.</div>
+            <p>ED probes and November 2026 searches at CoinDCX and Delta Exchange for FEMA issues underline money-laundering risks. Trading has dispersed to tier-2/3 hubs such as North 24 Parganas (≈33,000 users, ₹2,000 crore in FY26). Platforms must register with the FIU under PMLA; 53 non-compliant sites were ordered taken down. The author urges extending the 30% tax to crypto F&amp;O and reviving international coordination on uniform rules.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>30% crypto tax / 1% TDS</strong> (30% கிரிப்டோ வரி / 1% டிடிஎஸ்)</li>
+                <li><strong>Crypto futures & options</strong> (கிரிப்டோ எதிர்காலங்கள் & விருப்பங்கள்)</li>
+                <li><strong>PMLA / FIU registration</strong> (பிஎம்எல்ஏ / எஃபஐயூ பதிவு)</li>
+                <li><strong>FEMA / money laundering risk</strong> (ஃபெமா / பணமோசடி இடர்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/india-crypto-regulations-falling-short.png" alt="Are India’s crypto regulations falling short? — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Are India’s crypto regulations falling short?. November 13, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

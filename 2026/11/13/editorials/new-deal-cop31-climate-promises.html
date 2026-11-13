@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New deal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .article-deck { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        .qa-q { font-weight: 700; margin-top: 1.25rem; }
+        .qa-a { margin-bottom: 0.85rem; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">EDITORIAL · CLIMATE · COP31</div>
+            <h1>New deal</h1>
+            <p class="article-meta">Editorial &nbsp;|&nbsp; November 13, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="article-deck">Nations must deliver on past promises before committing to lofty climate goals</p>
+
+            <p class="drop-cap">The 31st Conference of Parties (<span class="vocab-words" data-modal-title="COP31 (acronym) (காலநிலை மாநாடு 31)" data-modal-meaning="– 31st UN climate Conference of the Parties in Antalya, Türkiye." data-modal-synonyms="COP, climate summit">COP31</span>) began this week in Antalya, Türkiye. Hosted by Türkiye and negotiations presided over by Australia, the run-up saw ministerial delegations visit Fiji and Tuvalu — a reminder that small island nations are most vulnerable to warming from rising greenhouse gas emissions. Yet the opening days have belied that urgency. Prominent world leaders, even from European countries that champion the cause most vociferously, have chosen to skip the meet.</p>
+            <p>Main concerns this year are delivering on existing commitments such as $300 billion a year by 2035 (COP29, Baku) and the COP30 call to triple adaptation finance — while deciding how funds will practically flow has been deferred to COP32. The second <span class="vocab-words" data-modal-title="Global stocktake (noun) (உலகளாவிய முன்னேற்ற மதிப்பீடு)" data-modal-meaning="– periodic Paris Agreement check on climate progress." data-modal-synonyms="GST, Paris stocktake">global stocktake</span> begins at COP31, but the IPCC has dithered on a timeline for the next reports needed to keep warming below 2°C, and more ambitiously 1.5°C.</p>
+            <p>COP30 ended without a formal roadmap away from fossil fuels — a step back from COP28 in Dubai. A voluntary roadmap ahead of COP31 sits outside the formal negotiating text. Against war in West Asia, U.S. withdrawal from the Paris Agreement and European financial strain, funds remain scarce: Nepal’s recent Loss and Damage approval of $21 million against an ask in billions underscores the gap. COP31 president Murat Kurum’s electrification target would raise electricity’s share from 23% to 35% of energy use by 2035; India has refused such a pledge and insisted on predictable climate finance, technology transfer and nationally determined approaches. Nations must deliver on past promises rather than commit to new lofty targets.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>COP31 / Antalya</strong> (காலநிலை மாநாடு)</li>
+                <li><strong>Climate finance ($300 bn)</strong> (காலநிலை நிதி)</li>
+                <li><strong>Global stocktake</strong> (உலகளாவிய மதிப்பீடு)</li>
+                <li><strong>Loss and Damage fund</strong> (இழப்பு மற்றும் சேத நிதி)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/new-deal-cop31-climate-promises.png" alt="New deal — scan" />
+                <figcaption>THE HINDU: New deal. Editorial. November 13, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
