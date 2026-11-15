@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surfacing: resurrecting the lost glory of Poompuhar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">NEWS · FEATURE · ARCHAEOLOGY</div>
+            <h1>Surfacing: resurrecting the lost glory of Poompuhar</h1>
+            <p class="subtitle">Recent underwater explorations off the coast of Poompuhar seem to have yielded a wealth of artefacts indicating the presence of an advanced society that thrived during the Sangam period</p>
+            <p class="byline">N. Sai Charan</p>
+            <p class="article-meta">MAYILADUTHURAI &nbsp;|&nbsp; November 15, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">For nearly 2,000 years, the history of <span class="vocab-words" data-modal-title="Poompuhar (proper noun) (பூம்புகார்)" data-modal-meaning="– Ancient Chola port also called Kaveripoompattinam in Mayiladuthurai district." data-modal-synonyms="Kaveripoompattinam">Poompuhar</span> survived mainly through Sangam literature and shoreline finds. Tamil Nadu State Department of Archaeology divers have now completed three phases of underwater survey off the coast.</p>
+            <p>Teams covered about 16 km between Thirumullaivasal and Vanagiri, up to six kilometres offshore, using side-scan sonar, DGPS, ROVs and dive computers. The third zone (2–5.5 km) yielded ring wells and more than 250 ceramic pieces, including a West Asian-style torpedo jar fragment — the first of its kind in an underwater survey here.</p>
+            <p>Researchers are also re-documenting a previously identified shipwreck after finding additional lead ingots, seeking firmer archaeological proof of the submerged city’s maritime trade links.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Poompuhar / Kaveripoompattinam</strong> (பூம்புகார் / காவிரிப்பூம்பட்டினம்)</li>
+                <li><strong>Underwater archaeology</strong> (கடல்சார் தொல்லியல்)</li>
+                <li><strong>Torpedo jar / ring wells</strong> (டார்பிடோ ஜார் / வளையக் கிணறுகள்)</li>
+                <li><strong>Sangam literature</strong> (சங்க இலக்கியம்)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/poompuhar-underwater-archaeology.png" alt="Surfacing: resurrecting the lost glory of Poompuhar — scan" />
+                <figcaption>THE HINDU: Surfacing: resurrecting the lost glory of Poompuhar. N. Sai Charan, MAYILADUTHURAI. November 15, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To strengthen the Supreme Court, divide it</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OP-ED · JUDICIARY · REFORM</div>
+            <h1>To strengthen the Supreme Court, divide it</h1>
+            
+            <p class="byline">Pradeep S. Mehta &amp; Vijay L. Kelkar</p>
+            <p class="article-meta">Op-Ed &nbsp;|&nbsp; November 14, 2026</p>
+        </header>
+        <div class="article-body">
+
+            <p class="drop-cap">Pradeep S. Mehta and Vijay L. Kelkar argue that India&rsquo;s Supreme Court should be split: a lean <span class="vocab-words" data-modal-title="Constitutional Court (noun) (அரசியலமைப்பு நீதிமன்றம்)" data-modal-meaning="– proposed Delhi court of about 11 judges for constitutional matters only." data-modal-synonyms="apex constitutional bench">Constitutional Court</span> in Delhi (~11 judges) and four or five regional Courts of Appeal for ordinary litigation.</p>
+            <div class="pullquote-card">Adding judges without sorting the work risks enlarging the same overburdened court. The task is not to move the same work faster, but to sort it.</div>
+            <p>Backlog hit 92,318 cases by 2025; Constitution Benches that once decided ~134 cases a year in the 1960s now decide fewer than 10, while <span class="vocab-words" data-modal-title="Special Leave Petition (noun) (சிறப்பு அனுமதி மனு)" data-modal-meaning="– appeals under Article 136 that dominate the Court’s docket." data-modal-synonyms="SLP, Article 136">Special Leave Petitions</span> under Article 136 make up ~84.6% of the docket. The 229th Law Commission (2009) and a 2023 Parliamentary panel backed regional benches. Comparisons include the U.S. Courts of Appeals, South Africa&rsquo;s dual apex courts, Germany&rsquo;s Federal Constitutional Court, and Brazil&rsquo;s Superior Tribunal of Justice. Raising strength to 34 then 38 judges has not fixed the backlog because the work was never sorted.</p>
+
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Constitutional Court / Courts of Appeal</strong> (அரசியலமைப்பு நீதிமன்றம் / மேல்முறையீட்டு நீதிமன்றங்கள்)</li>
+                <li><strong>Article 136 / SLPs</strong> (பிரிவு 136 / சிறப்பு அனுமதி மனுக்கள்)</li>
+                <li><strong>229th Law Commission</strong> (229வது சட்ட ஆணையம்)</li>
+                <li><strong>Constitution Bench backlog</strong> (அரசியலமைப்பு அமர்வு நிலுவை)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/strengthen-supreme-court-divide-it.png" alt="To strengthen the Supreme Court, divide it — scan" />
+                <figcaption>THE HINDU: To strengthen the Supreme Court, divide it. November 14, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

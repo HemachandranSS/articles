@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Hindu — Article Index</title>
+    <meta content="Curated news articles and editorials from The Hindu, organised by date with interactive vocabulary."
+        name="description" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f1eb;
+            --card-bg: #fffef9;
+            --text: #1a1a1a;
+            --muted: #666;
+            --accent: #1a6b3c;
+            --accent-dark: #0d3325;
+            --accent-light: #e8f5ee;
+            --accent-mid: #1a5c38;
+            --border: #ddd;
+            --border-light: #ece9e2;
+            --news-tag: #1a5276;
+            --news-tag-bg: #eaf0f7;
+            --editorial-tag: #6d4c0f;
+            --editorial-tag-bg: #fef3e2;
+            --radius: 10px;
+            --shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0 0 80px;
+            line-height: 1.7;
+        }
+
+        /* ── MASTHEAD ── */
+        .masthead {
+            background: linear-gradient(135deg, #0d3325 0%, #1a5c38 60%, #2ecc71 100%);
+            padding: 36px 24px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masthead::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .masthead-inner {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .masthead-kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a8f0c6;
+            margin-bottom: 10px;
+        }
+
+        .masthead h1 {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .masthead-sub {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 8px;
+        }
+
+        .masthead-divider {
+            width: 48px;
+            height: 3px;
+            background: #f9ca24;
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        /* ── CONTENT WRAPPER ── */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ── DATE SECTION ── */
+        .date-section {
+            margin-top: 40px;
+        }
+
+        .date-section:first-of-type {
+            margin-top: 36px;
+        }
+
+        .date-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .date-badge {
+            background: var(--accent-dark);
+            color: #f9ca24;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .date-badge .date-today {
+            color: #a8f0c6;
+            font-size: 0.62rem;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+
+        .date-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .date-count {
+            font-size: 0.72rem;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* ── CATEGORY LABEL ── */
+        .cat-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 10px 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        /* ── ARTICLE CARD ── */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+            transform: translateY(-2px);
+        }
+
+        .card-accent-bar {
+            width: 4px;
+            flex-shrink: 0;
+            background: var(--accent);
+        }
+
+        .article-card.editorial .card-accent-bar {
+            background: #c0882a;
+        }
+
+        .card-body {
+            padding: 14px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tag-news {
+            background: var(--news-tag-bg);
+            color: var(--news-tag);
+        }
+
+        .tag-editorial {
+            background: var(--editorial-tag-bg);
+            color: var(--editorial-tag);
+        }
+
+        .card-topic {
+            font-size: 0.68rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .article-card:hover .card-title {
+            color: var(--accent);
+        }
+
+        .card-author {
+            font-size: 0.72rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: var(--border);
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover .card-arrow {
+            color: var(--accent);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .card-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-button.article-link {
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            border-color: rgba(26, 107, 60, 0.15);
+        }
+
+        .card-button.google-link {
+            background: #fff;
+            color: #1f1f1f;
+            border-color: #d9d9d9;
+        }
+
+        .card-button.google-link:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .empty-state span {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            text-align: center;
+            margin-top: 52px;
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .masthead h1 {
+                font-size: 1.4rem;
+            }
+
+            .card-title {
+                font-size: 0.9rem;
+            }
+
+            .card-body {
+                padding: 12px 14px;
+            }
+
+            .card-arrow {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <p class="masthead-kicker">📰 Curated Reading</p>
+            <h1>The Hindu — Article Index</h1>
+            <p class="masthead-sub">News articles &amp; features with interactive vocabulary</p>
+            <div class="masthead-divider"></div>
+        </div>
+    </header>
+    <main class="content">
+        <section aria-labelledby="date-2026-11-15" class="date-section">
+            <div class="date-header">
+                <span class="date-badge" id="date-2026-11-15">November 15, 2026 <span class="date-today">Latest</span></span>
+                <span class="date-line"></span>
+                <span class="date-count">32 articles</span>
+            </div>
+
+            <p class="cat-label">News</p>
+            <div class="article-list">
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Microsoft · Outage · Exchange Online · Teams</span>
+                        </div>
+                        <div class="card-title">How Microsoft outage affected millions</div>
+                        <div class="card-author">Sahana Venugopal, Vasudevan Mukunth · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/microsoft-365-outage-explained.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=How+Microsoft+outage+affected+millions+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Nehru · Congress · Kharge · Birth Anniversary</span>
+                        </div>
+                        <div class="card-title">Nehru is principal architect of modern India: Congress</div>
+                        <div class="card-author">The Hindu Bureau · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/nehru-principal-architect-congress.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Nehru+is+principal+architect+of+modern+India%3A+Congress+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Cyberfraud · TN Govt · CCB · HDFC</span>
+                        </div>
+                        <div class="card-title">Seven arrested for siphoning ₹22.30 crore from T.N. govt. account through cyberfraud</div>
+                        <div class="card-author">R. Sivaraman · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/tn-govt-cyberfraud-22-crore.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Seven+arrested+for+siphoning+%E2%82%B922.30+crore+from+T.N.+govt.+account+through+cyberfraud+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Bird Flu · H5N1 · Cuddalore · Culling</span>
+                        </div>
+                        <div class="card-title">Over 1,500 chickens culled due to bird flu in Cuddalore</div>
+                        <div class="card-author">S. Prasad · CUDDALORE</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/bird-flu-cuddalore-culling.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Over+1%2C500+chickens+culled+due+to+bird+flu+in+Cuddalore+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Bay of Bengal · Cyclone · RMC · Tamil Nadu</span>
+                        </div>
+                        <div class="card-title">T.N. unlikely to see significant impact of weather system brewing over Bay of Bengal</div>
+                        <div class="card-author">The Hindu Bureau · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/bay-bengal-weather-tn-impact.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=T.N.+unlikely+to+see+significant+impact+of+weather+system+brewing+over+Bay+of+Bengal+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Northeast Monsoon · Cyclones · IMD · Tamil Nadu</span>
+                        </div>
+                        <div class="card-title">Fewer cyclones cross State’s coast during northeast monsoon, weather trends show</div>
+                        <div class="card-author">K. Lakshmi · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/fewer-cyclones-tn-northeast-monsoon.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Fewer+cyclones+cross+State%E2%80%99s+coast+during+northeast+monsoon%2C+weather+trends+show+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Poompuhar · Underwater Archaeology · Sangam · TNSDA</span>
+                        </div>
+                        <div class="card-title">Surfacing: resurrecting the lost glory of Poompuhar</div>
+                        <div class="card-author">N. Sai Charan · MAYILADUTHURAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/poompuhar-underwater-archaeology.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Surfacing%3A+resurrecting+the+lost+glory+of+Poompuhar+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Custodial Death · Madurai · Police · CB-CID</span>
+                        </div>
+                        <div class="card-title">Truck driver detained for questioning dies in custody</div>
+                        <div class="card-author">S. Sundar · MADURAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/truck-driver-custodial-death-madurai.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Truck+driver+detained+for+questioning+dies+in+custody+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Mekedatu · Cauvery · Karnataka · Tamil Nadu</span>
+                        </div>
+                        <div class="card-title">Mekedatu project is Karnataka’s right: CM</div>
+                        <div class="card-author">The Hindu Bureau · BENGALURU</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/mekedatu-project-karnataka-right.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Mekedatu+project+is+Karnataka%E2%80%99s+right%3A+CM+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Rahul Gandhi · Democracy · Elections · Bharat Summit</span>
+                        </div>
+                        <div class="card-title">Democratic system destroyed in 2014, says Rahul</div>
+                        <div class="card-author">R. Ravikanth Reddy · HYDERABAD</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/rahul-democratic-system-destroyed-2014.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Democratic+system+destroyed+in+2014%2C+says+Rahul+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Jensen Huang · Nvidia · AI · Export Controls</span>
+                        </div>
+                        <div class="card-title">AI rainmaker meets his Waterloo</div>
+                        <div class="card-author">John Xavier · BENGALURU</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/jensen-huang-ai-rainmaker-waterloo.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=AI+rainmaker+meets+his+Waterloo+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Megaspeed · Nvidia · Singapore · Spy Scandal</span>
+                        </div>
+                        <div class="card-title">At the centre of the storm: Megaspeed</div>
+                        <div class="card-author">Ananth Krishnan · BEIJING</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/megaspeed-centre-of-storm.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=At+the+centre+of+the+storm%3A+Megaspeed+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Booker Prize · M. John Harrison · Literature</span>
+                        </div>
+                        <div class="card-title">From rebellion to despair</div>
+                        <div class="card-author">Vasudevan Mukunth · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/booker-m-john-harrison-rebellion-despair.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=From+rebellion+to+despair+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+            </div>
+            <p class="cat-label">Science</p>
+            <div class="article-list">
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Science</span>
+                            <span class="card-topic">Perovskite · Solar · China · Domestic Manufacturing</span>
+                        </div>
+                        <div class="card-title">Potent perovskites demand domestic manufacturing push</div>
+                        <div class="card-author">Sonam Raina · BENGALURU</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/potent-perovskites-domestic-manufacturing.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Potent+perovskites+demand+domestic+manufacturing+push+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Science</span>
+                            <span class="card-topic">Graphene · MATBG · Strain · Condensed Matter</span>
+                        </div>
+                        <div class="card-title">Graphene adds new feather to cap of unusual properties</div>
+                        <div class="card-author">The Hindu · SCIENCE</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/graphene-matbg-strain.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Graphene+adds+new+feather+to+cap+of+unusual+properties+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Science</span>
+                            <span class="card-topic">CO2 · Emissions · West Asia · Climate</span>
+                        </div>
+                        <div class="card-title">CO₂ emissions briefly dipped in 2026 due to West Asia war</div>
+                        <div class="card-author">The Hindu · SCIENCE</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/co2-emissions-dip-west-asia-war.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=CO%E2%82%82+emissions+briefly+dipped+in+2026+due+to+West+Asia+war+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Science</span>
+                            <span class="card-topic">Ebola · Bundibugyo · DRC · Travel Routes</span>
+                        </div>
+                        <div class="card-title">Ebola outbreak ‘flowed’ along major travel, trade routes</div>
+                        <div class="card-author">The Hindu · SCIENCE</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/ebola-bundibugyo-travel-routes.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Ebola+outbreak+%E2%80%98flowed%E2%80%99+along+major+travel%2C+trade+routes+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Science</span>
+                            <span class="card-topic">Firecrackers · Inversion · Boundary Layer · Pollution</span>
+                        </div>
+                        <div class="card-title">Question Corner: Why do firecracker emissions sometimes linger in the air?</div>
+                        <div class="card-author">The Hindu · SCIENCE</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/question-corner-firecracker-smoke.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Question+Corner%3A+Why+do+firecracker+emissions+sometimes+linger+in+the+air%3F+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-editorial">Science</span>
+                            <span class="card-topic">Vanilla · Vanillin · Biotechnology · Agriculture</span>
+                        </div>
+                        <div class="card-title">There is more to vanilla than its taste and aroma</div>
+                        <div class="card-author">D. Balasubramanian · SCIENCE</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/speaking-of-science-vanilla.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=There+is+more+to+vanilla+than+its+taste+and+aroma+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+            </div>
+            <p class="cat-label">International Relations</p>
+            <div class="article-list">
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Pannun · Hague Convention · Ajit Doval · Summons</span>
+                        </div>
+                        <div class="card-title">Can India refuse summons in Pannun case?</div>
+                        <div class="card-author">Aaratrika Bhaumik · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/pannun-summons-india-refuse.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Can+India+refuse+summons+in+Pannun+case%3F+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Sheikh Hasina · Bangladesh · Extradition · Passport</span>
+                        </div>
+                        <div class="card-title">What are the hurdles in Hasina’s return?</div>
+                        <div class="card-author">Kallol Bhattacherjee · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/hasina-return-hurdles.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=What+are+the+hurdles+in+Hasina%E2%80%99s+return%3F+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Trump · Iran · Houthis · West Asia</span>
+                        </div>
+                        <div class="card-title">Trump may hold off on new strike unless provoked by Iran, Houthis</div>
+                        <div class="card-author">Reuters · WASHINGTON/RIYADH</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/trump-hold-off-iran-houthis.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Trump+may+hold+off+on+new+strike+unless+provoked+by+Iran%2C+Houthis+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">US Airlines · Ground Stop · Aviation · Travel</span>
+                        </div>
+                        <div class="card-title">Airlines cancel thousands of flights across the U.S.</div>
+                        <div class="card-author">Associated Press · WASHINGTON</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/us-airlines-cancel-thousands-flights.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Airlines+cancel+thousands+of+flights+across+the+U.S.+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Quad · Manila · ASEAN · Critical Minerals</span>
+                        </div>
+                        <div class="card-title">Quad summit likely to be held in Manila on Nov. 17</div>
+                        <div class="card-author">Suhasini Haidar · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/quad-summit-manila-nov-17.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Quad+summit+likely+to+be+held+in+Manila+on+Nov.+17+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">UNGA · Palestine · India · Natural Resources</span>
+                        </div>
+                        <div class="card-title">India backs UN resolution on rights of Palestinians</div>
+                        <div class="card-author">Press Trust of India · UNITED NATIONS</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/india-backs-un-palestine-resolution.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=India+backs+UN+resolution+on+rights+of+Palestinians+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">SCO · Pakistan · Indus Waters · Dialogue</span>
+                        </div>
+                        <div class="card-title">Pakistan to send Minister to India for SCO dialogue</div>
+                        <div class="card-author">Kallol Bhattacherjee · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="news/pakistan-sco-minister-india.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Pakistan+to+send+Minister+to+India+for+SCO+dialogue+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+            </div>
+            <p class="cat-label">Business News</p>
+            <div class="article-list">
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Anthropic · IPO · AI Moat · Claude</span>
+                        </div>
+                        <div class="card-title">Anthropic’s valuation can’t secure its moat</div>
+                        <div class="card-author">Vasudevan Mukunth · CHENNAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/anthropic-valuation-moat.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Anthropic%E2%80%99s+valuation+can%E2%80%99t+secure+its+moat+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">Noel Tata · Tata Sons · Listing · Philanthropy</span>
+                        </div>
+                        <div class="card-title">‘Why to tinker with something that has delivered value for 150 years’</div>
+                        <div class="card-author">Lalatendu Mishra · MUMBAI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/noel-tata-tata-sons-listing.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=%E2%80%98Why+to+tinker+with+something+that+has+delivered+value+for+150+years%E2%80%99+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">LPG · PNG · Commissions · Hardeep Puri</span>
+                        </div>
+                        <div class="card-title">LPG distributors seek higher commissions and new connections</div>
+                        <div class="card-author">Saptaparno Ghosh · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/lpg-distributors-commissions.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=LPG+distributors+seek+higher+commissions+and+new+connections+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">News</span>
+                            <span class="card-topic">TRAI · Spam · UCC · SMS Headers</span>
+                        </div>
+                        <div class="card-title">TRAI barred 1.24 lakh mobile connections in July-Sept. for spam</div>
+                        <div class="card-author">Press Trust of India · NEW DELHI</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="business-news/trai-spam-1-24-lakh-connections.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=TRAI+barred+1.24+lakh+mobile+connections+in+July-Sept.+for+spam+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+            </div>
+            <p class="cat-label">Sports</p>
+            <div class="article-list">
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">Sports</span>
+                            <span class="card-topic">Carlsen · Martirosyan · Total Chess · Budapest</span>
+                        </div>
+                        <div class="card-title">Martirosyan inflicts first loss on Carlsen</div>
+                        <div class="card-author">Jayantho Sengupta · BUDAPEST</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="sports/martirosyan-carlsen-total-chess.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Martirosyan+inflicts+first+loss+on+Carlsen+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+                <div class="article-card editorial">
+                    <div class="card-accent-bar"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-news">Sports</span>
+                            <span class="card-topic">Archery · Nationals · Indian Bow · Shillong</span>
+                        </div>
+                        <div class="card-title">Archers face new challenges at Nationals</div>
+                        <div class="card-author">Y.B. Sarangi · SHILLONG</div>
+                        <div class="card-actions">
+                            <a class="card-button article-link" target="_blank" href="sports/archers-nationals-indian-bow-format.html">Open Article</a>
+                            <a class="card-button google-link" target="_blank" href="https://www.google.com/search?q=Archers+face+new+challenges+at+Nationals+The+Hindu">Google</a>
+                        </div>
+                    </div>
+                    <div class="card-arrow">›</div>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+    <footer class="site-footer">
+        <p>Articles sourced from <strong>The Hindu</strong> for vocabulary and reading practice.</p>
+    </footer>
+    <script src="../../../assets/js/index.js"></script>
+</body>
+</html>
