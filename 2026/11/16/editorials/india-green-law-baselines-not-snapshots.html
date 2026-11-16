@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>India’s green law needs baselines, not snapshots</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">OP-ED · ENVIRONMENT · LAW</div>
+            <h1>India’s green law needs baselines, not snapshots</h1>
+            <p class="byline">Prasanth Raju</p>
+            <p class="article-meta">Op-Ed &nbsp;|&nbsp; November 16, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">On August 22 the Supreme Court set aside the National Green Tribunal’s December 2017 finding that Art of Living’s World Culture Festival organisers owed for Yamuna floodplain damage, ordering a refund of the ₹5 crore environmental deposit. The Court rightly insists that <span class="vocab-words" data-modal-title="polluter pays (principle) (மாசுபடுத்துபவர் செலுத்துக)" data-modal-meaning="– Liability for ecological harm must attach to the party who caused it." data-modal-synonyms="environmental liability">polluter pays</span> needs a polluter — but its route leaves a gap Section 17(2) of the NGT Act had already closed.</p>
+            <div class="pullquote-card">The Yamuna floodplain verdict rightly insists that the ‘polluter pays’ principle requires a polluter, but the route it takes leaves a gap that the National Green Tribunal Act had already closed.</div>
+            <p>The Tribunal’s March 2016 interim — event allowed if organisers deposited ₹5 crore — fixed culpability without reasons after one rushed site visit; earlier records already showed a ruined floodplain. When later harm could not be separated from prior ruin, <span class="vocab-words" data-modal-title="Section 17(2) NGT Act (noun) (தேசிய பசுமை தீர்ப்பாயச் சட்டம் பிரிவு 17(2))" data-modal-meaning="– Lets the Tribunal apportion liability equitably when damage is the combined effect of several activities." data-modal-synonyms="apportionment clause">Section 17(2)</span> allows equitable apportionment — yet the judgment quotes the section and then ignores it.</p>
+            <p>Without a recorded starting condition, every new occupant can hide fresh injury in old ruin. The fix is cheap: a signed baseline survey — levels, soil density, absorption, vegetation map, dated photos — on the day floodplain possession changes hands. Where baselines truly cannot be recovered, approximation still beats acquittal, as the ICJ showed on the Costa Rica–Nicaragua wetland claim.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Polluter pays principle</strong> (மாசுபடுத்துபவர் செலுத்துக கொள்கை)</li>
+                <li><strong>NGT Act Sections 15 &amp; 17(2)</strong> (பசுமை தீர்ப்பாயச் சட்டம் பிரிவுகள் 15 மற்றும் 17(2))</li>
+                <li><strong>Environmental baseline survey</strong> (சுற்றுச்சூழல் அடிப்படை ஆய்வு)</li>
+                <li><strong>Floodplain restoration vs upgrade</strong> (வெள்ளச் சமவெளி மீட்பு எதிர் மேம்பாடு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/india-green-law-baselines-not-snapshots.png" alt="India’s green law needs baselines, not snapshots — scan" />
+                <figcaption>THE HINDU: India’s green law needs baselines, not snapshots. Prasanth Raju. November 16, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

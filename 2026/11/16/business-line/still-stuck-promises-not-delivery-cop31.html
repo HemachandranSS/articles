@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Still stuck on promises, not delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">BUSINESS LINE · OPINION · COP31</div>
+            <h1>Still stuck on promises, not delivery</h1>
+            <p class="subtitle">WHO’S PAYING? The ongoing UN climate meet in Turkiye has so far failed to grapple with the toughest questions on transition funding</p>
+            <p class="byline">Soumya Sarkar</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 16, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">From Antalya’s COP31, Soumya Sarkar finds clean-power and efficient-building announcements but little grip on who pays for the transition. Türkiye wants electricity’s share of global energy up from 23% to 35% by 2035; finance remains the bottleneck after Baku’s $300 billion / $1.3 trillion tracks.</p>
+            <p>A November 13 text still jams on fossil fuels, what counts as climate finance, and rich-country duties. For India the stakes are concrete: power, transport and climate resilience without sacrificing growth. The underfunded Loss and Damage window — Nepal’s $20 million versus a $4.7 billion need — shows why week two must lock a credible delivery path, not more pledges.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Transition funding / who pays</strong> (மாற்ற நிதி / யார் செலுத்துவது)</li>
+                <li><strong>Climate finance definition fight</strong> (காலநிலை நிதி வரையறைப் போட்டி)</li>
+                <li><strong>Electrification target 2035</strong> (மின்மயமாக்கல் இலக்கு 2035)</li>
+                <li><strong>Loss and Damage underfunding</strong> (இழப்பு-சேத நிதிப் பற்றாக்குறை)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/still-stuck-promises-not-delivery-cop31.png" alt="Still stuck on promises, not delivery — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Still stuck on promises, not delivery. November 16, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Watch: city temperatures, rainfall and air quality</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">NEWS · WEATHER WATCH</div>
+            <h1>Weather Watch: city temperatures, rainfall and air quality</h1>
+                        <p class="subtitle">INSAT/IMD satellite outlook, Monday forecast, and pollutant readings across major cities</p>
+
+            <p class="byline">The Hindu Bureau</p>
+            <p class="article-meta">CHENNAI &nbsp;|&nbsp; November 16, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">Monday’s Weather Watch shows thunderstorms, lightning and gusty winds likely over the Andaman and Nicobar Islands and <span class="vocab-words" data-modal-title="dense fog (அடர் மூடுபனி)" data-modal-meaning="– Thick fog that sharply reduces visibility." data-modal-synonyms="heavy fog">dense fog</span> in isolated places over Uttar Pradesh, with INSAT/IMD imagery highlighting Bay of Bengal cloud cover.</p>
+            <p>Chennai recorded 0.3 mm rain with a max of 28.7°C and min of 24.6°C. Among metros, Delhi’s <span class="vocab-words" data-modal-title="AQI (காற்றுத் தரக் குறியீடு)" data-modal-meaning="– Air Quality Index summarising pollutant levels into health bands." data-modal-synonyms="Air Quality Index">AQI</span> was in the poor band (<span class="vocab-words" data-modal-title="PM2.5 (PM2.5)" data-modal-meaning="– Fine particulate matter smaller than 2.5 micrometres that can enter lungs." data-modal-synonyms="fine particulates">PM2.5</span> 237), while Chennai was moderate (PM2.5 117). Muzaffarnagar logged an unhealthy AQI of 338; Aizawl a healthy 22.</p>
+            <p>City tables cover rainfall and temperatures for dozens of stations and SO₂, NO₂, CO, <span class="vocab-words" data-modal-title="PM2.5 (PM2.5)" data-modal-meaning="– Fine particulate matter smaller than 2.5 micrometres that can enter lungs." data-modal-synonyms="fine particulates">PM2.5</span> and PM10 for ten major cities — see the page scan for the full grid.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>INSAT / IMD</strong> (இன்சாட் / இந்திய வானிலை ஆய்வு மையம்)</li>
+                <li><strong>Air Quality Index (AQI)</strong> (காற்றுத் தரக் குறியீடு)</li>
+                <li><strong>PM2.5 / PM10</strong> (PM2.5 / PM10)</li>
+                <li><strong>Andaman &amp; Nicobar / U.P. fog</strong> (அந்தமான் நிக்கோபார் / உ.பி. மூடுபனி)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/weather-watch-november-16.png" alt="Weather Watch: city temperatures, rainfall and air quality — scan" />
+                <figcaption>THE HINDU: Weather Watch: city temperatures, rainfall and air quality. The Hindu Bureau, CHENNAI. November 16, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

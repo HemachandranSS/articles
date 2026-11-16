@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pakistan gets GI tag for its basmati from Türkiye, but India stands to gain too</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        .data-table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.45rem 0.6rem; text-align: right; }
+        .data-table th:first-child, .data-table td:first-child { text-align: left; }
+        .data-table th { background: #f8fafc; font-weight: 600; }
+        .data-table caption { caption-side: top; text-align: left; font-weight: 600; margin-bottom: 0.4rem; color: #334155; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">BUSINESS LINE · TRADE · GI · AGRI</div>
+            <h1>Pakistan gets GI tag for its basmati from Türkiye, but India stands to gain too</h1>
+            <p class="byline">Subramani Ra Mancombu · Chennai</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 16, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">Pakistan secured a Turkish <span class="vocab-words" data-modal-title="Geographical Indication (noun) (புவியியல் குறியீடு)" data-modal-meaning="– Legal tag linking a product’s quality to its place of origin." data-modal-synonyms="GI tag">Geographical Indication</span> (<em>mahrec İşareti</em>) for basmati from TURKPATENT on February 1, 2026, after filing in June 2024. India’s pending bid is under <em>Menşe Adı</em> — a protected designation of origin (PDO) filed July 31, 2025 — which needs a scientific environment–product link.</p>
+            <p>A January 2026 Pakistani amendment dropped “Azad Kashmir” from the description — read as a diplomatic win for India. Türkiye’s wide regional list (Sindh, Balochistan, KPK) may also bolster Madhya Pradesh’s claim to be treated as a basmati-growing region in Indian litigation before the Madras High Court (hearing November 17) and related Supreme Court proceedings involving APEDA and the Patent Office.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>GI / Protected Designation of Origin</strong> (புவியியல் குறியீடு / பாதுகாக்கப்பட்ட தோற்றப் பெயர்)</li>
+                <li><strong>TURKPATENT / mahrec İşareti</strong> (டர்க்பேட்டண்ட் / துருக்கி ஜிஐ)</li>
+                <li><strong>APEDA / basmati region dispute</strong> (அபேடா / பாஸ்மதி பகுதி பிரச்சினை)</li>
+                <li><strong>Madhya Pradesh GI claim</strong> (மத்தியப் பிரதேச ஜிஐ கோரிக்கை)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/pakistan-turkiye-basmati-gi-india.png" alt="Pakistan gets GI tag for its basmati from Türkiye, but India stands to gain too — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Pakistan gets GI tag for its basmati from Türkiye, but India stands to gain too. November 16, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

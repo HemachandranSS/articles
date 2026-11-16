@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historic Delhi monuments to host India Biennale galleries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        .data-table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .data-table th, .data-table td { border: 1px solid #e2e8f0; padding: 0.45rem 0.6rem; text-align: right; }
+        .data-table th:first-child, .data-table td:first-child { text-align: left; }
+        .data-table th { background: #f8fafc; font-weight: 600; }
+        .data-table caption { caption-side: top; text-align: left; font-weight: 600; margin-bottom: 0.4rem; color: #334155; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">BUSINESS LINE · CULTURE · TOURISM</div>
+            <h1>Historic Delhi monuments to host India Biennale galleries</h1>
+            <p class="subtitle">Purana Qila is at the heart of 108-day cultural extravaganza, starting December 4</p>
+            <p class="byline">Our Bureau · New Delhi</p>
+            <p class="article-meta">The Hindu Business Line &nbsp;|&nbsp; November 16, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">The India Biennale opens December 4 for 108 days, with <strong>Purana Qila</strong> as the hub and installations also at the Red Fort complex, Qutab Minar and Humayun’s Tomb. Culture Secretary Vivek Agarwal said twelve countries and artists from across India will take part under the Upanishadic theme <em>Tat Tvam Asi</em>.</p>
+            <p>Highlights include an 18th-century Mahabharata scroll (DAG), NMACC’s “Kingdom of Earth,” Serendipity’s Charpai Project and Manipuri performance <em>Hakchang-Polang</em>. The public–private push involves Vedanta, Aditya Birla Group, Godrej and cultural partners (NMACC, Serendipity Arts, KNMA). Half of ticket revenue goes to a Biennale Fund; the rest to ASI, NGMA and the National Museum. Passes run from one-day (₹100) to premium (₹10,000) through March 21, 2027.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>India Biennale / Tat Tvam Asi</strong> (இந்தியா பியெனாலே / தத் த்வம் அசி)</li>
+                <li><strong>Purana Qila / monument venues</strong> (புராணா கிலா / நினைவுச்சின்ன இடங்கள்)</li>
+                <li><strong>Public–private partnership</strong> (பொது-தனியார் கூட்டாண்மை)</li>
+                <li><strong>Biennale Fund / ASI share</strong> (பியெனாலே நிதி / ஏஎஸ்ஐ பங்கு)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/india-biennale-delhi-monuments-galleries.png" alt="Historic Delhi monuments to host India Biennale galleries — scan" />
+                <figcaption>THE HINDU BUSINESS LINE: Historic Delhi monuments to host India Biennale galleries. November 16, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>

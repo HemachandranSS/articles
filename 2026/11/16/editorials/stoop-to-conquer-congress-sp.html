@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stoop to conquer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../assets/css/article.css" />
+    <style>
+        .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
+        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
+        .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+        .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
+        .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article class="article-wrapper">
+        <header class="article-header">
+            <div class="magazine-tag">EDITORIAL · POLITICS · UTTAR PRADESH</div>
+            <h1>Stoop to conquer</h1>
+            <p class="subtitle">Congress should scale down its ambition while seeking alliance with SP</p>
+            <p class="byline">Editorial Desk</p>
+            <p class="article-meta">Editorial &nbsp;|&nbsp; November 16, 2026</p>
+        </header>
+        <div class="article-body">
+            <p class="drop-cap">Ahead of the 2027 Uttar Pradesh Assembly polls, seat-sharing friction between the Samajwadi Party and Congress has resurfaced. Reports that Congress wants about 181 of 403 seats — roughly 45% — look overly ambitious against its 2022 record of a 2.33% vote share, while the SP won 111 seats with about 32%.</p>
+            <p>The 2024 Lok Sabha combine did better — 43 of 80 seats and a 43.2% vote share — and Congress won 6 of 17 seats it contested (about 44.2% in those seats). That still does not justify a near-half claim without a statewide organisation. A well-targeted hundred-odd seats would be more realistic than delays that hurt alliances in Bihar and Tamil Nadu.</p>
+            <p>Against the BJP’s <span class="vocab-words" data-modal-title="hegemonic (adjective) (மேலாதிக்க)" data-modal-meaning="– Dominating a political field so rivals struggle to compete as equals." data-modal-synonyms="dominant">hegemonic</span> hold in the Hindi heartland, the editorial’s warning is blunt: swimming together beats sinking separately.</p>
+            <h3>Key Terminologies</h3>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Seat-sharing / Mahagathbandhan</strong> (தொகுதிப் பகிர்வு / மகாகத்பந்தன்)</li>
+                <li><strong>Vote share vs seats</strong> (வாக்கு விழுக்காடு எதிர் தொகுதிகள்)</li>
+                <li><strong>Hindi heartland</strong> (இந்தி மைய மாநிலங்கள்)</li>
+                <li><strong>Anti-incumbency</strong> (ஆட்சி எதிர்ப்பு அலை)</li>
+            </ol>
+        </div>
+        <section class="article-figures-section">
+            <figure class="article-image-figure">
+                <img src="images/stoop-to-conquer-congress-sp.png" alt="Stoop to conquer — scan" />
+                <figcaption>THE HINDU: Stoop to conquer. November 16, 2026.</figcaption>
+            </figure>
+        </section>
+    </article>
+    <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-icon">📖</div>
+                <div class="modal-title-block">
+                    <div class="modal-word" id="modalWordTitle"></div>
+                    <div class="modal-tamil" id="modalTamilTitle"></div>
+                </div>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="imageModal" role="dialog" aria-modal="true" style="display: none;">
+        <div class="image-modal-box">
+            <button class="modal-close" id="imgModalCloseBtn" aria-label="Close">✕</button>
+            <div class="image-modal-body">
+                <img id="modalHDImage" src="" alt="HD View" />
+                <div class="image-meta-info" id="imageMetaInfo"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../assets/js/vocab-modal.js"></script>
+</body>
+</html>
