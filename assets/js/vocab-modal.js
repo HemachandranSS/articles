@@ -172,33 +172,297 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalHDImage = document.getElementById("modalHDImage");
     const imageMetaInfo = document.getElementById("imageMetaInfo");
     const imgModalCloseBtn = document.getElementById("imgModalCloseBtn");
+    const imageModalBox = imageModal ? imageModal.querySelector(".image-modal-box") : null;
+    const imageModalBody = imageModal ? imageModal.querySelector(".image-modal-body") : null;
 
-    // Attach click event to all figures/article images
-    document.querySelectorAll(".article-image-figure img").forEach((img) => {
-        img.addEventListener("click", () => {
-            if (!imageModal) return;
-            modalHDImage.src = img.src;
-            modalHDImage.alt = img.alt || "HD Image";
+    if (!imageModal || !modalHDImage || !imageModalBody) {
+        // fall through to selection tooltip setup below
+    }
 
-            // Wait for image load to capture actual HD resolution
-            const tempImg = new Image();
-            tempImg.src = img.src;
-            tempImg.onload = () => {
-                const hdWidth = tempImg.naturalWidth;
-                const hdHeight = tempImg.naturalHeight;
-                imageMetaInfo.innerHTML = `<strong>Resolution:</strong> ${hdWidth} × ${hdHeight} px (HD Original)`;
-            };
+    let viewport = null;
+    let zoomLevelEl = null;
+    let scale = 1;
+    let tx = 0;
+    let ty = 0;
+    let fitScale = 1;
+    let minScale = 0.5;
+    let maxScale = 8;
+    let naturalW = 0;
+    let naturalH = 0;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragOriginTx = 0;
+    let dragOriginTy = 0;
+    let pinchStartDist = 0;
+    let pinchStartScale = 1;
 
-            imageModal.style.display = "flex";
+    function ensureZoomChrome() {
+        if (!imageModalBody || viewport) return;
+
+        viewport = document.createElement("div");
+        viewport.className = "image-zoom-viewport";
+        viewport.setAttribute("tabindex", "0");
+        viewport.setAttribute("aria-label", "Zoomable page scan");
+
+        modalHDImage.removeAttribute("width");
+        modalHDImage.removeAttribute("height");
+        viewport.appendChild(modalHDImage);
+
+        const toolbar = document.createElement("div");
+        toolbar.className = "image-zoom-toolbar";
+        toolbar.innerHTML = [
+            '<button type="button" data-zoom="out" title="Zoom out (−)" aria-label="Zoom out">−</button>',
+            '<span class="image-zoom-level" id="imageZoomLevel">100%</span>',
+            '<button type="button" data-zoom="in" title="Zoom in (+)" aria-label="Zoom in">+</button>',
+            '<button type="button" data-zoom="fit" title="Fit to view" aria-label="Fit to view">Fit</button>',
+            '<button type="button" data-zoom="width" title="Fit to width" aria-label="Fit to width">Width</button>',
+            '<button type="button" data-zoom="reset" title="Actual pixels (1:1 when possible)" aria-label="Actual size">1:1</button>',
+        ].join("");
+
+        imageModalBody.insertBefore(toolbar, imageModalBody.firstChild);
+        imageModalBody.insertBefore(viewport, toolbar.nextSibling);
+        zoomLevelEl = toolbar.querySelector("#imageZoomLevel");
+
+        toolbar.addEventListener("click", (e) => {
+            const btn = e.target.closest("button[data-zoom]");
+            if (!btn) return;
+            const action = btn.getAttribute("data-zoom");
+            if (action === "in") zoomBy(1.25);
+            else if (action === "out") zoomBy(1 / 1.25);
+            else if (action === "fit") fitContain();
+            else if (action === "width") fitWidth();
+            else if (action === "reset") zoomToActual();
         });
-    });
 
-    // Close Modal Events
+        viewport.addEventListener("wheel", onWheel, { passive: false });
+        viewport.addEventListener("dblclick", onDblClick);
+        viewport.addEventListener("pointerdown", onPointerDown);
+        viewport.addEventListener("pointermove", onPointerMove);
+        viewport.addEventListener("pointerup", onPointerUp);
+        viewport.addEventListener("pointercancel", onPointerUp);
+        viewport.addEventListener("pointerleave", onPointerUp);
+    }
+
+    function applyTransform() {
+        if (!modalHDImage) return;
+        modalHDImage.style.transform =
+            `translate(-50%, -50%) translate(${tx}px, ${ty}px) scale(${scale})`;
+        if (zoomLevelEl) zoomLevelEl.textContent = `${Math.round(scale * 100)}%`;
+        if (viewport) {
+            viewport.classList.toggle("is-zoomed", scale > fitScale * 1.02);
+        }
+        updateMeta();
+    }
+
+    function updateMeta() {
+        if (!imageMetaInfo || !naturalW) return;
+        const hint = "Scroll to zoom · drag to pan · double-click to toggle";
+        imageMetaInfo.innerHTML =
+            `<strong>Resolution:</strong> ${naturalW} × ${naturalH} px` +
+            ` &nbsp;·&nbsp; <strong>Zoom:</strong> ${Math.round(scale * 100)}%` +
+            `<span class="zoom-hint">${hint}</span>`;
+    }
+
+    function clampPan() {
+        if (!viewport || !naturalW) return;
+        const vw = viewport.clientWidth;
+        const vh = viewport.clientHeight;
+        const dispW = naturalW * scale;
+        const dispH = naturalH * scale;
+        const maxX = Math.max(0, (dispW - vw) / 2 + 40);
+        const maxY = Math.max(0, (dispH - vh) / 2 + 40);
+        tx = Math.min(maxX, Math.max(-maxX, tx));
+        ty = Math.min(maxY, Math.max(-maxY, ty));
+    }
+
+    function setScale(next, pivotX, pivotY) {
+        if (!viewport) return;
+        const rect = viewport.getBoundingClientRect();
+        const cx = pivotX == null ? rect.left + rect.width / 2 : pivotX;
+        const cy = pivotY == null ? rect.top + rect.height / 2 : pivotY;
+        const ox = cx - rect.left - rect.width / 2;
+        const oy = cy - rect.top - rect.height / 2;
+        const prev = scale;
+        scale = Math.min(maxScale, Math.max(minScale, next));
+        if (prev !== 0) {
+            const ratio = scale / prev;
+            tx = ox - (ox - tx) * ratio;
+            ty = oy - (oy - ty) * ratio;
+        }
+        clampPan();
+        applyTransform();
+    }
+
+    function zoomBy(factor, pivotX, pivotY) {
+        setScale(scale * factor, pivotX, pivotY);
+    }
+
+    function computeContainScale() {
+        if (!viewport || !naturalW) return 1;
+        const pad = 8;
+        const sx = (viewport.clientWidth - pad) / naturalW;
+        const sy = (viewport.clientHeight - pad) / naturalH;
+        return Math.min(sx, sy, 1);
+    }
+
+    function computeWidthScale() {
+        if (!viewport || !naturalW) return 1;
+        return Math.min((viewport.clientWidth - 8) / naturalW, maxScale);
+    }
+
+    function fitContain() {
+        fitScale = computeContainScale();
+        minScale = Math.min(0.25, fitScale);
+        maxScale = Math.max(8, fitScale * 12, (naturalW > 0 ? Math.max(2, naturalW / viewport.clientWidth) : 8));
+        scale = fitScale;
+        tx = 0;
+        ty = 0;
+        applyTransform();
+    }
+
+    function fitWidth() {
+        scale = computeWidthScale();
+        tx = 0;
+        ty = 0;
+        clampPan();
+        applyTransform();
+    }
+
+    function zoomToActual() {
+        setScale(1);
+        tx = 0;
+        ty = 0;
+        clampPan();
+        applyTransform();
+    }
+
+    function onWheel(e) {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+        zoomBy(factor, e.clientX, e.clientY);
+    }
+
+    function onDblClick(e) {
+        e.preventDefault();
+        if (scale < fitScale * 1.5) setScale(Math.min(fitScale * 2.5, maxScale), e.clientX, e.clientY);
+        else fitContain();
+    }
+
+    let activePointers = new Map();
+
+    function onPointerDown(e) {
+        if (e.target.closest && e.target.closest("button")) return;
+        activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+        if (activePointers.size === 2) {
+            const pts = [...activePointers.values()];
+            pinchStartDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+            pinchStartScale = scale;
+            dragging = false;
+            viewport.classList.remove("is-panning");
+            return;
+        }
+
+        // Single-finger / mouse pan (capture only for mouse/pen to keep pinch working)
+        if (e.pointerType !== "touch") {
+            try { viewport.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
+        }
+        dragging = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        dragOriginTx = tx;
+        dragOriginTy = ty;
+        viewport.classList.add("is-panning");
+    }
+
+    function onPointerMove(e) {
+        if (activePointers.has(e.pointerId)) {
+            activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        }
+
+        if (activePointers.size === 2 && pinchStartDist > 0) {
+            const pts = [...activePointers.values()];
+            const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+            const midX = (pts[0].x + pts[1].x) / 2;
+            const midY = (pts[0].y + pts[1].y) / 2;
+            setScale(pinchStartScale * (dist / pinchStartDist), midX, midY);
+            return;
+        }
+
+        if (!dragging) return;
+        tx = dragOriginTx + (e.clientX - dragStartX);
+        ty = dragOriginTy + (e.clientY - dragStartY);
+        clampPan();
+        applyTransform();
+    }
+
+    function onPointerUp(e) {
+        activePointers.delete(e.pointerId);
+        if (activePointers.size < 2) pinchStartDist = 0;
+        if (activePointers.size === 0) {
+            dragging = false;
+            viewport.classList.remove("is-panning");
+        } else if (activePointers.size === 1) {
+            // Resume pan from remaining finger
+            const remaining = [...activePointers.values()][0];
+            dragging = true;
+            dragStartX = remaining.x;
+            dragStartY = remaining.y;
+            dragOriginTx = tx;
+            dragOriginTy = ty;
+        }
+        try { viewport.releasePointerCapture(e.pointerId); } catch (_) { /* noop */ }
+    }
+
+    function openImgModal(img) {
+        if (!imageModal || !modalHDImage) return;
+        ensureZoomChrome();
+
+        scale = 1;
+        tx = 0;
+        ty = 0;
+        activePointers.clear();
+        pinchStartDist = 0;
+        dragging = false;
+        modalHDImage.style.opacity = "0";
+        modalHDImage.src = img.src;
+        modalHDImage.alt = img.alt || "HD Image";
+        imageModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+
+        const finish = () => {
+            naturalW = modalHDImage.naturalWidth || img.naturalWidth;
+            naturalH = modalHDImage.naturalHeight || img.naturalHeight;
+            modalHDImage.style.width = naturalW + "px";
+            modalHDImage.style.height = naturalH + "px";
+            modalHDImage.style.opacity = "1";
+            fitContain();
+            if (viewport) viewport.focus({ preventScroll: true });
+        };
+
+        if (modalHDImage.complete && modalHDImage.naturalWidth) finish();
+        else modalHDImage.onload = finish;
+    }
+
     const closeImgModal = () => {
         if (!imageModal) return;
         imageModal.style.display = "none";
         modalHDImage.src = "";
+        modalHDImage.onload = null;
+        document.body.style.overflow = "";
+        dragging = false;
+        activePointers.clear();
+        scale = 1;
+        tx = 0;
+        ty = 0;
     };
+
+    document.querySelectorAll(".article-image-figure img").forEach((img) => {
+        img.addEventListener("click", () => openImgModal(img));
+        img.style.cursor = "zoom-in";
+        img.title = img.title || "Click to zoom";
+    });
 
     if (imgModalCloseBtn) imgModalCloseBtn.addEventListener("click", closeImgModal);
 
@@ -209,8 +473,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && imageModal && imageModal.style.display === "flex") {
+        if (!imageModal || imageModal.style.display !== "flex") return;
+        if (e.key === "Escape") {
             closeImgModal();
+            return;
+        }
+        if (e.key === "+" || e.key === "=") {
+            e.preventDefault();
+            zoomBy(1.25);
+        } else if (e.key === "-" || e.key === "_") {
+            e.preventDefault();
+            zoomBy(1 / 1.25);
+        } else if (e.key === "0") {
+            e.preventDefault();
+            fitContain();
+        } else if (e.key === "1") {
+            e.preventDefault();
+            zoomToActual();
+        } else if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+            e.preventDefault();
+            const step = 60;
+            if (e.key === "ArrowLeft") tx += step;
+            if (e.key === "ArrowRight") tx -= step;
+            if (e.key === "ArrowUp") ty += step;
+            if (e.key === "ArrowDown") ty -= step;
+            clampPan();
+            applyTransform();
         }
     });
 

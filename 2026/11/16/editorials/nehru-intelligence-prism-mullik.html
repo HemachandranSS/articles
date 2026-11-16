@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="../../../../assets/css/article.css" />
     <style>
         .responsive-vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6; }
-        .pullquote-card { background-color: #fcf8f2; border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #78350f; border-radius: 0 6px 6px 0; }
-        .article-figures-section { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .pullquote-card { background-color: #f0f9ff; border-left: 4px solid #0284c7; padding: 1.25rem 1.5rem; margin: 1.75rem 0; font-size: 1.125rem; font-style: italic; color: #0c4a6e; border-radius: 0 6px 6px 0; }
+        .article-figures-section { margin-top: 2rem; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 2rem; }
         .article-image-figure { margin: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,.05); }
         .article-image-figure img { width: 100%; height: auto; display: block; cursor: zoom-in; }
         .article-image-figure figcaption { padding: .85rem 1.1rem; font-size: .875rem; color: #475569; background: #f8fafc; border-top: 1px solid #e2e8f0; line-height: 1.45; }
         .subtitle { font-size: 1.05rem; color: #444; margin-bottom: 1.25rem; line-height: 1.55; }
+        .vocab-glossary-section { margin-top: 2.5rem; background: #f8fafc; padding: 1.75rem 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .vocab-glossary-section h2 { font-family: 'Inter', sans-serif; font-size: 1.15rem; color: #1e293b; margin: 0 0 0.75rem; }
         @media (max-width: 600px) { .responsive-vocab-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -26,26 +28,66 @@
             <p class="byline">Ramanathan Kumar</p>
             <p class="article-meta">Op-Ed &nbsp;|&nbsp; November 16, 2026</p>
         </header>
+
+        <section class="article-figures-section" style="margin-top: 0;">
+            <figure class="article-image-figure">
+                <img src="images/nehru-intelligence-prism-mullik.png" alt="Looking at India’s first Prime Minister through an intelligence prism — page scan" />
+                <figcaption>Jawaharlal Nehru at the Temple of Heaven in Beijing, China, during a visit in 1954. THE HINDU ARCHIVES — full page scan (click to zoom).</figcaption>
+            </figure>
+        </section>
+
         <div class="article-body">
-            <p class="drop-cap">Reading <span class="vocab-words" data-modal-title="Jawaharlal Nehru (proper noun) (ஜவஹர்லால் நேரு)" data-modal-meaning="– India’s first Prime Minister (1947–64), often cast as naive on China." data-modal-synonyms="first Prime Minister">Jawaharlal Nehru</span> through an intelligence lens, Ramanathan Kumar uses the memoirs of <span class="vocab-words" data-modal-title="B.N. Mullik (proper noun) (பி.என். முல்லிக்)" data-modal-meaning="– Director of the Intelligence Bureau, 1950–64, author of a trilogy on working with Nehru." data-modal-synonyms="DIB Mullik">B.N. Mullik</span> — DIB for almost the whole Nehru years, before <span class="vocab-words" data-modal-title="R&amp;AW (acronym) (ஆராய்ச்சி மற்றும் பகுப்பாய்வுப் பிரிவு)" data-modal-meaning="– Research and Analysis Wing; external intelligence service created later (1968)." data-modal-synonyms="Research and Analysis Wing">R&amp;AW</span> existed — to rebut the charge that Nehru was rosy-eyed and naive about China.</p>
-            <p>Mullik joined the IB in 1948 and became DIB in 1950; early friction with Nehru after a 1934 Bihar earthquake episode gave way to a working relationship that encouraged frank reporting. His trilogy covers Kashmir, the 1962 war and wider security, and paints Nehru as a statesman with a broad view of statecraft.</p>
-            <p>Against the claim that Nehru ignored Sardar Patel’s 1950 Tibet warning, Mullik’s record shows stronger border intelligence, military readiness and the <span class="vocab-words" data-modal-title="forward policy (noun) (முன்னணிக் கொள்கை)" data-modal-meaning="– Establishing posts and checkpoints in claimed border areas to assert territorial control." data-modal-synonyms="border posts policy">forward policy</span> of police and intelligence posts in contested zones. Nehru, on this reading, saw an aggressive, militaristic China early, tried to avoid war so scarce resources stayed on economic development, yet prepared for force while keeping a public pretence of peace.</p>
-            <p>When China invaded in 1962, Nehru sought help from President Kennedy; Bruce Riedel’s <em>JFK’s Forgotten Crisis</em> is cited on that appeal. Kumar ends with Mullik’s lasting admiration for Nehru’s patriotism and vision despite disagreements. (The writer is former Special Secretary, R&amp;AW. Views are personal.)</p>
+            <p class="drop-cap">Much has been written on <span class="vocab-words" data-modal-title="Jawaharlal Nehru (proper noun) (ஜவஹர்லால் நேரு)" data-modal-meaning="– India’s first Prime Minister (1947–64)." data-modal-synonyms="first Prime Minister">Jawaharlal Nehru</span>; Ramanathan Kumar adds a less-used angle — Nehru as seen by his long-serving <span class="vocab-words" data-modal-title="intelligence chief (noun) (உளவுத்துறை தலைவர்)" data-modal-meaning="– Head of a nation’s intelligence service." data-modal-synonyms="DIB, spymaster">intelligence chief</span>, <span class="vocab-words" data-modal-title="B.N. Mullik (proper noun) (பி.என். முல்லிக்)" data-modal-meaning="– Director, Intelligence Bureau (1950–64); wrote a trilogy on working with Nehru." data-modal-synonyms="Bhola Nath Mullik">B.N. Mullik</span>.</p>
+
+            <p>Mullik was Director of the <span class="vocab-words" data-modal-title="Intelligence Bureau (noun) (புலனாய்வுப் பணியகம்)" data-modal-meaning="– India’s internal intelligence agency; before R&amp;AW it also led on external security assessments." data-modal-synonyms="IB, DIB">Intelligence Bureau</span> from 1950 until shortly after Nehru’s death. <span class="vocab-words" data-modal-title="R&amp;AW (acronym) (ஆராய்ச்சி மற்றும் பகுப்பாய்வுப் பிரிவு)" data-modal-meaning="– Research and Analysis Wing (est. 1968), India’s external intelligence service." data-modal-synonyms="Research and Analysis Wing">R&amp;AW</span> did not yet exist, so the DIB was the apex voice on intelligence and security.</p>
+
+            <p>An Indian Police officer, Mullik entered the IB in 1948 and became DIB two years later. Earlier, as ASP in Madhubani (Darbhanga), he tried to brief Nehru on police rehabilitation after Bihar’s 1934 earthquake; Nehru, thinking he was under <span class="vocab-words" data-modal-title="surveillance (noun) (கண்காணிப்பு)" data-modal-meaning="– Close observation of a person or place." data-modal-synonyms="monitoring, watch">surveillance</span>, sent an angry note and Mullik resolved never to approach him again. A later IB report on minorities in East Pakistan that Nehru questioned deepened the chill. Sardar Patel then urged the new DIB to call on the Prime Minister — a meeting that reset the relationship: Nehru wanted unbiased intelligence, and Mullik valued his wider horizon of statecraft.</p>
+
+            <div class="pullquote-card">Critics cast Nehru as rosy-eyed on China; Mullik’s memoirs, read here as a study lens, push back on that picture.</div>
+
+            <h3>Picture of a statesman</h3>
+            <p>After retirement Mullik published a trilogy — Kashmir, the 1962 Indo-China war, and other national-security problems of the young republic. From that professional proximity comes a vivid picture of Nehru’s worldview and governing style.</p>
+            <p>Far from naivety, Mullik records Nehru warning as early as 1952 — around the first annual conference of State police chiefs — about an aggressive, <span class="vocab-words" data-modal-title="militaristic (adjective) (ராணுவமய)" data-modal-meaning="– Oriented toward military power and force." data-modal-synonyms="belligerent, warlike">militaristic</span> China that used communist ideology to cloak hard national interest, and stressing the need to stay on guard.</p>
+            <p>On Sardar Patel’s November 1950 Tibet letter, the essay argues the common claim that Nehru ignored a <span class="vocab-words" data-modal-title="prescient (adjective) (தீர்க்கதரிசன)" data-modal-meaning="– Showing foresight about future danger." data-modal-synonyms="foresighted, prophetic">prescient</span> warning is overstated: under the circumstances the government pushed military readiness, border intelligence, and administrative reach adjoining Tibet. The contested <span class="vocab-words" data-modal-title="forward policy (noun) (முன்னணிக் கொள்கை)" data-modal-meaning="– Light police/intelligence posts in claimed border areas to deter Chinese encroachment." data-modal-synonyms="border posts policy">forward policy</span> — light police and intelligence checkpoints across claimed territory — was part of that multi-pronged response.</p>
+
+            <h3>Different outlooks</h3>
+            <p>Kumar contrasts Nehru’s effort to avoid war (to spare scarce resources after colonial drain and Partition) with Mao-era China’s readiness to treat force as normal <span class="vocab-words" data-modal-title="statecraft (noun) (அரசுத் தந்திரம்)" data-modal-meaning="– The practice of managing state power and foreign policy." data-modal-synonyms="diplomacy of power">statecraft</span> while keeping a pretence of peace. Avoidance failed in 1962; Nehru sought U.S. armed help. Limited assistance came, but China — aiming to humble Nehru — pulled back from much of the Northeast while retaining gains in Ladakh.</p>
+            <p>Selective use of Bruce Riedel’s <em>JFK’s Forgotten Crisis</em> in Parliament to paint Nehru as panicking is set against Riedel’s own framing of India’s luck in having a humanistic founding leader. Mullik’s closing admiration — courage, patriotism, drive, determination, breadth of vision, even when he disagreed — is the essay’s final chord.</p>
+            <p><em>(The writer is former Special Secretary, R&amp;AW. Views are personal.)</em></p>
+
             <h3>Key Terminologies</h3>
             <ol class="responsive-vocab-grid">
                 <li><strong>Intelligence Bureau / DIB</strong> (புலனாய்வுப் பணியகம் / டிஐபி)</li>
-                <li><strong>Forward policy / territorial claims</strong> (முன்னணிக் கொள்கை / எல்லை உரிமைகள்)</li>
+                <li><strong>Forward policy / encroachment</strong> (முன்னணிக் கொள்கை / ஊடுருவல்)</li>
                 <li><strong>1962 Indo-China war</strong> (1962 இந்திய-சீனப் போர்)</li>
-                <li><strong>R&amp;AW / Mullik trilogy</strong> (ஆராவ் / முல்லிக் மூன்று தொகுதிகள்)</li>
+                <li><strong>Statecraft / militaristic China</strong> (அரசுத் தந்திரம் / ராணுவமய சீனா)</li>
+                <li><strong>R&amp;AW (post-1968)</strong> (ஆராய்ச்சி மற்றும் பகுப்பாய்வுப் பிரிவு)</li>
+                <li><strong>Mullik memoirs trilogy</strong> (முல்லிக் நினைவுக்குறிப்பு மூன்று தொகுதிகள்)</li>
             </ol>
         </div>
-        <section class="article-figures-section">
-            <figure class="article-image-figure">
-                <img src="images/nehru-intelligence-prism-mullik.png" alt="Looking at India’s first Prime Minister through an intelligence prism — scan" />
-                <figcaption>THE HINDU: Looking at India’s first Prime Minister through an intelligence prism. Ramanathan Kumar. November 16, 2026.</figcaption>
-            </figure>
+
+        <section class="vocab-glossary-section">
+            <h2>Study vocabulary (selected)</h2>
+            <ol class="responsive-vocab-grid">
+                <li><strong>Intelligence chief / DIB</strong> — உளவுத்துறை தலைவர்</li>
+                <li><strong>Surveillance</strong> — கண்காணிப்பு</li>
+                <li><strong>Aspersions</strong> — அவதூறு / களங்கம்</li>
+                <li><strong>Pent-up resentment</strong> — அடக்கி வைத்த வெறுப்பு</li>
+                <li><strong>Expansive</strong> — தாராள / வெளிப்படையான</li>
+                <li><strong>Prescient warning</strong> — தீர்க்கதரிசன எச்சரிக்கை</li>
+                <li><strong>Administrative apparatus</strong> — நிர்வாக இயந்திரம்</li>
+                <li><strong>Encroachment</strong> — ஊடுருவல் / ஆக்கிரமிப்பு</li>
+                <li><strong>Multi-pronged response</strong> — பன்முனை எதிர்வினை</li>
+                <li><strong>Statecraft</strong> — அரசுத் தந்திரம்</li>
+                <li><strong>Colonial exploitation</strong> — காலனி சுரண்டல்</li>
+                <li><strong>Partition</strong> — பிரிவினை</li>
+                <li><strong>Armed assistance</strong> — ஆயுத உதவி</li>
+                <li><strong>Humanistic outlook</strong> — மனிதநேய பார்வை</li>
+                <li><strong>Compass of vision</strong> — தொலைநோக்கின் பரப்பு</li>
+            </ol>
         </section>
     </article>
+
     <div class="modal-overlay" id="meaningModal" role="dialog" aria-modal="true" aria-labelledby="modalWordTitle">
         <div class="modal-box">
             <div class="modal-head">
